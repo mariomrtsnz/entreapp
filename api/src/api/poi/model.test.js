@@ -1,0 +1,55 @@
+import { Poi } from '.'
+
+let poi
+
+beforeEach(async () => {
+  poi = await Poi.create({ name: 'test', categories: 'test', coordinates: 'test', comments: 'test', badges: 'test', qrCode: 'test', audioguides: 'test', description: 'test', images: 'test', year: 'test', creator: 'test', likes: 'test', status: 'test', schedule: 'test', price: 'test' })
+})
+
+describe('view', () => {
+  it('returns simple view', () => {
+    const view = poi.view()
+    expect(typeof view).toBe('object')
+    expect(view.id).toBe(poi.id)
+    expect(view.name).toBe(poi.name)
+    expect(view.categories).toBe(poi.categories)
+    expect(view.coordinates).toBe(poi.coordinates)
+    expect(view.comments).toBe(poi.comments)
+    expect(view.badges).toBe(poi.badges)
+    expect(view.qrCode).toBe(poi.qrCode)
+    expect(view.audioguides).toBe(poi.audioguides)
+    expect(view.description).toBe(poi.description)
+    expect(view.images).toBe(poi.images)
+    expect(view.year).toBe(poi.year)
+    expect(view.creator).toBe(poi.creator)
+    expect(view.likes).toBe(poi.likes)
+    expect(view.status).toBe(poi.status)
+    expect(view.schedule).toBe(poi.schedule)
+    expect(view.price).toBe(poi.price)
+    expect(view.createdAt).toBeTruthy()
+    expect(view.updatedAt).toBeTruthy()
+  })
+
+  it('returns full view', () => {
+    const view = poi.view(true)
+    expect(typeof view).toBe('object')
+    expect(view.id).toBe(poi.id)
+    expect(view.name).toBe(poi.name)
+    expect(view.categories).toBe(poi.categories)
+    expect(view.coordinates).toBe(poi.coordinates)
+    expect(view.comments).toBe(poi.comments)
+    expect(view.badges).toBe(poi.badges)
+    expect(view.qrCode).toBe(poi.qrCode)
+    expect(view.audioguides).toBe(poi.audioguides)
+    expect(view.description).toBe(poi.description)
+    expect(view.images).toBe(poi.images)
+    expect(view.year).toBe(poi.year)
+    expect(view.creator).toBe(poi.creator)
+    expect(view.likes).toBe(poi.likes)
+    expect(view.status).toBe(poi.status)
+    expect(view.schedule).toBe(poi.schedule)
+    expect(view.price).toBe(poi.price)
+    expect(view.createdAt).toBeTruthy()
+    expect(view.updatedAt).toBeTruthy()
+  })
+})
