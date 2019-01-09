@@ -1,54 +1,23 @@
+import { MaterialModule } from './../material-module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatExpansionModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatSidenavModule,
-  MatSortModule,
-  MatTableModule,
-  MatToolbarModule,
-} from '@angular/material';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { DashboardRoutes } from './dashboard.routing';
 import { PoiComponent } from './poi/poi.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   imports: [
-  CommonModule,
-    RouterModule.forChild(DashboardRoutes),
-    MatIconModule,
-    MatCardModule,
-    MatChipsModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatListModule,
-    MatProgressBarModule,
-    MatMenuModule,
+    CommonModule,
+    MaterialModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatSidenavModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatToolbarModule,
-    MatSelectModule,
-    MatExpansionModule,
+    RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [ PoiComponent ],
+  declarations: [ PoiComponent, MenuComponent ],
 })
 
 export class DashboardModule {}

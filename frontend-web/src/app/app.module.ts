@@ -18,6 +18,7 @@ import { DialogNewSupercategoryComponent } from './dialogs/dialog-new-supercateg
 import { DialogEditSupercategoryComponent } from './dialogs/dialog-edit-supercategory/dialog-edit-supercategory.component';
 import { DialogDeleteSuperCategoryComponent } from './dialogs/dialog-delete-supercategory/dialog-delete-supercategory.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
     DialogEditCategoryComponent,
     DialogEditSupercategoryComponent,
     DialogDeleteCategoryComponent,
-    DialogDeleteSuperCategoryComponent
+    DialogDeleteSuperCategoryComponent,
+    DialogUpdateProfileComponent
   ],
   imports: [
     BrowserModule,
