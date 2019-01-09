@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>¿Borrar {{ POI.name }}?</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+        <p>Para confirmar inserte "ELIMINAR" todo en mayusculas y pulse Borrar.</p>
+        <mat-form-field>
+            <input matInput placeholder="ELIMINAR" type="text" [formControl]="form.controls['borrar']" required>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
+        <button mat-button [mat-dialog-close]>Volver atrás</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Borrar</button>
+    </div>
+</form>

@@ -1,14 +1,16 @@
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { routes } from './app-routing.module';
-import { FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
+import { PoiCreateComponent } from './dialogs/poi-create/poi-create.component';
+import { PoiDeleteComponent } from './dialogs/poi-delete/poi-delete.component';
+import { PoiEditComponent } from './dialogs/poi-edit/poi-edit.component';
 import { DialogEditCategoryComponent } from './dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogNewCategoryComponent } from './dialogs/dialog-new-category/dialog-new-category.component';
 import { DialogDeleteCategoryComponent } from './dialogs/dialog-delete-category/dialog-delete-category.component';
@@ -20,6 +22,9 @@ import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
+    PoiCreateComponent,
+    PoiDeleteComponent,
+    PoiEditComponent,
     DialogNewCategoryComponent,
     DialogNewSupercategoryComponent,
     DialogEditCategoryComponent,
