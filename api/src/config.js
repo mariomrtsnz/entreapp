@@ -39,7 +39,7 @@ const config = {
   test: { },
   development: {
     mongo: {
-      uri: 'mongodb://localhost/entreapp-dev',
+      uri: 'mongodb://entreappuser:salesianosDesarrollo2019@ds161700.mlab.com:61700/entreappdatabase',
       options: {
         debug: true
       }
@@ -49,7 +49,7 @@ const config = {
     ip: process.env.IP || undefined,
     port: process.env.PORT || 8080,
     mongo: {
-      uri: process.env.MONGODB_URI || 'mongodb://localhost/entreapp'
+      uri: process.env.MONGODB_URI || 'mongodb://entreappuser:salesianosDesarrollo2019@ds161700.mlab.com:61700/entreappdatabase'
     }
   }
 }
