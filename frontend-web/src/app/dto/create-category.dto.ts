@@ -1,4 +1,4 @@
-export class CategoriaCreateDto {
+export class CategoryCreateDto {
 
     name: string;
     idSuperCategoria: number;

@@ -1,0 +1,7 @@
+<div fxLayout="column" fFlexFill>
+  <h3>Please, write "DELETE" to continue</h3>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Word" [(ngModel)]="word">
+  </mat-form-field>
+  <button mat-raised-button color="primary" *ngIf="checkWord()" (click)="deleteCategory()">Delete</button>
+</div>
