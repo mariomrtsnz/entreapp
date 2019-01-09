@@ -1,52 +1,70 @@
 <div class="container">
-  <div class="container">
-    <mat-sidenav-container class="sidenav-container">
-      <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" role="navigation">
-        <mat-nav-list>
-          <a mat-list-item [routerLink]="['/home']">
-            <mat-icon>place</mat-icon>Inicio (Points of Interests)
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" role="navigation">
+      <div class="my-2" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <div class="with-bg"></div>
+        <div>
+          <a>
+            <img class="circle" src="./assets/images/profile.jpg" width="100">
           </a>
-          <a mat-list-item [routerLink]="['/admin/users']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>supervisor_account</mat-icon>Users
-          </a>
-          <a mat-list-item [routerLink]="['/admin/routes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>map</mat-icon>Routes
-          </a>
-          <a mat-list-item [routerLink]="['/admin/badges']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>bookmarks</mat-icon>Badges
-          </a>
-          <a mat-list-item [routerLink]="['/admin/likes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>thumbs_up_down</mat-icon>Likes
-          </a>
-          <a mat-list-item [routerLink]="['/admin/supercategories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>list</mat-icon>SuperCategories
-          </a>
-          <a mat-list-item [routerLink]="['/admin/categories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>list</mat-icon>Categories
-          </a>
-          <a mat-list-item (click)="openUpdateProfile()">
-            <mat-icon>settings</mat-icon>My Profile
-          </a>
-          <a mat-list-item (click)="authService.logout()">
-            <mat-icon>power_settings_new</mat-icon>Logout
-          </a>
-        </mat-nav-list>
-      </mat-sidenav>
-
-      <mat-sidenav-content>
-        <mat-toolbar color="primary">
-          <mat-toolbar-row>
-            <div (click)="sidenav.toggle()" class="menu-toggle">
-              <mat-icon class="example-icon">menu</mat-icon>
-              <span>EntreApp</span>
-            </div>
-          </mat-toolbar-row>
-        </mat-toolbar>
-        <div class="app-content">
-          <router-outlet></router-outlet>
         </div>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+      </div>
+      <div style="background-color: #3e50b5 !important;" class="mt-2 py-3 text-white" fxLayout="column" fxLayoutAlign="center center"
+        fxLayoutGap="7px">
+        <div>
+          <a>
+            <span class="lead">{{loggedUserName}}</span>
+          </a>
+        </div>
+        <div>
+          <a>
+            <span class="">{{authService.getEmail()}}</span>
+          </a>
+        </div>
+      </div>
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="['/home']">
+          <mat-icon>place</mat-icon>Inicio (Points of Interests)
+        </a>
+        <a mat-list-item [routerLink]="['/admin/users']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>supervisor_account</mat-icon>Users
+        </a>
+        <a mat-list-item [routerLink]="['/admin/routes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>map</mat-icon>Routes
+        </a>
+        <a mat-list-item [routerLink]="['/admin/badges']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>bookmarks</mat-icon>Badges
+        </a>
+        <a mat-list-item [routerLink]="['/admin/likes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>thumbs_up</mat-icon>Likes
+        </a>
+        <a mat-list-item [routerLink]="['/admin/supercategories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>list</mat-icon>SuperCategories
+        </a>
+        <a mat-list-item [routerLink]="['/admin/categories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+          <mat-icon>list</mat-icon>Categories
+        </a>
+        <a mat-list-item (click)="openUpdateProfile()">
+          <mat-icon>settings</mat-icon>My Profile
+        </a>
+        <a mat-list-item (click)="authService.logout()">
+          <mat-icon>power_settings_new</mat-icon>Logout
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
 
-  </div>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <div (click)="sidenav.toggle()" class="menu-toggle">
+            <mat-icon class="example-icon">menu</mat-icon>
+            <span>EntreApp</span>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="app-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

@@ -5,7 +5,7 @@ import {
   Routes,
   RouterModule
 } from '@angular/router';
-// import { AdminLayoutComponent, AuthLayoutComponent } from './core';
+
 export const routes: Routes = [{
     path: '',
     redirectTo: '/signin',
