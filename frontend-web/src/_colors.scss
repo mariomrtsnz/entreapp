@@ -1,16 +1,16 @@
 :root {
     /* main colors */
-    --color-primary: #64706c;
-    --color-primary-light: color-mod(var(--color-primary) tint(15%));
-    --color-primary-dark: color-mod(var(--color-primary) shade(15%));
-    --color-primary-bg: color-mod(var(--color-primary) alpha(20%));
+    --color-primary: #a29287;
+    --color-primary-light: #bdb2ab;
+    --color-primary-dark: #71665e;
+    --color-primary-bg: #e3dedb;
 
-    --color-accent: #ede9ce;
-    --color-accent-light: color-mod(var(--color-accent) tint(15%));
-    --color-accent-dark: color-mod(var(--color-accent) shade(10%));
-    --color-accent-bg: color-mod(var(--color-accent) alpha(20%));
+    --color-accent: #8797a2;
+    --color-accent-light: #abb6bd;
+    --color-accent-dark: #5e6971;
+    --color-accent-bg: #dbdfe3;
 
-    // shades - generated using chroma.js - 12 steps
+    // shades
     --black: #1d1d21;
     --gray-10: #2e2e31;
     --gray-6: #7b7a7d;

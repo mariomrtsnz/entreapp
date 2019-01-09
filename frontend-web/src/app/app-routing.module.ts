@@ -1,14 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 // import { AdminLayoutComponent, AuthLayoutComponent } from './core';
-const routes: Routes = [];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
+export const routes: Routes = [{ path: '', redirectTo: '/session/signin', pathMatch: 'full'}];
 export const AppRoutes: Routes = [
-  { path: '', redirectTo: '/session/signin', pathMatch: 'full'}// ,
+  // ,
   // {
   //   path: '',
   //   component: AdminLayoutComponent,
@@ -28,4 +23,3 @@ export const AppRoutes: Routes = [
   //   redirectTo: 'session/404'
   // }
   ];
-export class AppRoutingModule { }

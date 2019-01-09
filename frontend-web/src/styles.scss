@@ -1,11 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "_colors.scss";
-@font-face {
-    font-family: 'InterUI';
-    src: url('/src/assets/fonts/brelaregular.otf');
+@import url('https://rsms.me/inter/inter-ui.css');
+html { font-family: 'Inter UI', sans-serif; }
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter UI var alt', sans-serif; }
 }
-
 html, body, * {
-    font-family: InterUI;
     background-color: var(--color-primary-light);
 }
