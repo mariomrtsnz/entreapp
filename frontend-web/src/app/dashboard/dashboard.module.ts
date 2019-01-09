@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DashboardRoutes } from './dashboard.routing';
 import { PoiComponent } from './poi/poi.component';
 import { MenuComponent } from './menu/menu.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { MenuComponent } from './menu/menu.component';
     ReactiveFormsModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [ PoiComponent, MenuComponent ],
+  declarations: [ PoiComponent, MenuComponent, UserComponent ],
 })
 
 export class DashboardModule {}
