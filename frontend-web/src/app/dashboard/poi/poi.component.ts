@@ -22,7 +22,7 @@ export class PoiComponent implements OnInit {
     private authService: AuthService, public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.getAll();
+    // this.getAll();
   }
 
   getAll() {

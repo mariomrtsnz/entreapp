@@ -7,9 +7,9 @@ import { Supercategory } from 'src/app/interfaces/supercategory';
 import { DialogNewSupercategoryComponent } from 'src/app/dialogs/dialog-new-supercategory/dialog-new-supercategory.component';
 import { DialogEditSupercategoryComponent } from 'src/app/dialogs/dialog-edit-supercategory/dialog-edit-supercategory.component';
 @Component({
-  selector: 'app-lista-supercategorias',
-  templateUrl: './lista-supercategorias.component.html',
-  styleUrls: ['./lista-supercategorias.component.scss']
+  selector: 'app-list-supercategories',
+  templateUrl: './list-supercategories.component.html',
+  styleUrls: ['./list-supercategories.component.scss']
 })
 export class ListSuperCategoriesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'accions'];

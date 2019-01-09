@@ -6,6 +6,7 @@ export interface PoiResponse {
     categories: Category;
     coordinates: {long: string, lat: string};
     comments: string[]; // CommentResponse[];
+    stars: number;
     // badges: BadgeResponse[];
     qrCode: string;
     audioguides: string[];

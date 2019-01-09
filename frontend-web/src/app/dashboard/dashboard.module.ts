@@ -8,6 +8,8 @@ import { DashboardRoutes } from './dashboard.routing';
 import { PoiComponent } from './poi/poi.component';
 import { MenuComponent } from './menu/menu.component';
 import { UserComponent } from './user/user.component';
+import { ListCategoriesComponent } from './list-categories/list-categories.component';
+import { ListSuperCategoriesComponent } from './list-supercategories/list-supercategories.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,7 @@ import { UserComponent } from './user/user.component';
     ReactiveFormsModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [ PoiComponent, MenuComponent, UserComponent ],
+  declarations: [ PoiComponent, MenuComponent, UserComponent, ListCategoriesComponent, ListSuperCategoriesComponent ],
 })
 
 export class DashboardModule {}
