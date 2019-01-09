@@ -30,7 +30,7 @@ export class PoiDeleteComponent implements OnInit {
   }
 
   onSubmit() {
-    this.poiService.removeResource(this.POI.id).toPromise()
+    this.poiService.remove(this.POI.id).toPromise()
     .then(resp => this.dialogRef.close(resp))
     .catch(() => this.snackBar.open('Error al borrar la localización.', 'Cerrar', {duration: 3000}));
   }

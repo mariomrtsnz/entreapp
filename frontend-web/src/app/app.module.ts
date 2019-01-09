@@ -43,7 +43,7 @@ import {
     PoiComponent,
     PoiCreateComponent,
     PoiDeleteComponent,
-    PoiEditComponent
+    PoiEditComponent,
     DialogNewCategoryComponent,
     DialogNewSupercategoryComponent,
     DialogEditCategoryComponent,
