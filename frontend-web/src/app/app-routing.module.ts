@@ -20,9 +20,8 @@ export const routes: Routes = [{
   },
   {
     path: '',
-    // component: AdminLayoutComponent,
     children: [{
-      path: 'dashboard',
+      path: 'home',
       loadChildren: './dashboard/dashboard.module#DashboardModule'
     }]
   },

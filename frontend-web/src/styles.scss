@@ -2,10 +2,12 @@
 @import "_colors.scss";
 @import "./custom-theme.scss";
 @import url('https://rsms.me/inter/inter-ui.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @include angular-material-theme($custom-theme);
-html { font-family: 'Inter UI', sans-serif; }
+html { font-family: 'Inter UI', 'Roboto', sans-serif; }
 @supports (font-variation-settings: normal) {
-  html { font-family: 'Inter UI var alt', sans-serif; }
+  html { font-family: 'Inter UI var alt', 'Roboto', sans-serif; }
 }
 
 html, body, * {
