@@ -4,9 +4,9 @@ import { CategoryService } from '../../services/category.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-dialog-edit-categoria',
-  templateUrl: './dialog-edit-categoria.component.html',
-  styleUrls: ['./dialog-edit-categoria.component.scss']
+  selector: 'app-dialog-edit-category',
+  templateUrl: './dialog-edit-category.component.html',
+  styleUrls: ['./dialog-edit-category.component.scss']
 })
 export class DialogEditCategoryComponent implements OnInit {
   category: Category;

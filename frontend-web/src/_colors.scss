@@ -1,14 +1,14 @@
 :root {
     /* main colors */
     --color-primary: #a29287;
-    --color-primary-light: #bdb2ab;
-    --color-primary-dark: #71665e;
-    --color-primary-bg: #e3dedb;
+    --color-primary-light: #BEB3AB;
+    --color-primary-dark: #756357;
+    --color-primary-bg: #E3DEDB;
 
     --color-accent: #8797a2;
-    --color-accent-light: #abb6bd;
-    --color-accent-dark: #5e6971;
-    --color-accent-bg: #dbdfe3;
+    --color-accent-light: #ABB6BE;
+    --color-accent-dark: #576975;
+    --color-accent-bg: #DBE0E3;
 
     // shades
     --black: #1d1d21;
@@ -21,9 +21,9 @@
     --white: white;
 
     /* feedback */
-    --color-success: #c7ad88;
+    --color-success: #00a4d7;
     --color-error: #ee1c25;
-    --color-warning: #00a4d7;
+    --color-warning: #c7ad88;
 
     /* typography */
     --color-text: var(--gray-10);

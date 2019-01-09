@@ -1,10 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "_colors.scss";
+@import "./custom-theme.scss";
 @import url('https://rsms.me/inter/inter-ui.css');
+@include angular-material-theme($custom-theme);
 html { font-family: 'Inter UI', sans-serif; }
 @supports (font-variation-settings: normal) {
   html { font-family: 'Inter UI var alt', sans-serif; }
 }
+
 html, body, * {
-    background-color: var(--color-primary-light);
+    background-color: var(--color-primary-bg);
 }

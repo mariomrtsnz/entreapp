@@ -34,7 +34,24 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem('token');
   }
+
+  getName(): string {
+    return localStorage.getItem('name');
+  }
+
   isAdmin() {
     return localStorage.getItem('role') === 'admin';
+  }
+
+  googleLogin() {
+    return true;
+  }
+
+  googleLogout() {
+    return false;
+  }
+
+  facebookLogin() {
+    return true;
   }
 }

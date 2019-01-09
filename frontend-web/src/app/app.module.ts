@@ -15,24 +15,7 @@ import { DialogDeleteCategoryComponent } from './dialogs/dialog-delete-category/
 import { DialogNewSupercategoryComponent } from './dialogs/dialog-new-supercategory/dialog-new-supercategory.component';
 import { DialogEditSupercategoryComponent } from './dialogs/dialog-edit-supercategory/dialog-edit-supercategory.component';
 import { DialogDeleteSuperCategoryComponent } from './dialogs/dialog-delete-supercategory/dialog-delete-supercategory.component';
-import {MatInputModule} from '@angular/material/input';
-import {MatTableModule} from '@angular/material/table';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
-import {
-  MatSidenavModule,
-  MatCardModule,
-  MatMenuModule,
-  MatCheckboxModule,
-  MatIconModule,
-  MatButtonModule,
-  MatToolbarModule,
-  MatTabsModule,
-  MatListModule,
-  MatSlideToggleModule,
-  MatSelectModule,
-  MatProgressBarModule } from '@angular/material';
+import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -60,7 +43,6 @@ import {
     DialogEditSupercategoryComponent,
     DialogDeleteCategoryComponent,
     DialogDeleteSuperCategoryComponent
-
   ],
   providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}],
   bootstrap: [AppComponent]
