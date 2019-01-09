@@ -33,4 +33,16 @@ export class SigninComponent implements OnInit {
     );
   }
 
+  doGoogleLogin() {
+    this.authService.googleLogin();
+  }
+
+  doGoogleLogout() {
+    this.authService.googleLogout();
+  }
+
+  doFacebooLogin() {
+    this.authService.facebookLogin();
+  }
+
 }

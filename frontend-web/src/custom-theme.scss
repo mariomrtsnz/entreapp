@@ -1,0 +1,175 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$md-primary: (
+    50 : #f4f2f1,
+    100 : #e3dedb,
+    200 : #d1c9c3,
+    300 : #beb3ab,
+    400 : #b0a299,
+    500 : #a29287,
+    600 : #9a8a7f,
+    700 : #907f74,
+    800 : #86756a,
+    900 : #756357,
+    A100 : #ffece0,
+    A200 : #fecdad,
+    A400 : #ffad7a,
+    A700 : #ff9e60,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-accent: (
+    50 : #f1f3f4,
+    100 : #dbe0e3,
+    200 : #c3cbd1,
+    300 : #abb6be,
+    400 : #99a7b0,
+    500 : #8797a2,
+    600 : #7f8f9a,
+    700 : #748490,
+    800 : #6a7a86,
+    900 : #576975,
+    A100 : #e0f2ff,
+    A200 : #addcfe,
+    A400 : #7ac7ff,
+    A700 : #60bcff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-warn: (
+    50 : #f8f5f1,
+    100 : #eee6db,
+    200 : #e3d6c4,
+    300 : #d8c6ac,
+    400 : #cfb99a,
+    500 : #c7ad88,
+    600 : #c1a680,
+    700 : #ba9c75,
+    800 : #b3936b,
+    900 : #a68358,
+    A100 : #ffffff,
+    A200 : #ffeeda,
+    A400 : #ffd7a7,
+    A700 : #ffcb8e,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-success: (
+    50 : #e0f4fa,
+    100 : #b3e4f3,
+    200 : #80d2eb,
+    300 : #4dbfe3,
+    400 : #26b2dd,
+    500 : #00a4d7,
+    600 : #009cd3,
+    700 : #0092cd,
+    800 : #0089c7,
+    900 : #0078be,
+    A100 : #e6f5ff,
+    A200 : #b3dfff,
+    A400 : #80caff,
+    A700 : #67bfff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-error: (
+    50 : #fde4e5,
+    100 : #fabbbe,
+    200 : #f78e92,
+    300 : #f36066,
+    400 : #f13e46,
+    500 : #ee1c25,
+    600 : #ec1921,
+    700 : #e9141b,
+    800 : #e71116,
+    900 : #e2090d,
+    A100 : #ffffff,
+    A200 : #ffd9d9,
+    A400 : #ffa6a7,
+    A700 : #ff8c8d,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$custom-theme-primary: mat-palette($md-primary);
+$custom-theme-accent: mat-palette($md-accent);
+$custom-theme-warn: mat-palette($md-warn);
+$custom-theme-success: mat-palette($md-success);
+$custom-theme-error: mat-palette($md-error);
+
+$custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent,  $custom-theme-warn);

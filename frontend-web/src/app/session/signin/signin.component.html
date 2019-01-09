@@ -29,14 +29,16 @@
             </div>
             <div class="pt-1 pb-1 text-xs-center">
               <a [routerLink]="['/session/forgot']">Forgot password?</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <div *ngIf="auth.user | async as user; else showLogin">
-                <h1>Hello {{ user.displayName }}!</h1>
-                <button (click)="auth.googleLogout()">Logout</button>
+              <!--
+                <div *ngIf="auth.user | async as user; else showLogin">
+                <h1>Hello!</h1>
+                <button (click)="doGoogleLogout()">Logout</button>
               </div>
+              -->
               <ng-template #showLogin>
                 <p>Please login.</p>
                 <div class="btn white darken-4 col s10 m4">
-                  <a (click)="auth.googleLogin()" style="text-transform:none">
+                  <a (click)="doGoogleLogin()" style="text-transform:none">
                       <div class="left">
                           <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
                       </div>

@@ -31,10 +31,35 @@ export class AuthService {
     localStorage.setItem('id', loginResponse.id);
   }
 
+  logout() {
+    localStorage.clear();
+  }
+
   getToken(): string {
     return localStorage.getItem('token');
   }
+
+  getName(): string {
+    return localStorage.getItem('name');
+  }
+
+  getEmail(): string {
+    return localStorage.getItem('email');
+  }
+
   isAdmin() {
     return localStorage.getItem('role') === 'admin';
+  }
+
+  googleLogin() {
+    return true;
+  }
+
+  googleLogout() {
+    return false;
+  }
+
+  facebookLogin() {
+    return true;
   }
 }
