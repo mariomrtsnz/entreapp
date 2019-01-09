@@ -4,19 +4,19 @@
       <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" role="navigation">
         <mat-nav-list>
           <a mat-list-item [routerLink]="['/home']">
-            <mat-icon>home</mat-icon>Inicio (Points of Interests)
+            <mat-icon>place</mat-icon>Inicio (Points of Interests)
           </a>
           <a mat-list-item [routerLink]="['/admin/users']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
             <mat-icon>supervisor_account</mat-icon>Users
           </a>
           <a mat-list-item [routerLink]="['/admin/routes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>book</mat-icon>Routes
+            <mat-icon>map</mat-icon>Routes
           </a>
           <a mat-list-item [routerLink]="['/admin/badges']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>home</mat-icon>Badges
+            <mat-icon>bookmarks</mat-icon>Badges
           </a>
           <a mat-list-item [routerLink]="['/admin/likes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-            <mat-icon>movie</mat-icon>Likes
+            <mat-icon>thumbs_up_down</mat-icon>Likes
           </a>
           <a mat-list-item [routerLink]="['/admin/supercategories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
             <mat-icon>list</mat-icon>SuperCategories
