@@ -14,7 +14,7 @@ export const DashboardRoutes: Routes = [
       { path: 'users', component: UserComponent }
       /*{ path: 'routes', component: ListRoutesComponent },
       { path: 'badges', component: ListBadgesComponent },
-      { path: 'likes', component: ListLikesComponent },*/
+      { path: 'likes', component: ListLikesComponent },*/,
       { path: 'categories', component: ListCategoriesComponent },
       { path: 'supercategories', component: ListSuperCategoriesComponent }
     ]
