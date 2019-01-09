@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@font-face {
+    font-family: 'Brela';
+    src: url('/src/assets/fonts/brelaregular.otf');
+}
+
+html, body, * {
+    font-family: Brela;
+}
