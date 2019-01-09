@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListaCategoriasComponent } from './lista-categorias.component';
+import { DialogEditCategoryComponent } from './dialog-edit-category.component';
 
-describe('ListaCategoriasComponent', () => {
-  let component: ListaCategoriasComponent;
-  let fixture: ComponentFixture<ListaCategoriasComponent>;
+describe('DialogEditCategoryComponent', () => {
+  let component: DialogEditCategoryComponent;
+  let fixture: ComponentFixture<DialogEditCategoryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListaCategoriasComponent ]
+      declarations: [ DialogEditCategoryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListaCategoriasComponent);
+    fixture = TestBed.createComponent(DialogEditCategoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
