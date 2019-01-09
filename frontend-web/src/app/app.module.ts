@@ -2,7 +2,6 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { routes } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,7 +35,6 @@ import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/di
     DialogUpdateProfileComponent
   ],
   imports: [
-    FlexLayoutModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
