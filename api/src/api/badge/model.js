@@ -13,11 +13,11 @@ const badgeSchema = new Schema({
   icon: {
     type: String
   },
-  pois: {
-    type: [Schema.Types.ObjectId],
+  pois: [{
+    type: Schema.Types.ObjectId,
     ref: 'Poi',
     required: true
-  }
+  }]
 }, {
   timestamps: true,
   toJSON: {

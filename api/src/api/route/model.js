@@ -1,11 +1,11 @@
 import mongoose, { Schema } from 'mongoose'
 
 const routeSchema = new Schema({
-  pois: {
-    type: [Schema.Types.ObjectId],
+  pois: [{
+    type: Schema.Types.ObjectId,
     ref: 'Poi',
     required: true
-  },
+  }],
   name: {
     type: String
   }

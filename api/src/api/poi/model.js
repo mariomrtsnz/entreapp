@@ -4,42 +4,30 @@ const poiSchema = new Schema({
   name: {
     type: String
   },
-  categories: {
-    type: [Schema.Types.ObjectId],
+  categories: [{
+    type: Schema.Types.ObjectId,
     ref: 'Category'
-  },
-  coordinates: {
-    type: [String]
-  },
-  comments: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Comment'
-  },
-  badges: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Badge'
-  },
+  }],
+  coordinates: [{
+    type: String
+  }],
   qrCode: {
     type: String
   },
-  audioguides: {
-    type: [String]
-  },
+  audioguides: [{
+    type: String
+  }],
   description: {
     type: String
   },
-  images: {
-    type: [String]
-  },
+  images: [{
+    type: String
+  }],
   year: {
     type: Date
   },
   creator: {
     type: String
-  },
-  likes: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Like'
   },
   status: {
     type: String

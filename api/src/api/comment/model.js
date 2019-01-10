@@ -16,9 +16,9 @@ const commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Poi'
   },
-  photos: {
-    type: [String]
-  }
+  photos: [{
+    type: String
+  }]
 }, {
   timestamps: true,
   toJSON: {
