@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>¿Borrar {{ POI.name }}?</h1>
+<h1 mat-dialog-title>¿Borrar {{ this.data.poi.name }}?</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div mat-dialog-content>
         <p>Para confirmar inserte "ELIMINAR" todo en mayusculas y pulse Borrar.</p>
