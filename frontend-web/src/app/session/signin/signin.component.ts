@@ -41,7 +41,7 @@ export class SigninComponent implements OnInit {
     this.authService.googleLogout();
   }
 
-  doFacebooLogin() {
+  doFacebookLogin() {
     this.authService.facebookLogin();
   }
 

@@ -1,3 +1,84 @@
-<p>
-  badges works!
-</p>
+<div fxFlex fxFlexFill>
+  <div fxGap="100px">
+    <h4 fxFlex="100px" id="titleTable">User list</h4>
+    <mat-form-field fxFlex="300px">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search user by name.">
+    </mat-form-field>
+
+    <mat-form-field [ngStyle.md]="{'margin-left.px': 100}" [ngStyle.sm]="{'margin-left.px': 10}" [ngStyle.xs]="{'margin-left.px': 5}"
+      [ngStyle.lg]="{'margin-left.px':847}" [ngStyle.xl]="{'margin-left.px':700}">
+      <select matNativeControl required>
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+      </select>
+    </mat-form-field>
+  </div>
+  <div>
+
+    <table fxFlexFill fxFlex mat-table [dataSource]="dataSource" class="mat-elevation-z8 white container" fxFlex="80%"
+      fxLayoutGap="200px">
+      <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <img src="../../../assets/images/iconoprueba.jpg" alt="Badge icon" height="42" width="42">
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.name}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="points">
+        <th mat-header-cell *matHeaderCellDef> Points </th>
+        <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description" fxShow.lt-xs="false">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pois" fxShow.lt-xs="false">
+        <th mat-header-cell *matHeaderCellDef> POIs </th>
+        <td mat-cell *matCellDef="let element"> {{element.pois}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <!--Mobile actions -->
+          <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.gt-sm>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>border_color</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+          <!-- Mobile actions -->
+
+          <!-- Actions in normal size-->
+          <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.lt-md>
+            <mat-icon>border_color</mat-icon>
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.lt-md>
+            <mat-icon>delete</mat-icon>
+          </button>
+          <!-- Actions in normal size-->
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>
