@@ -1,5 +1,18 @@
 <mat-card class="example-card">
     <img mat-card-image src="https://www.viajarasevilla.com/wp-content/uploads/2009/08/TorredeOro-1024x768.jpg">
+    <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu">
+        <mat-icon>more_horiz</mat-icon>
+      </a>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialogEditPoi(p)">
+          <mat-icon>edit</mat-icon>
+          <span>Editar</span>
+        </button>
+        <button mat-menu-item (click)="openDialogDeletePoi(p)">
+          <mat-icon>delete</mat-icon>
+          <span>Eliminar</span>
+        </button>
+      </mat-menu>
     <mat-card-header>
       <!-- <div mat-card-avatar class="example-header-image"></div> -->
       <mat-card-title>Torre del Oro</mat-card-title>
@@ -16,10 +29,10 @@
     </mat-card-actions>
   </mat-card>
 
-  <mat-card class="example-card" *ngFor="let p of POIs">
+<!--   <mat-card class="example-card" *ngFor="let p of POIs">
       <img mat-card-image src="https://www.viajarasevilla.com/wp-content/uploads/2009/08/TorredeOro-1024x768.jpg">
       <mat-card-header>
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
+        <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>Nombre</mat-card-title>
         <mat-card-subtitle>Categoria</mat-card-subtitle>
       </mat-card-header>
@@ -32,4 +45,8 @@
           <mat-icon *ngFor="let i of p.stars">star</mat-icon>
           <button mat-button>Ver más</button>
       </mat-card-actions>
-    </mat-card>
+    </mat-card> -->
+
+<button mat-fab id="addFloatingButton" (click)="openDialogNewPoi()">
+  <mat-icon>add</mat-icon>
+</button>
