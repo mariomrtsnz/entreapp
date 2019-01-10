@@ -1,9 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { PoiResponse } from './../../interfaces/poi-response';
-import { PoiService } from 'src/app/services/poi.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
+import { PoiService } from 'src/app/services/poi.service';
+
+import { PoiResponse } from './../../interfaces/poi-response';
 
 @Component({
   selector: 'app-poi-create',
@@ -20,7 +21,6 @@ export class PoiCreateComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    // this.getData();
   }
 
   createForm() {
@@ -33,7 +33,6 @@ export class PoiCreateComponent implements OnInit {
       images: [null, Validators.compose ([ Validators.required ])],
       // categories: [null, Validators.compose ([ Validators.required ])],
       audioguides: [null, Validators.compose ([ Validators.required ])],
-      likes: [null, Validators.compose ([ Validators.required ])],
       status: [null, Validators.compose ([ Validators.required ])],
       schedule: [null, Validators.compose ([ Validators.required ])],
       price: [ null ],

@@ -21,7 +21,6 @@ export class PoiEditComponent implements OnInit {
   ngOnInit() {
     console.log(this.data.poi);
     this.createForm();
-    // this.getData();
   }
 
   createForm() {

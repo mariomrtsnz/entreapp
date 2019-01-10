@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { PoiService } from 'src/app/services/poi.service';
-import { PoiResponse } from './../../interfaces/poi-response';
 import { PoiCreateComponent } from 'src/app/dialogs/poi-create/poi-create.component';
 import { PoiDeleteComponent } from 'src/app/dialogs/poi-delete/poi-delete.component';
 import { PoiEditComponent } from 'src/app/dialogs/poi-edit/poi-edit.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { PoiService } from 'src/app/services/poi.service';
+
+import { PoiResponse } from './../../interfaces/poi-response';
 
 @Component({
   selector: 'app-poi',
@@ -17,18 +18,16 @@ export class PoiComponent implements OnInit {
 
   POIs: PoiResponse;
 
-
   constructor(private poiService: PoiService, public dialog: MatDialog,
     private authService: AuthService, public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    // this.getAll();
+    this.getAll();
   }
 
   getAll() {
     this.poiService.getAll().toPromise()
     .then(receivedPois => {
-      console.log(receivedPois);
       this.POIs = receivedPois;
     })
     .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
@@ -53,6 +52,11 @@ export class PoiComponent implements OnInit {
     dialogDeletePoi.afterClosed().toPromise()
     .then(() => this.getAll())
     .catch(() => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', {duration: 3000}));
+  }
+
+  goPoiDetails(p) {
+    this.poiService.selectedPoi = p;
+    this.router.navigate(['home/details']);
   }
 
 }
