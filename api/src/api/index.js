@@ -2,7 +2,6 @@ import { Router } from 'express'
 import user from './user'
 import auth from './auth'
 import poi from './poi'
-import like from './like'
 import comment from './comment'
 import badge from './badge'
 import category from './category'
@@ -37,7 +36,6 @@ const router = new Router()
 router.use('/users', user)
 router.use('/auth', auth)
 router.use('/pois', poi)
-router.use('/likes', like)
 router.use('/comments', comment)
 router.use('/badges', badge)
 router.use('/categories', category)
