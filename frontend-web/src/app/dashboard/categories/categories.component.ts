@@ -13,7 +13,7 @@ import { DialogDeleteCategoryComponent } from 'src/app/dialogs/dialog-delete-cat
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'accions'];
+  displayedColumns: string[] = ['name', 'actions'];
   dataSource: Category[];
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar,
     public dialog: MatDialog, private authService: AuthService) { }

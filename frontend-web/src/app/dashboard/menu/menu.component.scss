@@ -19,11 +19,14 @@
     mat-icon {
       margin-right: 15px;
     }
+
     .menu-profile {
       background-color: var(--color-accent);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+
+      img,
+      div {
+        margin-left: 16px;
+      }
     }
   }
 
@@ -68,7 +71,7 @@
     margin-top: 2em;
     padding: 2em;
   }
-  
+
   .circle {
     border-radius: 50%;
   }

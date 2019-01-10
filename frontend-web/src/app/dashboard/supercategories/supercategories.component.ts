@@ -1,3 +1,4 @@
+import { DialogDeleteSuperCategoryComponent } from './../../dialogs/dialog-delete-supercategory/dialog-delete-supercategory.component';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +13,7 @@ import { DialogEditSupercategoryComponent } from 'src/app/dialogs/dialog-edit-su
   styleUrls: ['./supercategories.component.scss']
 })
 export class SuperCategoriesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'accions'];
+  displayedColumns: string[] = ['name', 'actions'];
   dataSource: Supercategory[];
   constructor(private superCategoryService: SupercategoryService, public snackBar: MatSnackBar,
     public dialog: MatDialog, private authService: AuthService) { }
@@ -49,6 +50,16 @@ export class SuperCategoriesComponent implements OnInit {
     });
 
     dialogEditSuperCategory.afterClosed().subscribe(result => {
+      this.getListSuperCategories('Super Category edited');
+    });
+  }
+
+  openDialogDeleteSuperCategory(element: Supercategory) {
+    const dialogDeleteSuperCategory = this.dialog.open(DialogDeleteSuperCategoryComponent, {
+      data: {superCategory: element}
+    });
+
+    dialogDeleteSuperCategory.afterClosed().subscribe(result => {
       this.getListSuperCategories('Super Category edited');
     });
   }

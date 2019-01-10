@@ -10,6 +10,9 @@ import { MenuComponent } from './menu/menu.component';
 import { UserComponent } from './user/user.component';
 import { SuperCategoriesComponent } from './supercategories/supercategories.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { RouteComponent } from './route/route.component';
+import { LikesComponent } from './likes/likes.component';
+import { BadgesComponent } from './badges/badges.component';
 
 @NgModule({
   imports: [
@@ -20,7 +23,7 @@ import { CategoriesComponent } from './categories/categories.component';
     ReactiveFormsModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [ PoiComponent, MenuComponent, UserComponent, CategoriesComponent, SuperCategoriesComponent ],
+  declarations: [ PoiComponent, MenuComponent, UserComponent, CategoriesComponent, SuperCategoriesComponent, RouteComponent, LikesComponent, BadgesComponent ],
 })
 
 export class DashboardModule {}

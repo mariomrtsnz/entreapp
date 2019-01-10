@@ -1,21 +1,21 @@
 <div class="tabla">
   <div fxFlex="100%" fxFlexFill>
-      <button mat-raised-button color="primary" (click)="openDialogNewSuperCategory()">New Super Category</button>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" fxFlexFill>
-      
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="accions">
-            <th mat-header-cell *matHeaderCellDef> Accions </th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-raised-button color="primary" (click)="openDialogEditSuperCategory(element)">Edit</button>
-              <!-- <button mat-raised-button color="danger" (click)="openDialogDeleteCategory(element)">Delete</button> -->
-             </td>
-          </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      </div>
-    </div>
+    <button mat-raised-button color="primary" (click)="openDialogNewSuperCategory()">New Super Category</button>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" fxFlexFill>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" (click)="openDialogEditSuperCategory(element)">Edit</button>
+          <button mat-raised-button color="danger" (click)="openDialogDeleteSuperCategory(element)">Delete</button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
