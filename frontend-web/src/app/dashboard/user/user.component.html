@@ -1,7 +1,12 @@
 <div>
-   
   <div fxFlexFill fxFlex fxLayoutGap="10px" fxLayout="column">
-      <h4 fxFlexFill fxFlex>User list</h4>
+      <h4 fxFlexFill fxFlex id="titleTable">User list</h4>
+
+  </div>
+  <div fxFlexFill fxFlex fxLayoutGap="10px">
+      <mat-form-field fxFlex="300px">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar usuarios">
+        </mat-form-field>
     <table fxFlexFill fxFlex mat-table [dataSource]="dataSource" class="mat-elevation-z8 white container" fxFlex="80%" fxLayoutGap="200px">
       <ng-container matColumnDef="picture">
         <th mat-header-cell *matHeaderCellDef>  </th>
