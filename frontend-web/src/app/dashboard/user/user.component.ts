@@ -19,8 +19,8 @@ const ELEMENT_DATA: Persona[] = [
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-  displayedColumns: string[] = ['picture','name', 'email', 'points', 'actions'];
-  dataSource= ELEMENT_DATA;
+  displayedColumns: string[] = ['picture', 'name', 'email', 'points', 'actions'];
+  dataSource = ELEMENT_DATA;
   constructor(private snackBar: MatSnackBar, private router: Router, public dialog: MatDialog) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

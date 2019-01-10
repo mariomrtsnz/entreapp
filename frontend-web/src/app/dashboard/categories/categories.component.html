@@ -2,9 +2,11 @@
   <div fxFlex="100%" fxFlexFill>
     <button mat-raised-button color="primary" (click)="openDialogNewCategory()">New Category</button>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" fxFlexFill>
-
+      <mat-form-field fxFlex="300px">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search category by name.">
+      </mat-form-field>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
       <ng-container matColumnDef="actions">

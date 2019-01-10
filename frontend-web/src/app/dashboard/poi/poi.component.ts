@@ -31,28 +31,28 @@ export class PoiComponent implements OnInit {
       console.log(receivedPois);
       this.POIs = receivedPois;
     })
-    .catch(() => this.snackBar.open('Error al cargar los datos.', 'Cerrar', {duration: 3000}));
+    .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }
 
   openDialogNewPoi() {
     const dialogNewPoi = this.dialog.open(PoiCreateComponent, {width: '500px'});
     dialogNewPoi.afterClosed().toPromise()
     .then(() => this.getAll())
-    .catch(() => this.snackBar.open('Error al actualizar los datos.', 'Cerrar', {duration: 3000}));
+    .catch(() => this.snackBar.open('There was an error when we were creating a new POI.', 'Close', {duration: 3000}));
   }
 
   openDialogEditPoi(p: PoiResponse) {
     const dialogEditPoi = this.dialog.open(PoiEditComponent, {data: {poi: p}, width: '500px' });
     dialogEditPoi.afterClosed().toPromise()
     .then(() => this.getAll())
-    .catch(() => this.snackBar.open('Error al actualizar los datos.', 'Cerrar', {duration: 3000}));
+    .catch(() => this.snackBar.open('There was an error when we were updating this POI.', 'Close', {duration: 3000}));
   }
 
   openDialogDeletePoi(p: PoiResponse) {
     const dialogDeletePoi = this.dialog.open(PoiDeleteComponent, {data: {poi: p}});
     dialogDeletePoi.afterClosed().toPromise()
     .then(() => this.getAll())
-    .catch(() => this.snackBar.open('Error al actualizar los datos.', 'Cerrar', {duration: 3000}));
+    .catch(() => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', {duration: 3000}));
   }
 
 }

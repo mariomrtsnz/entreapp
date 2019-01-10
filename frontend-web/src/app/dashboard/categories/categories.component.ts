@@ -63,6 +63,5 @@ export class CategoriesComponent implements OnInit {
     dialogoDeleteCategory.afterClosed().subscribe(result => {
       this.getListCategories('Category deleted');
     });
-    // this.recursoService.refresh();
   }
 }
