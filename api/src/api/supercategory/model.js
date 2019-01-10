@@ -4,10 +4,10 @@ const supercategorySchema = new Schema({
   name: {
     type: String
   },
-  categories: {
-      type: [Schema.Types.ObjectId],
+  categories: [{
+      type: Schema.Types.ObjectId,
       ref: 'Category'
-  }
+  }]
 }, {
   timestamps: true,
   toJSON: {

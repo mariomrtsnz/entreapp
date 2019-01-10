@@ -39,22 +39,22 @@ const userSchema = new Schema({
     type: String,
     trim: true
   },
-  likes: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Like'
-  },
-  visited: {
-    type: [Schema.Types.ObjectId],
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  }],
+  visited: [{
+    type: Schema.Types.ObjectId,
     ref: 'Poi'
-  },
-  favs: {
-    type: [Schema.Types.ObjectId],
+  }],
+  favs: [{
+    type: Schema.Types.ObjectId,
     ref: 'Poi'
-  },
-  badges: {
-    type: [Schema.Types.ObjectId],
+  }],
+  badges: [{
+    type: Schema.Types.ObjectId,
     ref: 'Badge'
-  },
+  }],
   city: {
     type: String
   },
