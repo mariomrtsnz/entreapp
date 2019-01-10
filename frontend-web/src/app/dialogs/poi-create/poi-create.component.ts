@@ -15,9 +15,8 @@ export class PoiCreateComponent implements OnInit {
   POI: PoiResponse;
   public form: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
-  private poiService: PoiService, public dialogRef: MatDialogRef<PoiCreateComponent>,
-  public snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private poiService: PoiService,
+    public dialogRef: MatDialogRef<PoiCreateComponent>, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createForm();

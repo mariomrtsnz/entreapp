@@ -49,7 +49,10 @@ import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/di
     DialogEditCategoryComponent,
     DialogEditSupercategoryComponent,
     DialogDeleteCategoryComponent,
-    DialogDeleteSuperCategoryComponent
+    DialogDeleteSuperCategoryComponent,
+    PoiCreateComponent,
+    PoiDeleteComponent,
+    PoiEditComponent,
   ],
   providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}],
   bootstrap: [AppComponent]
