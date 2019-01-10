@@ -1,5 +1,6 @@
-<mat-card class="example-card">
-    <img mat-card-image src="https://www.viajarasevilla.com/wp-content/uploads/2009/08/TorredeOro-1024x768.jpg">
+<div fxLayout="row wrap">
+  <mat-card class="example-card" *ngFor="let p of POIs?.rows">
+    <img mat-card-image src="{{p.images[0]}}">
     <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu">
         <mat-icon>more_horiz</mat-icon>
       </a>
@@ -15,37 +16,20 @@
       </mat-menu>
     <mat-card-header>
       <!-- <div mat-card-avatar class="example-header-image"></div> -->
-      <mat-card-title>Torre del Oro</mat-card-title>
-      <mat-card-subtitle>Monumentos</mat-card-subtitle>
+      <mat-card-title>{{p.name}}</mat-card-title>
+      <!-- <mat-card-subtitle>{{p.category[0].name}}</mat-card-subtitle> -->
     </mat-card-header>
     <mat-card-content>
-      <p>
-        Descripción de elemento estatico para pruebas
-      </p>
+      <p> {{p.description}} </p>
     </mat-card-content>
     <mat-card-actions>
         <mat-icon>star</mat-icon><mat-icon>star</mat-icon><mat-icon>star</mat-icon>
         <button mat-button style="float:right;">Ver más</button>
     </mat-card-actions>
   </mat-card>
+</div>
 
-<!--   <mat-card class="example-card" *ngFor="let p of POIs">
-      <img mat-card-image src="https://www.viajarasevilla.com/wp-content/uploads/2009/08/TorredeOro-1024x768.jpg">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Nombre</mat-card-title>
-        <mat-card-subtitle>Categoria</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          Descripción
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-          <mat-icon *ngFor="let i of p.stars">star</mat-icon>
-          <button mat-button>Ver más</button>
-      </mat-card-actions>
-    </mat-card> -->
+
 
 <button mat-fab id="addFloatingButton" (click)="openDialogNewPoi()">
   <mat-icon>add</mat-icon>

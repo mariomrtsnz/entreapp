@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { PoiResponse } from 'src/app/interfaces/poi-response';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { PoiService } from 'src/app/services/poi.service';
+
 import { PoiCreateDto } from './../../dto/poi-create-dto';
 
 @Component({
@@ -12,7 +12,6 @@ import { PoiCreateDto } from './../../dto/poi-create-dto';
 })
 export class PoiEditComponent implements OnInit {
 
-  POI: PoiResponse;
   public form: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
@@ -20,31 +19,31 @@ export class PoiEditComponent implements OnInit {
   public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    console.log(this.data.poi);
     this.createForm();
     // this.getData();
   }
 
   createForm() {
     this.form = this.fb.group ( {
-      name: [this.POI.name, Validators.compose ([ Validators.required ])],
-      categories: [this.POI.categories, Validators.compose ([ Validators.required ])],
-      coordinates: [this.POI.coordinates, Validators.compose ([ Validators.required ])],
+      name: [this.data.poi.name, Validators.compose ([ Validators.required ])],
+      categories: [this.data.poi.categories, Validators.compose ([ Validators.required ])],
+      coordinates: [this.data.poi.coordinates, Validators.compose ([ Validators.required ])],
       // badges
-      audioguides: [this.POI.audioguides, Validators.compose ([ Validators.required ])],
-      description: [this.POI.description, Validators.compose ([ Validators.required ])],
-      images: [this.POI.images, Validators.compose ([ Validators.required ])],
-      year: [this.POI.year, Validators.compose ([ Validators.required ])],
-      creator: [ this.POI.creator ],
-      likes: [this.POI.likes, Validators.compose ([ Validators.required ])],
-      status: [this.POI.status, Validators.compose ([ Validators.required ])],
-      // schedule: [this.POI., Validators.compose ([ Validators.required ])],
-      price: [ this.POI.price ],
+      audioguides: [this.data.poi.audioguides, Validators.compose ([ Validators.required ])],
+      description: [this.data.poi.description, Validators.compose ([ Validators.required ])],
+      images: [this.data.poi.images, Validators.compose ([ Validators.required ])],
+      year: [this.data.poi.year, Validators.compose ([ Validators.required ])],
+      creator: [ this.data.poi.creator ],
+      status: [this.data.poi.status, Validators.compose ([ Validators.required ])],
+      schedule: [this.data.poi.Schedule, Validators.compose ([ Validators.required ])],
+      price: [ this.data.poi.price ],
     } );
   }
 
   onSubmit() {
     const poiEdited: PoiCreateDto = <PoiCreateDto>this.form.value;
-    this.poiService.edit(this.POI.id, poiEdited).toPromise()
+    this.poiService.edit(this.data.poi.id, poiEdited).toPromise()
     .then(resp => this.dialogRef.close(resp))
     .catch(() => this.snackBar.open('Error al editar localización.', 'Cerrar', {duration: 3000}));
   }

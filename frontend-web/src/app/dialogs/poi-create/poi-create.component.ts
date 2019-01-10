@@ -31,7 +31,7 @@ export class PoiCreateComponent implements OnInit {
       coordinates: [null, Validators.compose ([ Validators.required ])],
       description: [null, Validators.compose ([ Validators.required ])],
       images: [null, Validators.compose ([ Validators.required ])],
-      categories: [null, Validators.compose ([ Validators.required ])],
+      // categories: [null, Validators.compose ([ Validators.required ])],
       audioguides: [null, Validators.compose ([ Validators.required ])],
       likes: [null, Validators.compose ([ Validators.required ])],
       status: [null, Validators.compose ([ Validators.required ])],

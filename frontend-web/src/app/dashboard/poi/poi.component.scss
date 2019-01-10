@@ -14,11 +14,11 @@
 
 .example-card {
     max-width: 275px;
-}
-  
-.example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
+    margin: 0 30px;
+
+    .mat-card-image {
+        height: 230px;
+    }
 }
 
 .mat-card-actions .mat-icon {

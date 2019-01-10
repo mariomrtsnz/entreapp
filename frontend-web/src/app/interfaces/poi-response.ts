@@ -1,21 +1,7 @@
 import { Category } from './category';
+import { OnePoiResponse } from './one-poi-response';
 
 export interface PoiResponse {
-    id: string;
-    name: string;
-    categories: Category;
-    coordinates: {long: string, lat: string};
-    comments: string[]; // CommentResponse[];
-    stars: number;
-    // badges: BadgeResponse[];
-    qrCode: string;
-    audioguides: string[];
-    description: string;
-    images: string[];
-    year: number;
-    creator?: string;
-    likes: string[]; // LikesResponse[];
-    status: string;
-    // Schedule
-    price?: number;
+    count: number;
+    rows: OnePoiResponse[];
 }

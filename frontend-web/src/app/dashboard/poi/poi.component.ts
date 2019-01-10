@@ -15,7 +15,7 @@ import { PoiEditComponent } from 'src/app/dialogs/poi-edit/poi-edit.component';
 })
 export class PoiComponent implements OnInit {
 
-  POIs: PoiResponse[];
+  POIs: PoiResponse;
 
 
   constructor(private poiService: PoiService, public dialog: MatDialog,
@@ -27,7 +27,10 @@ export class PoiComponent implements OnInit {
 
   getAll() {
     this.poiService.getAll().toPromise()
-    .then(receivedPois => this.POIs = receivedPois)
+    .then(receivedPois => {
+      console.log(receivedPois);
+      this.POIs = receivedPois;
+    })
     .catch(() => this.snackBar.open('Error al cargar los datos.', 'Cerrar', {duration: 3000}));
   }
 
