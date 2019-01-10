@@ -14,22 +14,22 @@
         <a mat-list-item [routerLink]="['/home']">
           <mat-icon>place</mat-icon>Inicio (Points of Interests)
         </a>
-        <a mat-list-item [routerLink]="['/users']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+        <a mat-list-item [routerLink]="['/home/users']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>supervisor_account</mat-icon>Users
         </a>
-        <a mat-list-item [routerLink]="['/routes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+        <a mat-list-item [routerLink]="['/home/routes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>map</mat-icon>Routes
         </a>
-        <a mat-list-item [routerLink]="['/badges']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+        <a mat-list-item [routerLink]="['/home/badges']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>bookmarks</mat-icon>Badges
         </a>
-        <a mat-list-item [routerLink]="['/likes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+        <a mat-list-item [routerLink]="['/home/likes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>thumb_up</mat-icon>Likes
         </a>
-        <a mat-list-item [routerLink]="['/supercategories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+        <a mat-list-item [routerLink]="['/home/supercategories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>list</mat-icon>SuperCategories
         </a>
-        <a mat-list-item [routerLink]="['/categories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
+        <a mat-list-item [routerLink]="['/home/categories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>list</mat-icon>Categories
         </a>
         <a mat-list-item (click)="openUpdateProfile()">
