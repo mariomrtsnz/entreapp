@@ -47,6 +47,10 @@ export class AuthService {
     return localStorage.getItem('email');
   }
 
+  getPicture(): string {
+    return localStorage.getItem('picture');
+  }
+
   isAdmin() {
     return localStorage.getItem('role') === 'admin';
   }

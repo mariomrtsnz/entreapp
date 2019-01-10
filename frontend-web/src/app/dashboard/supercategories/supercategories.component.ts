@@ -7,11 +7,11 @@ import { Supercategory } from 'src/app/interfaces/supercategory';
 import { DialogNewSupercategoryComponent } from 'src/app/dialogs/dialog-new-supercategory/dialog-new-supercategory.component';
 import { DialogEditSupercategoryComponent } from 'src/app/dialogs/dialog-edit-supercategory/dialog-edit-supercategory.component';
 @Component({
-  selector: 'app-list-supercategories',
-  templateUrl: './list-supercategories.component.html',
-  styleUrls: ['./list-supercategories.component.scss']
+  selector: 'app-supercategories',
+  templateUrl: './supercategories.component.html',
+  styleUrls: ['./supercategories.component.scss']
 })
-export class ListSuperCategoriesComponent implements OnInit {
+export class SuperCategoriesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'accions'];
   dataSource: Supercategory[];
   constructor(private superCategoryService: SupercategoryService, public snackBar: MatSnackBar,

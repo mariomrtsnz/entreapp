@@ -8,11 +8,11 @@ import { DialogNewCategoryComponent } from 'src/app/dialogs/dialog-new-category/
 import { DialogEditCategoryComponent } from 'src/app/dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogDeleteCategoryComponent } from 'src/app/dialogs/dialog-delete-category/dialog-delete-category.component';
 @Component({
-  selector: 'app-list-categories',
-  templateUrl: './list-categories.component.html',
-  styleUrls: ['./list-categories.component.scss']
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrls: ['./categories.component.scss']
 })
-export class ListCategoriesComponent implements OnInit {
+export class CategoriesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'accions'];
   dataSource: Category[];
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar,

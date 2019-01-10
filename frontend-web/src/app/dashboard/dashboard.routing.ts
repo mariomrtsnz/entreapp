@@ -1,9 +1,9 @@
-import { ListSuperCategoriesComponent } from './list-supercategories/list-supercategories.component';
-import { ListCategoriesComponent } from './list-categories/list-categories.component';
 import { Routes } from '@angular/router';
 import { PoiComponent } from './poi/poi.component';
 import { MenuComponent } from './menu/menu.component';
 import { UserComponent } from './user/user.component';
+import { SuperCategoriesComponent } from './supercategories/supercategories.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -12,11 +12,11 @@ export const DashboardRoutes: Routes = [
     children: [
       { path: '', component: PoiComponent },
       { path: 'users', component: UserComponent }
-      /*{ path: 'routes', component: ListRoutesComponent },
-      { path: 'badges', component: ListBadgesComponent },
-      { path: 'likes', component: ListLikesComponent },*/,
-      { path: 'categories', component: ListCategoriesComponent },
-      { path: 'supercategories', component: ListSuperCategoriesComponent }
+      /*{ path: 'routes', component: RoutesComponent },
+      { path: 'badges', component: BadgesComponent },
+      { path: 'likes', component: LikesComponent },*/,
+      { path: 'categories', component: CategoriesComponent },
+      { path: 'supercategories', component: SuperCategoriesComponent }
     ]
   }
 ];
