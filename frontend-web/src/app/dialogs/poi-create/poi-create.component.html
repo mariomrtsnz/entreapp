@@ -1,3 +1,52 @@
-<p>
-  poi-create works!
-</p>
+<h1 mat-dialog-title>New POI</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
+    <mat-form-field>
+      <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Autor" type="text" [formControl]="form.controls['creator']">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Year" type="number" [formControl]="form.controls['year']" required>
+    </mat-form-field>
+    <!-- A espera de ver si necesitamos coordenadas o lat y long -->
+    <mat-form-field>
+      <input matInput placeholder="coordinates" type="text" [formControl]="form.controls['coordinates']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']" required></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Images" type="text" [formControl]="form.controls['images']" required>
+    </mat-form-field>
+    <!-- <mat-form-field>
+      <mat-select placeholder="Categoría" [formControl]="form.controls['categoryId']" required>
+        <mat-optgroup *ngFor="let sc of superCategories" [label]="sc.name" [disabled]="sc.disabled">
+          <mat-option *ngFor="let c of sc.categories" [value]="c.id">
+            {{c.name}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field> -->
+    <mat-form-field>
+      <input matInput placeholder="Audioguides" type="text" [formControl]="form.controls['audioguides']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Likes" type="text" [formControl]="form.controls['likes']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="status" type="text" [formControl]="form.controls['status']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="schedule" type="text" [formControl]="form.controls['schedule']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="price" type="number" [formControl]="form.controls['price']">
+    </mat-form-field>
+    
+  </div>
+  <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>
+  </div>
+</form>

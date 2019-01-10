@@ -26,14 +26,13 @@ export class PoiCreateComponent implements OnInit {
   createForm() {
     this.form = this.fb.group ( {
       name: [null, Validators.compose ([ Validators.required ])],
-      categories: [null, Validators.compose ([ Validators.required ])],
-      coordinates: [null, Validators.compose ([ Validators.required ])],
-      // badges
-      audioguides: [null, Validators.compose ([ Validators.required ])],
-      description: [null, Validators.compose ([ Validators.required ])],
-      images: [null, Validators.compose ([ Validators.required ])],
       year: [null, Validators.compose ([ Validators.required ])],
       creator: [ null ],
+      coordinates: [null, Validators.compose ([ Validators.required ])],
+      description: [null, Validators.compose ([ Validators.required ])],
+      images: [null, Validators.compose ([ Validators.required ])],
+      categories: [null, Validators.compose ([ Validators.required ])],
+      audioguides: [null, Validators.compose ([ Validators.required ])],
       likes: [null, Validators.compose ([ Validators.required ])],
       status: [null, Validators.compose ([ Validators.required ])],
       schedule: [null, Validators.compose ([ Validators.required ])],

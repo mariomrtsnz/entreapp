@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { PoiResponse } from '../interfaces/poi-response';
 import { PoiCreateDto } from '../dto/poi-create-dto';
 
-const url = `${environment.apiUrl}/recurso`;
+const url = `${environment.apiUrl}/pois`;
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +24,11 @@ export class PoiService {
 
 
   getAll(): Observable<PoiResponse[]> {
-    return this.http.get<PoiResponse[]>(`${url}/all`, this.requestOptions);
+    return this.http.get<PoiResponse[]>(`${url}`, this.requestOptions);
   }
 
   create(resource: PoiCreateDto): Observable<PoiResponse> {
-    return this.http.post<PoiResponse>(`${url}/create`, resource, this.requestOptions);
+    return this.http.post<PoiResponse>(`${url}`, resource, this.requestOptions);
   }
 
   remove(id: string): Observable<PoiResponse[]> {
@@ -36,7 +36,7 @@ export class PoiService {
   }
 
   edit(id: string, resource: PoiCreateDto): Observable<PoiResponse> {
-    return this.http.put<PoiResponse>(`${url}/edit/${id}`, resource, this.requestOptions);
+    return this.http.put<PoiResponse>(`${url}/${id}`, resource, this.requestOptions);
   }
 
 }
