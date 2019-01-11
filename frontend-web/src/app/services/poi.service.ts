@@ -7,7 +7,7 @@ import { PoiCreateDto } from '../dto/poi-create-dto';
 import { PoiResponse } from '../interfaces/poi-response';
 import { AuthService } from './auth.service';
 
-const url = `${environment.apiUrl}pois`;
+const url = `${environment.apiUrl}/pois`;
 
 @Injectable({
   providedIn: 'root'
