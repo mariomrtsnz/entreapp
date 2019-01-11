@@ -20,7 +20,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(loginDto: LoginDto): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${authUrl}/auth/login`, loginDto, requestOptions);
+    return this.http.post<LoginResponse>(`${authUrl}/auth`, loginDto, requestOptions);
   }
 
   setLoginData(loginResponse: LoginResponse) {

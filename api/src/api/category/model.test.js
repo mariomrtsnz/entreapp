@@ -3,7 +3,7 @@ import { Category } from '.'
 let category
 
 beforeEach(async () => {
-  category = await Category.create({ name: 'test', supercategory: 'test' })
+  category = await Category.create({ name: 'test', parent: 'test' })
 })
 
 describe('view', () => {
@@ -12,7 +12,7 @@ describe('view', () => {
     expect(typeof view).toBe('object')
     expect(view.id).toBe(category.id)
     expect(view.name).toBe(category.name)
-    expect(view.supercategory).toBe(category.supercategory)
+    expect(view.parent).toBe(category.parent)
     expect(view.createdAt).toBeTruthy()
     expect(view.updatedAt).toBeTruthy()
   })
@@ -22,7 +22,7 @@ describe('view', () => {
     expect(typeof view).toBe('object')
     expect(view.id).toBe(category.id)
     expect(view.name).toBe(category.name)
-    expect(view.supercategory).toBe(category.supercategory)
+    expect(view.parent).toBe(category.parent)
     expect(view.createdAt).toBeTruthy()
     expect(view.updatedAt).toBeTruthy()
   })

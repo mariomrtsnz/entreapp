@@ -5,7 +5,6 @@ import poi from './poi'
 import comment from './comment'
 import badge from './badge'
 import category from './category'
-import supercategory from './supercategory'
 import route from './route'
 
 const router = new Router()
@@ -39,7 +38,6 @@ router.use('/pois', poi)
 router.use('/comments', comment)
 router.use('/badges', badge)
 router.use('/categories', category)
-router.use('/supercategories', supercategory)
 router.use('/routes', route)
 
 export default router

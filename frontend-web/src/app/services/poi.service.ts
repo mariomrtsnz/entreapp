@@ -8,7 +8,7 @@ import { PoiResponse } from '../interfaces/poi-response';
 import { AuthService } from './auth.service';
 import { OnePoiResponse } from '../interfaces/one-poi-response';
 
-const url = `${environment.apiUrl}pois`;
+const url = `${environment.apiUrl}/pois`;
 
 @Injectable({
   providedIn: 'root'
