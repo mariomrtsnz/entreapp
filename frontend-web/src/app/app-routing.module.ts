@@ -1,10 +1,4 @@
-import {
-  NgModule
-} from '@angular/core';
-import {
-  Routes,
-  RouterModule
-} from '@angular/router';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [{
     path: '',
@@ -27,6 +21,6 @@ export const routes: Routes = [{
   },
   {
     path: '**',
-    redirectTo: 'session/404'
+    redirectTo: '404'
   }
 ];

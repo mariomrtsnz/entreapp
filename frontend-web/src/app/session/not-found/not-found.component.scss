@@ -1,0 +1,83 @@
+  .bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../assets/images/error_bg.jpg');
+    background-size: cover;
+  }
+  
+  .bg:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(211, 0, 28, 0.561);
+  }
+
+  .error {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 220px;
+    font-weight: 900;
+    margin: 0px;
+    color: #fff;
+    letter-spacing: 10px;
+  }
+  
+  h2 {
+    font-size: 60px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 0px;
+    margin-bottom: 15px;
+  }
+  
+  button {
+    font-size: 34px;
+    color: rgba(211, 0, 28, 0.561);
+    background-color: #fff;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+    line-height: inherit!important;
+  }
+  
+  button:hover {
+    background-color: rgba(70, 0, 128, 0.966);
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 20%;
+  }
+
+  @media only screen and (max-width: 767px) {
+    h1 {
+      font-size: 182px;
+    }
+    h2 {
+      font-size: 40px;
+    }
+    button {
+      font-size: 28px;
+    }
+  }
+  
+  @media only screen and (max-width: 480px) {
+    h1 {
+      font-size: 146px;
+    }
+    h2 {
+      font-size: 30px;
+    }
+    .notfound .home-btn {
+      font-size: 14px;
+    }
+  }
+  
+
+  
