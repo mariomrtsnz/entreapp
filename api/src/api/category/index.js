@@ -7,7 +7,7 @@ import { schema } from './model'
 export Category, { schema } from './model'
 
 const router = new Router()
-const { name, supercategory } = schema.tree
+const { name, parent } = schema.tree
 
 /**
  * @api {post} /categories Create category
@@ -16,7 +16,7 @@ const { name, supercategory } = schema.tree
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
  * @apiParam name Category's name.
- * @apiParam supercategory Category's supercategory.
+ * @apiParam parent Category's parent.
  * @apiSuccess {Object} category Category's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Category not found.
@@ -24,7 +24,7 @@ const { name, supercategory } = schema.tree
  */
 router.post('/',
   token({ required: true, roles: ['admin'] }),
-  body({ name, supercategory }),
+  body({ name, parent }),
   create)
 
 /**
@@ -66,7 +66,7 @@ router.get('/:id',
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
  * @apiParam name Category's name.
- * @apiParam supercategory Category's supercategory.
+ * @apiParam parent Category's parent.
  * @apiSuccess {Object} category Category's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Category not found.
@@ -74,7 +74,7 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true, roles: ['admin'] }),
-  body({ name, supercategory }),
+  body({ name, parent }),
   update)
 
 /**

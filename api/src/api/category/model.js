@@ -4,10 +4,9 @@ const categorySchema = new Schema({
   name: {
     type: String
   },
-  supercategory: {
+  parent: {
     type: Schema.Types.ObjectId,
-    ref: 'Supercategory',
-    required: true
+    ref: 'Category'
   }
 }, {
   timestamps: true,
@@ -23,7 +22,7 @@ categorySchema.methods = {
       // simple view
       id: this.id,
       name: this.name,
-      supercategory: this.supercategory,
+      parent: this.parent,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
