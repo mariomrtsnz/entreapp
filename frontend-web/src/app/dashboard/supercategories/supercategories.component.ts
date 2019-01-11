@@ -2,7 +2,7 @@ import { DialogDeleteSuperCategoryComponent } from './../../dialogs/dialog-delet
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SupercategoryService } from 'src/app/services/supercategory.service';
 import { Supercategory } from 'src/app/interfaces/supercategory';
 import { DialogNewSupercategoryComponent } from 'src/app/dialogs/dialog-new-supercategory/dialog-new-supercategory.component';
@@ -16,7 +16,7 @@ export class SuperCategoriesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'actions'];
   dataSource: Supercategory[];
   constructor(private superCategoryService: SupercategoryService, public snackBar: MatSnackBar,
-    public dialog: MatDialog, private authService: AuthService) { }
+    public dialog: MatDialog, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.getListSuperCategories('List of supercategories loaded');

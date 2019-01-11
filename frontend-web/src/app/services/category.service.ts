@@ -1,10 +1,11 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Category } from '../interfaces/category';
+
 import { CategoryCreateDto } from '../dto/create-category.dto';
+import { Category } from '../interfaces/category';
+import { AuthenticationService } from './authentication.service';
 
 const categoryUrl = `${environment.apiUrl}/category`;
 
@@ -13,7 +14,7 @@ const categoryUrl = `${environment.apiUrl}/category`;
 })
 export class CategoryService {
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   getAllCategories(): Observable<Category[]> {
     const requestOptions = {

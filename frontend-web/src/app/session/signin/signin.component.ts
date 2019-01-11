@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthServiceP } from '../../services/auth.service';
+import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angular-6-social-login';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
 import { LoginDto } from '../../dto/login-dto';
-import {
-  AuthService,
-  FacebookLoginProvider,
-  GoogleLoginProvider
-} from 'angular-6-social-login';
+
+
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -15,7 +14,7 @@ import {
 })
 export class SigninComponent implements OnInit {
   public form: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthServiceP,
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthenticationService,
     private socialAuthService: AuthService) {}
 
   ngOnInit() {

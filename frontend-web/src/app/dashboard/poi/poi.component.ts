@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
 import { PoiService } from 'src/app/services/poi.service';
 import { PoiResponse } from './../../interfaces/poi-response';
@@ -19,7 +19,7 @@ export class PoiComponent implements OnInit {
 
 
   constructor(private poiService: PoiService, public dialog: MatDialog,
-    private authService: AuthService, public router: Router, public snackBar: MatSnackBar) { }
+    private authService: AuthenticationService, public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getAll();

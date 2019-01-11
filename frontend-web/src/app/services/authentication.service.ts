@@ -15,7 +15,7 @@ const requestOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceP {
+export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 

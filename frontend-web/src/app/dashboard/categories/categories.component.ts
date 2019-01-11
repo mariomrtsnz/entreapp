@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Category } from 'src/app/interfaces/category';
 import { DialogNewCategoryComponent } from 'src/app/dialogs/dialog-new-category/dialog-new-category.component';
 import { DialogEditCategoryComponent } from 'src/app/dialogs/dialog-edit-category/dialog-edit-category.component';
@@ -16,7 +16,7 @@ export class CategoriesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'actions'];
   dataSource: Category[];
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar,
-    public dialog: MatDialog, private authService: AuthService) { }
+    public dialog: MatDialog, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.getListCategories('List of categories loaded');

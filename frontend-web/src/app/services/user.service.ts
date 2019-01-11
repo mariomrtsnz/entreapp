@@ -1,6 +1,6 @@
 import { environment } from './../../environments/environment';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -10,7 +10,7 @@ const userUrl = `${environment.apiUrl}/user`;
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   getAllUsers(): Observable<any[]> {
     const requestOptions = {

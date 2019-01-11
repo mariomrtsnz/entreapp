@@ -1,4 +1,4 @@
-import { AuthService } from './../../services/auth.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
   alertMessage: string;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private snackBar: MatSnackBar, public router: Router, public dialog: MatDialog, public authService: AuthService, private userService: UserService) { }
+  constructor(private snackBar: MatSnackBar, public router: Router, public dialog: MatDialog, public authService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
     this.loggedUserName = this.authService.getName();
