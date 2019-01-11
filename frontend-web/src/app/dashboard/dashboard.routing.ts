@@ -7,6 +7,7 @@ import { MenuComponent } from './menu/menu.component';
 import { UserComponent } from './user/user.component';
 import { SuperCategoriesComponent } from './supercategories/supercategories.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { PoiDetailsComponent } from './poi-details/poi-details.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -19,7 +20,8 @@ export const DashboardRoutes: Routes = [
       { path: 'badges', component: BadgesComponent },
       { path: 'likes', component: LikesComponent },
       { path: 'categories', component: CategoriesComponent },
-      { path: 'supercategories', component: SuperCategoriesComponent }
+      { path: 'supercategories', component: SuperCategoriesComponent },
+      { path: 'details', component: PoiDetailsComponent }
     ]
   }
 ];

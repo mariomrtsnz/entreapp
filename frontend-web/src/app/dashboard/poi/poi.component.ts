@@ -22,13 +22,12 @@ export class PoiComponent implements OnInit {
     private authService: AuthService, public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    // this.getAll();
+    this.getAll();
   }
 
   getAll() {
     this.poiService.getAll().toPromise()
     .then(receivedPois => {
-      console.log(receivedPois);
       this.POIs = receivedPois;
     })
     .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
@@ -53,6 +52,11 @@ export class PoiComponent implements OnInit {
     dialogDeletePoi.afterClosed().toPromise()
     .then(() => this.getAll())
     .catch(() => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', {duration: 3000}));
+  }
+
+  goPoiDetails(p) {
+    this.poiService.selectedPoi = p;
+    this.router.navigate(['home/details']);
   }
 
 }
