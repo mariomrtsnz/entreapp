@@ -19,7 +19,29 @@ import { DialogEditSupercategoryComponent } from './dialogs/dialog-edit-supercat
 import { DialogDeleteSuperCategoryComponent } from './dialogs/dialog-delete-supercategory/dialog-delete-supercategory.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
-
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from 'angular-6-social-login';
+// Configs
+export function getAuthServiceConfigs() {
+  // tslint:disable-next-line:prefer-const
+  let config = new AuthServiceConfig(
+      [
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider('Your-Facebook-app-id')
+        },
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider('Your-Google-Client-Id')
+        }
+      ]
+  );
+  return config;
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +63,8 @@ import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/di
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    SocialLoginModule
   ],
   entryComponents: [
     DialogNewCategoryComponent,
@@ -54,7 +77,10 @@ import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/di
     PoiDeleteComponent,
     PoiEditComponent,
   ],
-  providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}],
+  providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},    {
+    provide: AuthServiceConfig,
+    useFactory: getAuthServiceConfigs
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
