@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthServiceP } from '../../services/auth.service';
 import { LoginDto } from '../../dto/login-dto';
-
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider
+} from 'angular-6-social-login';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -11,7 +15,8 @@ import { LoginDto } from '../../dto/login-dto';
 })
 export class SigninComponent implements OnInit {
   public form: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthServiceP,
+    private socialAuthService: AuthService) {}
 
   ngOnInit() {
     this.form = this.fb.group ( {
@@ -45,4 +50,20 @@ export class SigninComponent implements OnInit {
     this.authService.facebookLogin();
   }
 
+  public socialSignIn(socialPlatform: string) {
+    let socialPlatformProvider;
+    if (socialPlatform === 'facebook') {
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    } else if (socialPlatform === 'google') {
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        console.log(socialPlatform + ' sign in data : ' , userData);
+        // Now sign-in with userData
+        // ...
+      }
+    );
+  }
+}
 }

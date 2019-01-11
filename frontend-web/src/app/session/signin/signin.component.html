@@ -38,13 +38,13 @@
               <ng-template #showLogin>
                 <p>Please login.</p>
                 <div class="btn white darken-4 col s10 m4">
-                  <a (click)="doGoogleLogin()" style="text-transform:none">
+                  <a (click)="socialSignIn('google')" style="text-transform:none">
                       <div class="left">
                           <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
                       </div>
                       Login with Google
                   </a>
-                  <button class="loginBtn loginBtn--facebook" (click)="doFacebookLogin()">
+                  <button class="loginBtn loginBtn--facebook" (click)="socialSignIn('facebook')">
                     Login with Facebook
                   </button>
              </div>
