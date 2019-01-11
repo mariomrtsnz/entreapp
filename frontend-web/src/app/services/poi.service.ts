@@ -6,7 +6,6 @@ import { environment } from 'src/environments/environment';
 import { PoiCreateDto } from '../dto/poi-create-dto';
 import { PoiResponse } from '../interfaces/poi-response';
 import { AuthService } from './auth.service';
-import { OnePoiResponse } from './../interfaces/one-poi-response';
 
 const url = `${environment.apiUrl}pois`;
 
@@ -15,9 +14,7 @@ const url = `${environment.apiUrl}pois`;
 })
 export class PoiService {
 
-  public selectedPoi: OnePoiResponse;
-
-  private token = `?access_token=${this.authService.getToken()}`;
+  token = `?access_token=${this.authService.getToken()}`;
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
