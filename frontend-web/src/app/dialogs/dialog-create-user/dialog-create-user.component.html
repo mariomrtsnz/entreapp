@@ -14,9 +14,25 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-    <button type="button" md-button (click)="imgFileInput.click()">Add a profile photo</button>
-    <input hidden type="file" #imgFileInput [formControl]="form.controls['picture']" required />
+<!--
+    
+    <mat-form-field>
+      <mat-select placeholder="City">
+        <mat-option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    -->
+    <!--
+    <mat-form-field>
+      <mat-select placeholder="Languaje">
+        <mat-option *ngFor="let languaje of languajes" [value]="languaje">
+          {{languaje}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    -->
     <!-- <mat-form-field>
       <mat-select placeholder="Categoría" [formControl]="form.controls['categoryId']" required>
         <mat-optgroup *ngFor="let sc of superCategories" [label]="sc.name" [disabled]="sc.disabled">
