@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserResponse } from '../interfaces/user-response';
 import { UsersResponse } from '../interfaces/users-response';
+import { UserCreateDto } from '../dto/create-user.dto';
 
 const userUrl = `${environment.apiUrl}/users`;
 
@@ -44,6 +45,9 @@ export class UserService {
   }
   remove(id: string): Observable<UserResponse[]> {
     return this.http.delete<UserResponse[]>(`${userUrl}/${id}${this.token}`);
+  }
+  create(resource: UserCreateDto): Observable<UserResponse> {
+    return this.http.post<UserResponse>(`${userUrl}${this.token}`, resource);
   }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {

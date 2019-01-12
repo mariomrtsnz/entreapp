@@ -1,3 +1,35 @@
-<p>
-  dialog-create-user works!
-</p>
+<h1 mat-dialog-title>New User</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Email" type="email" [formControl]="form.controls['email']" required>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="User role">
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button type="button" md-button (click)="imgFileInput.click()">Add a profile photo</button>
+    <input hidden type="file" #imgFileInput [formControl]="form.controls['picture']" required />
+    <!-- <mat-form-field>
+      <mat-select placeholder="Categoría" [formControl]="form.controls['categoryId']" required>
+        <mat-optgroup *ngFor="let sc of superCategories" [label]="sc.name" [disabled]="sc.disabled">
+          <mat-option *ngFor="let c of sc.categories" [value]="c.id">
+            {{c.name}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field> -->
+
+
+  </div>
+  <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>
+  </div>
+</form>

@@ -44,7 +44,7 @@ export class UserComponent implements OnInit {
     .then(() => this.getAll())
     .catch(() => this.snackBar.open('There was an error when we were deleting this USER.', 'Close', {duration: 3000}));
   }
-  openDialogNewPoi() {
+  openDialogNewUser() {
     const dialogNewUser = this.dialog.open(DialogCreateUserComponent, {width: '500px'});
     dialogNewUser.afterClosed().toPromise()
     .then(() => this.getAll())

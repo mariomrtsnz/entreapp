@@ -14,3 +14,15 @@ img {
 #selectFilter{
     margin-left: 47%;
 }
+
+#addFloatingButton {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    z-index: 9999999;
+    background-color: var(--color-primary-dark);
+
+    .mat-icon {
+        color: white;
+    }
+}
