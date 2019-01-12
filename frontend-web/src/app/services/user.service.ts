@@ -3,15 +3,32 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UserResponse } from '../interfaces/user-response';
+import { UsersResponse } from '../interfaces/users-response';
 
-const userUrl = `${environment.apiUrl}/user`;
+const userUrl = `${environment.apiUrl}/users`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  // token = `?access_token=${this.authService.getToken()}`;
+  // tslint:disable-next-line:max-line-length
+  token = `?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMzc5NGVmNzQ4MWRiMzFmYTNlMTk5MiIsImlhdCI6MTU0NzMwOTgwNCwiZXhwIjoxNTQ3OTE0NjA0fQ.sBI-5FqBiaRmrrz6DqaVbRfVh0dJMMbb86HfWlngLXc`;
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
+  /*getAll() {
+    this.poiService.getAll().toPromise()
+    .then(receivedPois => {
+      this.POIs = receivedPois;
+    })
+    .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
+  }*/
+  getAll(): Observable<UsersResponse> {
+    console.log('get all service');
+    console.log(this.token);
+    return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
+  }
   getAllUsers(): Observable<any[]> {
     const requestOptions = {
       headers: new HttpHeaders({

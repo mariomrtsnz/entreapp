@@ -28,13 +28,6 @@
 	- [Retrieve comments](#retrieve-comments)
 	- [Update comment](#update-comment)
 	
-- [Like](#like)
-	- [Create like](#create-like)
-	- [Delete like](#delete-like)
-	- [Retrieve like](#retrieve-like)
-	- [Retrieve likes](#retrieve-likes)
-	- [Update like](#update-like)
-	
 - [Poi](#poi)
 	- [Create poi](#create-poi)
 	- [Delete poi](#delete-poi)
@@ -48,13 +41,6 @@
 	- [Retrieve route](#retrieve-route)
 	- [Retrieve routes](#retrieve-routes)
 	- [Update route](#update-route)
-	
-- [Supercategory](#supercategory)
-	- [Create supercategory](#create-supercategory)
-	- [Delete supercategory](#delete-supercategory)
-	- [Retrieve supercategories](#retrieve-supercategories)
-	- [Retrieve supercategory](#retrieve-supercategory)
-	- [Update supercategory](#update-supercategory)
 	
 - [User](#user)
 	- [Create user](#create-user)
@@ -210,7 +196,7 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>admin access token.</p>							|
 | name			| 			|  <p>Category's name.</p>							|
-| supercategory			| 			|  <p>Category's supercategory.</p>							|
+| parent			| 			|  <p>Category's parent.</p>							|
 
 ## Delete category
 
@@ -269,7 +255,7 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>admin access token.</p>							|
 | name			| 			|  <p>Category's name.</p>							|
-| supercategory			| 			|  <p>Category's supercategory.</p>							|
+| parent			| 			|  <p>Category's parent.</p>							|
 
 # Comment
 
@@ -350,80 +336,6 @@
 | content			| 			|  <p>Comment's content.</p>							|
 | poi			| 			|  <p>Comment's poi.</p>							|
 | photos			| 			|  <p>Comment's photos.</p>							|
-
-# Like
-
-## Create like
-
-
-
-	POST /likes
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>admin access token.</p>							|
-| name			| 			|  <p>Like's name.</p>							|
-
-## Delete like
-
-
-
-	DELETE /likes/:id
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>admin access token.</p>							|
-
-## Retrieve like
-
-
-
-	GET /likes/:id
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>user access token.</p>							|
-
-## Retrieve likes
-
-
-
-	GET /likes
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>user access token.</p>							|
-| q			| String			| **optional** <p>Query to search.</p>							|
-| page			| Number			| **optional** <p>Page number.</p>							|
-| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
-| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
-| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
-
-## Update like
-
-
-
-	PUT /likes/:id
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>admin access token.</p>							|
-| name			| 			|  <p>Like's name.</p>							|
 
 # Poi
 
@@ -602,82 +514,6 @@
 | access_token			| String			|  <p>admin access token.</p>							|
 | pois			| 			|  <p>Route's pois.</p>							|
 | name			| 			|  <p>Route's name.</p>							|
-
-# Supercategory
-
-## Create supercategory
-
-
-
-	POST /supercategories
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>admin access token.</p>							|
-| name			| 			|  <p>Supercategory's name.</p>							|
-| categories			| 			|  <p>Supercategory's categories.</p>							|
-
-## Delete supercategory
-
-
-
-	DELETE /supercategories/:id
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>admin access token.</p>							|
-
-## Retrieve supercategories
-
-
-
-	GET /supercategories
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>user access token.</p>							|
-| q			| String			| **optional** <p>Query to search.</p>							|
-| page			| Number			| **optional** <p>Page number.</p>							|
-| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
-| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
-| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
-
-## Retrieve supercategory
-
-
-
-	GET /supercategories/:id
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>user access token.</p>							|
-
-## Update supercategory
-
-
-
-	PUT /supercategories/:id
-
-
-### Parameters
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| access_token			| String			|  <p>admin access token.</p>							|
-| name			| 			|  <p>Supercategory's name.</p>							|
-| categories			| 			|  <p>Supercategory's categories.</p>							|
 
 # User
 
