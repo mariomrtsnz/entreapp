@@ -29,7 +29,7 @@ export class UserService {
     console.log(this.token);
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
   }
-  getAllUsers(): Observable<any[]> {
+  getAllUsers(): Observable<any[]>  {
     const requestOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -41,6 +41,9 @@ export class UserService {
     };
 
     return this.http.get<any[]>(`${userUrl}/all`, requestOptions);
+  }
+  remove(id: string): Observable<UserResponse[]> {
+    return this.http.delete<UserResponse[]>(`${userUrl}/${id}${this.token}`);
   }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {

@@ -64,7 +64,7 @@
               <mat-icon>border_color</mat-icon>
               <span>Edit</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="openDialogDeleteUser(element)">
               <mat-icon>delete</mat-icon>
               <span>Delete</span>
             </button>
@@ -72,10 +72,10 @@
           <!-- Mobile actions -->
 
           <!-- Actions in normal size-->
-          <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.lt-md>
+          <button mat-icon-button fxHide.lt-md>
             <mat-icon>border_color</mat-icon>
           </button>
-          <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.lt-md>
+          <button mat-icon-button  fxHide.lt-md (click)="openDialogDeleteUser(element)">
             <mat-icon>delete</mat-icon>
           </button>
           <!-- Actions in normal size-->
@@ -85,5 +85,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
+  </div>
+  <div>  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons fxFlex="80%"></mat-paginator>
   </div>
 </div>

@@ -25,6 +25,9 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angular-6-social-login';
+import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-delete-user.component';
+import { DialogCreateUserComponent } from './dialogs/dialog-create-user/dialog-create-user.component';
+import { DialogEditUserComponent } from './dialogs/dialog-edit-user/dialog-edit-user.component';
 // Configs
 export function getAuthServiceConfigs() {
   // tslint:disable-next-line:prefer-const
@@ -54,7 +57,10 @@ export function getAuthServiceConfigs() {
     DialogEditSupercategoryComponent,
     DialogDeleteCategoryComponent,
     DialogDeleteSuperCategoryComponent,
-    DialogUpdateProfileComponent
+    DialogUpdateProfileComponent,
+    DialogDeleteUserComponent,
+    DialogCreateUserComponent,
+    DialogEditUserComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +79,9 @@ export function getAuthServiceConfigs() {
     DialogEditSupercategoryComponent,
     DialogDeleteCategoryComponent,
     DialogDeleteSuperCategoryComponent,
+    DialogDeleteUserComponent,
+    DialogCreateUserComponent,
+    DialogEditUserComponent,
     PoiCreateComponent,
     PoiDeleteComponent,
     PoiEditComponent,
