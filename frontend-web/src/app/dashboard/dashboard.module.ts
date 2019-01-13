@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -23,9 +24,13 @@ import { UserComponent } from './user/user.component';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(DashboardRoutes)
+    RouterModule.forChild(DashboardRoutes),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDvjSoqqucab1Bs_Oedq3gSAXVhIU5BFHw'
+    })
   ],
-  declarations: [ PoiComponent, MenuComponent, UserComponent, CategoriesComponent, SuperCategoriesComponent, RouteComponent, LikesComponent, BadgesComponent, PoiDetailsComponent ],
+  // tslint:disable-next-line:max-line-length
+  declarations: [PoiComponent, MenuComponent, UserComponent, CategoriesComponent, SuperCategoriesComponent, RouteComponent, LikesComponent, BadgesComponent, PoiDetailsComponent],
 })
 
-export class DashboardModule {}
+export class DashboardModule { }

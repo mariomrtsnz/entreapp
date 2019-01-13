@@ -24,6 +24,10 @@ export class PoiService {
     return this.http.get<PoiResponse>(`${url}${this.token}`);
   }
 
+  getOne(id: string): Observable<OnePoiResponse> {
+    return this.http.get<OnePoiResponse>(`${url}/${id}${this.token}`);
+  }
+
   create(resource: PoiCreateDto): Observable<PoiResponse> {
     return this.http.post<PoiResponse>(`${url}${this.token}`, resource);
   }
