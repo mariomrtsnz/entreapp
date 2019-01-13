@@ -51,11 +51,4 @@ export class UserComponent implements OnInit {
     .then(() => this.getAll())
     .catch(() => this.snackBar.open('There was an error when we were creating a new USER.', 'Close', {duration: 3000}));
   }
-  obtainRoles() {
-    this.userService.getRoles().toPromise()
-    .then(receivedRoles => {
-      this.roles = receivedRoles;
-    })
-    .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
-  }
 }

@@ -43,7 +43,7 @@ export const showMe = ({
 
 export const obtainRoles = (req, res) => {
   res.status(200).send({
-    roles.value
+    roles
   });
 
 

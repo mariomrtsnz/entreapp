@@ -15,7 +15,7 @@ export class DialogCreateUserComponent implements OnInit {
 
   USER: UserResponse;
   public form: FormGroup;
-  roles: Roles[];
+  roles: string[];
   constructor(private fb: FormBuilder, private userService: UserService,
     public dialogRef: MatDialogRef<DialogCreateUserComponent>, public snackBar: MatSnackBar) { }
 
@@ -53,7 +53,8 @@ export class DialogCreateUserComponent implements OnInit {
     this.userService.getRoles().toPromise()
     .then(receivedRoles => {
       console.log(receivedRoles);
-      this.roles = receivedRoles;
+      console.log(this.roles);
+      this.roles = receivedRoles.roles;
     })
     .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }

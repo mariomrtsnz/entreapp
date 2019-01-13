@@ -31,8 +31,8 @@ export class UserService {
     console.log(this.token);
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
   }
-  getRoles(): Observable<Roles[]> {
-    return this.http.get<Roles[]>(`${userUrl}/roles${this.token}`);
+  getRoles(): Observable<Roles> {
+    return this.http.get<Roles>(`${userUrl}/roles${this.token}`);
   }
   getAllUsers(): Observable<any[]>  {
     const requestOptions = {
