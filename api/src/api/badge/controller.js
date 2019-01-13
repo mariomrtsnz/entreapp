@@ -2,6 +2,7 @@ import { success, notFound } from '../../services/response/'
 import { Badge } from '.'
 
 export const create = ({ bodymen: { body } }, res, next) =>
+  //let objectIdPoisArray = body.pois.map(s => mongoose.Types.ObjectId(s))
   Badge.create(body)
     .then((badge) => badge.view(true))
     .then(success(res, 201))
