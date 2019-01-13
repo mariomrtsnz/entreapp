@@ -7,7 +7,7 @@ import { schema } from './model'
 export Poi, { schema } from './model'
 
 const router = new Router()
-const { name, categories, coordinates, comments, badges, qrCode, audioguides, description, images, year, creator, likes, status, schedule, price } = schema.tree
+const { name, categories, coordinates, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price } = schema.tree
 
 /**
  * @api {post} /pois Create poi
@@ -16,17 +16,15 @@ const { name, categories, coordinates, comments, badges, qrCode, audioguides, de
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
  * @apiParam name Poi's name.
- * @apiParam categories Poi's categories.
+ * @apiParam categories Categories's ids.
  * @apiParam coordinates Poi's coordinates.
- * @apiParam comments Poi's comments.
- * @apiParam badges Poi's badges.
  * @apiParam qrCode Poi's qrCode.
  * @apiParam audioguides Poi's audioguides.
  * @apiParam description Poi's description.
+ * @apiParam coverImage Poi's images.
  * @apiParam images Poi's images.
  * @apiParam year Poi's year.
  * @apiParam creator Poi's creator.
- * @apiParam likes Poi's likes.
  * @apiParam status Poi's status.
  * @apiParam schedule Poi's schedule.
  * @apiParam price Poi's price.
@@ -37,7 +35,7 @@ const { name, categories, coordinates, comments, badges, qrCode, audioguides, de
  */
 router.post('/',
   token({ required: true, roles: ['admin'] }),
-  body({ name, categories, coordinates, comments, badges, qrCode, audioguides, description, images, year, creator, likes, status, schedule, price }),
+  body({ name, categories, coordinates, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price }),
   create)
 
 /**
@@ -79,17 +77,15 @@ router.get('/:id',
  * @apiPermission admin
  * @apiParam {String} access_token admin access token.
  * @apiParam name Poi's name.
- * @apiParam categories Poi's categories.
+ * @apiParam categories Categories's ids.
  * @apiParam coordinates Poi's coordinates.
- * @apiParam comments Poi's comments.
- * @apiParam badges Poi's badges.
  * @apiParam qrCode Poi's qrCode.
  * @apiParam audioguides Poi's audioguides.
  * @apiParam description Poi's description.
+ * @apiParam coverImage Poi's images.
  * @apiParam images Poi's images.
  * @apiParam year Poi's year.
  * @apiParam creator Poi's creator.
- * @apiParam likes Poi's likes.
  * @apiParam status Poi's status.
  * @apiParam schedule Poi's schedule.
  * @apiParam price Poi's price.
@@ -100,7 +96,7 @@ router.get('/:id',
  */
 router.put('/:id',
   token({ required: true, roles: ['admin'] }),
-  body({ name, categories, coordinates, comments, badges, qrCode, audioguides, description, images, year, creator, likes, status, schedule, price }),
+  body({ name, categories, coordinates, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price }),
   update)
 
 /**

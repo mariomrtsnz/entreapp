@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Edit {{this.data.poi.name}}</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" [formGroup]="coordinatesForm" (ngSubmit)="onSubmit()" *ngIf="poi">
   <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
     <mat-form-field class="w-100">
       <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
@@ -11,8 +11,11 @@
       <input matInput placeholder="Year" type="number" [formControl]="form.controls['year']" required>
     </mat-form-field>
     <!-- A espera de ver si necesitamos coordenadas o lat y long -->
-    <mat-form-field class="w-100">
-      <input matInput placeholder="coordinates" type="text" [formControl]="form.controls['coordinates']" required>
+    <mat-form-field class="w-50">
+      <input matInput placeholder="Latitude" type="text" [formControl]="coordinatesForm.controls['lat']" required>
+    </mat-form-field>
+    <mat-form-field class="w-50">
+      <input matInput placeholder="Longitude" type="text" [formControl]="coordinatesForm.controls['lng']" required>
     </mat-form-field>
     <mat-form-field class="w-100">
       <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']" required></textarea>
@@ -44,6 +47,6 @@
     
   </div>
   <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
-    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Editar</button>
   </div>
 </form>

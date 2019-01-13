@@ -13,6 +13,7 @@ import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 export class PoiCreateComponent implements OnInit {
 
   POI: PoiResponse;
+  public coordinatesForm: FormGroup;
   public form: FormGroup;
 
   constructor(private fb: FormBuilder, private poiService: PoiService,
@@ -24,11 +25,14 @@ export class PoiCreateComponent implements OnInit {
   }
 
   createForm() {
+    this.coordinatesForm = this.fb.group ({
+      lat: [null, Validators.compose ([ Validators.required ])],
+      lng: [null, Validators.compose ([ Validators.required ])]
+    });
     this.form = this.fb.group ( {
       name: [null, Validators.compose ([ Validators.required ])],
       year: [null, Validators.compose ([ Validators.required ])],
       creator: [ null ],
-      coordinates: [null, Validators.compose ([ Validators.required ])],
       description: [null, Validators.compose ([ Validators.required ])],
       images: [null, Validators.compose ([ Validators.required ])],
       // categories: [null, Validators.compose ([ Validators.required ])],
@@ -41,6 +45,7 @@ export class PoiCreateComponent implements OnInit {
 
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
+    newPoi.coordinates = this.coordinatesForm.value;
     this.poiService.create(newPoi).toPromise()
     .then(resp => this.dialogRef.close(resp))
     .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', {duration: 3000}));

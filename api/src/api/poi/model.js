@@ -63,27 +63,21 @@ poiSchema.methods = {
       id: this.id,
       name: this.name,
       categories: this.categories,
-      coordinates: this.coordinates,
-      comments: this.comments,
-      badges: this.badges,
-      qrCode: this.qrCode,
-      audioguides: this.audioguides,
+      qrCode: this.qrCode,  
       description: this.description,
-      coverImage: this.coverImage,
-      images: this.images,
+      coverImage: this.coverImage,     
       year: this.year,
       creator: this.creator,
-      likes: this.likes,
-      status: this.status,
-      schedule: this.schedule,
-      price: this.price,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt
     }
 
     return full ? {
-      ...view
-      // add properties for a full view
+      ...view,
+      coordinates: this.coordinates,
+      audioguides: this.audioguides,
+      images: this.images,
+      status: this.status,
+      schedule: this.schedule,
+      price: this.price,
     } : view
   }
 }

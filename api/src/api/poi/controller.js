@@ -21,7 +21,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
 export const show = ({ params }, res, next) =>
   Poi.findById(params.id)
     .then(notFound(res))
-    .then((poi) => poi ? poi.view() : null)
+    .then((poi) => poi ? poi.view(true) : null)
     .then(success(res))
     .catch(next)
 
