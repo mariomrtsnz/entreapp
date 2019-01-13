@@ -8,9 +8,16 @@ const poiSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category'
   }],
-  coordinates: [{
-    type: String
-  }],
+  coordinates: {
+    lat: {
+      type: Number,
+      required: true
+    },
+    lng: {
+      type: Number,
+      required: true
+    }
+  },
   qrCode: {
     type: String
   },
@@ -20,11 +27,14 @@ const poiSchema = new Schema({
   description: {
     type: String
   },
+  coverImage: {
+    type: String
+  },
   images: [{
     type: String
   }],
   year: {
-    type: Date
+    type: Number
   },
   creator: {
     type: String
@@ -59,6 +69,7 @@ poiSchema.methods = {
       qrCode: this.qrCode,
       audioguides: this.audioguides,
       description: this.description,
+      coverImage: this.coverImage,
       images: this.images,
       year: this.year,
       creator: this.creator,

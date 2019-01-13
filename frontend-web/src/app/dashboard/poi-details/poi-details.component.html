@@ -1,3 +1,36 @@
-<p>
-  poi-details works!
-</p>
+<div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%" *ngIf="poi">
+  <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
+    <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5%">
+      <div>
+        <div id="coverImage" [style.background-image]="'url(' + coverImage + ')'"> </div>
+        <!-- <img id="coverImage" width="1920" height="600" [src]="coverImage"> -->
+      </div>
+      <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">
+        <agm-marker [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng"></agm-marker>
+      </agm-map>
+    </div>
+    <div fxFlex.gt-md="50" fxFlex="100">
+      <h1>{{ poi.name }}</h1>
+      <hr>
+      <mat-chip-list *ngFor="let c of poi.categories">
+        <mat-chip>{{c}}</mat-chip>
+      </mat-chip-list>
+      <p>{{poi.creator}} - {{poi.year}}</p>
+      {{poi.description}}
+    </div>
+
+  </mat-card>
+  <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+    <mat-card>
+      <p>Precio: {{poi.price}}</p>
+      <p>Estado: {{poi.status}}</p>
+      <p>Horario: {{poi.schedule}}</p>
+    </mat-card>
+    <mat-card>
+      <h3>Audioguides</h3>
+      <div *ngFor="let a of poi.audioguides">
+        <audio controls [src]="a"></audio>
+      </div>
+    </mat-card>
+  </div>
+</div>

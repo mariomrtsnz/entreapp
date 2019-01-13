@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
 })
 export class PoiDetailsComponent implements OnInit {
 
-  private poi: OnePoiResponse;
+  poi: OnePoiResponse;
+  coverImage: string;
+  images = ['https://bit.ly/2AHGQIw', 'https://bit.ly/2QCBEuO', 'https://on.natgeo.com/2TOioMO'];
+
 
   constructor(private poiService: PoiService, public router: Router) { }
 
@@ -18,10 +21,17 @@ export class PoiDetailsComponent implements OnInit {
     if (this.poiService.selectedPoi == null) {
       this.router.navigate(['home']);
     } else {
-      this.poi = this.poiService.selectedPoi;
-      console.log(this.poi);
-      
+      this.getData();
     }
- }
+  }
+
+  getData() {
+    this.poiService.getOne(this.poiService.selectedPoi.id).toPromise()
+    .then(p => {
+      this.poi = p;
+      this.coverImage = p.coverImage;
+    }).then(()=>console.log(this.poi));
+  }
+
 
 }
