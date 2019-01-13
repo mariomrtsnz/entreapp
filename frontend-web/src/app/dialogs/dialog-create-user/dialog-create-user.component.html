@@ -9,11 +9,13 @@
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="User role">
-        <mat-option *ngFor="let role of roles" [value]="role">
+        <!--<mat-option *ngFor="let role of roles" [value]="role">
           {{role}}
-        </mat-option>
+        </mat-option>-->
+        {{roles}}
       </mat-select>
     </mat-form-field>
+    <p> {{roles}}</p>
 <!--
     
     <mat-form-field>

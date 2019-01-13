@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { UserResponse } from '../interfaces/user-response';
 import { UsersResponse } from '../interfaces/users-response';
 import { UserCreateDto } from '../dto/create-user.dto';
+import { Roles } from '../interfaces/roles';
 
 const userUrl = `${environment.apiUrl}/users`;
 
@@ -29,6 +30,9 @@ export class UserService {
     console.log('get all service');
     console.log(this.token);
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
+  }
+  getRoles(): Observable<Roles[]> {
+    return this.http.get<Roles[]>(`${userUrl}/roles${this.token}`);
   }
   getAllUsers(): Observable<any[]>  {
     const requestOptions = {

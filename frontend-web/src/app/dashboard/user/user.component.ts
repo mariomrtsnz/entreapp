@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   userList: UserResponse[];
   displayedColumns: string[] = ['picture', 'name', 'email', 'points', 'actions'];
   dataSource;
+  roles: string[];
   constructor(private snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private userService: UserService) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
@@ -49,5 +50,12 @@ export class UserComponent implements OnInit {
     dialogNewUser.afterClosed().toPromise()
     .then(() => this.getAll())
     .catch(() => this.snackBar.open('There was an error when we were creating a new USER.', 'Close', {duration: 3000}));
+  }
+  obtainRoles() {
+    this.userService.getRoles().toPromise()
+    .then(receivedRoles => {
+      this.roles = receivedRoles;
+    })
+    .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }
 }
