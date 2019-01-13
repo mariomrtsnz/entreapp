@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   userList: UserResponse[];
   displayedColumns: string[] = ['picture', 'name', 'email', 'points', 'actions'];
   dataSource;
+  roles: string[];
   constructor(private snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private userService: UserService) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {

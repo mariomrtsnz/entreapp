@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { UserCreateDto } from 'src/app/dto/create-user.dto';
+import { Roles } from 'src/app/interfaces/roles';
 
 @Component({
   selector: 'app-dialog-create-user',
@@ -14,12 +15,13 @@ export class DialogCreateUserComponent implements OnInit {
 
   USER: UserResponse;
   public form: FormGroup;
-  roles = ['Admin', 'User', 'Contributor'];
+  roles: string[];
   constructor(private fb: FormBuilder, private userService: UserService,
     public dialogRef: MatDialogRef<DialogCreateUserComponent>, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createForm();
+    this.obtainRoles();
     // this.getData();
   }
 /*email: String;
@@ -46,6 +48,15 @@ export class DialogCreateUserComponent implements OnInit {
     this.userService.create(newUser).toPromise()
     .then(resp => this.dialogRef.close(resp))
     .catch(() => this.snackBar.open('Error creating user.', 'Cerrar', {duration: 3000}));
+  }
+  obtainRoles() {
+    this.userService.getRoles().toPromise()
+    .then(receivedRoles => {
+      console.log(receivedRoles);
+      console.log(this.roles);
+      this.roles = receivedRoles.roles;
+    })
+    .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }
 
 }
