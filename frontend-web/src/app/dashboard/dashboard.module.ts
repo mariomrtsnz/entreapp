@@ -16,6 +16,7 @@ import { PoiComponent } from './poi/poi.component';
 import { RouteComponent } from './route/route.component';
 import { SuperCategoriesComponent } from './supercategories/supercategories.component';
 import { UserComponent } from './user/user.component';
+import { MyprofileComponent } from './myprofile/myprofile.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import { UserComponent } from './user/user.component';
     })
   ],
   // tslint:disable-next-line:max-line-length
-  declarations: [PoiComponent, MenuComponent, UserComponent, CategoriesComponent, SuperCategoriesComponent, RouteComponent, LikesComponent, BadgesComponent, PoiDetailsComponent],
+  declarations: [PoiComponent, MenuComponent, UserComponent, CategoriesComponent, SuperCategoriesComponent, RouteComponent, LikesComponent, BadgesComponent, PoiDetailsComponent, MyprofileComponent],
 })
 
 export class DashboardModule { }
