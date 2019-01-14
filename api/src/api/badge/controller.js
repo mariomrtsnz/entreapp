@@ -1,12 +1,21 @@
 import { success, notFound } from '../../services/response/'
 import { Badge } from '.'
+import mongoose from '../../services/mongoose'
 
-export const create = ({ bodymen: { body } }, res, next) =>
-  //let objectIdPoisArray = body.pois.map(s => mongoose.Types.ObjectId(s))
-  Badge.create(body)
+export const create = ({ bodymen: { body } }, res, next) => {
+  let objectIdPoisArray = body.pois.map(s => mongoose.Types.ObjectId(s))
+  let correctBody = {
+    name: body.name,
+    points: body.points,
+    description: body.description,
+    icon: body.icon,
+    pois: objectIdPoisArray
+  }
+  return Badge.create(correctBody)
     .then((badge) => badge.view(true))
     .then(success(res, 201))
     .catch(next)
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Badge.count(query)
