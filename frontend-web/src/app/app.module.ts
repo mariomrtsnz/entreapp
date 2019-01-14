@@ -22,6 +22,8 @@ import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/poi-edit.compo
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
 import { QuillModule } from 'ngx-quill';
+import { DialogBadgeComponent } from './dialogs/dialog-badge/dialog-badge.component';
+import { DialogDeleteBadgeComponent } from './dialogs/dialog-delete-badge/dialog-delete-badge.component';
 
 // Configs
 export function getAuthServiceConfigs() {
@@ -51,7 +53,9 @@ export function getAuthServiceConfigs() {
     DialogUpdateProfileComponent,
     DialogDeleteUserComponent,
     DialogCreateUserComponent,
-    DialogEditUserComponent
+    DialogEditUserComponent,
+    DialogBadgeComponent,
+    DialogDeleteBadgeComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +81,8 @@ export function getAuthServiceConfigs() {
     DialogPoiCreateComponent,
     DialogPoiDeleteComponent,
     DialogPoiEditComponent,
+    DialogBadgeComponent,
+    DialogDeleteBadgeComponent
   ],
   providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},    {
     provide: AuthServiceConfig,
