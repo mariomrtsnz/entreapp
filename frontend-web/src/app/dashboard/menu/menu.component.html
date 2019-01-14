@@ -23,16 +23,12 @@
         <a mat-list-item [routerLink]="['/home/badges']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>bookmarks</mat-icon>Badges
         </a>
-        <a mat-list-item [routerLink]="['/home/likes']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
-          <mat-icon>thumb_up</mat-icon>Likes
-        </a>
         <a mat-list-item [routerLink]="['/home/supercategories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>list</mat-icon>SuperCategories
         </a>
         <a mat-list-item [routerLink]="['/home/categories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>list</mat-icon>Categories
         </a>
-        <!-- <a mat-list-item (click)="openUpdateProfile()"> -->
         <a mat-list-item [routerLink]="['/home/myprofile']" routerLinkActive="active-link">
           <mat-icon>settings</mat-icon>My Profile
         </a>

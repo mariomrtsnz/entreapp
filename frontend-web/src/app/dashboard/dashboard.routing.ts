@@ -1,16 +1,15 @@
-import { LikesComponent } from './likes/likes.component';
-import { BadgesComponent } from './badges/badges.component';
-import { RouteComponent } from './route/route.component';
 import { Routes } from '@angular/router';
-import { PoiComponent } from './poi/poi.component';
-import { MenuComponent } from './menu/menu.component';
-import { UserComponent } from './user/user.component';
-import { SuperCategoriesComponent } from './supercategories/supercategories.component';
+
+import { BadgesComponent } from './badges/badges.component';
 import { CategoriesComponent } from './categories/categories.component';
-import { PoiDetailsComponent } from './poi-details/poi-details.component';
-import { MyprofileComponent } from './myprofile/myprofile.component';
-import { PoiEditComponent } from './poi-edit/poi-edit.component';
+import { MenuComponent } from './menu/menu.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PoiCreateComponent } from './poi-create/poi-create.component';
+import { PoiDetailsComponent } from './poi-details/poi-details.component';
+import { PoiEditComponent } from './poi-edit/poi-edit.component';
+import { PoiComponent } from './poi/poi.component';
+import { RouteComponent } from './route/route.component';
+import { UserComponent } from './user/user.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -21,11 +20,9 @@ export const DashboardRoutes: Routes = [
       { path: 'users', component: UserComponent },
       { path: 'routes', component: RouteComponent },
       { path: 'badges', component: BadgesComponent },
-      { path: 'likes', component: LikesComponent },
       { path: 'categories', component: CategoriesComponent },
-      { path: 'supercategories', component: SuperCategoriesComponent },
       { path: 'details', component: PoiDetailsComponent },
-      { path: 'myprofile', component: MyprofileComponent },
+      { path: 'myprofile', component: MyProfileComponent },
       { path: 'editPoi', component: PoiEditComponent },
       { path: 'createPoi', component: PoiCreateComponent }
     ]

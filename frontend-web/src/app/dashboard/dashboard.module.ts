@@ -9,16 +9,14 @@ import { MaterialModule } from './../material-module';
 import { BadgesComponent } from './badges/badges.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { DashboardRoutes } from './dashboard.routing';
-import { LikesComponent } from './likes/likes.component';
 import { MenuComponent } from './menu/menu.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { PoiCreateComponent } from './poi-create/poi-create.component';
 import { PoiDetailsComponent } from './poi-details/poi-details.component';
+import { PoiEditComponent } from './poi-edit/poi-edit.component';
 import { PoiComponent } from './poi/poi.component';
 import { RouteComponent } from './route/route.component';
-import { SuperCategoriesComponent } from './supercategories/supercategories.component';
 import { UserComponent } from './user/user.component';
-import { MyprofileComponent } from './myprofile/myprofile.component';
-import { PoiEditComponent } from './poi-edit/poi-edit.component';
-import { PoiCreateComponent } from './poi-create/poi-create.component';
 
 @NgModule({
   imports: [
@@ -33,7 +31,18 @@ import { PoiCreateComponent } from './poi-create/poi-create.component';
     })
   ],
   // tslint:disable-next-line:max-line-length
-  declarations: [PoiComponent, MenuComponent, UserComponent, CategoriesComponent, SuperCategoriesComponent, RouteComponent, LikesComponent, BadgesComponent, PoiDetailsComponent, MyprofileComponent, PoiEditComponent, PoiCreateComponent],
+  declarations: [
+    PoiComponent,
+    MenuComponent,
+    UserComponent,
+    CategoriesComponent,
+    RouteComponent,
+    BadgesComponent,
+    PoiDetailsComponent,
+    MyProfileComponent,
+    PoiEditComponent,
+    PoiCreateComponent
+  ],
 })
 
 export class DashboardModule { }
