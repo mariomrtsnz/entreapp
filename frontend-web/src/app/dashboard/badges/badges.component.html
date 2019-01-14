@@ -1,8 +1,8 @@
 <div fxFlex fxFlexFill>
   <div fxGap="100px">
-    <h4 fxFlex="100px" id="titleTable">User list</h4>
+    <h4 fxFlex="100px" id="titleTable">Badges</h4>
     <mat-form-field fxFlex="300px">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search user by name.">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search badge by name.">
     </mat-form-field>
 
     <mat-form-field [ngStyle.md]="{'margin-left.px': 100}" [ngStyle.sm]="{'margin-left.px': 10}" [ngStyle.xs]="{'margin-left.px': 5}"
@@ -20,31 +20,31 @@
     <table fxFlexFill fxFlex mat-table [dataSource]="dataSource" class="mat-elevation-z8 white container" fxFlex="80%"
       fxLayoutGap="200px">
       <ng-container matColumnDef="icon">
-        <th mat-header-cell *matHeaderCellDef> </th>
+        <th mat-header-cell *matHeaderCellDef>Icon</th>
         <td mat-cell *matCellDef="let element">
-          <img src="../../../assets/images/iconoprueba.jpg" alt="Badge icon" height="42" width="42">
+          <img src="{{element.icon}}" alt="Badge icon" height="42" width="42">
         </td>
       </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let element">
           {{element.name}}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="points">
-        <th mat-header-cell *matHeaderCellDef> Points </th>
-        <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+        <th mat-header-cell *matHeaderCellDef>Points</th>
+        <td mat-cell *matCellDef="let element">{{element.points}}</td>
       </ng-container>
 
       <ng-container matColumnDef="description" fxShow.lt-xs="false">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{element.description}}</td>
       </ng-container>
 
       <ng-container matColumnDef="pois" fxShow.lt-xs="false">
-        <th mat-header-cell *matHeaderCellDef> POIs </th>
-        <td mat-cell *matCellDef="let element"> {{element.pois}} </td>
+        <th mat-header-cell *matHeaderCellDef>POIs</th>
+        <td mat-cell *matCellDef="let element"><span *ngFor="let poi of element.pois">{{poi.name}}<span *ngIf="element.pois > 1">,</span></span></td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

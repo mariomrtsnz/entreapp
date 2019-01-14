@@ -19,7 +19,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Badge.count(query)
-    .then(count => Badge.find(query, select, cursor)
+    .then(count => Badge.find(query, select, cursor).populate('pois', 'id name')
       .then((badges) => ({
         count,
         rows: badges.map((badge) => badge.view())
