@@ -21,6 +21,7 @@ import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/poi-delete
 import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/poi-edit.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
+import { QuillModule } from 'ngx-quill';
 
 // Configs
 export function getAuthServiceConfigs() {
@@ -63,7 +64,8 @@ export function getAuthServiceConfigs() {
     SocialLoginModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDvjSoqqucab1Bs_Oedq3gSAXVhIU5BFHw'
-    })
+    }),
+    QuillModule
   ],
   entryComponents: [
     DialogNewCategoryComponent,

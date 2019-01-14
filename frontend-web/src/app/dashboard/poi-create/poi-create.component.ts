@@ -1,7 +1,12 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
+import { Category } from 'src/app/interfaces/category';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-poi-create',
@@ -11,27 +16,44 @@ import { Router } from '@angular/router';
 export class PoiCreateComponent implements OnInit {
 
   poi: OnePoiResponse;
-  coverImage: string;
+  categories: Category;
+  public coordinatesForm: FormGroup;
+  public form: FormGroup;
 
-  constructor(private poiService: PoiService, public router: Router) { }
+  separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  ngOnInit() {
-    if (this.poiService.selectedPoi == null) {
-      this.router.navigate(['home']);
-    } else {
-      this.getData();
+  constructor(private fb: FormBuilder, private poiService: PoiService,
+    public router: Router, public snackBar: MatSnackBar) { }
+
+    ngOnInit() {
+      this.createForm();
     }
+
+  createForm() {
+    this.coordinatesForm = this.fb.group ({
+      lat: [null, Validators.compose ([ Validators.required ])],
+      lng: [null, Validators.compose ([ Validators.required ])]
+    });
+    this.form = this.fb.group ( {
+      name: [null, Validators.compose ([ Validators.required ])],
+      year: [null, Validators.compose ([ Validators.required ])],
+      creator: [ null ],
+      description: [null, Validators.compose ([ Validators.required ])],
+      images: [null, Validators.compose ([ Validators.required ])],
+      categories: [null, Validators.compose ([ Validators.required ])],
+      audioguides: [null, Validators.compose ([ Validators.required ])],
+      status: [null, Validators.compose ([ Validators.required ])],
+      schedule: [null, Validators.compose ([ Validators.required ])],
+      price: [ null ],
+    } );
   }
 
-  getData() {
-    this.poiService.getOne(this.poiService.selectedPoi.id).toPromise()
-    .then(p => {
-      this.poi = p;
-      console.log(p);
-      this.coverImage = p.coverImage;
-      console.log(this.coverImage);
-      
-    });
+  onSubmit() {
+    const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
+    newPoi.coordinates = this.coordinatesForm.value;
+    this.poiService.create(newPoi).toPromise()
+    .then(() => this.router.navigate(['/home']))
+    .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', {duration: 3000}));
   }
 
 }

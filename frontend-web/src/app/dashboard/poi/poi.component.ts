@@ -33,6 +33,10 @@ export class PoiComponent implements OnInit {
     .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }
 
+  // openNewPoi() {
+
+  // }
+
   openDialogNewPoi() {
     const dialogNewPoi = this.dialog.open(DialogPoiCreateComponent, {width: '500px'});
     dialogNewPoi.afterClosed().toPromise()

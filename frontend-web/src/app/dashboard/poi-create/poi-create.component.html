@@ -1,36 +1,52 @@
-<div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%" *ngIf="poi">
-  <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
-    <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5%">
-      <div>
-        <div id="coverImage" [style.background-image]="'url(' + coverImage + ')'"> </div>
-        <!-- <img id="coverImage" width="1920" height="600" [src]="coverImage"> -->
+<form [formGroup]="form" [formGroup]="coordinatesForm" (ngSubmit)="onSubmit()">
+  <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
+    <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
+      <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5%">
+        <div>
+          <!-- Subir archivos -->
+          <!--  -->
+        </div>
+        <!-- Coordenadas google maps  -->
+        <!-- <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">
+          <agm-marker [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng"></agm-marker>
+        </agm-map> -->
       </div>
-      <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">
-        <agm-marker [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng"></agm-marker>
-      </agm-map>
-    </div>
-    <div fxFlex.gt-md="50" fxFlex="100">
-      <h1>{{ poi.name }}</h1>
-      <hr>
-      <mat-chip-list *ngFor="let c of poi.categories">
-        <mat-chip>{{c}}</mat-chip>
-      </mat-chip-list>
-      <p>{{poi.creator}} - {{poi.year}}</p>
-      {{poi.description}}
-    </div>
-
-  </mat-card>
-  <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
-    <mat-card>
-      <p>Precio: {{poi.price}}</p>
-      <p>Estado: {{poi.status}}</p>
-      <p>Horario: {{poi.schedule}}</p>
-    </mat-card>
-    <mat-card>
-      <h3>Audioguides</h3>
-      <div *ngFor="let a of poi.audioguides">
-        <audio controls [src]="a"></audio>
+      <div fxFlex.gt-md="50" fxFlex="100">
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
+        </mat-form-field>
+        <hr>
+        <!-- Categorías -->
+        <!--  -->
+        <!-- Autor/Anyo -->
+        <mat-form-field class="w-50">
+          <input matInput placeholder="Autor" type="text" [formControl]="form.controls['creator']">
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <input matInput placeholder="Year" type="number" [formControl]="form.controls['year']" required>
+        </mat-form-field>
+        <!-- Descripción con librería -->
+        <quill-editor></quill-editor>
       </div>
     </mat-card>
+    <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+      <mat-card>
+        <!-- Precio, estado, horarios -->
+        <mat-form-field class="w-50">
+          <input matInput placeholder="price" type="number" [formControl]="form.controls['price']">
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <input matInput placeholder="status" type="text" [formControl]="form.controls['status']" required>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <textarea matInput placeholder="schedule" type="text" [formControl]="form.controls['schedule']" required></textarea>
+        </mat-form-field>
+      </mat-card>
+      <mat-card>
+        <h3>Audioguides</h3>
+        <!-- Upload autoguides -->
+        <!--  -->
+      </mat-card>
+    </div>
   </div>
-</div>
+</form>

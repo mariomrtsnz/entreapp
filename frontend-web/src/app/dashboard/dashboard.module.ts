@@ -17,6 +17,7 @@ import { PoiEditComponent } from './poi-edit/poi-edit.component';
 import { PoiComponent } from './poi/poi.component';
 import { RouteComponent } from './route/route.component';
 import { UserComponent } from './user/user.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { UserComponent } from './user/user.component';
     RouterModule.forChild(DashboardRoutes),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDvjSoqqucab1Bs_Oedq3gSAXVhIU5BFHw'
-    })
+    }),
+    QuillModule
   ],
   // tslint:disable-next-line:max-line-length
   declarations: [

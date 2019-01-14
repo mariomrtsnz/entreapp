@@ -23,8 +23,8 @@ export const DashboardRoutes: Routes = [
       { path: 'categories', component: CategoriesComponent },
       { path: 'details', component: PoiDetailsComponent },
       { path: 'myprofile', component: MyProfileComponent },
-      { path: 'editPoi', component: PoiEditComponent },
-      { path: 'createPoi', component: PoiCreateComponent }
+      { path: 'edit', component: PoiEditComponent },
+      { path: 'create', component: PoiCreateComponent }
     ]
   }
 ];
