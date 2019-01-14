@@ -1,10 +1,11 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { UserResponse } from 'src/app/interfaces/user-response';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { MatSnackBar, MatDialog } from '@angular/material';
-
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthenticationService} from '../../services/authentication.service';
+import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -44,5 +45,13 @@ export class MyProfileComponent implements OnInit {
       this.user = user;
     });
   }
+  openDialogEditUser(user: UserResponse) {
+    const dialogEditUser = this.dialog.open(DialogEditUserComponent, {
+      data: {user: user}
+    });
 
+    dialogEditUser.afterClosed().subscribe(result => {
+      this.getUser();
+    });
+  }
 }

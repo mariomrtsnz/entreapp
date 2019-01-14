@@ -64,7 +64,6 @@ export class UserService {
 
   //   return this.http.post<UserResponse>(`${userUrl}/create`, recurso, requestOptions);
   // }
-
   // editUser(user: UserDto, userId: number): Observable<UserResponse> {
   //   const requestOptions = {
   //     headers: new HttpHeaders({
