@@ -1,6 +1,6 @@
 import { OnePoiResponse } from './one-poi-response';
 
-export interface Badge {
+export interface OneBadgeResponse {
     id: string;
     name: string;
     points: number;
