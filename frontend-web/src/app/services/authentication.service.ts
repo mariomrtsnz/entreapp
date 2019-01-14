@@ -6,20 +6,27 @@ import { Observable } from 'rxjs';
 import { LoginResponse } from '../interfaces/login-response';
 const authUrl = `${environment.apiUrl}`;
 
-const requestOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  request(email: String, password: String) {
+    let emailPass: String 
+    emailPass = btoa(email + ":" + password);
+    const requestOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Basic ${emailPass}`
+    })
+  }
+
+    return requestOptions;
+  };
 
   constructor(private http: HttpClient) { }
 
   login(loginDto: LoginDto): Observable<LoginResponse> {
+    let requestOptions = this.request(loginDto.email, loginDto.password);
     return this.http.post<LoginResponse>(`${authUrl}/auth`, loginDto, requestOptions);
   }
 
