@@ -32,7 +32,8 @@
         <a mat-list-item [routerLink]="['/home/categories']" routerLinkActive="active-link" *ngIf="authService.isAdmin()">
           <mat-icon>list</mat-icon>Categories
         </a>
-        <a mat-list-item (click)="openUpdateProfile()">
+        <!-- <a mat-list-item (click)="openUpdateProfile()"> -->
+        <a mat-list-item [routerLink]="['/home/myprofile']" routerLinkActive="active-link">
           <mat-icon>settings</mat-icon>My Profile
         </a>
         <a mat-list-item (click)="authService.logout()">

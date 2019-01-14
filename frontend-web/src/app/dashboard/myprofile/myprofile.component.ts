@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService} from '../../services/authentication.service';
@@ -28,7 +29,8 @@ export class MyprofileComponent implements OnInit {
   pieChartData: number[] = [300, 500, 100];
   pieChartType = 'pie';
   user: UserResponse;
-  constructor(private userService: UserService, private authService: AuthenticationService,
+  constructor(private userService: UserService,  private router: Router,
+    private authService: AuthenticationService,
     public snackBar: MatSnackBar, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
