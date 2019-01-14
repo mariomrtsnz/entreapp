@@ -120,6 +120,17 @@ export class UserService {
     return foundUser;
   }
 
+  // getOneByEmail(email: string): any {
+  //   let foundUser;
+  //   this.getAllUsers().toPromise().then(
+  //     users => {
+  //       foundUser = users.find(user => {
+  //         return user.email.toLowerCase() === email.toLowerCase();
+  //       });
+  //     }
+  //   );
+  //   return foundUser;
+  // }
   // getOneById(userId: number): Observable<User> {
   //   const requestOptions = {
   //     headers: new HttpHeaders({

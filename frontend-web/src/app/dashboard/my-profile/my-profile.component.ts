@@ -30,7 +30,7 @@ export class MyProfileComponent implements OnInit {
   pieChartData: number[] = [300, 500, 100];
   pieChartType = 'pie';
 
-  user: UserResponse;
+  user: any;
 
   constructor(private userService: UserService,  private router: Router,
     private authService: AuthenticationService,
