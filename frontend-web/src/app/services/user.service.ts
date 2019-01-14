@@ -7,9 +7,11 @@ import { UserResponse } from '../interfaces/user-response';
 import { UsersResponse } from '../interfaces/users-response';
 import { UserCreateDto } from '../dto/create-user.dto';
 import { Roles } from '../interfaces/roles';
+import { CountryResponse } from '../interfaces/country-response';
 
 const userUrl = `${environment.apiUrl}/users`;
-
+const countryUrlApi = 'https://restcountries.eu/rest/v2/all?fields=name;';
+const masterKey = '?access_token=WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +36,9 @@ export class UserService {
   getRoles(): Observable<Roles> {
     return this.http.get<Roles>(`${userUrl}/roles${this.token}`);
   }
+  getAllCountries(): Observable<CountryResponse[]> {
+    return this.http.get<CountryResponse[]>(countryUrlApi);
+  }
   getAllUsers(): Observable<any[]>  {
     const requestOptions = {
       headers: new HttpHeaders({
@@ -51,7 +56,7 @@ export class UserService {
     return this.http.delete<UserResponse[]>(`${userUrl}/${id}${this.token}`);
   }
   create(resource: UserCreateDto): Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${userUrl}${this.token}`, resource);
+    return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
   }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {

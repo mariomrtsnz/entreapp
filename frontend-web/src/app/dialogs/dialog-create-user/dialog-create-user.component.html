@@ -7,23 +7,26 @@
     <mat-form-field class="w-100">
       <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
     </mat-form-field>
+    <h4>Role</h4>
+
     <mat-form-field>
-      <mat-select placeholder="User role">
+      <mat-select placeholder="User role" [formControl]="form.controls['role']" [(value)]="roleSelected" name="role">
         <mat-option *ngFor="let role of roles" [value]="role">
           {{role}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-<!--
-    
+
+    <h4>Country</h4>
+
     <mat-form-field>
-      <mat-select placeholder="City">
-        <mat-option *ngFor="let city of cities" [value]="city">
-          {{city}}
+      <mat-select placeholder="Country" [formControl]="form.controls['country']"  name="country">
+        <mat-option *ngFor="let country of countries" [value]="country.name">
+          {{country.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    -->
+    
     <!--
     <mat-form-field>
       <mat-select placeholder="Languaje">
@@ -42,10 +45,20 @@
         </mat-optgroup>
       </mat-select>
     </mat-form-field> -->
+    <h4>Languaje</h4>
 
+    <mat-form-field>
+      <select  matNativeControl required [formControl]="form.controls['languaje']">
+        <option value="SPANISH">Spanish</option>
+        <option value="ENGLISH">English</option>
+        <option value="FRENCH">French</option>
+        <option value="BASQUE">Basque</option>
+      </select>
+    </mat-form-field>
 
   </div>
   <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
-    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>
+    <!--<button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>-->
+    <button mat-raised-button color="primary" type="submit" >Añadir</button>
   </div>
 </form>
