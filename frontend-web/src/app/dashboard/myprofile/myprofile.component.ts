@@ -5,7 +5,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { AuthenticationService} from '../../services/authentication.service';
 import { UserResponse } from '../../interfaces/user-response';
-import {DialogEditUserComponent} from '../../dialogs/dialog-edit-user';
+import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',

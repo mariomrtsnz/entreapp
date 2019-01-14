@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { UserResponse } from '../../interfaces/user-response';
 import { UserService } from '../../services/user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-dialog-edit-user',
   templateUrl: './dialog-edit-user.component.html',
@@ -16,8 +15,7 @@ export class DialogEditUserComponent implements OnInit {
   ngOnInit() {
     this.user = this.data;
   }
-
-  // editUsuario() {
+  // editUser() {
   //   this.userService.editUser(this.user).subscribe(nota => {
   //     this.dialogRef.close();
   //   });
