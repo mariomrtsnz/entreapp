@@ -22,13 +22,13 @@ export class PoiEditComponent implements OnInit {
   public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    console.log(this.data.poi);
     this.getData();
   }
 
   getData() {
     this.poiService.getOne(this.data.poi.id).toPromise()
     .then(p => this.poi = p)
+    .then(() => console.log(this.poi))
     .then(() => this.createForm());
   }
 
@@ -42,6 +42,7 @@ export class PoiEditComponent implements OnInit {
       // categories: [this.poi.categories, Validators.compose ([ Validators.required ])],
       audioguides: [this.poi.audioguides, Validators.compose ([ Validators.required ])],
       description: [this.poi.description, Validators.compose ([ Validators.required ])],
+      coverImage: [this.poi.coverImage, Validators.compose ([ Validators.required ])],
       images: [this.poi.images, Validators.compose ([ Validators.required ])],
       year: [this.poi.year, Validators.compose ([ Validators.required ])],
       creator: [ this.poi.creator ],

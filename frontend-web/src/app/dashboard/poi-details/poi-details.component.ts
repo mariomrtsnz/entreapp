@@ -29,8 +29,11 @@ export class PoiDetailsComponent implements OnInit {
     this.poiService.getOne(this.poiService.selectedPoi.id).toPromise()
     .then(p => {
       this.poi = p;
+      console.log(p);
       this.coverImage = p.coverImage;
-    }).then(()=>console.log(this.poi));
+      console.log(this.coverImage);
+      
+    });
   }
 
 
