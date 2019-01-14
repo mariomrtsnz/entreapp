@@ -9,12 +9,12 @@ import { PoiService } from 'src/app/services/poi.service';
   templateUrl: './poi-delete.component.html',
   styleUrls: ['./poi-delete.component.scss']
 })
-export class PoiDeleteComponent implements OnInit {
+export class DialogPoiDeleteComponent implements OnInit {
 
   public form: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
-  private poiService: PoiService, public dialogRef: MatDialogRef<PoiDeleteComponent>,
+  private poiService: PoiService, public dialogRef: MatDialogRef<DialogPoiDeleteComponent>,
   public snackBar: MatSnackBar) { }
 
   ngOnInit() {

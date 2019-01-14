@@ -10,14 +10,14 @@ import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
   templateUrl: './poi-create.component.html',
   styleUrls: ['./poi-create.component.scss']
 })
-export class PoiCreateComponent implements OnInit {
+export class DialogPoiCreateComponent implements OnInit {
 
   POI: PoiResponse;
   public coordinatesForm: FormGroup;
   public form: FormGroup;
 
   constructor(private fb: FormBuilder, private poiService: PoiService,
-    public dialogRef: MatDialogRef<PoiCreateComponent>, public snackBar: MatSnackBar) { }
+    public dialogRef: MatDialogRef<DialogPoiCreateComponent>, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createForm();

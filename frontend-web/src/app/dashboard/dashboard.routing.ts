@@ -1,12 +1,15 @@
-import { MyProfileComponent } from './my-profile/my-profile.component';
-import { BadgesComponent } from './badges/badges.component';
-import { RouteComponent } from './route/route.component';
 import { Routes } from '@angular/router';
-import { PoiComponent } from './poi/poi.component';
-import { MenuComponent } from './menu/menu.component';
-import { UserComponent } from './user/user.component';
+
+import { BadgesComponent } from './badges/badges.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { MenuComponent } from './menu/menu.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { PoiCreateComponent } from './poi-create/poi-create.component';
 import { PoiDetailsComponent } from './poi-details/poi-details.component';
+import { PoiEditComponent } from './poi-edit/poi-edit.component';
+import { PoiComponent } from './poi/poi.component';
+import { RouteComponent } from './route/route.component';
+import { UserComponent } from './user/user.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -19,7 +22,9 @@ export const DashboardRoutes: Routes = [
       { path: 'badges', component: BadgesComponent },
       { path: 'categories', component: CategoriesComponent },
       { path: 'details', component: PoiDetailsComponent },
-      { path: 'myprofile', component: MyProfileComponent}
+      { path: 'myprofile', component: MyProfileComponent },
+      { path: 'editPoi', component: PoiEditComponent },
+      { path: 'createPoi', component: PoiCreateComponent }
     ]
   }
 ];

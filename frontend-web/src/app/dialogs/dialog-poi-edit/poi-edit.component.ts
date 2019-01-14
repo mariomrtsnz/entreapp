@@ -11,14 +11,14 @@ import { OnePoiResponse } from './../../interfaces/one-poi-response';
   templateUrl: './poi-edit.component.html',
   styleUrls: ['./poi-edit.component.scss']
 })
-export class PoiEditComponent implements OnInit {
+export class DialogPoiEditComponent implements OnInit {
 
   poi: OnePoiResponse;
   public coordinatesForm: FormGroup;
   public form: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
-  private poiService: PoiService, public dialogRef: MatDialogRef<PoiEditComponent>,
+  private poiService: PoiService, public dialogRef: MatDialogRef<DialogPoiEditComponent>,
   public snackBar: MatSnackBar) { }
 
   ngOnInit() {
