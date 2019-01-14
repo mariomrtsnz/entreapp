@@ -43,6 +43,9 @@ export class DialogCreateUserComponent implements OnInit {
     } );
   }
 
+  getAllCountries(){
+    
+  }
   onSubmit() {
     const newUser: UserCreateDto = <UserCreateDto>this.form.value;
     this.userService.create(newUser).toPromise()
