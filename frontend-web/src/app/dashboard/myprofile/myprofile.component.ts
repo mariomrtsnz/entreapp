@@ -32,6 +32,13 @@ export class MyprofileComponent implements OnInit {
     public snackBar: MatSnackBar, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.getUser();
+  }
+
+  getUser() {
+    this.userService.getOneByEmail(this.authService.getEmail()).suscribe(user => {
+      this.user = user;
+    });
   }
 
 }

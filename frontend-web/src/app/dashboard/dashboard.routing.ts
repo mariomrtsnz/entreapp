@@ -8,6 +8,7 @@ import { UserComponent } from './user/user.component';
 import { SuperCategoriesComponent } from './supercategories/supercategories.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { PoiDetailsComponent } from './poi-details/poi-details.component';
+import { MyprofileComponent } from './myprofile/myprofile.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -21,7 +22,8 @@ export const DashboardRoutes: Routes = [
       { path: 'likes', component: LikesComponent },
       { path: 'categories', component: CategoriesComponent },
       { path: 'supercategories', component: SuperCategoriesComponent },
-      { path: 'details', component: PoiDetailsComponent }
+      { path: 'details', component: PoiDetailsComponent },
+      { path: 'myprofile', component: MyprofileComponent}
     ]
   }
 ];

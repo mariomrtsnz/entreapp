@@ -1,3 +1,24 @@
-<p>
-  myprofile works!
-</p>
+<div class="card">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="row">
+        <div fxFlex="55">
+          <h1 class="ma-0">{{user.name}}</h1>
+          <small>{{user.email}}</small>
+          <p class="mt-xs mb-xs">Role: {{user.role}}</p>
+          <a href="javascript:;" class="block mt-xs mb-xs">Phone: {{user.phone}}</a>
+          <!-- <button mat-raised-button color="primary">Edit Profile</button> -->
+        </div>
+         <div fxFlex="45">
+          <figure>
+            <div class="text-xs-center">
+              <img src="https://api.adorable.io/avatars/285/{{user.email}}.png" alt="" class="radius-circle">
+            </div>
+          </figure>
+        </div> 
+      </div>
+    </mat-card-content>
+    <hr>
+    <hr>
+  </mat-card>
+  </div>
