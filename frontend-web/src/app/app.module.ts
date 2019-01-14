@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,17 +21,15 @@ import { DialogEditSupercategoryComponent } from './dialogs/dialog-edit-supercat
 import { DialogEditUserComponent } from './dialogs/dialog-edit-user/dialog-edit-user.component';
 import { DialogNewCategoryComponent } from './dialogs/dialog-new-category/dialog-new-category.component';
 import { DialogNewSupercategoryComponent } from './dialogs/dialog-new-supercategory/dialog-new-supercategory.component';
+import { DialogPoiCreateComponent } from './dialogs/dialog-poi-create/poi-create.component';
+import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/poi-delete.component';
+import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/poi-edit.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
-import { PoiCreateComponent } from './dialogs/poi-create/poi-create.component';
-import { PoiDeleteComponent } from './dialogs/poi-delete/poi-delete.component';
-import { PoiEditComponent } from './dialogs/poi-edit/poi-edit.component';
 import { MaterialModule } from './material-module';
-import { AgmCoreModule } from '@agm/core';
 
 // Configs
 export function getAuthServiceConfigs() {
-  // tslint:disable-next-line:prefer-const
-  let config = new AuthServiceConfig(
+  const config = new AuthServiceConfig(
       [
         {
           id: FacebookLoginProvider.PROVIDER_ID,
@@ -47,9 +46,9 @@ export function getAuthServiceConfigs() {
 @NgModule({
   declarations: [
     AppComponent,
-    PoiCreateComponent,
-    PoiDeleteComponent,
-    PoiEditComponent,
+    DialogPoiCreateComponent,
+    DialogPoiDeleteComponent,
+    DialogPoiEditComponent,
     DialogNewCategoryComponent,
     DialogNewSupercategoryComponent,
     DialogEditCategoryComponent,
@@ -84,9 +83,9 @@ export function getAuthServiceConfigs() {
     DialogDeleteUserComponent,
     DialogCreateUserComponent,
     DialogEditUserComponent,
-    PoiCreateComponent,
-    PoiDeleteComponent,
-    PoiEditComponent,
+    DialogPoiCreateComponent,
+    DialogPoiDeleteComponent,
+    DialogPoiEditComponent,
   ],
   providers: [ {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},    {
     provide: AuthServiceConfig,

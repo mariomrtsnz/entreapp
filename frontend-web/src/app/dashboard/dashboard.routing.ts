@@ -9,6 +9,8 @@ import { SuperCategoriesComponent } from './supercategories/supercategories.comp
 import { CategoriesComponent } from './categories/categories.component';
 import { PoiDetailsComponent } from './poi-details/poi-details.component';
 import { MyprofileComponent } from './myprofile/myprofile.component';
+import { PoiEditComponent } from './poi-edit/poi-edit.component';
+import { PoiCreateComponent } from './poi-create/poi-create.component';
 
 export const DashboardRoutes: Routes = [
   {
@@ -23,7 +25,9 @@ export const DashboardRoutes: Routes = [
       { path: 'categories', component: CategoriesComponent },
       { path: 'supercategories', component: SuperCategoriesComponent },
       { path: 'details', component: PoiDetailsComponent },
-      { path: 'myprofile', component: MyprofileComponent}
+      { path: 'myprofile', component: MyprofileComponent },
+      { path: 'editPoi', component: PoiEditComponent },
+      { path: 'createPoi', component: PoiCreateComponent }
     ]
   }
 ];

@@ -1,0 +1,24 @@
+agm-map {
+    height: 300px;
+  }
+
+#coverImage {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+
+
+@media only screen and (max-width: 720px) {
+    agm-map {
+        display: none;
+    }
+}
+
+audio {
+    width: 100%;
+}
