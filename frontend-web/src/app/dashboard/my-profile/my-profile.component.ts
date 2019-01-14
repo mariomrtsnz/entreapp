@@ -1,16 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit } from '@angular/core';
+import { UserResponse } from 'src/app/interfaces/user-response';
+import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserService } from '../../services/user.service';
-import { AuthenticationService} from '../../services/authentication.service';
-import { UserResponse } from '../../interfaces/user-response';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MatSnackBar, MatDialog } from '@angular/material';
+
 @Component({
-  selector: 'app-myprofile',
-  templateUrl: './myprofile.component.html',
-  styleUrls: ['./myprofile.component.scss']
+  selector: 'app-my-profile',
+  templateUrl: './my-profile.component.html',
+  styleUrls: ['./my-profile.component.scss']
 })
-export class MyprofileComponent implements OnInit {
+export class MyProfileComponent implements OnInit {
   images: any[] = [];
   num = 1;
 
@@ -28,10 +28,12 @@ export class MyprofileComponent implements OnInit {
   pieChartLabels: string[] = ['MS Word', 'Typing', 'Sage Pastel'];
   pieChartData: number[] = [300, 500, 100];
   pieChartType = 'pie';
+
   user: UserResponse;
+
   constructor(private userService: UserService,  private router: Router,
     private authService: AuthenticationService,
-    public snackBar: MatSnackBar, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getUser();

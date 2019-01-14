@@ -11,15 +11,10 @@ import { routes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DialogCreateUserComponent } from './dialogs/dialog-create-user/dialog-create-user.component';
 import { DialogDeleteCategoryComponent } from './dialogs/dialog-delete-category/dialog-delete-category.component';
-import {
-  DialogDeleteSuperCategoryComponent,
-} from './dialogs/dialog-delete-supercategory/dialog-delete-supercategory.component';
 import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-delete-user.component';
 import { DialogEditCategoryComponent } from './dialogs/dialog-edit-category/dialog-edit-category.component';
-import { DialogEditSupercategoryComponent } from './dialogs/dialog-edit-supercategory/dialog-edit-supercategory.component';
 import { DialogEditUserComponent } from './dialogs/dialog-edit-user/dialog-edit-user.component';
 import { DialogNewCategoryComponent } from './dialogs/dialog-new-category/dialog-new-category.component';
-import { DialogNewSupercategoryComponent } from './dialogs/dialog-new-supercategory/dialog-new-supercategory.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { PoiCreateComponent } from './dialogs/poi-create/poi-create.component';
 import { PoiDeleteComponent } from './dialogs/poi-delete/poi-delete.component';
@@ -51,11 +46,8 @@ export function getAuthServiceConfigs() {
     PoiDeleteComponent,
     PoiEditComponent,
     DialogNewCategoryComponent,
-    DialogNewSupercategoryComponent,
     DialogEditCategoryComponent,
-    DialogEditSupercategoryComponent,
     DialogDeleteCategoryComponent,
-    DialogDeleteSuperCategoryComponent,
     DialogUpdateProfileComponent,
     DialogDeleteUserComponent,
     DialogCreateUserComponent,
@@ -76,11 +68,8 @@ export function getAuthServiceConfigs() {
   ],
   entryComponents: [
     DialogNewCategoryComponent,
-    DialogNewSupercategoryComponent,
     DialogEditCategoryComponent,
-    DialogEditSupercategoryComponent,
     DialogDeleteCategoryComponent,
-    DialogDeleteSuperCategoryComponent,
     DialogDeleteUserComponent,
     DialogCreateUserComponent,
     DialogEditUserComponent,
