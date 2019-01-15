@@ -44,7 +44,9 @@
 
       <ng-container matColumnDef="pois" fxShow.lt-xs="false">
         <th mat-header-cell *matHeaderCellDef>POIs</th>
-        <td mat-cell *matCellDef="let element"><span *ngFor="let poi of element.pois">{{poi.name}}<span *ngIf="element.pois > 1">,</span></span></td>
+        <td mat-cell *matCellDef="let element">
+          <span *ngFor="let poi of element.pois; let i = index">{{poi.name}}<span *ngIf="element.pois.length > 1 && i+1 < element.pois.length">, </span><span *ngIf="element.pois.length > 1 && i > 1"> + {{element.pois.length-1-i}}</span></span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

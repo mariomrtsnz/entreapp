@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BadgeService } from './../../services/badge.service';
@@ -18,42 +19,64 @@ export class DialogBadgeComponent implements OnInit {
   description: string;
   icon: string;
   pois: OnePoiResponse[];
+  allPois: OnePoiResponse[];
   badgeId: string;
-
-  public form: FormGroup;
+  form: FormGroup;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogBadgeComponent>) { }
+  constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogBadgeComponent>) { }
 
   ngOnInit() {
     this.getAllPois();
-    if (this.data !== null) {
+    this.createForm();
+    if (this.data.badge) {
       this.edit = true;
       this.name = this.data.badge.name;
       this.points = this.data.badge.points;
       this.description = this.data.badge.description;
       this.icon = this.data.badge.icon;
+      this.pois = this.data.badge.pois;
       this.badgeId = this.data.badge.id;
     } else {
       this.edit = false;
     }
   }
 
+  onSubmit() {
+    if (this.edit) {
+      const editedBadge: BadgeDto = <BadgeDto>this.form.value;
+      this.badgeService.edit(this.badgeId, editedBadge).subscribe(result => {
+        this.dialogRef.close('confirm');
+      }, error => {
+        console.log(error);
+        this.snackBar.open('Failed to create.', 'Close', {duration: 3000});
+      });
+    } else {
+      const newBadge: BadgeDto = <BadgeDto>this.form.value;
+      this.badgeService.create(newBadge).subscribe(result => {
+        this.dialogRef.close('confirm');
+      }, error => {
+        console.log(error);
+        this.snackBar.open('Failed to create.', 'Close', {duration: 3000});
+      });
+    }
+  }
+
   createForm() {
-    this.form = this.fb.group ( {
-      name: [null, Validators.compose ([ Validators.required ])],
-      icon: [null, Validators.compose ([ Validators.required ])],
-      pois: [ null ],
-      description: [null, Validators.compose ([ Validators.required ])],
-      images: [null, Validators.compose ([ Validators.required ])],
-      categories: [null, Validators.compose ([ Validators.required ])]
-    } );
+    const newForm: FormGroup = this.fb.group ({
+      name: ['', Validators.compose ([ Validators.required ])],
+      points: ['', Validators.compose ([ Validators.required ])],
+      description: ['', Validators.compose ([ Validators.required ])],
+      icon: ['', Validators.compose ([ Validators.required ])],
+      pois: ['', Validators.compose ([ Validators.required ])]
+    });
+    this.form = newForm;
   }
 
   getAllPois() {
     this.poisService.getAll().subscribe(
       pois => {
-          this.pois = pois.rows;
+          this.allPois = pois.rows;
       }, error => {
         console.log(error);
       }
