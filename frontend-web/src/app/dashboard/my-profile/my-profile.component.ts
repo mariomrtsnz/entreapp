@@ -31,22 +31,22 @@ export class MyProfileComponent implements OnInit {
   pieChartType = 'pie';
 
   user: UserResponse;
-  name: string;
-  email: string;
-  createAt: string;
-  picture: string;
-  role: string;
 
   constructor(private userService: UserService,  private router: Router,
     private authService: AuthenticationService,
-    public snackBar: MatSnackBar, public dialog: MatDialog) { }
+    public snackBar: MatSnackBar, public dialog: MatDialog) {
+
+    }
 
   ngOnInit() {
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
-    this.createAt = localStorage.getItem('createAt');
-    this.picture = localStorage.getItem('picture');
-    this.role = localStorage.getItem('role');
+    this.getMe();
+
+  }
+
+  getMe() {
+    this.userService.getMe().subscribe(result => {
+      this.user = result;
+    });
   }
 
   openDialogEditUser(user: UserResponse) {

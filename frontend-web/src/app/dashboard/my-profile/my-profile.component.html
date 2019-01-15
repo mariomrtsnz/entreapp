@@ -3,17 +3,17 @@
     <mat-card-content>
       <div fxLayout="row">
         <div fxFlex="55">
-          <h1 class="ma-0">{{name}}</h1>
-          <small>{{email}}</small>
-          <p class="mt-xs mb-xs">{{role}}</p>
+          <h1 class="ma-0">{{user.name}}</h1>
+          <small>{{user.email}}</small>
+          <p class="mt-xs mb-xs">{{user.role}}</p>
           <!-- <a href="javascript:;" class="block mt-xs mb-xs">Phone: {{user.phone}}</a> -->
-          <a href="javascript:;" class="block mt-xs mb-xs">Register date: {{createAt}}</a>
+          <p href="javascript:;" class="block mt-xs mb-xs">Register date: {{user.createAt}}</p>
           <!-- <button mat-raised-button color="primary">Edit Profile</button> -->
         </div>
         <div fxFlex="45">
           <figure>
             <div class="text-xs-center">
-              <img src="https://api.adorable.io/avatars/285/{{email}}.png" alt="" class="radius-circle">
+              <img src="https://api.adorable.io/avatars/285/{{user.email}}.png" alt="" class="radius-circle">
             </div>
           </figure>
         </div>
