@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BadgeService } from './../../services/badge.service';
 import { BadgeDto } from './../../dto/badge.dto';
@@ -19,8 +20,10 @@ export class DialogBadgeComponent implements OnInit {
   pois: OnePoiResponse[];
   badgeId: string;
 
+  public form: FormGroup;
+
   // tslint:disable-next-line:max-line-length
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogBadgeComponent>) { }
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogBadgeComponent>) { }
 
   ngOnInit() {
     this.getAllPois();
@@ -36,6 +39,17 @@ export class DialogBadgeComponent implements OnInit {
     }
   }
 
+  createForm() {
+    this.form = this.fb.group ( {
+      name: [null, Validators.compose ([ Validators.required ])],
+      icon: [null, Validators.compose ([ Validators.required ])],
+      pois: [ null ],
+      description: [null, Validators.compose ([ Validators.required ])],
+      images: [null, Validators.compose ([ Validators.required ])],
+      categories: [null, Validators.compose ([ Validators.required ])]
+    } );
+  }
+
   getAllPois() {
     this.poisService.getAll().subscribe(
       pois => {
@@ -45,8 +59,6 @@ export class DialogBadgeComponent implements OnInit {
       }
     );
   }
-
-
 
   addBadge() {
     const poisIds: string[] = [];
