@@ -30,28 +30,32 @@ export class MyProfileComponent implements OnInit {
   pieChartData: number[] = [300, 500, 100];
   pieChartType = 'pie';
 
-  user: any;
+  user: UserResponse;
+  name: string;
+  email: string;
+  createAt: string;
+  picture: string;
+  role: string;
 
   constructor(private userService: UserService,  private router: Router,
     private authService: AuthenticationService,
     public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.getUser();
+    this.name = localStorage.getItem('name');
+    this.email = localStorage.getItem('email');
+    this.createAt = localStorage.getItem('createAt');
+    this.picture = localStorage.getItem('picture');
+    this.role = localStorage.getItem('role');
   }
 
-  getUser() {
-    this.userService.getOneByEmail(this.authService.getEmail()).suscribe(user => {
-      this.user = user;
-    });
-  }
   openDialogEditUser(user: UserResponse) {
     const dialogEditUser = this.dialog.open(DialogEditUserComponent, {
       data: {user: user}
     });
 
     dialogEditUser.afterClosed().subscribe(result => {
-      this.getUser();
+      console.log(result);
     });
   }
 }

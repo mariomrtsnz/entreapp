@@ -36,6 +36,7 @@ export class AuthenticationService {
     localStorage.setItem('email', loginResponse.email);
     localStorage.setItem('role', loginResponse.role);
     localStorage.setItem('id', loginResponse.id);
+    localStorage.setItem('createAt', loginResponse.createAt);
   }
 
   logout() {
