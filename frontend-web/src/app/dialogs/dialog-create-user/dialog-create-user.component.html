@@ -5,11 +5,20 @@
       <input matInput placeholder="Email" type="email" [formControl]="form.controls['email']" required>
     </mat-form-field>
     <mat-form-field class="w-100">
+      <input matInput placeholder="Password" name="password" id="password" [formControl]="form.controls['password']" [type]="hide ? 'password' : 'text'" [(ngModel)]="passGenerada">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Confirm password" name="passwordDos" [type]="hideDos ? 'password' : 'text'" [formControl]="form.controls['confirmPassword']"
+      type="${password}" [(ngModel)]="passGeneradaDos" id="passwordDos">
+    </mat-form-field>
+      <mat-icon matSuffix (click)="hideDos = !hideDos">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    <mat-form-field class="w-100">
       <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
     </mat-form-field>
     <h4>Role</h4>
 
-    <mat-form-field>
+    <mat-form-field class="w-100">
       <mat-select placeholder="User role" [formControl]="form.controls['role']" [(value)]="roleSelected" name="role">
         <mat-option *ngFor="let role of roles" [value]="role">
           {{role}}
@@ -19,7 +28,7 @@
 
     <h4>Country</h4>
 
-    <mat-form-field>
+    <mat-form-field class="w-100">
       <mat-select placeholder="Country" [formControl]="form.controls['country']"  name="country">
         <mat-option *ngFor="let country of countries" [value]="country.name">
           {{country.name}}
@@ -45,9 +54,9 @@
         </mat-optgroup>
       </mat-select>
     </mat-form-field> -->
-    <h4>Languaje</h4>
+    <h4 class="w-100">Languaje</h4>
 
-    <mat-form-field>
+    <mat-form-field class="w-100">
       <select  matNativeControl required [formControl]="form.controls['languaje']">
         <option value="SPANISH">Spanish</option>
         <option value="ENGLISH">English</option>
