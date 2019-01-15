@@ -5,4 +5,6 @@ export interface UserResponse {
     picture: string;
     email: string;
     createAt: string;
+    country: string;
+    languaje: string;
 }

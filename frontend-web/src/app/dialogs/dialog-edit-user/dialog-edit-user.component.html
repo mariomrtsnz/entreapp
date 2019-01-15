@@ -1,19 +1,21 @@
-<div fxLayout="column" fFlexFill>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name" [(ngModel)]="user.name">
+<h1 mat-dialog-title>New User</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
+    
+    <h4>Role</h4>
+
+    <mat-form-field class="w-100">
+      <mat-select placeholder="User role" [formControl]="form.controls['role']" [(value)]="roleSelected" name="role">
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-  
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email" [(ngModel)]="user.email">
-    </mat-form-field>
-  
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Password" [(ngModel)]="user.password">
-    </mat-form-field>
-  
-    <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="Phone" [(ngModel)]="user.phone"></textarea>
-    </mat-form-field>
-    <br/>
-    <button mat-raised-button color="primary" (click)="editUser()">Edit</button>
+
+
   </div>
+  <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
+    <!--<button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>-->
+    <button mat-raised-button color="primary" type="submit" >Añadir</button>
+  </div>
+</form>
