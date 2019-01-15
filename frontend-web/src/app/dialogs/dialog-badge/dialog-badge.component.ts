@@ -31,11 +31,6 @@ export class DialogBadgeComponent implements OnInit {
     this.createForm();
     if (this.data.badge) {
       this.edit = true;
-      this.name = this.data.badge.name;
-      this.points = this.data.badge.points;
-      this.description = this.data.badge.description;
-      this.icon = this.data.badge.icon;
-      this.pois = this.data.badge.pois;
       this.badgeId = this.data.badge.id;
     } else {
       this.edit = false;
@@ -63,14 +58,25 @@ export class DialogBadgeComponent implements OnInit {
   }
 
   createForm() {
-    const newForm: FormGroup = this.fb.group ({
-      name: ['', Validators.compose ([ Validators.required ])],
-      points: ['', Validators.compose ([ Validators.required ])],
-      description: ['', Validators.compose ([ Validators.required ])],
-      icon: ['', Validators.compose ([ Validators.required ])],
-      pois: ['', Validators.compose ([ Validators.required ])]
-    });
-    this.form = newForm;
+    if (this.data.badge) {
+      const editForm: FormGroup = this.fb.group ({
+        name: [this.data.badge.name, Validators.compose ([ Validators.required ])],
+        points: [this.data.badge.points, Validators.compose ([ Validators.required ])],
+        description: [this.data.badge.description, Validators.compose ([ Validators.required ])],
+        icon: [this.data.badge.icon, Validators.compose ([ Validators.required ])],
+        pois: [this.data.badge.pois, Validators.compose ([ Validators.required ])]
+      });
+      this.form = editForm;
+    } else {
+      const newForm: FormGroup = this.fb.group ({
+        name: ['', Validators.compose ([ Validators.required ])],
+        points: ['', Validators.compose ([ Validators.required ])],
+        description: ['', Validators.compose ([ Validators.required ])],
+        icon: ['', Validators.compose ([ Validators.required ])],
+        pois: ['', Validators.compose ([ Validators.required ])]
+      });
+      this.form = newForm;
+    }
   }
 
   getAllPois() {

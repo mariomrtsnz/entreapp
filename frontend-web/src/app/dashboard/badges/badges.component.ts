@@ -54,7 +54,8 @@ export class BadgesComponent implements OnInit {
   }
 
   openDialogDeleteBadge(badge: OneBadgeResponse) {
-    const deleteBadgeDialog = this.dialog.open(DialogDeleteBadgeComponent, {panelClass: 'delete-dialog', data: {badgeId: badge.id}});
+    // tslint:disable-next-line:max-line-length
+    const deleteBadgeDialog = this.dialog.open(DialogDeleteBadgeComponent, {panelClass: 'delete-dialog', data: {badgeId: badge.id, badgeName: badge.name}});
 
     deleteBadgeDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {
