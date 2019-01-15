@@ -2,6 +2,13 @@
   <mat-card>
     <mat-card-content>
       <div fxLayout="row">
+          <div fxFlex="45">
+              <figure>
+                <div class="text-xs-center">
+                  <img src="https://api.adorable.io/avatars/285/{{user.email}}.png" alt="" class="radius-circle">
+                </div>
+              </figure>
+            </div>
         <div fxFlex="55">
           <h1 class="ma-0">{{user.name}}</h1>
           <small>{{user.email}}</small>
@@ -10,17 +17,9 @@
           <p href="javascript:;" class="block mt-xs mb-xs">Register date: {{user.createAt}}</p>
           <!-- <button mat-raised-button color="primary">Edit Profile</button> -->
         </div>
-        <div fxFlex="45">
-          <figure>
-            <div class="text-xs-center">
-              <img src="https://api.adorable.io/avatars/285/{{user.email}}.png" alt="" class="radius-circle">
-            </div>
-          </figure>
-        </div>
+
       </div>
     </mat-card-content>
-    <hr>
-    <hr>
   </mat-card>
 
   <button mat-fab id="addFloatingButton" (click)="openDialogEditUser(user)">
