@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { PoiResponse } from './../../interfaces/poi-response';
+import { PoiResponse } from '../../interfaces/poi-response';
 import { PoiService } from 'src/app/services/poi.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 
 @Component({
-  selector: 'app-poi-create',
-  templateUrl: './poi-create.component.html',
-  styleUrls: ['./poi-create.component.scss']
+  selector: 'app-dialog-poi-create',
+  templateUrl: './dialog-poi-create.component.html',
+  styleUrls: ['./dialog-poi-create.component.scss']
 })
 export class DialogPoiCreateComponent implements OnInit {
 
@@ -46,9 +46,8 @@ export class DialogPoiCreateComponent implements OnInit {
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
     newPoi.coordinates = this.coordinatesForm.value;
-    this.poiService.create(newPoi).toPromise()
-    .then(resp => this.dialogRef.close(resp))
-    .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', {duration: 3000}));
+    this.poiService.create(newPoi).subscribe(() => this.dialogRef.close('confirm'),
+    err => this.snackBar.open('Error al crear localización.', 'Cerrar', {duration: 3000}));
   }
 
 }

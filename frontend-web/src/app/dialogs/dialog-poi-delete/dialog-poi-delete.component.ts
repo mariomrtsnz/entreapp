@@ -5,9 +5,9 @@ import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
 
 @Component({
-  selector: 'app-poi-delete',
-  templateUrl: './poi-delete.component.html',
-  styleUrls: ['./poi-delete.component.scss']
+  selector: 'app-dialog-poi-delete',
+  templateUrl: './dialog-poi-delete.component.html',
+  styleUrls: ['./dialog-poi-delete.component.scss']
 })
 export class DialogPoiDeleteComponent implements OnInit {
 
@@ -28,9 +28,8 @@ export class DialogPoiDeleteComponent implements OnInit {
   }
 
   onSubmit()  {
-    this.poiService.remove(this.data.poi.id).toPromise()
-    .then(resp => this.dialogRef.close(resp))
-    .catch(() => this.snackBar.open('Error al borrar la localización.', 'Cerrar', {duration: 3000}));
+    this.poiService.remove(this.data.poi.id).subscribe(() => this.dialogRef.close('confirm'),
+    err => this.snackBar.open('Error al borrar la localización.', 'Cerrar', {duration: 3000}));
   }
 
 }

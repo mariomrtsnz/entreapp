@@ -19,9 +19,9 @@ import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-d
 import { DialogEditCategoryComponent } from './dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogEditUserComponent } from './dialogs/dialog-edit-user/dialog-edit-user.component';
 import { DialogNewCategoryComponent } from './dialogs/dialog-new-category/dialog-new-category.component';
-import { DialogPoiCreateComponent } from './dialogs/dialog-poi-create/poi-create.component';
-import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/poi-delete.component';
-import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/poi-edit.component';
+import { DialogPoiCreateComponent } from './dialogs/dialog-poi-create/dialog-poi-create.component';
+import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/dialog-poi-delete.component';
+import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/dialog-poi-edit.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
 

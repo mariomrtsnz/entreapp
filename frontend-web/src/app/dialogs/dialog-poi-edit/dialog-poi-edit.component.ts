@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { PoiService } from 'src/app/services/poi.service';
 
-import { PoiCreateDto } from './../../dto/poi-create-dto';
-import { OnePoiResponse } from './../../interfaces/one-poi-response';
+import { PoiCreateDto } from '../../dto/poi-create-dto';
+import { OnePoiResponse } from '../../interfaces/one-poi-response';
 
 @Component({
-  selector: 'app-poi-edit',
-  templateUrl: './poi-edit.component.html',
-  styleUrls: ['./poi-edit.component.scss']
+  selector: 'app-dialog-poi-edit',
+  templateUrl: './dialog-poi-edit.component.html',
+  styleUrls: ['./dialog-poi-edit.component.scss']
 })
 export class DialogPoiEditComponent implements OnInit {
 
@@ -55,9 +55,8 @@ export class DialogPoiEditComponent implements OnInit {
   onSubmit() {
     const poiEdited: PoiCreateDto = <PoiCreateDto>this.form.value;
     poiEdited.coordinates = this.coordinatesForm.value;
-    this.poiService.edit(this.poi.id, poiEdited).toPromise()
-    .then(resp => this.dialogRef.close(resp))
-    .catch(() => this.snackBar.open('Error al editar localización.', 'Cerrar', {duration: 3000}));
+    this.poiService.edit(this.poi.id, poiEdited).subscribe(() => this.dialogRef.close('confirm'),
+    err => this.snackBar.open('Error al editar localización.', 'Cerrar', {duration: 3000}));
   }
 
 }
