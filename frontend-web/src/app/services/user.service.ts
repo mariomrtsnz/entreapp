@@ -33,6 +33,12 @@ export class UserService {
     console.log(this.token);
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
   }
+
+  getMe(): Observable<UserResponse> {
+    console.log('get me');
+    console.log(this.token);
+    return this.http.get<UserResponse>(`${userUrl}/me${this.token}`);
+  }
   getRoles(): Observable<Roles> {
     return this.http.get<Roles>(`${userUrl}/roles${this.token}`);
   }
