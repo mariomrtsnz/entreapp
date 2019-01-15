@@ -6,6 +6,7 @@ import comment from './comment'
 import badge from './badge'
 import category from './category'
 import route from './route'
+import upload from './upload'
 
 const router = new Router()
 
@@ -39,5 +40,6 @@ router.use('/comments', comment)
 router.use('/badges', badge)
 router.use('/categories', category)
 router.use('/routes', route)
+router.use('/uploads', upload)
 
 export default router

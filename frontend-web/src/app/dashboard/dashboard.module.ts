@@ -18,6 +18,7 @@ import { PoiComponent } from './poi/poi.component';
 import { RouteComponent } from './route/route.component';
 import { UserComponent } from './user/user.component';
 import { QuillModule } from 'ngx-quill';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { QuillModule } from 'ngx-quill';
     PoiDetailsComponent,
     MyProfileComponent,
     PoiEditComponent,
-    PoiCreateComponent
+    PoiCreateComponent,
+    FileSelectDirective
   ],
 })
 

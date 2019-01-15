@@ -4,7 +4,10 @@
       <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5%">
         <div>
           <!-- Subir archivos -->
-          <!--  -->
+          <input type="file" name="photo" ng2FileSelect [uploader]="uploader" multiple/>
+          <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            Upload an Image
+          </button>
         </div>
         <!-- Coordenadas google maps  -->
         <!-- <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">

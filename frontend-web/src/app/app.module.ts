@@ -2,15 +2,18 @@ import { AgmCoreModule } from '@agm/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from 'angular-6-social-login';
+import { QuillModule } from 'ngx-quill';
 
 import { routes } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DialogBadgeComponent } from './dialogs/dialog-badge/dialog-badge.component';
 import { DialogCreateUserComponent } from './dialogs/dialog-create-user/dialog-create-user.component';
+import { DialogDeleteBadgeComponent } from './dialogs/dialog-delete-badge/dialog-delete-badge.component';
 import { DialogDeleteCategoryComponent } from './dialogs/dialog-delete-category/dialog-delete-category.component';
 import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-delete-user.component';
 import { DialogEditCategoryComponent } from './dialogs/dialog-edit-category/dialog-edit-category.component';
@@ -21,9 +24,6 @@ import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/poi-delete
 import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/poi-edit.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
-import { QuillModule } from 'ngx-quill';
-import { DialogBadgeComponent } from './dialogs/dialog-badge/dialog-badge.component';
-import { DialogDeleteBadgeComponent } from './dialogs/dialog-delete-badge/dialog-delete-badge.component';
 
 // Configs
 export function getAuthServiceConfigs() {
