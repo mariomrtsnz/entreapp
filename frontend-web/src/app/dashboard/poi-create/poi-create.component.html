@@ -26,7 +26,7 @@
           <input matInput placeholder="Year" type="number" [formControl]="form.controls['year']" required>
         </mat-form-field>
         <!-- Descripción con librería -->
-        <quill-editor></quill-editor>
+        <quill-editor [formControl]="form.controls['description']"></quill-editor>
       </div>
     </mat-card>
     <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
