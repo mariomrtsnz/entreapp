@@ -10,6 +10,7 @@ const authUrl = `${environment.apiUrl}`;
   providedIn: 'root'
 })
 export class AuthenticationService {
+  
   request(email: String, password: String) {
     let emailPass: String;
     emailPass = btoa(email + ':' + password);
@@ -24,7 +25,6 @@ export class AuthenticationService {
   }
 
   constructor(private http: HttpClient) { }
-
   login(loginDto: LoginDto): Observable<LoginResponse> {
     const requestOptions = this.request(loginDto.email, loginDto.password);
     return this.http.post<LoginResponse>(`${authUrl}/auth`, environment.masterKey, requestOptions);
@@ -38,7 +38,22 @@ export class AuthenticationService {
     localStorage.setItem('id', loginResponse.id);
     localStorage.setItem('createAt', loginResponse.createAt);
   }
-
+  randomPassword(length) {
+    // tslint:disable-next-line:prefer-const
+    let chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890';
+    let pass = '';
+    for (let x = 0; x < length; x++) {
+      const i = Math.floor(Math.random() * chars.length);
+      pass += chars.charAt(i);
+    }
+    return pass;
+  }
+  generateNewPassword(): string {
+    const tamanioPassword = 10;
+    const passwordGenerada = this.randomPassword(tamanioPassword);
+    const passGenerada = passwordGenerada;
+    return passGenerada;
+  }
   logout() {
     localStorage.clear();
   }

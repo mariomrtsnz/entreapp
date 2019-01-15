@@ -60,7 +60,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="openDialogUpdateUser(element)">
               <mat-icon>border_color</mat-icon>
               <span>Edit</span>
             </button>
@@ -72,7 +72,7 @@
           <!-- Mobile actions -->
 
           <!-- Actions in normal size-->
-          <button mat-icon-button fxHide.lt-md>
+          <button mat-icon-button fxHide.lt-md (click)="openDialogUpdateUser(element)">
             <mat-icon>border_color</mat-icon>
           </button>
           <button mat-icon-button  fxHide.lt-md (click)="openDialogDeleteUser(element)">

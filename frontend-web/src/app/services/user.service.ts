@@ -8,6 +8,7 @@ import { UsersResponse } from '../interfaces/users-response';
 import { UserCreateDto } from '../dto/create-user.dto';
 import { Roles } from '../interfaces/roles';
 import { CountryResponse } from '../interfaces/country-response';
+import { UserUpdateDto } from '../dto/update-user.dto';
 
 const userUrl = `${environment.apiUrl}/users`;
 const countryUrlApi = 'https://restcountries.eu/rest/v2/all?fields=name;';
@@ -63,6 +64,9 @@ export class UserService {
   }
   create(resource: UserCreateDto): Observable<UserResponse> {
     return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
+  }
+  edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
+    return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, resource);
   }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {

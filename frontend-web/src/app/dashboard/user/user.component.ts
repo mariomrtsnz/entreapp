@@ -9,6 +9,7 @@ import { UserResponse } from '../../interfaces/user-response';
 import { UsersResponse } from 'src/app/interfaces/users-response';
 import { DialogDeleteUserComponent } from 'src/app/dialogs/dialog-delete-user/dialog-delete-user.component';
 import { DialogCreateUserComponent } from 'src/app/dialogs/dialog-create-user/dialog-create-user.component';
+import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
 
 @Component({
   selector: 'app-user',
@@ -50,5 +51,11 @@ export class UserComponent implements OnInit {
     dialogNewUser.afterClosed().toPromise()
     .then(() => this.getAll())
     .catch(() => this.snackBar.open('There was an error when we were creating a new USER.', 'Close', {duration: 3000}));
+  }
+  openDialogUpdateUser(userResponse: UserResponse) {
+    const dialogUpdateUser = this.dialog.open(DialogEditUserComponent,  {width: '500px', data: {user: userResponse}});
+    dialogUpdateUser.afterClosed().toPromise()
+    .then(() => this.getAll())
+    .catch(() => this.snackBar.open('There was an error when we were updating a  USER.', 'Close', {duration: 3000}));
   }
 }

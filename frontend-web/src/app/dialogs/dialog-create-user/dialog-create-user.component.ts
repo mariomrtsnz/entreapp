@@ -7,6 +7,8 @@ import { UserCreateDto } from 'src/app/dto/create-user.dto';
 import { Roles } from 'src/app/interfaces/roles';
 import { CountryResponse } from 'src/app/interfaces/country-response';
 import { CustomValidators } from 'ng2-validation';
+import { AuthService } from 'angular-6-social-login';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 const password = new FormControl('', Validators.required);
 
@@ -24,19 +26,23 @@ export class DialogCreateUserComponent implements OnInit {
   countrySelected;
   public form: FormGroup;
   hide = true;
-  passGenerada=''
-  passGeneradaDos=''
+  passGenerada = '';
+  passGeneradaDos = '';
   hideDos = true;
-  type='password'
+  type = 'password';
   roles: string[];
   constructor(private fb: FormBuilder, private userService: UserService,
-    public dialogRef: MatDialogRef<DialogCreateUserComponent>, public snackBar: MatSnackBar) { }
+    public dialogRef: MatDialogRef<DialogCreateUserComponent>, public snackBar: MatSnackBar, public authService: AuthenticationService) { }
 
   ngOnInit() {
     this.createForm();
     this.obtainRoles();
     this.getAllCountries();
     // this.getData();
+  }
+  generateNewPassword () {
+  this.passGenerada = this.authService.generateNewPassword();
+  this.passGeneradaDos = this.passGenerada;
   }
   /*email: String;
           password: String;
@@ -46,20 +52,21 @@ export class DialogCreateUserComponent implements OnInit {
           city: String;
           language: String;*/
   randomPassword(length) {
-    var chars = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
-    var pass = "";
-    for (var x = 0; x < length; x++) {
-      var i = Math.floor(Math.random() * chars.length);
+    // tslint:disable-next-line:prefer-const
+    let chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890';
+    let pass = '';
+    for (let x = 0; x < length; x++) {
+      const i = Math.floor(Math.random() * chars.length);
       pass += chars.charAt(i);
     }
     return pass;
   }
   generate() {
-    let tamanioPassword = 10;
-    let passwordGenerada = this.randomPassword(tamanioPassword);
+    const tamanioPassword = 10;
+    const passwordGenerada = this.randomPassword(tamanioPassword);
     this.passGenerada = passwordGenerada;
     this.passGeneradaDos = passwordGenerada;
-    this.type = "password";
+    this.type = 'password';
 
 
   }
@@ -86,7 +93,7 @@ export class DialogCreateUserComponent implements OnInit {
   }
   onSubmit() {
     const newUser: UserCreateDto = <UserCreateDto>this.form.value;
-    newUser.picture = 'prueba';
+    newUser.picture = 'https://gravatar.com/avatar/801fce29ee6b494ec10dc47af131b1ba?d=identicon';
     console.log(newUser);
     this.userService.create(newUser).toPromise()
       .then(resp => {
