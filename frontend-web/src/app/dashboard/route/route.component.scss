@@ -1,0 +1,38 @@
+@import "../../../colors.scss";
+
+#addFloatingButton {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    z-index: 9999999;
+    background-color: var(--color-primary-dark);
+
+    .mat-icon {
+        color: white;
+    }
+}
+
+.example-card {
+    width: 275px;
+    margin: 15px;
+
+    .mat-card-image {
+        height: 230px;
+    }
+
+    .mat-card-actions .mat-icon {
+        line-height: 36px;
+    }
+    
+    .card-floating-button {
+        position: absolute;
+        // top: 203px;
+        top: 209px;
+        right: 27px;
+        background-color: var(--color-primary-light);
+    
+        .mat-icon {
+            color: var(--gray-10);
+        }
+    }
+}

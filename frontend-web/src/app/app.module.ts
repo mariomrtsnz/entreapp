@@ -24,6 +24,8 @@ import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/dialog-poi
 import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/dialog-poi-edit.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
+import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.component';
+import { DialogDeleteRouteComponent } from './dialogs/dialog-delete-route/dialog-delete-route.component';
 
 // Configs
 export function getAuthServiceConfigs() {
@@ -55,7 +57,9 @@ export function getAuthServiceConfigs() {
     DialogCreateUserComponent,
     DialogEditUserComponent,
     DialogBadgeComponent,
-    DialogDeleteBadgeComponent
+    DialogDeleteBadgeComponent,
+    DialogRouteComponent,
+    DialogDeleteRouteComponent
   ],
   imports: [
     BrowserModule,

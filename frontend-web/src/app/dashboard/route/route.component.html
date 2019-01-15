@@ -1,3 +1,38 @@
-<p>
-  route works!
-</p>
+<div fxLayout="row wrap">
+  <mat-card class="example-card" *ngFor="let r of routes?.rows">
+    <img mat-card-image src="{{r.coverImage}}">
+    <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu">
+      <mat-icon>more_horiz</mat-icon>
+    </a>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openDialogEditRoute(r)">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button mat-menu-item (click)="openDialogDeleteRoute(r)">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
+    <mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-title>{{r.name}}</mat-card-title>
+      <!-- <mat-card-subtitle>{{p.category[0].name}}</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+      <p> {{r.description.substring(0, 117)}} <span *ngIf="r.description.length > 115">...</span> </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <mat-icon>star</mat-icon>
+      <mat-icon>star</mat-icon>
+      <mat-icon>star</mat-icon>
+      <button mat-button style="float:right;" (click)="goRouteDetails(r)">See more</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
+
+<button mat-fab id="addFloatingButton" (click)="openDialogNewRoute()">
+  <mat-icon>add</mat-icon>
+</button>

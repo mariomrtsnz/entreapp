@@ -44,5 +44,4 @@ export class BadgeService {
     return this.http.put<OneBadgeResponse>(`${badgeUrl}/${id}${this.token}`, resource);
   }
 
-
 }
