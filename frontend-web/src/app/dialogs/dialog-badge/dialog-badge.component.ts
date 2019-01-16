@@ -44,7 +44,7 @@ export class DialogBadgeComponent implements OnInit {
         this.dialogRef.close('confirm');
       }, error => {
         console.log(error);
-        this.snackBar.open('Failed to create.', 'Close', {duration: 3000});
+        this.snackBar.open('Failed to edit.', 'Close', {duration: 3000});
       });
     } else {
       const newBadge: BadgeDto = <BadgeDto>this.form.value;
@@ -102,14 +102,14 @@ export class DialogBadgeComponent implements OnInit {
     );
   }
 
-  editCategoria() {
+  editBadge() {
     const poisIds: string[] = [];
     this.pois.forEach(poi => {
       poisIds.push(poi.id);
     });
     const badgeCreateDto = new BadgeDto(this.name, this.points, this.description, this.icon, poisIds);
     this.badgeService.edit(this.badgeId, badgeCreateDto).subscribe(
-      categoria => {
+      badge => {
         this.dialogRef.close('confirm');
       }
     );

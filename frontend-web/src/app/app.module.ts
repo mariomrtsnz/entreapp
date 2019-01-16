@@ -86,7 +86,9 @@ export function getAuthServiceConfigs() {
     DialogPoiDeleteComponent,
     DialogPoiEditComponent,
     DialogBadgeComponent,
-    DialogDeleteBadgeComponent
+    DialogDeleteBadgeComponent,
+    DialogRouteComponent,
+    DialogDeleteRouteComponent
   ],
   providers: [ {provide: MAT_DIALOG_DATA, useValue: {}}, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},    {
     provide: AuthServiceConfig,
