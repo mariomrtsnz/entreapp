@@ -64,8 +64,8 @@ export class DialogEditUserComponent implements OnInit {
       });
   }*/
   onSubmit() {
-   
-    this.userService.editMyProfile("1", null).subscribe(result => {
+    const editedUser: UserUpdateDto = <UserUpdateDto>this.form.value;
+    this.userService.edit(this.data.user.id, editedUser).subscribe(result => {
       console.log('success');
       console.log(result);
     }, error => {

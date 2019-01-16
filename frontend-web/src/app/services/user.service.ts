@@ -67,6 +67,8 @@ export class UserService {
     return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
   }
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
+    console.log(id);
+    console.log(UserUpdateDto);
     return this.http.put<UserResponse>(`${userUrl}/editRole/${id}${this.token}`, resource);
   }
   editMyProfile(id: string, resource: UserUpdateMyProfileDto): Observable<UserResponse> {
