@@ -4,15 +4,15 @@ export class UserUpdateMyProfileDto {
     password: String;
     email: String;
     city: String;
-    languaje: String;
+    language: String;
 
-    constructor(role: string, name: string, password: string, email: string, city: string, languaje: string) {
+    constructor(role: string, name: string, password: string, email: string, city: string, language: string) {
         this.role = role;
         this.name = name;
         this.password = password;
         this.email = email;
         this.city = city;
-        this.languaje = languaje;
+        this.language = language;
 
     }
 }

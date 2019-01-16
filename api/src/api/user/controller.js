@@ -39,7 +39,7 @@ export const show = ({
 export const showMe = ({
     user
   }, res) =>
-  res.json(user.view(true))
+  res.json(user.view("full"))
 
 export const obtainRoles = (req, res) => {
   res.status(200).send({

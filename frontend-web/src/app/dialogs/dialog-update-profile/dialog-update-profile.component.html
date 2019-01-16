@@ -1,24 +1,33 @@
 <div fxLayout="column" fFlexFill>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Name" [(ngModel)]="user.name">
-  </mat-form-field>
+  <form [formGroup]="form" (ngSubmit)="editUser()">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name" [(ngModel)]="user.name">
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Email" [(ngModel)]="user.email">
-  </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email" [(ngModel)]="user.email">
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <input matInput type="password" placeholder="Password" [(ngModel)]="user.password">
-  </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput type="password" placeholder="Password" [(ngModel)]="user.password">
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Phone" [(ngModel)]="user.phone"></textarea>
-  </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="City" [(ngModel)]="user.city"></textarea>
+      </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Role" [(ngModel)]="user.role">
-  </mat-form-field>
-  <br/>
+    <mat-form-field class="example-full-width">
+          <textarea matInput placeholder="Language" [(ngModel)]="user.language"></textarea>
+        </mat-form-field>
+    <h4>Role</h4>
 
-  <button mat-raised-button color="primary" (click)="editProfile()">Edit</button>
-</div>
+    <mat-form-field class="w-100">
+      <mat-select placeholder="User role" [formControl]="form.controls['role']" [(value)]="roleSelected" name="role">
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+
+    <button mat-raised-button color="primary" type="submit">Edit</button>
