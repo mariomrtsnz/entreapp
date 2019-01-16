@@ -7,7 +7,8 @@ export class UserUpdateMyProfileDto {
     languaje: String;
     favs: String[];
     friends: String[];
-    constructor(role: string, name: string, password: string, email: string, city: string, languaje: string, favs: string[], friends: string[]) {
+    constructor(role: string, name: string, password: string,
+         email: string, city: string, languaje: string, favs: string[], friends: string[]) {
         this.role = role;
         this.name = name;
         this.password = password;

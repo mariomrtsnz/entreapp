@@ -64,8 +64,7 @@ export class DialogEditUserComponent implements OnInit {
       });
   }*/
   onSubmit() {
-   
-    this.userService.editMyProfile("1", null).subscribe(result => {
+    this.userService.editMyProfile('1', null).subscribe(result => {
       console.log('success');
       console.log(result);
     }, error => {
