@@ -46,6 +46,7 @@ export class MyProfileComponent implements OnInit {
   getMe() {
     this.userService.getMe().subscribe(result => {
       this.user = result;
+      console.log(this.user);
     });
   }
 
