@@ -71,7 +71,7 @@ export function getAuthServiceConfigs() {
     RouterModule.forRoot(routes),
     SocialLoginModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDvjSoqqucab1Bs_Oedq3gSAXVhIU5BFHw'
+      apiKey: 'AIzaSyA-JcBiiDwRaudqbUlqAC4c-Ehn4uPCsqY'
     }),
     QuillModule
   ],
@@ -86,7 +86,9 @@ export function getAuthServiceConfigs() {
     DialogPoiDeleteComponent,
     DialogPoiEditComponent,
     DialogBadgeComponent,
-    DialogDeleteBadgeComponent
+    DialogDeleteBadgeComponent,
+    DialogRouteComponent,
+    DialogDeleteRouteComponent
   ],
   providers: [ {provide: MAT_DIALOG_DATA, useValue: {}}, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},    {
     provide: AuthServiceConfig,
