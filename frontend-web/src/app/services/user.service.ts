@@ -9,6 +9,7 @@ import { UserCreateDto } from '../dto/create-user.dto';
 import { Roles } from '../interfaces/roles';
 import { CountryResponse } from '../interfaces/country-response';
 import { UserUpdateDto } from '../dto/update-user.dto';
+import { UserUpdateMyProfileDto } from '../dto/user-update-my-profile.dto';
 
 const userUrl = `${environment.apiUrl}/users`;
 const countryUrlApi = 'https://restcountries.eu/rest/v2/all?fields=name;';
@@ -19,7 +20,7 @@ const masterKey = '?access_token=WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX';
 export class UserService {
   // token = `?access_token=${this.authService.getToken()}`;
   // tslint:disable-next-line:max-line-length
-  token = `?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMzc5NGVmNzQ4MWRiMzFmYTNlMTk5MiIsImlhdCI6MTU0NzMwOTgwNCwiZXhwIjoxNTQ3OTE0NjA0fQ.sBI-5FqBiaRmrrz6DqaVbRfVh0dJMMbb86HfWlngLXc`;
+  token = `?access_token=${this.authService.getToken()}`;
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   /*getAll() {
@@ -33,6 +34,10 @@ export class UserService {
     console.log('get all service');
     console.log(this.token);
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
+  }
+
+  getOne(id: String): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${userUrl}/${id}${this.token}`);
   }
 
   getMe(): Observable<UserResponse> {
@@ -66,7 +71,12 @@ export class UserService {
     return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
   }
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
-    return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, resource);
+    console.log(id);
+    console.log(UserUpdateDto);
+    return this.http.put<UserResponse>(`${userUrl}/editRole/${id}${this.token}`, resource);
+  }
+  editMyProfile(id: string, resource: UserUpdateMyProfileDto): Observable<UserResponse> {
+    return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, UserUpdateMyProfileDto);
   }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {

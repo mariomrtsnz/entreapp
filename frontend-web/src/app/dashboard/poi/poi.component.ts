@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { DialogPoiCreateComponent } from 'src/app/dialogs/dialog-poi-create/dialog-poi-create.component';
 import { DialogPoiDeleteComponent } from 'src/app/dialogs/dialog-poi-delete/dialog-poi-delete.component';
 import { DialogPoiEditComponent } from 'src/app/dialogs/dialog-poi-edit/dialog-poi-edit.component';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PoiService } from 'src/app/services/poi.service';
 
 import { PoiResponse } from './../../interfaces/poi-response';
@@ -20,7 +19,7 @@ export class PoiComponent implements OnInit {
 
 
   constructor(private poiService: PoiService, public dialog: MatDialog,
-    private authService: AuthenticationService, public router: Router, public snackBar: MatSnackBar) { }
+    public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getAll();
