@@ -18,7 +18,6 @@ import { RouteResponse } from 'src/app/interfaces/route-response';
 export class RouteComponent implements OnInit {
   routes: RouteResponse;
 
-
   constructor(private routeService: RouteService, private poiService: PoiService, public dialog: MatDialog,
     private authService: AuthenticationService, public router: Router, public snackBar: MatSnackBar) { }
 
@@ -52,5 +51,14 @@ export class RouteComponent implements OnInit {
   goRouteDetails(r: OneRouteResponse) {
     this.routeService.selectedRoute = r;
     this.router.navigate(['home/route/details']);
+  }
+
+  createRouteImage(r: OneRouteResponse) {
+    const coverImagesArr: string[] = [];
+
+    r.pois.forEach(poi => {
+      coverImagesArr.push(poi.coverImage);
+    });
+    console.log(coverImagesArr);
   }
 }

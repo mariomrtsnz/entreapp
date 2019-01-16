@@ -1,3 +1,36 @@
-<p>
-  dialog-route works!
-</p>
+<h1 mat-dialog-title>New Route</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!edit;else edit_form">
+  <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
+    </mat-form-field>
+    <mat-form-field class="w-50">
+      <input matInput placeholder="Points" type="number" [formControl]="form.controls['points']" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="POIs" [formControl]="form.controls['pois']" multiple>
+        <mat-option *ngFor="let poi of allPois" [value]="poi.id">{{poi.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Add</button>
+  </div>
+</form>
+<ng-template #edit_form>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
+      <mat-form-field class="w-100">
+        <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="POIs" [formControl]="form.controls['pois']" multiple>
+          <mat-option *ngFor="let poi of allPois" [value]="poi.id">{{poi.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Edit</button>
+    </div>
+  </form>
+</ng-template>
