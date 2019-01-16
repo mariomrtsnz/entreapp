@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PoiService } from 'src/app/services/poi.service';
 
 import { PoiResponse } from './../../interfaces/poi-response';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-poi',
@@ -19,11 +20,12 @@ export class PoiComponent implements OnInit {
   POIs: PoiResponse;
 
 
-  constructor(private poiService: PoiService, public dialog: MatDialog,
+  constructor(private poiService: PoiService, public dialog: MatDialog, private userService: UserService,
     private authService: AuthenticationService, public router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getAll();
+    this.userService.getMe().subscribe(u => console.log(u));
   }
 
   getAll() {

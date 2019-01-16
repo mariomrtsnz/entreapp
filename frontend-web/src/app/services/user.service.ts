@@ -35,6 +35,10 @@ export class UserService {
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
   }
 
+  getOne(id: String): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${userUrl}/${id}${this.token}`)
+  }
+
   getMe(): Observable<UserResponse> {
     console.log('get me');
     console.log(this.token);
