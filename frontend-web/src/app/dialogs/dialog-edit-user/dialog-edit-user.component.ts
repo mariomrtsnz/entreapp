@@ -50,7 +50,7 @@ export class DialogEditUserComponent implements OnInit {
       })
       .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
   }
- 
+
   onSubmit() {
       const updatedUser: UserUpdateDto = new UserUpdateDto(this.form.value.role);
       console.log(updatedUser);
