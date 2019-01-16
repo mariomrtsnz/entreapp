@@ -71,7 +71,7 @@ export function getAuthServiceConfigs() {
     RouterModule.forRoot(routes),
     SocialLoginModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDvjSoqqucab1Bs_Oedq3gSAXVhIU5BFHw'
+      apiKey: 'AIzaSyA-JcBiiDwRaudqbUlqAC4c-Ehn4uPCsqY'
     }),
     QuillModule
   ],

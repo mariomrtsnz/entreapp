@@ -352,17 +352,15 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>admin access token.</p>							|
 | name			| 			|  <p>Poi's name.</p>							|
-| categories			| 			|  <p>Poi's categories.</p>							|
+| categories			| 			|  <p>Categories's ids.</p>							|
 | coordinates			| 			|  <p>Poi's coordinates.</p>							|
-| comments			| 			|  <p>Poi's comments.</p>							|
-| badges			| 			|  <p>Poi's badges.</p>							|
 | qrCode			| 			|  <p>Poi's qrCode.</p>							|
 | audioguides			| 			|  <p>Poi's audioguides.</p>							|
 | description			| 			|  <p>Poi's description.</p>							|
+| coverImage			| 			|  <p>Poi's images.</p>							|
 | images			| 			|  <p>Poi's images.</p>							|
 | year			| 			|  <p>Poi's year.</p>							|
 | creator			| 			|  <p>Poi's creator.</p>							|
-| likes			| 			|  <p>Poi's likes.</p>							|
 | status			| 			|  <p>Poi's status.</p>							|
 | schedule			| 			|  <p>Poi's schedule.</p>							|
 | price			| 			|  <p>Poi's price.</p>							|
@@ -424,17 +422,15 @@
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>admin access token.</p>							|
 | name			| 			|  <p>Poi's name.</p>							|
-| categories			| 			|  <p>Poi's categories.</p>							|
+| categories			| 			|  <p>Categories's ids.</p>							|
 | coordinates			| 			|  <p>Poi's coordinates.</p>							|
-| comments			| 			|  <p>Poi's comments.</p>							|
-| badges			| 			|  <p>Poi's badges.</p>							|
 | qrCode			| 			|  <p>Poi's qrCode.</p>							|
 | audioguides			| 			|  <p>Poi's audioguides.</p>							|
 | description			| 			|  <p>Poi's description.</p>							|
+| coverImage			| 			|  <p>Poi's images.</p>							|
 | images			| 			|  <p>Poi's images.</p>							|
 | year			| 			|  <p>Poi's year.</p>							|
 | creator			| 			|  <p>Poi's creator.</p>							|
-| likes			| 			|  <p>Poi's likes.</p>							|
 | status			| 			|  <p>Poi's status.</p>							|
 | schedule			| 			|  <p>Poi's schedule.</p>							|
 | price			| 			|  <p>Poi's price.</p>							|
