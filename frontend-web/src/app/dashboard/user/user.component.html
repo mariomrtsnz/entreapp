@@ -4,7 +4,7 @@
     <mat-form-field fxFlex="300px">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search user by name.">
     </mat-form-field>
-    
+    <!--
     <mat-form-field [ngStyle.md]="{'margin-left.px': 100}" [ngStyle.sm]="{'margin-left.px': 10}" [ngStyle.xs]="{'margin-left.px': 5}"
     [ngStyle.lg]="{'margin-left.px':847}" [ngStyle.xl]="{'margin-left.px':700}">
         <select matNativeControl required>
@@ -13,14 +13,8 @@
             <option value="mercedes">Mercedes</option>
             <option value="audi">Audi</option>
           </select>
-      <!--
-      <mat-select placeholder="Filter by">
-        <mat-option *ngFor="let food of foods" [value]="food.value">
-          {{food.viewValue}}
-        </mat-option>
-      </mat-select>
-      -->
-    </mat-form-field>
+    
+    </mat-form-field>-->
   </div>
   <div>
     <table fxFlexFill fxFlex mat-table [dataSource]="dataSource" class="mat-elevation-z8 white container" fxFlex="80%"
