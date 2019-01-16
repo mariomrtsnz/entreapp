@@ -29,7 +29,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     ReactiveFormsModule,
     RouterModule.forChild(DashboardRoutes),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDvjSoqqucab1Bs_Oedq3gSAXVhIU5BFHw'
+      apiKey: 'AIzaSyA-JcBiiDwRaudqbUlqAC4c-Ehn4uPCsqY'
     }),
     QuillModule
   ],
