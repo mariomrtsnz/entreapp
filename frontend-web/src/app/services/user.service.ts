@@ -9,6 +9,7 @@ import { UserCreateDto } from '../dto/create-user.dto';
 import { Roles } from '../interfaces/roles';
 import { CountryResponse } from '../interfaces/country-response';
 import { UserUpdateDto } from '../dto/update-user.dto';
+import { UserUpdateMyProfileDto } from '../dto/user-update-my-profile.dto';
 
 const userUrl = `${environment.apiUrl}/users`;
 const countryUrlApi = 'https://restcountries.eu/rest/v2/all?fields=name;';
@@ -19,7 +20,7 @@ const masterKey = '?access_token=WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX';
 export class UserService {
   // token = `?access_token=${this.authService.getToken()}`;
   // tslint:disable-next-line:max-line-length
-  token = `?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMzc5NGVmNzQ4MWRiMzFmYTNlMTk5MiIsImlhdCI6MTU0NzMwOTgwNCwiZXhwIjoxNTQ3OTE0NjA0fQ.sBI-5FqBiaRmrrz6DqaVbRfVh0dJMMbb86HfWlngLXc`;
+  token = `?access_token=${this.authService.getToken()}`;
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
   /*getAll() {
@@ -67,6 +68,19 @@ export class UserService {
   }
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
     return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, resource);
+  }
+  editMyProfile(id: string, resource: UserUpdateMyProfileDto): Observable<UserResponse> {
+    /*	"name": "marania",
+	"password": "12345678",
+	"email": "jose2@gmail.com",
+	"city": "seville",
+	"languaje": "english",
+  "favs": "5c3f49121c0ce14e18709ce1"*/
+    const friends=["pepe"];
+    const favs=["pepe"];
+
+    const user = new UserUpdateMyProfileDto("admin", "html", "htmlhtml", "juan@juan.com", "sevilleee", "andaluz", friends, favs);
+    return this.http.put<UserResponse>(`${userUrl}/5c3794ef7481db31fa3e1992${this.token}`, UserUpdateMyProfileDto);
   }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {

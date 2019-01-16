@@ -9,6 +9,7 @@ import { CountryResponse } from 'src/app/interfaces/country-response';
 import { CustomValidators } from 'ng2-validation';
 import { UserUpdateDto } from 'src/app/dto/update-user.dto';
 import { User } from '../../../../../api/src/api/user/index';
+import { UserUpdateMyProfileDto } from 'src/app/dto/user-update-my-profile.dto';
 
 const password = new FormControl('');
 const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
@@ -51,7 +52,7 @@ export class DialogEditUserComponent implements OnInit {
       .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
   }
 
-  onSubmit() {
+  /*onSubmit() {
       const updatedUser: UserUpdateDto = new UserUpdateDto(this.form.value.role);
       console.log(updatedUser);
       this.userService.edit(this.data.user.id, updatedUser).subscribe(result => {
@@ -61,7 +62,17 @@ export class DialogEditUserComponent implements OnInit {
         console.log(error);
         this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
       });
-  }
+  }*/
+  onSubmit() {
+   
+    this.userService.editMyProfile("1", null).subscribe(result => {
+      console.log('success');
+      console.log(result);
+    }, error => {
+      console.log(error);
+      this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
+    });
+}
   obtainRoles() {
     this.userService.getRoles().toPromise()
       .then(receivedRoles => {
