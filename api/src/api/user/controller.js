@@ -39,7 +39,7 @@ export const show = ({
 export const showMe = ({
     user
   }, res) =>
-  res.json(user.view(true))
+  res.json(user.view("full"))
 
 export const obtainRoles = (req, res) => {
   res.status(200).send({
@@ -101,6 +101,23 @@ export const update = ({
   .then((user) => user ? user.view(true) : null)
   .then(success(res))
   .catch(next)
+
+export const updateRole = ({
+    bodymen: {
+      body
+    },
+    params,
+    user
+  }, res, next) =>
+  User.findById(params.id === 'me' ? user.id : params.id)
+  .then(notFound(res))
+  .then((user) => user ? user.set({
+    role: body.role
+  }).save() : null)
+  .then((user) => user ? user.view(true) : null)
+  .then(success(res))
+  .catch(next)
+
 
 export const updatePassword = ({
     bodymen: {

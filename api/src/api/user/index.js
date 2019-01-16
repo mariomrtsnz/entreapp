@@ -2,12 +2,12 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy, obtainRoles } from './controller'
+import { index, showMe, show, create, update, updatePassword, updateRole, destroy, obtainRoles } from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
 
 const router = new Router()
-const { email, password, name, picture, role, city, languaje } = schema.tree
+const { email, password, name, picture, role, city, languaje, favs, friends } = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -88,8 +88,13 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({email, password, name, city, languaje  }),
+  body({email, password, name, city, languaje, favs, friends  }),
   update)
+
+router.put('/editRole/:id',
+  token({ required: true, role: ['admin']}),
+  body({role}),
+  updateRole)
 //   body({ name, email, password, city, languaje }),
 
 /**
