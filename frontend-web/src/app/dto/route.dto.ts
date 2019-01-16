@@ -1,8 +1,8 @@
 export class RouteDto {
-    pois: string[];
     name: string;
-    constructor(p: string[], n: string) {
-        this.pois = p;
+    pois: string[];
+    constructor(n: string, p: string[]) {
         this.name = n;
+        this.pois = p;
     }
 }

@@ -10,7 +10,7 @@ const authUrl = `${environment.apiUrl}`;
   providedIn: 'root'
 })
 export class AuthenticationService {
-  
+
   request(email: String, password: String) {
     let emailPass: String;
     emailPass = btoa(email + ':' + password);

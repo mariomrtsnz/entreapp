@@ -1,14 +1,14 @@
 import mongoose, { Schema } from 'mongoose'
 
 const routeSchema = new Schema({
+  name: {
+    type: String
+  },
   pois: [{
     type: Schema.Types.ObjectId,
     ref: 'Poi',
     required: true
-  }],
-  name: {
-    type: String
-  }
+  }]
 }, {
   timestamps: true,
   toJSON: {
@@ -22,8 +22,8 @@ routeSchema.methods = {
     const view = {
       // simple view
       id: this.id,
-      pois: this.pois,
       name: this.name,
+      pois: this.pois,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }

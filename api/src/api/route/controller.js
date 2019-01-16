@@ -1,15 +1,22 @@
 import { success, notFound } from '../../services/response/'
 import { Route } from '.'
+import mongoose from '../../services/mongoose'
 
-export const create = ({ bodymen: { body } }, res, next) =>
-  Route.create(body)
+export const create = ({ bodymen: { body } }, res, next) => {
+  let objectIdPoisArray = body.pois.map(s => mongoose.Types.ObjectId(s))
+  let correctBody = {
+    name: body.name,
+    pois: objectIdPoisArray
+  }
+  Route.create(correctBody)
     .then((route) => route.view(true))
     .then(success(res, 201))
     .catch(next)
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Route.count(query)
-    .then(count => Route.find(query, select, cursor)
+    .then(count => Route.find(query, select, cursor).populate('pois', 'id name')
       .then((routes) => ({
         count,
         rows: routes.map((route) => route.view())

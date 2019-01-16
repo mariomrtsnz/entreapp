@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { DialogRouteComponent } from './../../dialogs/dialog-route/dialog-route.component';
 import { DialogDeleteRouteComponent } from './../../dialogs/dialog-delete-route/dialog-delete-route.component';
 import { OneRouteResponse } from './../../interfaces/one-route-response';
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { PoiService } from 'src/app/services/poi.service';
 import { RouteService } from 'src/app/services/route.service';
 import { RouteResponse } from 'src/app/interfaces/route-response';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-route',
@@ -19,15 +21,20 @@ export class RouteComponent implements OnInit {
   routes: RouteResponse;
 
   constructor(private routeService: RouteService, private poiService: PoiService, public dialog: MatDialog,
-    private authService: AuthenticationService, public router: Router, public snackBar: MatSnackBar) { }
+    private authService: AuthenticationService, public router: Router, public snackBar: MatSnackBar, private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Routes');
     this.getAll();
   }
 
+  // NO FUNCIONA
   getAll() {
-    this.routeService.getAll().subscribe(result => this.routes = result,
-      err => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
+    this.routeService.getAll().subscribe(result => {
+      this.routes = result;
+    }, err => {
+        this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000});
+    });
   }
 
   openDialogNewRoute() {

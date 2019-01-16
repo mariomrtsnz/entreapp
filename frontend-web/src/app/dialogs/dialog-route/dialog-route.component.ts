@@ -83,7 +83,7 @@ export class DialogRouteComponent implements OnInit {
     this.allPois.forEach(poi => {
       poisIds.push(poi.id);
     });
-    const routeCreateDto = new RouteDto(poisIds, this.name);
+    const routeCreateDto = new RouteDto(this.name, poisIds);
     this.routeService.create(routeCreateDto).subscribe(
       route => {
         this.dialogRef.close('confirm');
@@ -96,7 +96,7 @@ export class DialogRouteComponent implements OnInit {
     this.allPois.forEach(poi => {
       poisIds.push(poi.id);
     });
-    const routeCreateDto = new RouteDto(poisIds, this.name);
+    const routeCreateDto = new RouteDto(this.name, poisIds);
     this.routeService.edit(this.routeId, routeCreateDto).subscribe(
       categoria => {
         this.dialogRef.close('confirm');

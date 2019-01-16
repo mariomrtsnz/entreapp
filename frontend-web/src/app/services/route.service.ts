@@ -25,11 +25,11 @@ export class RouteService {
 
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
-  getAll() {
+  getAll(): Observable<RouteResponse> {
     return this.http.get<RouteResponse>(`${routeUrl}${this.token}`);
   }
 
-  getOne(id: number) {
+  getOne(id: number): Observable<OneRouteResponse> {
     return this.http.get<OneRouteResponse>(`${routeUrl}/${id}${this.token}`);
   }
 
