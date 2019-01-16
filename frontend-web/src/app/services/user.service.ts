@@ -37,7 +37,7 @@ export class UserService {
   }
 
   getOne(id: String): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${userUrl}/${id}${this.token}`)
+    return this.http.get<UserResponse>(`${userUrl}/${id}${this.token}`);
   }
 
   getMe(): Observable<UserResponse> {
