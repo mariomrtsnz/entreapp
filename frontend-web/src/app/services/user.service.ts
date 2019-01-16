@@ -67,20 +67,10 @@ export class UserService {
     return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
   }
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
-    return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, resource);
+    return this.http.put<UserResponse>(`${userUrl}/editRole/${id}${this.token}`, resource);
   }
   editMyProfile(id: string, resource: UserUpdateMyProfileDto): Observable<UserResponse> {
-    /*	"name": "marania",
-	"password": "12345678",
-	"email": "jose2@gmail.com",
-	"city": "seville",
-	"languaje": "english",
-  "favs": "5c3f49121c0ce14e18709ce1"*/
-    const friends=["pepe"];
-    const favs=["pepe"];
-
-    const user = new UserUpdateMyProfileDto("admin", "html", "htmlhtml", "juan@juan.com", "sevilleee", "andaluz", friends, favs);
-    return this.http.put<UserResponse>(`${userUrl}/5c3794ef7481db31fa3e1992${this.token}`, UserUpdateMyProfileDto);
+    return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, UserUpdateMyProfileDto);
   }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {
