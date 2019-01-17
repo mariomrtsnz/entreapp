@@ -16,7 +16,7 @@
         <mat-chip>{{c}}</mat-chip>
       </mat-chip-list>
       <p>{{poi.creator}} - {{poi.year}}</p>
-      {{poi.description}}
+      {{ poi.description.originalDescription.substr(3) }}
     </div>
 
   </mat-card>
