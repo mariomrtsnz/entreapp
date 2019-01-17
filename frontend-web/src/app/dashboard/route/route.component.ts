@@ -11,6 +11,7 @@ import { PoiService } from 'src/app/services/poi.service';
 import { RouteService } from 'src/app/services/route.service';
 import { RouteResponse } from 'src/app/interfaces/route-response';
 import { Title } from '@angular/platform-browser';
+import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 
 @Component({
   selector: 'app-route',
@@ -26,15 +27,11 @@ export class RouteComponent implements OnInit {
   ngOnInit() {
     this.getAll();
     this.titleService.setTitle('Routes');
-    console.log(this.routes);
   }
 
-  // NO FUNCIONA
   getAll() {
     this.routeService.getAll().subscribe(result => {
-      console.log(`Result: ${result}`);
       this.routes = result;
-      console.log(this.routes);
     }, err => {
         this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000});
     });
@@ -63,12 +60,13 @@ export class RouteComponent implements OnInit {
     this.router.navigate(['home/route/details']);
   }
 
-  createRouteImage(r: OneRouteResponse) {
-    const coverImagesArr: string[] = [];
+  calcTotalDistanceInKm(r: OneRouteResponse) {
+    return 0;
+  }
 
-    r.pois.forEach(poi => {
-      coverImagesArr.push(poi.coverImage);
-    });
-    console.log(coverImagesArr);
+  calcWidth(r: OneRouteResponse) {
+    const maxImgWidthPcntg = 100;
+    return maxImgWidthPcntg / r.pois.length;
+
   }
 }
