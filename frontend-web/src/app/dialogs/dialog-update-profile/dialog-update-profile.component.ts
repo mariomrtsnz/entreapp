@@ -15,6 +15,11 @@ const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 
 export class DialogUpdateProfileComponent implements OnInit {
   user: UserResponse;
+  name: string;
+  email: string;
+  password: string;
+  city: string;
+  language: string;
   roleSelected;
   public form: FormGroup;
   roles: string[];
@@ -23,7 +28,10 @@ export class DialogUpdateProfileComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.user = this.data;
+    this.user = this.data.user;
+    this.obtainRoles();
+    this.name = this.data.name;
+    this.email = this.data.email;
   }
   createForm() {
     this.form = this.fb.group({
@@ -31,9 +39,8 @@ export class DialogUpdateProfileComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    const editedUser: UserUpdateMyProfileDto = <UserUpdateMyProfileDto>this.form.value;
-    this.userService.edit(this.user.id.toString(), editedUser).subscribe(result => {
+  updateProfile() {
+    this.userService.editMyProfile(this.user).subscribe(result => {
       console.log('success');
       console.log(result);
     }, error => {

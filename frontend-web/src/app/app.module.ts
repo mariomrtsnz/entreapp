@@ -77,9 +77,9 @@ export function getAuthServiceConfigs() {
     }),
     QuillModule,
     AngularFireModule.initializeApp({
-      apiKey: "AIzaSyC9iLIAKYPgmNojVVXXHCP1nRt_lAMkxOQ",
-      authDomain: "entreapp-erasmus.firebaseapp.com",
-      storageBucket: "entreapp-erasmus.appspot.com"
+      apiKey: 'AIzaSyC9iLIAKYPgmNojVVXXHCP1nRt_lAMkxOQ',
+      authDomain: 'entreapp-erasmus.firebaseapp.com',
+      storageBucket: 'entreapp-erasmus.appspot.com'
     }),
     AngularFireStorageModule
   ],
@@ -96,7 +96,8 @@ export function getAuthServiceConfigs() {
     DialogBadgeComponent,
     DialogDeleteBadgeComponent,
     DialogRouteComponent,
-    DialogDeleteRouteComponent
+    DialogDeleteRouteComponent,
+    DialogUpdateProfileComponent
   ],
   providers: [ {provide: MAT_DIALOG_DATA, useValue: {}}, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},    {
     provide: AuthServiceConfig,

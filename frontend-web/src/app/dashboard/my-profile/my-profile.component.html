@@ -5,13 +5,13 @@
           <div fxFlex="45">
               <figure>
                 <div class="text-xs-center">
-                  <img src="https://api.adorable.io/avatars/285/{{user.email}}.png" alt="" class="radius-circle">
+                  <img src="https://api.adorable.io/avatars/285/1234.png" alt="" class="radius-circle">
                 </div>
               </figure>
             </div>
         <div fxFlex="55">
-          <h1 class="ma-0">{{user.name}}</h1>
-          <small>{{user.email}}</small>
+          <h1 class="ma-0" [(ngModel)]="name">{{user.name}}</h1>
+          <small [(ngModel)]="email">{{user.email}}</small>
           <p>Role: <span class="roleusu">{{user.role}}</span></p>
           <!-- <p href="javascript:;" class="block mt-xs mb-xs">Phone: {{user.phone}}</p> -->
           <p href="javascript:;" class="block mt-xs mb-xs">Register date: {{user.createdAt}}</p>
