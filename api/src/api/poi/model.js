@@ -21,9 +21,31 @@ const poiSchema = new Schema({
   qrCode: {
     type: String
   },
-  audioguides: [{
-    type: String
-  }],
+  audioguides: {
+    // Lenguaje por defecto, en nuestro caso siempre ingles. Escribimos el codigo del lenguaje solo.
+    language: {
+      // ejemplo: "en"
+      type: String
+    },
+    // Fichero por defecto, en nuestro caso en ingles.
+    originalFile: {
+      // ejemplo: "en-giralda.mp3"
+      type: String
+    },
+    // Array de traducciones con la misma estructura que la de arriba.
+    translations: [
+      {
+        language: {
+          // ejemplo: "es"
+          type: String
+        },
+        translatedFile: {
+          // ejemplo: "es-giralda.mp3"
+          type: String
+        }
+      }
+    ]
+  },
   description: {
     type: String
   },
