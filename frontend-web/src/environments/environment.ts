@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:9000',
-  masterKey: '{"access_token": "WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX"}'
+  masterKey: '{"access_token": "WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX"}',
+
 };
 
 /*

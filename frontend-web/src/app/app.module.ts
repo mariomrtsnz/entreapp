@@ -7,6 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from 'angular-6-social-login';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { QuillModule } from 'ngx-quill';
 
 import { routes } from './app-routing.module';
@@ -15,6 +17,7 @@ import { DialogBadgeComponent } from './dialogs/dialog-badge/dialog-badge.compon
 import { DialogCreateUserComponent } from './dialogs/dialog-create-user/dialog-create-user.component';
 import { DialogDeleteBadgeComponent } from './dialogs/dialog-delete-badge/dialog-delete-badge.component';
 import { DialogDeleteCategoryComponent } from './dialogs/dialog-delete-category/dialog-delete-category.component';
+import { DialogDeleteRouteComponent } from './dialogs/dialog-delete-route/dialog-delete-route.component';
 import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-delete-user.component';
 import { DialogEditCategoryComponent } from './dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogEditUserComponent } from './dialogs/dialog-edit-user/dialog-edit-user.component';
@@ -22,10 +25,9 @@ import { DialogNewCategoryComponent } from './dialogs/dialog-new-category/dialog
 import { DialogPoiCreateComponent } from './dialogs/dialog-poi-create/dialog-poi-create.component';
 import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/dialog-poi-delete.component';
 import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/dialog-poi-edit.component';
+import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
-import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.component';
-import { DialogDeleteRouteComponent } from './dialogs/dialog-delete-route/dialog-delete-route.component';
 
 // Configs
 export function getAuthServiceConfigs() {
@@ -73,7 +75,13 @@ export function getAuthServiceConfigs() {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA-JcBiiDwRaudqbUlqAC4c-Ehn4uPCsqY'
     }),
-    QuillModule
+    QuillModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyC9iLIAKYPgmNojVVXXHCP1nRt_lAMkxOQ",
+      authDomain: "entreapp-erasmus.firebaseapp.com",
+      storageBucket: "entreapp-erasmus.appspot.com"
+    }),
+    AngularFireStorageModule
   ],
   entryComponents: [
     DialogNewCategoryComponent,

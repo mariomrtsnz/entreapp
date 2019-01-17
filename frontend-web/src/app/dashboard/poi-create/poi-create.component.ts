@@ -9,6 +9,7 @@ import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
 import { FileUploader } from 'ng2-file-upload';
 
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 
 const URL = 'http://localhost:9000/uploads';
 
@@ -18,6 +19,9 @@ const URL = 'http://localhost:9000/uploads';
   styleUrls: ['./poi-create.component.scss']
 })
 export class PoiCreateComponent implements OnInit {
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+
 
   poi: OnePoiResponse;
   categories: Category;
@@ -28,7 +32,7 @@ export class PoiCreateComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(private fb: FormBuilder, private poiService: PoiService,
-    public router: Router, public snackBar: MatSnackBar) { }
+    public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
@@ -63,6 +67,12 @@ export class PoiCreateComponent implements OnInit {
     this.poiService.create(newPoi).toPromise()
       .then(() => this.router.navigate(['/home']))
       .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', { duration: 3000 }));
+  }
+
+  upload(event) {
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref(id);
+    this.task = this.ref.put(event.target.files[0]);
   }
 
 }
