@@ -19,6 +19,7 @@ export const index = ({
   }, res, next) =>
   User.count(query)
   .then(count => User.find(query, select, cursor)
+  .populate('badges')
     .then(users => ({
       rows: users.map((user) => user.view(true)),
       count
@@ -26,11 +27,17 @@ export const index = ({
   )
   .then(success(res))
   .catch(next)
-
+/* Comment.findById(params.id)
+    .populate('user')
+    .then(notFound(res))
+    .then((comment) => comment ? comment.view() : null)
+    .then(success(res))
+    .catch(next)*/
 export const show = ({
     params
   }, res, next) =>
   User.findById(params.id)
+  .populate('badges')
   .then(notFound(res))
   .then((user) => user ? user.view() : null)
   .then(success(res))

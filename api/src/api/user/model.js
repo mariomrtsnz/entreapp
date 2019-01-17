@@ -96,16 +96,25 @@ userSchema.pre('save', function (next) {
 
 userSchema.methods = {
   view (full) {
-    let view = {}
-    let fields = ['id', 'name', 'picture']
-
-    if (full) {
-      fields = [...fields, 'email', 'createdAt', 'role']
+    let view = {
+      id: this.id,
+      name: this.name,
+      picture: this.picture,
+      badges: this.badges[0].view(),
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
     }
 
-    fields.forEach((field) => { view[field] = this[field] })
+    /*if (full) {
+      fields = [...fields, 'email', 'createdAt', 'role', 'badges']
+    }*/
 
-    return view
+    // fields.forEach((field) => { view[field] = this[field] })
+
+    return full ? {
+      ...view
+      // add properties for a full view
+    } : view
   },
 
   authenticate (password) {
