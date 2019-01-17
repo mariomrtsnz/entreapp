@@ -24,14 +24,17 @@ export class RouteComponent implements OnInit {
     private authService: AuthenticationService, public router: Router, public snackBar: MatSnackBar, private titleService: Title) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Routes');
     this.getAll();
+    this.titleService.setTitle('Routes');
+    console.log(this.routes);
   }
 
   // NO FUNCIONA
   getAll() {
     this.routeService.getAll().subscribe(result => {
+      console.log(`Result: ${result}`);
       this.routes = result;
+      console.log(this.routes);
     }, err => {
         this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000});
     });

@@ -116,5 +116,5 @@ export class AuthenticationService {
     });
     return loggedUser;
   } */
-  
+
 }
