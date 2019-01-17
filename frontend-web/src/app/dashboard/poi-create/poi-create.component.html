@@ -5,32 +5,6 @@
         <div>
           <!-- Subir archivos -->
           <input type="file" name="photo" (change)="upload($event)" multiple accept="image/*" />
-          <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-            Upload an Image
-          </button>
-          <table class="table">
-            <thead>
-            <tr>
-                <th width="50%">Name</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of uploader.queue">
-                <td><strong>{{ item?.file?.name }}</strong></td>               
-                <td nowrap>
-                    <button type="button" class="btn btn-success btn-xs"
-                            (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                        <span class="glyphicon glyphicon-upload"></span> Upload
-                    </button>
-                    <button type="button" class="btn btn-danger btn-xs"
-                            (click)="item.remove()">
-                        <span class="glyphicon glyphicon-trash"></span> Remove
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
         </div>
         <!-- Coordenadas google maps  -->
         <!-- <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">
