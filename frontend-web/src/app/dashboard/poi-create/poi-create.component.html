@@ -4,7 +4,15 @@
       <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5%">
         <div>
           <!-- Subir archivos -->
-          <input type="file" name="photo" (change)="upload($event)" multiple accept="image/*" />
+          <a mat-stroked-button (click)="fileInput.click()" class="w-100">
+            <input mat-stroked-button #fileInput type="file" (change)="upload($event)" multiple />
+            <mat-icon>library_add</mat-icon>
+            <span> Upload images</span>
+          </a>
+          <!-- <input type="file" name="photo" (change)="upload($event)" multiple accept="image/*" /> -->
+          <div fxLayout="row wrap" fxLayoutGap="2px">
+            <img *ngFor="let i of urlImage" [src]="i" alt="" width="150px">
+          </div>
         </div>
         <!-- Coordenadas google maps  -->
         <!-- <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">
