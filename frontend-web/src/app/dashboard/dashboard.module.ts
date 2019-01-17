@@ -19,6 +19,7 @@ import { RouteComponent } from './route/route.component';
 import { UserComponent } from './user/user.component';
 import { QuillModule } from 'ngx-quill';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA-JcBiiDwRaudqbUlqAC4c-Ehn4uPCsqY'
     }),
-    QuillModule
+    QuillModule,
+    GooglePlaceModule,
   ],
   // tslint:disable-next-line:max-line-length
   declarations: [

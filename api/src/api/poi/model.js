@@ -47,7 +47,22 @@ const poiSchema = new Schema({
     ]
   },
   description: {
-    type: String
+    language: {
+      type: String
+    },
+    originalDescription: {
+      type: String
+    },
+    translations: [
+      {
+        language: {
+          type: String
+        },
+        translatedDescription: {
+          type: String
+        }
+      }
+    ]
   },
   coverImage: {
     type: String

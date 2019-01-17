@@ -94,4 +94,8 @@ export class PoiCreateComponent implements OnInit {
         .subscribe();
     }
   }
+
+  public handleAddressChange(address: any) {
+    // Do some stuff
+}
 }
