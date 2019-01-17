@@ -75,9 +75,19 @@ export class UserService {
     console.log(UserUpdateDto);
     return this.http.put<UserResponse>(`${userUrl}/editRole/${id}${this.token}`, resource);
   }
-  editMyProfile(id: string, resource: UserUpdateMyProfileDto): Observable<UserResponse> {
-    return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, UserUpdateMyProfileDto);
+  editMyProfile(user: UserResponse): Observable<UserResponse> {
+    return this.http.put<UserResponse>(`${userUrl}/${user.id}${this.token}`, user);
   }
+
+  // updateUsuario(usuario: Usuario): Observable<Usuario> {
+  //   const requestOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${this.authService.getToken()}`
+  //     })
+  //   };
+  //   return this.http.put<Usuario>(`${usuarioUrl}/${usuario.id}`, usuario, requestOptions);
+  // }
 
   // createUser(recurso: UserDto): Observable<UserResponse> {
   //   const requestOptions = {

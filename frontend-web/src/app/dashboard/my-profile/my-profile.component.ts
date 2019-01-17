@@ -6,12 +6,15 @@ import { Router } from '@angular/router';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthenticationService} from '../../services/authentication.service';
 import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
+import { DialogUpdateProfileComponent } from 'src/app/dialogs/dialog-update-profile/dialog-update-profile.component';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent implements OnInit {
+  name: String;
+  email: String;
   images: any[] = [];
   num = 1;
 
@@ -51,8 +54,10 @@ export class MyProfileComponent implements OnInit {
   }
 
   openDialogEditUser(user: UserResponse) {
-    const dialogEditUser = this.dialog.open(DialogEditUserComponent, {
-      data: {user: user}
+    const dialogEditUser = this.dialog.open(DialogUpdateProfileComponent, {
+      data: {user: user,
+             name: this.name,
+             email: this.email}
     });
 
     dialogEditUser.afterClosed().subscribe(result => {
