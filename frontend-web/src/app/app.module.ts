@@ -7,8 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from 'angular-6-social-login';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { QuillModule } from 'ngx-quill';
 
 import { routes } from './app-routing.module';
@@ -77,9 +77,9 @@ export function getAuthServiceConfigs() {
     }),
     QuillModule,
     AngularFireModule.initializeApp({
-      apiKey: "AIzaSyC9iLIAKYPgmNojVVXXHCP1nRt_lAMkxOQ",
-      authDomain: "entreapp-erasmus.firebaseapp.com",
-      storageBucket: "entreapp-erasmus.appspot.com"
+      apiKey: 'AIzaSyC9iLIAKYPgmNojVVXXHCP1nRt_lAMkxOQ',
+      authDomain: 'entreapp-erasmus.firebaseapp.com',
+      storageBucket: 'entreapp-erasmus.appspot.com'
     }),
     AngularFireStorageModule
   ],
