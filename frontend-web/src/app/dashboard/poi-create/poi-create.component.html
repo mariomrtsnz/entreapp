@@ -15,6 +15,12 @@
           </div>
         </div>
         <!-- Coordenadas google maps  -->
+        <div>
+          <mat-form-field class="w-100">
+            <input matInput ngx-google-places-autocomplete type="text" placeholder="Site name"
+              #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" />
+          </mat-form-field>
+        </div>
         <!-- <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">
           <agm-marker [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng"></agm-marker>
         </agm-map> -->
