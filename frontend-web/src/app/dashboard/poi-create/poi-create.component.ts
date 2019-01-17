@@ -25,7 +25,6 @@ export class PoiCreateComponent implements OnInit {
   categories: Category;
   public coordinatesForm: FormGroup;
   public form: FormGroup;
-  
 
   constructor(private fb: FormBuilder, private poiService: PoiService,
     public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage) { }
@@ -66,7 +65,7 @@ export class PoiCreateComponent implements OnInit {
     this.ref = this.afStorage.ref(id);
     this.task = this.ref.put(event.target.files[0]);
     this.ref.getDownloadURL().subscribe(r => console.log(r));
-/*     this.task.snapshotChanges().pipe( 
+/*     this.task.snapshotChanges().pipe(
       finalize(() => {
           this.downloadURL = this.ref.getDownloadURL();
           this.downloadURL.subscribe(url=> console.log(url))
