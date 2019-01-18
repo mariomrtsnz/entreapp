@@ -14,7 +14,8 @@ const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 })
 
 export class DialogUpdateProfileComponent implements OnInit {
-  user: UserResponse;
+  user: UserUpdateMyProfileDto;
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -30,8 +31,6 @@ export class DialogUpdateProfileComponent implements OnInit {
   ngOnInit() {
     this.user = this.data.user;
     this.obtainRoles();
-    this.name = this.data.name;
-    this.email = this.data.email;
   }
   createForm() {
     this.form = this.fb.group({
@@ -40,7 +39,7 @@ export class DialogUpdateProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    this.userService.editMyProfile(this.user).subscribe(result => {
+    this.userService.editMyProfile(this.user, this.user.id).subscribe(result => {
       console.log('success');
       console.log(result);
     }, error => {
