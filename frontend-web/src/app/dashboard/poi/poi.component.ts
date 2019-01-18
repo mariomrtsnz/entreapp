@@ -30,21 +30,26 @@ export class PoiComponent implements OnInit {
       err => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }
 
-  // openNewPoi() {
+  openNewPoi() {
+    this.router.navigate(['home/create']);
+  }
 
+  openEditPoi(p) {
+    this.poiService.selectedPoi = p;
+    this.router.navigate(['home/edit']);
+  }
+
+  // openDialogNewPoi() {
+  //   const dialogNewPoi = this.dialog.open(DialogPoiCreateComponent, {width: '500px'});
+  //   dialogNewPoi.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
+  //   err => this.snackBar.open('There was an error when we were creating a new POI.', 'Close', {duration: 3000}));
   // }
 
-  openDialogNewPoi() {
-    const dialogNewPoi = this.dialog.open(DialogPoiCreateComponent, {width: '500px'});
-    dialogNewPoi.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
-    err => this.snackBar.open('There was an error when we were creating a new POI.', 'Close', {duration: 3000}));
-  }
-
-  openDialogEditPoi(p: PoiResponse) {
-    const dialogEditPoi = this.dialog.open(DialogPoiEditComponent, {data: {poi: p}, width: '500px' });
-    dialogEditPoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
-    err => this.snackBar.open('There was an error when we were updating this POI.', 'Close', {duration: 3000}));
-  }
+  // openDialogEditPoi(p: PoiResponse) {
+  //   const dialogEditPoi = this.dialog.open(DialogPoiEditComponent, {data: {poi: p}, width: '500px' });
+  //   dialogEditPoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
+  //   err => this.snackBar.open('There was an error when we were updating this POI.', 'Close', {duration: 3000}));
+  // }
 
   openDialogDeletePoi(p: PoiResponse) {
     const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, {data: {poi: p}});

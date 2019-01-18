@@ -5,7 +5,7 @@
       <mat-icon>more_horiz</mat-icon>
     </a>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="openDialogEditPoi(p)">
+      <button mat-menu-item (click)="openEditPoi(p)">
         <mat-icon>edit</mat-icon>
         <span>Editar</span>
       </button>
@@ -32,6 +32,6 @@
 
 
 
-<button mat-fab id="addFloatingButton" (click)="openDialogNewPoi()">
+<button mat-fab id="addFloatingButton" (click)="openNewPoi()">
   <mat-icon>add</mat-icon>
 </button>
