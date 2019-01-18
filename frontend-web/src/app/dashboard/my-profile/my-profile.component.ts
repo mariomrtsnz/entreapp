@@ -55,9 +55,9 @@ export class MyProfileComponent implements OnInit {
 
   openDialogEditUser(user: UserResponse) {
     const dialogEditUser = this.dialog.open(DialogUpdateProfileComponent, {
-      data: {user: user,
-             name: this.name,
-             email: this.email}
+      data: {user: user},
+      width: '50%',
+      height: '70%'
     });
 
     dialogEditUser.afterClosed().subscribe(result => {

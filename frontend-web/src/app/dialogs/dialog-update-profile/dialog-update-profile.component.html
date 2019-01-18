@@ -1,12 +1,11 @@
 <div class="dialog">
   <div fxLayout="column" fFlexFill>
-
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name" [(ngModel)]="name">
+      <input matInput placeholder="Name" [(ngModel)]="user.name">
     </mat-form-field>
     <br />
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email" [(ngModel)]="email">
+      <input matInput placeholder="Email" [(ngModel)]="user.email">
     </mat-form-field>
     <br />
     <mat-form-field class="example-full-width">
@@ -14,11 +13,11 @@
     </mat-form-field>
     <br />
     <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="City" [(ngModel)]="city"></textarea>
+      <textarea matInput placeholder="City" [(ngModel)]="user.city"></textarea>
     </mat-form-field>
     <br />
     <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="Language" [(ngModel)]="language"></textarea>
+      <textarea matInput placeholder="Language" [(ngModel)]="user.language"></textarea>
     </mat-form-field>
     <br />
     <h4>Role</h4>
