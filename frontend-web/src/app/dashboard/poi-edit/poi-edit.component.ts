@@ -86,7 +86,7 @@ export class PoiEditComponent implements OnInit {
     });
 
     this.descriptionForm = this.fb.group({
-      originalDescription: [this.poi.description.originalDescription, Validators.compose([Validators.required])]
+      originalDescription: [this.poi.description.originalDescription.substr(3), Validators.compose([Validators.required])]
     });
 
     this.form = this.fb.group({
