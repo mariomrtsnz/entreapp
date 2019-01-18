@@ -50,7 +50,8 @@ export class RouteComponent implements OnInit {
   }
 
   openDialogDeleteRoute(r: OneRouteResponse) {
-    const dialogDeleteRoute = this.dialog.open(DialogDeleteRouteComponent, {data: {routeId: r.id, routeName: r.name}});
+    // tslint:disable-next-line:max-line-length
+    const dialogDeleteRoute = this.dialog.open(DialogDeleteRouteComponent, {panelClass: 'delete-dialog', data: {routeId: r.id, routeName: r.name}});
     dialogDeleteRoute.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
     err => this.snackBar.open('There was an error when we were deleting this Route.', 'Close', {duration: 3000}));
   }

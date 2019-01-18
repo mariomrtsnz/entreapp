@@ -1,0 +1,17 @@
+label .mat-checkbox-layout {
+    white-space: initial !important;
+}
+.checkbox-container {
+    margin-bottom: 1em;
+    word-wrap: break-word;
+    mat-checkbox {
+        word-wrap: break-word;
+    }
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    justify-items: space-around;
+}
