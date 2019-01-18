@@ -1,6 +1,6 @@
 <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%" *ngIf="poi">
   <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
-    <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5%">
+    <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
       <div>
         <div id="coverImage" [style.background-image]="'url(' + coverImage + ')'"> </div>
         <!-- <img id="coverImage" width="1920" height="600" [src]="coverImage"> -->
@@ -28,7 +28,21 @@
     </mat-card>
     <mat-card>
       <h3>Audioguides</h3>
-        <audio controls [src]="poi.audioguides.originalFile"></audio>
+      <audio controls [src]="poi.audioguides.originalFile"></audio>
     </mat-card>
   </div>
 </div>
+
+<a mat-fab id="addFloatingButton" [matMenuTriggerFor]="menu">
+    <mat-icon>more_horiz</mat-icon>
+  </a>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openEditPoi()">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="openDialogDeletePoi()">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
