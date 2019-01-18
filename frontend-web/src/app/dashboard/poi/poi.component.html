@@ -2,30 +2,31 @@
   <mat-card class="example-card" *ngFor="let p of POIs?.rows">
     <img mat-card-image src="{{p.coverImage}}">
     <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu">
-        <mat-icon>more_horiz</mat-icon>
-      </a>
+      <mat-icon>more_horiz</mat-icon>
+    </a>
     <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openDialogEditPoi(p)">
-          <mat-icon>edit</mat-icon>
-          <span>Editar</span>
-        </button>
-        <button mat-menu-item (click)="openDialogDeletePoi(p)">
-          <mat-icon>delete</mat-icon>
-          <span>Eliminar</span>
-        </button>
-      </mat-menu>
+      <button mat-menu-item (click)="openDialogEditPoi(p)">
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </button>
+      <button mat-menu-item (click)="openDialogDeletePoi(p)">
+        <mat-icon>delete</mat-icon>
+        <span>Eliminar</span>
+      </button>
+    </mat-menu>
     <mat-card-header>
       <!-- <div mat-card-avatar class="example-header-image"></div> -->
       <mat-card-title>{{p.name}}</mat-card-title>
       <!-- <mat-card-subtitle>{{p.category[0].name}}</mat-card-subtitle> -->
     </mat-card-header>
-    <mat-card-content>
-      <p> {{p.description.originalDescription.substring(3, 117)}} <span *ngIf="p.description.originalDescription.length > 115">...</span> </p>
-    </mat-card-content>
-    <mat-card-actions>
-        <mat-icon>star</mat-icon><mat-icon>star</mat-icon><mat-icon>star</mat-icon>
+      <mat-card-content [innerHtml]="p.description.originalDescription.substring(3, 140) + '...'">
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
         <button mat-button style="float:right;" (click)="goPoiDetails(p)">Ver más</button>
-    </mat-card-actions>
+      </mat-card-actions>
   </mat-card>
 </div>
 

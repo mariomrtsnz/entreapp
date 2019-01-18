@@ -16,7 +16,7 @@
         <mat-chip>{{c}}</mat-chip>
       </mat-chip-list>
       <p>{{poi.creator}} - {{poi.year}}</p>
-      {{ poi.description.originalDescription.substr(3) }}
+      <div [innerHtml]="poi.description.originalDescription.substr(3)"></div>
     </div>
 
   </mat-card>
@@ -28,9 +28,7 @@
     </mat-card>
     <mat-card>
       <h3>Audioguides</h3>
-      <div *ngFor="let a of poi.audioguides">
-        <audio controls [src]="a"></audio>
-      </div>
+        <audio controls [src]="poi.audioguides.originalFile"></audio>
     </mat-card>
   </div>
 </div>

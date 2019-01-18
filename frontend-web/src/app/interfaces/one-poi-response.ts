@@ -8,7 +8,9 @@ export interface OnePoiResponse {
     comments: string[]; // CommentResponse[];
     stars: number;
     qrCode: string;
-    audioguides: string[];
+    audioguides: {
+        originalFile: string;
+    };
     description: {
         originalDescription: string;
     };

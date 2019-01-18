@@ -10,7 +10,6 @@ import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
 import { finalize } from 'rxjs/operators';
 
-const URL = 'http://localhost:9000/uploads';
 
 @Component({
   selector: 'app-poi-create',
@@ -20,14 +19,15 @@ const URL = 'http://localhost:9000/uploads';
 export class PoiCreateComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  downloadURL: Observable<any>;
   urlImage: Array<string> = [];
-  url = '';
 
-  poi: OnePoiResponse;
+  poi: PoiCreateDto;
   categories: Category;
-  public coordinatesForm: FormGroup;
-  public form: FormGroup;
+
+  coordinatesForm: FormGroup;
+  form: FormGroup;
+  audioguidesForm: FormGroup;
+  descriptionForm: FormGroup;
 
   constructor(private fb: FormBuilder, private poiService: PoiService,
     public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage) { }
@@ -41,14 +41,21 @@ export class PoiCreateComponent implements OnInit {
       lat: [null, Validators.compose([Validators.required])],
       lng: [null, Validators.compose([Validators.required])]
     });
+
+    this.audioguidesForm = this.fb.group({
+      originalFile: [null, Validators.compose([Validators.required])]
+    });
+
+    this.descriptionForm = this.fb.group({
+      originalDescription: [null, Validators.compose([Validators.required])]
+    });
+
     this.form = this.fb.group({
       name: [null, Validators.compose([Validators.required])],
       year: [null, Validators.compose([Validators.required])],
       creator: [null],
-      description: [null, Validators.compose([Validators.required])],
       images: [null, Validators.compose([Validators.required])],
-      categories: [null, Validators.compose([Validators.required])],
-      audioguides: [null, Validators.compose([Validators.required])],
+      // categories: [null, Validators.compose([Validators.required])],
       status: [null, Validators.compose([Validators.required])],
       schedule: [null, Validators.compose([Validators.required])],
       price: [null],
@@ -57,45 +64,50 @@ export class PoiCreateComponent implements OnInit {
 
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
+    this.descriptionForm.controls['originalDescription'].setValue('en-' + this.descriptionForm.controls['originalDescription'].value);
     newPoi.coordinates = this.coordinatesForm.value;
+    newPoi.audioguides = this.audioguidesForm.value;
+    newPoi.description = this.descriptionForm.value;
+
     this.poiService.create(newPoi).toPromise()
       .then(() => this.router.navigate(['/home']))
       .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', { duration: 3000 }));
   }
 
-  //   upload(event) {
-  //     const id = Math.random().toString(36).substring(2);
-  //     this.ref = this.afStorage.ref(id);
-  //     this.task = this.ref.put(event.target.files[0]);
-  //     this.ref.getDownloadURL().subscribe(r => console.log(r));
-  // /*     this.task.snapshotChanges().pipe(
-  //       finalize(() => {
-  //           this.downloadURL = this.ref.getDownloadURL();
-  //           this.downloadURL.subscribe(url=> console.log(url))
-  //       })
-  //     ) */
-  //   }
-
-  upload(e) {
-    console.log('length', e.target.files);
+  ImgUpload(e) {
     for (let i = 0; i < e.target.files.length; i++) {
       const id = Math.random().toString(36).substring(2);
       const file = e.target.files[i];
-      const filePath = `${e.target.files[i].type}/${id}`;
+      const filePath = `img/poi/${id}`;
       const ref = this.afStorage.ref(filePath);
       const task = this.afStorage.upload(filePath, file);
 
       task.snapshotChanges().pipe(
         finalize(() => ref.getDownloadURL()
-        .subscribe(r => {
-          this.urlImage.push(r);
-          this.form.controls['images'].setValue(this.urlImage);
-        })))
+          .subscribe(r => {
+            this.urlImage.push(r);
+            this.form.controls['images'].setValue(this.urlImage);
+          })))
         .subscribe();
     }
   }
 
-  public handleAddressChange(address: any) {
-    // Do some stuff
-}
+  audioUpload(e) {
+    const id = Math.random().toString(36).substring(2);
+    const file = e.target.files[0];
+    const filePath = `audioguides/en-${id}`;
+    const ref = this.afStorage.ref(filePath);
+    const task = this.afStorage.upload(filePath, file);
+
+    task.snapshotChanges().pipe(
+      finalize(() => ref.getDownloadURL()
+        .subscribe(r => {
+          this.audioguidesForm.controls['originalFile'].setValue(r);
+        })))
+      .subscribe();
+  }
+
+  // public handleAddressChange(address: any) {
+  //   // Do some stuff
+  // }
 }
