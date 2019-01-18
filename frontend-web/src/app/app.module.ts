@@ -7,8 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from 'angular-6-social-login';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { QuillModule } from 'ngx-quill';
 
 import { routes } from './app-routing.module';
@@ -28,6 +28,7 @@ import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/dialog-poi-edi
 import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 // Configs
 export function getAuthServiceConfigs() {
@@ -81,7 +82,8 @@ export function getAuthServiceConfigs() {
       authDomain: 'entreapp-erasmus.firebaseapp.com',
       storageBucket: 'entreapp-erasmus.appspot.com'
     }),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    GooglePlaceModule,
   ],
   entryComponents: [
     DialogNewCategoryComponent,

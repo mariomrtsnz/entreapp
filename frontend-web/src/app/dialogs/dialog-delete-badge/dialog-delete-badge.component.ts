@@ -8,16 +8,16 @@ import { Component, OnInit, Inject } from '@angular/core';
   styleUrls: ['./dialog-delete-badge.component.scss']
 })
 export class DialogDeleteBadgeComponent implements OnInit {
-  badgeId: string;
-  badgeName: string;
+  elementId: string;
+  elementName: string;
   checkedRobot: boolean;
 
   // tslint:disable-next-line:max-line-length
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogDeleteBadgeComponent>) { }
 
   ngOnInit() {
-    this.badgeId = this.data.badgeId;
-    this.badgeName = this.data.badgeName;
+    this.elementId = this.data.badgeId;
+    this.elementName = this.data.badgeName;
   }
 
   captcha() {
@@ -32,9 +32,9 @@ export class DialogDeleteBadgeComponent implements OnInit {
     this.dialogRef.close('cancel');
   }
 
-  deleteBadge() {
-    console.log(this.badgeId);
-    this.badgeService.remove(this.badgeId).subscribe(result => {
+  delete() {
+    console.log(this.elementId);
+    this.badgeService.remove(this.elementId).subscribe(result => {
       this.dialogRef.close('confirm');
     }, error => {
       console.log(error);

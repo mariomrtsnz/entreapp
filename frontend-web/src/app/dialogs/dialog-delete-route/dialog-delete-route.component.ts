@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { RouteService } from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-dialog-delete-route',
@@ -6,10 +8,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dialog-delete-route.component.scss']
 })
 export class DialogDeleteRouteComponent implements OnInit {
+  elementId: string;
+  elementName: string;
+  checkedRobot: boolean;
 
-  constructor() { }
+  // tslint:disable-next-line:max-line-length
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private routeService: RouteService, public dialogRef: MatDialogRef<DialogDeleteRouteComponent>) { }
 
   ngOnInit() {
+    this.elementId = this.data.routeId;
+    this.elementName = this.data.routeName;
+  }
+
+  captcha() {
+    if (this.checkedRobot) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  close() {
+    this.dialogRef.close('cancel');
+  }
+
+  delete() {
+    console.log(this.elementId);
+    this.routeService.remove(this.elementId).subscribe(result => {
+      this.dialogRef.close('confirm');
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

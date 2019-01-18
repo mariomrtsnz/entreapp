@@ -7,10 +7,11 @@ export interface OnePoiResponse {
     coordinates: { lat: number, lng: number };
     comments: string[]; // CommentResponse[];
     stars: number;
-    // badges: BadgeResponse[];
     qrCode: string;
     audioguides: string[];
-    description: string;
+    description: {
+        originalDescription: string;
+    };
     coverImage: string;
     images: string[];
     year: number;

@@ -7,4 +7,5 @@ export interface UserResponse {
     createAt: string;
     country: string;
     languaje: string;
+    // badges
 }

@@ -57,8 +57,8 @@ export class DialogRouteComponent implements OnInit {
   createForm() {
     if (this.data.route) {
       const editForm: FormGroup = this.fb.group ({
-        name: [this.data.badge.name, Validators.compose ([ Validators.required ])],
-        pois: [this.data.badge.pois, Validators.compose ([ Validators.required ])]
+        name: [this.data.route.name, Validators.compose ([ Validators.required ])],
+        pois: [this.data.route.pois, Validators.compose ([ Validators.required ])]
       });
       this.form = editForm;
     } else {

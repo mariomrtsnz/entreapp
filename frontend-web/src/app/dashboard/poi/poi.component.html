@@ -20,7 +20,7 @@
       <!-- <mat-card-subtitle>{{p.category[0].name}}</mat-card-subtitle> -->
     </mat-card-header>
     <mat-card-content>
-      <p> {{p.description.substring(0, 117)}} <span *ngIf="p.description.length > 115">...</span> </p>
+      <p> {{p.description.originalDescription.substring(3, 117)}} <span *ngIf="p.description.originalDescription.length > 115">...</span> </p>
     </mat-card-content>
     <mat-card-actions>
         <mat-icon>star</mat-icon><mat-icon>star</mat-icon><mat-icon>star</mat-icon>
