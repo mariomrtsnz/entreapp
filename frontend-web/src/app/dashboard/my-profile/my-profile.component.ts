@@ -7,6 +7,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthenticationService} from '../../services/authentication.service';
 import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
 import { DialogUpdateProfileComponent } from 'src/app/dialogs/dialog-update-profile/dialog-update-profile.component';
+import { UserUpdateMyProfileDto } from 'src/app/dto/user-update-my-profile.dto';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -54,7 +55,9 @@ export class MyProfileComponent implements OnInit {
   }
 
   openDialogEditUser(user: UserResponse) {
+    console.log(user);
     const dialogEditUser = this.dialog.open(DialogUpdateProfileComponent, {
+     
       data: {user: user},
       width: '50%',
       height: '70%'

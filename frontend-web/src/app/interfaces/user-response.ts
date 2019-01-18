@@ -3,6 +3,7 @@ export interface UserResponse {
     name: string;
     role: string;
     picture: string;
+    password: string;
     email: string;
     createAt: string;
     country: string;
