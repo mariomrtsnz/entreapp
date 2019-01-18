@@ -14,7 +14,7 @@ const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 })
 
 export class DialogUpdateProfileComponent implements OnInit {
-  user: UserUpdateMyProfileDto;
+  user: UserResponse;
   id: string;
   name: string;
   email: string;
@@ -39,11 +39,13 @@ export class DialogUpdateProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    this.userService.editMyProfile(this.user, this.user.id).subscribe(result => {
+    this.user.password = this.password;
+    this.userService.editMyProfile(this.user, this.user.id.toString()).subscribe(result => {
       console.log('success');
       console.log(result);
     }, error => {
       console.log(error);
+      console.log(this.user.password)
       this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
     });
 }

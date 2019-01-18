@@ -102,6 +102,9 @@ userSchema.methods = {
       picture: this.picture,
       badges: this.badges,
       role: this.role,
+      email: this.email,
+      city: this.city,
+      language: this.language,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
