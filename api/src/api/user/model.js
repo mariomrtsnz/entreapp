@@ -100,16 +100,14 @@ userSchema.methods = {
       id: this.id,
       name: this.name,
       picture: this.picture,
-      badges: this.badges[0].view(),
+      badges: this.badges,
+      role: this.role,
+      email: this.email,
+      city: this.city,
+      language: this.language,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
-
-    /*if (full) {
-      fields = [...fields, 'email', 'createdAt', 'role', 'badges']
-    }*/
-
-    // fields.forEach((field) => { view[field] = this[field] })
 
     return full ? {
       ...view
