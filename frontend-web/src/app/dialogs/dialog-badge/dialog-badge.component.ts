@@ -26,7 +26,7 @@ export class DialogBadgeComponent implements OnInit {
   form: FormGroup;
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  urlImage: Array<string> = [];
+  urlImage: string;
 
   // tslint:disable-next-line:max-line-length
   constructor(private afStorage: AngularFireStorage, private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogBadgeComponent>) { }
@@ -117,8 +117,8 @@ export class DialogBadgeComponent implements OnInit {
 
     task.snapshotChanges().pipe(finalize(() =>
       ref.getDownloadURL().subscribe(r => {
-        this.urlImage.push(r);
-        this.form.controls['images'].setValue(this.urlImage);
+        this.urlImage = r;
+        this.form.controls['icon'].setValue(this.urlImage);
       }))).subscribe();
   }
 
