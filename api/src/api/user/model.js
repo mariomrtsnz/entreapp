@@ -100,7 +100,7 @@ userSchema.methods = {
       id: this.id,
       name: this.name,
       picture: this.picture,
-      badges: this.badges[0].view(),
+      badges: this.badges,
       role: this.role,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
