@@ -65,3 +65,13 @@ input[type=file] {
     bottom: 0;
     right: 0;
   }
+
+  .DragAndDrop.title{
+      margin: 0;
+  }
+
+  .dragNdrop {
+      .mat-icon {
+          float: left;
+      }
+  }

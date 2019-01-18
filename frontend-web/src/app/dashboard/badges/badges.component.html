@@ -4,16 +4,6 @@
     <mat-form-field fxFlex="300px">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search badge by name.">
     </mat-form-field>
-
-    <mat-form-field [ngStyle.md]="{'margin-left.px': 100}" [ngStyle.sm]="{'margin-left.px': 10}" [ngStyle.xs]="{'margin-left.px': 5}"
-      [ngStyle.lg]="{'margin-left.px':847}" [ngStyle.xl]="{'margin-left.px':700}">
-      <select matNativeControl required>
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-      </select>
-    </mat-form-field>
   </div>
   <div>
 

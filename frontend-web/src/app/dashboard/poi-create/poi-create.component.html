@@ -4,10 +4,13 @@
       <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="5%">
         <div>
           <!-- Subir archivos -->
-          <a mat-stroked-button (click)="fileInput.click()" class="w-100">
+          <a mat-stroked-button (click)="fileInput.click()" class="w-100 dragNdrop">
+            <div id="dragNdrop">
+              <mat-icon>library_add</mat-icon>
+              <p class="DragAndDrop title">Upload images</p>
+              <span>Drag & Drop</span>
+            </div>
             <input mat-stroked-button #fileInput type="file" (change)="upload($event)" multiple />
-            <mat-icon>library_add</mat-icon>
-            <span> Upload images</span>
           </a>
           <!-- <input type="file" name="photo" (change)="upload($event)" multiple accept="image/*" /> -->
           <div fxLayout="row wrap" fxLayoutGap="2px">
