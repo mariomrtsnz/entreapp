@@ -36,11 +36,10 @@ export class AuthenticationService {
 
   setLoginData(loginResponse: LoginResponse) {
     localStorage.setItem('token', loginResponse.token);
-    localStorage.setItem('name', loginResponse.name);
-    localStorage.setItem('email', loginResponse.email);
-    localStorage.setItem('role', loginResponse.role);
-    localStorage.setItem('id', loginResponse.id);
-    localStorage.setItem('createAt', loginResponse.createAt);
+    localStorage.setItem('name', loginResponse.user.name);
+    localStorage.setItem('email', loginResponse.user.email);
+    localStorage.setItem('role', loginResponse.user.role);
+    localStorage.setItem('picture', loginResponse.user.picture);
   }
   randomPassword(length) {
     // tslint:disable-next-line:prefer-const
