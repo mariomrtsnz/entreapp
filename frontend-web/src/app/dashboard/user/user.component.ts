@@ -28,8 +28,10 @@ export class UserComponent implements OnInit {
     this.getAll();
   }
   getAll() {
+    let totalSum=0;
     this.userService.getAll().toPromise()
     .then(receivedUsers => {
+      //receivedUsers.rows.forEach(badges => {totalSum+=badge.points})
       this.dataSource = new MatTableDataSource(receivedUsers.rows);
       this.dataSource.paginator = this.paginator;
     })
