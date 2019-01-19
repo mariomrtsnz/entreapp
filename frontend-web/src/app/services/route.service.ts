@@ -29,7 +29,7 @@ export class RouteService {
     return this.http.get<RouteResponse>(`${routeUrl}${this.token}`);
   }
 
-  getOne(id: number): Observable<OneRouteResponse> {
+  getOne(id: string): Observable<OneRouteResponse> {
     return this.http.get<OneRouteResponse>(`${routeUrl}/${id}${this.token}`);
   }
 

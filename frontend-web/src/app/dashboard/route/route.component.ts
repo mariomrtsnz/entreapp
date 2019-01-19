@@ -68,6 +68,5 @@ export class RouteComponent implements OnInit {
   calcWidth(r: OneRouteResponse) {
     const maxImgWidthPcntg = 100;
     return maxImgWidthPcntg / r.pois.length;
-
   }
 }

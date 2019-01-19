@@ -1,3 +1,4 @@
+import { RouteDetailsComponent } from './route-details/route-details.component';
 import { Routes } from '@angular/router';
 
 import { BadgesComponent } from './badges/badges.component';
@@ -24,7 +25,8 @@ export const DashboardRoutes: Routes = [
       { path: 'details', component: PoiDetailsComponent },
       { path: 'myprofile', component: MyProfileComponent },
       { path: 'edit', component: PoiEditComponent },
-      { path: 'create', component: PoiCreateComponent }
+      { path: 'create', component: PoiCreateComponent },
+      { path: 'route/details', component: RouteDetailsComponent}
     ]
   }
 ];

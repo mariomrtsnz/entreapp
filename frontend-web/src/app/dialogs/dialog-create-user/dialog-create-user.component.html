@@ -56,10 +56,10 @@
         </mat-optgroup>
       </mat-select>
     </mat-form-field> -->
-    <h4 class="w-100">Languaje</h4>
+    <h4 class="w-100">Language</h4>
 
     <mat-form-field  class="w-100">
-      <select matNativeControl required [formControl]="form.controls['languaje']">
+      <select matNativeControl required [formControl]="form.controls['language']">
         <option value="SPANISH" >Spanish</option>
         <option value="ENGLISH" selected>English</option>
         <option value="FRENCH">French</option>
@@ -70,6 +70,6 @@
   </div>
   <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
     <!--<button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>-->
-    <button mat-raised-button color="primary" type="submit" >Añadir</button>
+    <button mat-raised-button color="primary" type="submit">CREATE</button>
   </div>
 </form>

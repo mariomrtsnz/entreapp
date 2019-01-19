@@ -14,14 +14,22 @@ import { DialogUpdateProfileComponent } from 'src/app/dialogs/dialog-update-prof
 export class MenuComponent implements OnInit {
   opened = false;
   over = 'over';
-  loggedUserName: string;
+  loggedUser = null;
   alertMessage: string;
 
   // tslint:disable-next-line:max-line-length
   constructor(private snackBar: MatSnackBar, public router: Router, public dialog: MatDialog, public authService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
-    this.loggedUserName = this.authService.getName();
+    this.loggedUser = this.getLoggedUserInfo();
+  }
+
+  getLoggedUserInfo() {
+    return {
+      'username': this.authService.getName(),
+      'email': this.authService.getEmail(),
+      'picture': this.authService.getPicture()
+    };
   }
 
   openUpdateProfile() {

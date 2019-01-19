@@ -20,6 +20,7 @@ import { UserComponent } from './user/user.component';
 import { QuillModule } from 'ngx-quill';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { RouteDetailsComponent } from './route-details/route-details.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     MyProfileComponent,
     PoiEditComponent,
     PoiCreateComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    RouteDetailsComponent
   ],
 })
 

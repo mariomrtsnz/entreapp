@@ -2,12 +2,12 @@
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" role="navigation">
       <div class="menu-profile">
-        <img class="circle" src="../../../assets/images/logo_salesians.png" width="100">
+        <img class="circle" src="{{loggedUser.picture}}" width="100">
         <div>
-          <span class="lead">{{loggedUserName}}</span>
+          <span class="lead">{{loggedUser.username}}</span>
         </div>
         <div>
-          <span class="">{{authService.getEmail()}}</span>
+          <span class="">{{loggedUser.email}}</span>
         </div>
       </div>
       <mat-nav-list>
