@@ -79,7 +79,6 @@ export class DialogCreateUserComponent implements OnInit {
       role: [null, Validators.compose([Validators.required])],
       country: [null, Validators.compose([Validators.required])],
       language: [null, Validators.compose([Validators.required])],
-      picture: [null, Validators.compose([Validators.required])],
 
     });
   }
