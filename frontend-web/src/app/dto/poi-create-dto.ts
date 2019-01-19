@@ -12,6 +12,7 @@ export class PoiCreateDto {
         originalDescription: string;
     };
     name: string;
+    coverImage: string;
     images: string[];
     price: number;
     schedule: string;

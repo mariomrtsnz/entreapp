@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>¿Borrar {{ this.data.poi.name }}?</h1>
+<h1 mat-dialog-title>Do you want to delete {{this.data.poi.name}} ?</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div mat-dialog-content>
-        <p>Para confirmar inserte "ELIMINAR" todo en mayusculas y pulse Borrar.</p>
+        <p>Type "DELETE" into the field to confirm.</p>
         <mat-form-field>
-            <input matInput placeholder="ELIMINAR" type="text" [formControl]="form.controls['borrar']" required>
+            <input matInput placeholder="Insert 'DELETE' here" type="text" [formControl]="form.controls['delete']" required>
         </mat-form-field>
     </div>
     <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
-        <button mat-button [mat-dialog-close]>Volver atrás</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Borrar</button>
+        <button mat-button [mat-dialog-close]>Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Delete</button>
     </div>
 </form>

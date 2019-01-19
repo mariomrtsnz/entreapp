@@ -111,8 +111,8 @@ export class PoiEditComponent implements OnInit {
     newPoi.coordinates = this.coordinatesForm.value;
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
-
-    this.poiService.create(newPoi).toPromise()
+    newPoi.coverImage = this.form.controls['images'].value;
+    this.poiService.edit(this.poi.id, newPoi).toPromise()
       .then(() => this.router.navigate(['/home']))
       .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', { duration: 3000 }));
   }
