@@ -36,7 +36,11 @@
         </mat-form-field>
         <hr>
         <!-- Categorías -->
-        <!--  -->
+        <mat-form-field class="w-100">
+          <mat-select placeholder="Categories" [formControl]="form.controls['categories']" multiple>
+            <mat-option *ngFor="let c of allCategories.rows" [value]="c.id">{{c.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <!-- Autor/Anyo -->
         <mat-form-field class="w-50">
           <input matInput placeholder="Autor" type="text" [formControl]="form.controls['creator']">

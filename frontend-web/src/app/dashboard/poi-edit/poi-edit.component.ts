@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { PoiResponse } from 'src/app/interfaces/poi-response';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
+import { CategoriesResponse } from 'src/app/interfaces/categories-response';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-poi-edit',
@@ -22,14 +24,14 @@ export class PoiEditComponent implements OnInit {
   urlImage: Array<string> = [];
 
   poi: OnePoiResponse;
-  categories: Category;
+  allCategories: CategoriesResponse;
 
   coordinatesForm: FormGroup;
   form: FormGroup;
   audioguidesForm: FormGroup;
   descriptionForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private poiService: PoiService,
+  constructor(private fb: FormBuilder, private poiService: PoiService, private categoryService: CategoryService,
     public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
@@ -47,6 +49,9 @@ export class PoiEditComponent implements OnInit {
       this.urlImage = p.images;
       this.setForms();
     });
+      this.categoryService.getAllCategories()
+        .subscribe(r => this.allCategories = r);
+
   }
 
   createForm() {
@@ -68,7 +73,7 @@ export class PoiEditComponent implements OnInit {
       year: [null, Validators.compose([Validators.required])],
       creator: [null],
       images: [null, Validators.compose([Validators.required])],
-      // categories: [null, Validators.compose([Validators.required])],
+      categories: [null, Validators.compose([Validators.required])],
       status: [null, Validators.compose([Validators.required])],
       schedule: [null, Validators.compose([Validators.required])],
       price: [null],
@@ -94,7 +99,7 @@ export class PoiEditComponent implements OnInit {
       year: [this.poi.year, Validators.compose([Validators.required])],
       creator: [this.poi.creator],
       images: [this.poi.images, Validators.compose([Validators.required])],
-      // categories: [null, Validators.compose([Validators.required])],
+      categories: [this.poi.categories, Validators.compose([Validators.required])],
       status: [this.poi.status, Validators.compose([Validators.required])],
       schedule: [this.poi.schedule, Validators.compose([Validators.required])],
       price: [this.poi.price],

@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
-import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
-import { Category } from 'src/app/interfaces/category';
-import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
-import { PoiService } from 'src/app/services/poi.service';
 import { finalize } from 'rxjs/operators';
+import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
+import { CategoriesResponse } from 'src/app/interfaces/categories-response';
+import { CategoryService } from 'src/app/services/category.service';
+import { PoiService } from 'src/app/services/poi.service';
 
 
 @Component({
@@ -22,18 +21,24 @@ export class PoiCreateComponent implements OnInit {
   urlImage: Array<string> = [];
 
   poi: PoiCreateDto;
-  categories: Category;
+  allCategories: CategoriesResponse;
 
   coordinatesForm: FormGroup;
   form: FormGroup;
   audioguidesForm: FormGroup;
   descriptionForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private poiService: PoiService,
+  constructor(private fb: FormBuilder, private poiService: PoiService, private categoryService: CategoryService,
     public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
     this.createForm();
+    this.getCategories();
+  }
+
+  getCategories() {
+    this.categoryService.getAllCategories()
+      .subscribe(r => this.allCategories = r);
   }
 
   createForm() {
@@ -55,7 +60,7 @@ export class PoiCreateComponent implements OnInit {
       year: [null, Validators.compose([Validators.required])],
       creator: [null],
       images: [null, Validators.compose([Validators.required])],
-      // categories: [null, Validators.compose([Validators.required])],
+      categories: [null, Validators.compose([Validators.required])],
       status: [null, Validators.compose([Validators.required])],
       schedule: [null, Validators.compose([Validators.required])],
       price: [null],

@@ -12,8 +12,8 @@
     <div fxFlex.gt-md="50" fxFlex="100">
       <h1>{{ poi.name }}</h1>
       <hr>
-      <mat-chip-list *ngFor="let c of poi.categories">
-        <mat-chip>{{c}}</mat-chip>
+      <mat-chip-list>
+        <mat-chip *ngFor="let c of poi.categories">{{c.name}}</mat-chip>
       </mat-chip-list>
       <p>{{poi.creator}} - {{poi.year}}</p>
       <div [innerHtml]="poi.description.originalDescription.substr(3)"></div>
