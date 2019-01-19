@@ -1,10 +1,9 @@
 export class CategoryCreateDto {
 
     name: string;
-    idSuperCategoria: number;
 
-    constructor(name: string, idSuperCategoria: number) {
+
+    constructor(name: string) {
         this.name = name;
-        this.idSuperCategoria = idSuperCategoria;
     }
 }

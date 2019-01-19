@@ -7,7 +7,7 @@ import { CategoryCreateDto } from '../dto/create-category.dto';
 import { Category } from '../interfaces/category';
 import { AuthenticationService } from './authentication.service';
 
-const categoryUrl = `${environment.apiUrl}/category`;
+const categoryUrl = `${environment.apiUrl}/categories`;
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class CategoryService {
       })
     };
 
-    return this.http.get<Category[]>(`${categoryUrl}/all`, requestOptions);
+    return this.http.get<Category[]>(`${categoryUrl}`, requestOptions);
   }
 
   createCategory(categoryCreateDto: CategoryCreateDto): Observable<Category> {
@@ -45,7 +45,7 @@ export class CategoryService {
         'Authorization': `Bearer ${this.authService.getToken()}`
       })
     };
-    return this.http.put<Category>(`${categoryUrl}/edit/${category.id}`, category, requestOptions);
+    return this.http.put<Category>(`${categoryUrl}/${category.id}`, category, requestOptions);
   }
 
   deleteCategory(id: number): Observable<Category> {
