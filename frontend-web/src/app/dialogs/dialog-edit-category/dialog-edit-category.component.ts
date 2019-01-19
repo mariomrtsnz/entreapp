@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Category } from '../../interfaces/category';
 import { CategoryService } from '../../services/category.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 
 @Component({
   selector: 'app-dialog-edit-category',
@@ -10,18 +11,25 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogEditCategoryComponent implements OnInit {
   category: Category;
-  constructor(private categoriaService: CategoryService,
+  categorySelected: Category;
+  categories: CategoriesResponse;
+  constructor(private categoryService: CategoryService,
     public dialogRef: MatDialogRef<DialogEditCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.category = this.data.category;
+    this.getCategories();
   }
 
   editCategory() {
-    this.categoriaService.updateCategory(this.category).subscribe(categoria => {
+    this.categoryService.updateCategory(this.category).subscribe(categoria => {
       this.dialogRef.close();
     });
   }
-
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe(result => {
+      this.categories = result;
+    });
+  }
 }
