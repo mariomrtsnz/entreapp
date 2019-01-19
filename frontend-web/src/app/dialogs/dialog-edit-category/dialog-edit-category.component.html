@@ -2,5 +2,11 @@
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Name" [(ngModel)]="category.name">
   </mat-form-field>
+  <mat-select placeholder="Categoría" [formControl]="categoriesControl" [value]="categorySelected">
+    <mat-option *ngFor="let categoryList of categories" [value]="category.id">
+      <small *ngIf="category.id.equals('categoryList.id')">You cannot choose the same category!</small>
+      {{categoryList.name}}
+    </mat-option>
+  </mat-select>
   <button mat-raised-button color="primary" (click)="editCategory()">Edit</button>
 </div>

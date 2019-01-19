@@ -50,10 +50,12 @@ export class DialogUpdateProfileComponent implements OnInit {
     });
 }
   obtainRoles() {
-    this.userService.getRoles().toPromise()
-      .then(receivedRoles => {
-        this.roles = receivedRoles.roles;
-      })
-      .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
+    this.userService.getRoles().subscribe(receivedRoles => {
+      this.roles = receivedRoles.roles;
+    }, error => {
+      this.snackBar.open('There was an error when we were loading data.', 'Close', {
+        duration: 3000
+      });
+    });
   }
 }

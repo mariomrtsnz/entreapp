@@ -7,9 +7,9 @@ export interface UserResponse {
     email: string;
     createAt: string;
     country: string;
-    languaje: string;
+    language: string;
     badges: {
         id: string,
         points: number
-    }
+    };
 }

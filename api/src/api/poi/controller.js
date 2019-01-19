@@ -1,5 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import { Poi } from '.'
+import mongoose from '../../services/mongoose';
 
 export const create = ({ bodymen: { body } }, res, next) => {
   body.coverImage = body.images[0];
@@ -11,7 +12,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Poi.count(query)
-    .then(count => Poi.find(query, select, cursor)
+    .then(count => Poi.find(query, select, cursor).populate('categories', 'id name')
       .then((pois) => ({
         count,
         rows: pois.map((poi) => poi.view())
@@ -21,7 +22,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .catch(next)
 
 export const show = ({ params }, res, next) =>
-  Poi.findById(params.id)
+  Poi.findById(params.id).populate('categories', 'id name')
     .then(notFound(res))
     .then((poi) => poi ? poi.view(true) : null)
     .then(success(res))
