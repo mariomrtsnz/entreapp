@@ -10,6 +10,8 @@ import { PoiService } from 'src/app/services/poi.service';
 })
 export class DialogPoiDeleteComponent implements OnInit {
 
+  checkedRobot: boolean;
+
   public form: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
@@ -17,18 +19,19 @@ export class DialogPoiDeleteComponent implements OnInit {
   public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.createForm();
   }
 
-  createForm() {
-    this.form = this.fb.group ( {
-      delete: [null , Validators.compose ( [ Validators.required, Validators.pattern(/DELETE$/) ] )]
-    });
+  captcha() {
+    if (this.checkedRobot) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  onSubmit()  {
+  delete()  {
     this.poiService.remove(this.data.poi.id).subscribe(() => this.dialogRef.close('confirm'),
-    err => this.snackBar.open('Error deleting this POI.', 'Cerrar', {duration: 3000}));
+    err => this.snackBar.open('Error deleting this POI.', 'Close', {duration: 3000}));
   }
 
 }

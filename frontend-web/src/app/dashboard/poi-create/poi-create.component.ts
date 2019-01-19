@@ -69,9 +69,12 @@ export class PoiCreateComponent implements OnInit {
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
 
-    this.poiService.create(newPoi).toPromise()
-      .then(() => this.router.navigate(['/home']))
-      .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', { duration: 3000 }));
+
+    this.poiService.create(newPoi).subscribe(() => {
+      this.router.navigate(['/home']);
+    }, error => {
+      this.snackBar.open('Error creating the POI.', 'Close', { duration: 3000 });
+    });
   }
 
   ImgUpload(e) {

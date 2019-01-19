@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Are you sure you want to delete POI: {{this.data.poi.name}?</h1>
+<h1 mat-dialog-title>Are you sure you want to delete POI: {{this.data.poi.name}}?</h1>
 <div>
   <div mat-dialog-content class="checkbox-container">
     <mat-checkbox [(ngModel)]="checkedRobot"><span>Click to confirm you are not a robot.</span></mat-checkbox>
   </div>
   <div mat-dialog-actions class="button-container">
-    <button mat-raised-button color="primary" type="submit" [disabled]="!captcha()">DELETE</button>
-    <button mat-button color="accent" [mat-dialog-close]>CANCEL</button>
+    <button mat-raised-button color="primary" type="submit" (click)="delete()" [disabled]="!captcha()"><mat-icon>delete_forever</mat-icon>DELETE</button>
+    <button mat-raised-button color="accent" [mat-dialog-close]>CANCEL</button>
   </div>
 </div>

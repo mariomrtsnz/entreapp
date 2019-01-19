@@ -50,14 +50,11 @@ export class MyProfileComponent implements OnInit {
   getMe() {
     this.userService.getMe().subscribe(result => {
       this.user = result;
-      console.log(this.user);
     });
   }
 
   openDialogEditUser(user: UserResponse) {
-    console.log(user);
     const dialogEditUser = this.dialog.open(DialogUpdateProfileComponent, {
-     
       data: {user: user},
       width: '50%',
       height: '70%'
