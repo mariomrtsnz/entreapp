@@ -24,7 +24,7 @@ export class DialogNewCategoryComponent implements OnInit {
   }
 
   addCategory() {
-    const categoryCreateDto = new CategoryCreateDto(this.name, this.idSuperCategory);
+    const categoryCreateDto = new CategoryCreateDto(this.name);
     this.categoryService.createCategory(categoryCreateDto).subscribe(
       categoria => {
         this.dialogRef.close();
