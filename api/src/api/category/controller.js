@@ -3,12 +3,7 @@ import { Category } from '.'
 import mongoose from '../../services/mongoose';
 
 export const create = ({ bodymen: { body } }, res, next) => {
-  let objectIdParentCategory = body.parent.map(s => mongoose.Types.ObjectId(s))
-  let correctBody = {
-    name: body.name,
-    parent: objectIdParentCategory
-  }
-  Category.create(correctBody)
+  Category.create(body)
     .then((category) => category.view(true))
     .then(success(res, 201))
     .catch(next)
