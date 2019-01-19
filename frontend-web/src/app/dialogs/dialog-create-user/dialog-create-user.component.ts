@@ -7,7 +7,7 @@ import { UserCreateDto } from 'src/app/dto/create-user.dto';
 import { Roles } from 'src/app/interfaces/roles';
 import { CountryResponse } from 'src/app/interfaces/country-response';
 import { CustomValidators } from 'ng2-validation';
-import { AuthService } from 'angular-6-social-login';
+// import { AuthService } from 'angular-6-social-login';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 const password = new FormControl('', Validators.required);
@@ -78,7 +78,7 @@ export class DialogCreateUserComponent implements OnInit {
       name: [null, Validators.compose([Validators.required])],
       role: [null, Validators.compose([Validators.required])],
       country: [null, Validators.compose([Validators.required])],
-      languaje: [null, Validators.compose([Validators.required])],
+      language: [null, Validators.compose([Validators.required])],
       picture: [null, Validators.compose([Validators.required])],
 
     });

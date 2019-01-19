@@ -7,6 +7,7 @@ import { MatPaginator, MatDialog, MatTableDataSource } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { DialogBadgeComponent } from 'src/app/dialogs/dialog-badge/dialog-badge.component';
 import { OneBadgeResponse } from 'src/app/interfaces/one-badge-response';
+import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 
 @Component({
   selector: 'app-badges',
@@ -51,6 +52,16 @@ export class BadgesComponent implements OnInit {
         this.getAllBadges(this.alertMsg);
       }
     });
+  }
+
+  getArrayPois(b: OneBadgeResponse) {
+    const firstTwoPois: OnePoiResponse[] = [];
+    for (let index = 0; index < 2; index++) {
+      if (b.pois[index] != null) {
+        firstTwoPois.push(b.pois[index]);
+      }
+    }
+    return firstTwoPois;
   }
 
   openDialogDeleteBadge(badge: OneBadgeResponse) {

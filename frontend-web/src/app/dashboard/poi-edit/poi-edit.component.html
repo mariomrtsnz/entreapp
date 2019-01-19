@@ -1,3 +1,97 @@
-<p>
-  poi-edit works!
-</p>
+<form [formGroup]="form" [formGroup]="coordinatesForm" [formGroup]="audioguidesForm" [formGroup]="descriptionForm"
+  (ngSubmit)="onSubmit()">
+  <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
+    <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
+      <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
+        <div>
+          <!-- Subir archivos -->
+          <div id="uploadContent" class="w-100">
+            <input type="file" name="photo" (change)="ImgUpload($event)" multiple accept="image/*" />
+            <p>Drag your images here or click in this area.</p>
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="2px">
+            <img *ngFor="let i of urlImage" [src]="i" alt="" width="150px">
+          </div>
+        </div>
+        <!-- Coordenadas google maps  -->
+        <div>
+          <mat-form-field class="w-50">
+            <input matInput placeholder="Latitude" type="text" [formControl]="coordinatesForm.controls['lat']" required>
+          </mat-form-field>
+          <mat-form-field class="w-50">
+            <input matInput placeholder="Longitude" type="text" [formControl]="coordinatesForm.controls['lng']"
+              required>
+          </mat-form-field>
+        </div>
+        <!-- <div>
+          <mat-form-field class="w-100">
+            <input matInput ngx-google-places-autocomplete type="text" placeholder="Site name" #placesRef="ngx-places"
+              (onAddressChange)="handleAddressChange($event)" />
+          </mat-form-field>
+        </div> -->
+      </div>
+      <div fxFlex.gt-md="50" fxFlex="100">
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Name" type="text" [formControl]="form.controls['name']" required>
+        </mat-form-field>
+        <hr>
+        <!-- Categorías -->
+        <!--  -->
+        <!-- Autor/Anyo -->
+        <mat-form-field class="w-50">
+          <input matInput placeholder="Autor" type="text" [formControl]="form.controls['creator']">
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <input matInput placeholder="Year" type="number" [formControl]="form.controls['year']" required>
+        </mat-form-field>
+        <!-- Descripción con librería -->
+        <quill-editor [formControl]="descriptionForm.controls['originalDescription']" required>
+          <div quill-editor-toolbar>
+            <span class="ql-formats">
+              <button class="ql-bold" [title]="'Bold'"></button>
+              <button class="ql-italic" [title]="'italic'"></button>
+              <button class="ql-underline" [title]="'underline'"></button>
+              <button class="ql-strike" [title]="'strike'"></button>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-list" value="ordered" [title]="'Ordered List'"></button>
+              <button class="ql-list" value="bullet" [title]="'Dots List'"></button>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-align" [title]="'Aligment'">
+                <option selected></option>
+                <option value="center"></option>
+                <option value="right"></option>
+                <option value="justify"></option>
+              </select>
+            </span>
+          </div>
+        </quill-editor>
+      </div>
+    </mat-card>
+    <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+      <mat-card>
+        <!-- Precio, estado, horarios -->
+        <mat-form-field class="w-50">
+          <input matInput placeholder="price" type="number" [formControl]="form.controls['price']">
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <input matInput placeholder="status" type="text" [formControl]="form.controls['status']" required>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <textarea matInput placeholder="schedule" type="text" [formControl]="form.controls['schedule']" required></textarea>
+        </mat-form-field>
+      </mat-card>
+      <mat-card>
+        <h3>Audioguides</h3>
+        <div id="uploadContent" class="w-100" style="height: 50px">
+          <input type="file" name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
+          <p style="margin-top: -38px">Drag & Drop or click to upload</p>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <button mat-fab id="addFloatingButton" type="submit" [disabled]="!form.valid">
+    <mat-icon>send</mat-icon>
+  </button>
+</form>

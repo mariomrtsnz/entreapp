@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
 
 @Component({
@@ -23,13 +22,13 @@ export class DialogPoiDeleteComponent implements OnInit {
 
   createForm() {
     this.form = this.fb.group ( {
-      borrar: [null , Validators.compose ( [ Validators.required, Validators.pattern(/ELIMINAR$/) ] )]
+      delete: [null , Validators.compose ( [ Validators.required, Validators.pattern(/DELETE$/) ] )]
     });
   }
 
   onSubmit()  {
     this.poiService.remove(this.data.poi.id).subscribe(() => this.dialogRef.close('confirm'),
-    err => this.snackBar.open('Error al borrar la localización.', 'Cerrar', {duration: 3000}));
+    err => this.snackBar.open('Error deleting this POI.', 'Cerrar', {duration: 3000}));
   }
 
 }

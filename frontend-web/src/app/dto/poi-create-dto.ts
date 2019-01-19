@@ -1,15 +1,19 @@
 export class PoiCreateDto {
-    audioguides: string[];
-    categories: string[];
+    audioguides: {
+        originalFile: string;
+    };
+    categories?: string[];
     coordinates: {
         lat: string,
         lon: string
     };
     creator?: string;
-    description: string;
+    description: {
+        originalDescription: string;
+    };
     name: string;
+    coverImage: string;
     images: string[];
-    likes: string[];
     price: number;
     schedule: string;
     status: string;

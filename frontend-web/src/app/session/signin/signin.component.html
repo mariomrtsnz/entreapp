@@ -1,66 +1,19 @@
-<div class="fondo">
-  
-</div>
-<div class="session mat-indigo">
-  <div class="session-content">
-    <div class="session-wrapper">
-      <div class="formlogin">
-        <mat-card>
-          <mat-card-content>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <div class="text-xs-center pb-1">
-                <!--Logo aquí-->
-                
-                <img class="logo" src="../../../assets/images/logo.png" alt="logo" />
-                <h1>Sign in with your email</h1>
-              </div>
-              <div fxLayout="column" fxLayoutAlign="space-around">
-                <div class="pb-1">
-                  <mat-form-field style="width: 100%">
-                    <input matInput placeholder="Username" [formControl]="form.controls['email']">
-                  </mat-form-field>
-                  <small *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="mat-text-warn">Email
-                    is required.</small>
-                </div>
-                <div class="pb-1">
-                  <mat-form-field style="width: 100%">
-                    <input matInput type="password" placeholder="Password" [formControl]="form.controls['password']">
-                  </mat-form-field>
-                  <small *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched"
-                    class="mat-text-warn">Password is required.</small>
-                </div>
-                <div class="pb-1">
-                  <mat-checkbox>Stay logged in</mat-checkbox>
-                </div>
-                <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
-              </div>
-              <div class="pt-1 pb-1 text-xs-center">
-                <a [routerLink]="['/session/forgot']">Forgot password?</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <!--
-                <div *ngIf="auth.user | async as user; else showLogin">
-                <h1>Hello!</h1>
-                <button (click)="doGoogleLogout()">Logout</button>
-              </div>
-              -->
-                <ng-template #showLogin>
-                  <p>Please login.</p>
-                  <div class="btn white darken-4 col s10 m4">
-                    <a (click)="socialSignIn('google')" style="text-transform:none">
-                      <div class="left">
-                        <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-                      </div>
-                      Login with Google
-                    </a>
-                    <button class="loginBtn loginBtn--facebook" (click)="socialSignIn('facebook')">
-                      Login with Facebook
-                    </button>
-                  </div>
-                </ng-template>
-              </div>
-            </form>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
+<div>
+  <div id="fondo" fxFlex="77" fxFlex.xs="0" fxFlex.lt-md="50" ></div>
+  <div id="container" fxFlex="33" fxFlex.xs="100" fxFlex.lt-md="50" fxLayout="column" fxLayoutAlign="center center"
+    fxLayoutGap="5px">
+    <img src="../../../assets/images/logo_salesians.png" alt="logo salesians" class="w-50">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" class="w-100" fxLayoutAlign="center center">
+      <mat-form-field class="w-50">
+        <input matInput placeholder="Username" [formControl]="form.controls['email']">
+      </mat-form-field>
+      <mat-form-field class="w-50">
+        <input matInput placeholder="Password" [formControl]="form.controls['password']" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
+      <button mat-raised-button class="btn btn-social btn-email w-50" [disabled]="!form.valid"><i class="fas fa-envelope"></i>Login</button>
+    </form>
+    <button mat-raised-button class="btn btn-social btn-google w-50" (click)="doGoogleLogin()"><i class="fab fa-google"></i>Google</button>
+    <button mat-raised-button class="btn btn-social btn-facebook w-50" (click)="doFacebookLogin()"><i class="fab fa-facebook"></i>Facebook</button>
   </div>
 </div>

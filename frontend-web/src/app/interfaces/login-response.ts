@@ -1,8 +1,10 @@
 export interface LoginResponse {
-    token: string;
-    id: string;
+  token: string;
+  user: {
     name: string;
     email: string;
     role: string;
-    createAt: string;
+    picture: string;
+  };
+
 }
