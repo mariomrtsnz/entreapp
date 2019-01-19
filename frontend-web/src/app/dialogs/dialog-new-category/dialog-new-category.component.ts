@@ -14,18 +14,26 @@ import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 export class DialogNewCategoryComponent implements OnInit {
   name: string;
   categorySelected: Category;
-  categories: CategoriesResponse;
-  public form: FormGroup;
+  allCategories: CategoriesResponse;
+  form: FormGroup;
   // tslint:disable-next-line:max-line-length
   constructor(private fb: FormBuilder, private categoryService: CategoryService,
     public dialogRef: MatDialogRef<DialogNewCategoryComponent>) { }
 
   ngOnInit() {
-    this.form = this.fb.group ( {
-      name: [null , Validators.compose ( [ Validators.required ] )]
-    });
+    this.createForm();
     this.getCategories();
+    this.form = this.fb.group ( {
+      name: [null , Validators.compose ( [ Validators.required ] )],
+      categories: [null , Validators.compose ( [ Validators.required ] )]
+    });
 
+  }
+  createForm()  {
+    this.form = this.fb.group({
+      name: [null, Validators.compose([Validators.required])],
+      categories: [null, Validators.compose([Validators.required])]
+    });
   }
 
   addCategory() {
@@ -38,8 +46,7 @@ export class DialogNewCategoryComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getAllCategories().subscribe(result => {
-      this.categories = result;
-    });
+    this.categoryService.getAllCategories()
+      .subscribe(r => this.allCategories = r);
   }
 }
