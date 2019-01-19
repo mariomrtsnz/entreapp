@@ -55,7 +55,7 @@ export class DialogRouteComponent implements OnInit {
   }
 
   createForm() {
-    if (this.data.route) {
+    if (this.data) {
       const editForm: FormGroup = this.fb.group ({
         name: [this.data.route.name, Validators.compose ([ Validators.required ])],
         pois: [this.data.route.pois, Validators.compose ([ Validators.required ])]
@@ -63,8 +63,8 @@ export class DialogRouteComponent implements OnInit {
       this.form = editForm;
     } else {
       const newForm: FormGroup = this.fb.group ({
-        name: ['', Validators.compose ([ Validators.required ])],
-        pois: ['', Validators.compose ([ Validators.required ])]
+        name: [null, Validators.compose ([ Validators.required ])],
+        pois: [null, Validators.compose ([ Validators.required ])]
       });
       this.form = newForm;
     }

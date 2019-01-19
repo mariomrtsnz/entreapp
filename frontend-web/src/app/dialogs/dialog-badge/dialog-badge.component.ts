@@ -37,6 +37,7 @@ export class DialogBadgeComponent implements OnInit {
     if (this.data.badge) {
       this.edit = true;
       this.badgeId = this.data.badge.id;
+      this.urlImage = this.data.badge.icon;
     } else {
       this.edit = false;
     }
@@ -63,7 +64,7 @@ export class DialogBadgeComponent implements OnInit {
   }
 
   createForm() {
-    if (this.data.badge) {
+    if (this.data) {
       const editForm: FormGroup = this.fb.group ({
         name: [this.data.badge.name, Validators.compose ([ Validators.required ])],
         points: [this.data.badge.points, Validators.compose ([ Validators.required ])],
@@ -74,11 +75,11 @@ export class DialogBadgeComponent implements OnInit {
       this.form = editForm;
     } else {
       const newForm: FormGroup = this.fb.group ({
-        name: ['', Validators.compose ([ Validators.required ])],
-        points: ['', Validators.compose ([ Validators.required ])],
-        description: ['', Validators.compose ([ Validators.required ])],
-        icon: ['', Validators.compose ([ Validators.required ])],
-        pois: ['', Validators.compose ([ Validators.required ])]
+        name: [null, Validators.compose ([ Validators.required ])],
+        points: [null, Validators.compose ([ Validators.required ])],
+        description: [null, Validators.compose ([ Validators.required ])],
+        icon: [null, Validators.compose ([ Validators.required ])],
+        pois: [null, Validators.compose ([ Validators.required ])]
       });
       this.form = newForm;
     }

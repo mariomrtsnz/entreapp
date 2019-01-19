@@ -27,7 +27,7 @@ export const DashboardRoutes: Routes = [
       { path: 'myprofile', component: MyProfileComponent, canActivate: [AuthGuard] },
       { path: 'edit', component: PoiEditComponent, canActivate: [AuthGuard] },
       { path: 'create', component: PoiCreateComponent, canActivate: [AuthGuard] },
-      { path: 'route/details', component: RouteDetailsComponent}
+      { path: 'route/details', component: RouteDetailsComponent, canActivate: [AuthGuard]}
     ]
   }
 ];
