@@ -64,11 +64,11 @@ export class UserService {
     return this.http.delete<UserResponse[]>(`${userUrl}/${id}${this.token}`);
   }
   create(resource: UserCreateDto): Observable<UserResponse> {
+    console.log('servicio usuario');
+    console.log(UserCreateDto);
     return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
   }
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
-    console.log(id);
-    console.log(UserUpdateDto);
     return this.http.put<UserResponse>(`${userUrl}/editRole/${id}${this.token}`, resource);
   }
   editMyProfile(user: UserResponse, id: string): Observable<UserResponse> {

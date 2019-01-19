@@ -6,7 +6,7 @@
     </mat-form-field>
 
     <mat-form-field class="w-100">
-      <input matInput  placeholder="Password" name="password" id="password" [formControl]="form.controls['password']" [type]="hide ? 'password' : 'text'" [(ngModel)]="passGenerada">
+      <input matInput  placeholder="Password (8-16 characters)" name="password" id="password" [formControl]="form.controls['password']" [type]="hide ? 'password' : 'text'" [(ngModel)]="passGenerada">
       <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </mat-form-field>
     <mat-form-field class="w-100">
