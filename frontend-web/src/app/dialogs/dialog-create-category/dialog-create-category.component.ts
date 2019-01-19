@@ -7,37 +7,31 @@ import { Category } from 'src/app/interfaces/category';
 import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 
 @Component({
-  selector: 'app-dialog-new-category.component',
-  templateUrl: './dialog-new-category.component.html',
-  styleUrls: ['./dialog-new-category.component.scss']
+  selector: 'app-dialog-create-category.component',
+  templateUrl: './dialog-create-category.component.html',
+  styleUrls: ['./dialog-create-category.component.scss']
 })
-export class DialogNewCategoryComponent implements OnInit {
-  name: string;
-  categorySelected: Category;
-  allCategories: CategoriesResponse;
+export class DialogCreateCategoryComponent implements OnInit {
+  allCategories: Category[];
   form: FormGroup;
+
   // tslint:disable-next-line:max-line-length
   constructor(private fb: FormBuilder, private categoryService: CategoryService,
-    public dialogRef: MatDialogRef<DialogNewCategoryComponent>) { }
+    public dialogRef: MatDialogRef<DialogCreateCategoryComponent>) { }
 
   ngOnInit() {
-    this.createForm();
     this.getCategories();
-    this.form = this.fb.group ( {
-      name: [null , Validators.compose ( [ Validators.required ] )],
-      categories: [null , Validators.compose ( [ Validators.required ] )]
-    });
-
+    this.createForm();
   }
   createForm()  {
     this.form = this.fb.group({
       name: [null, Validators.compose([Validators.required])],
-      categories: [null, Validators.compose([Validators.required])]
+      parent: [null]
     });
   }
 
   addCategory() {
-    const categoryCreateDto = new CategoryCreateDto(this.name, this.categorySelected);
+    const categoryCreateDto: CategoryCreateDto = <CategoryCreateDto>this.form.value;
     this.categoryService.createCategory(categoryCreateDto).subscribe(
       categoria => {
         this.dialogRef.close();
@@ -46,7 +40,6 @@ export class DialogNewCategoryComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getAllCategories()
-      .subscribe(r => this.allCategories = r);
+    this.categoryService.getAllCategories().subscribe(r => this.allCategories = r.rows);
   }
 }

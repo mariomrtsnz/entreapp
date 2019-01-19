@@ -3,10 +3,10 @@ import { Category } from '../interfaces/category';
 export class CategoryCreateDto {
 
     name: string;
-    parent: Category;
+    parent: string;
 
 
-    constructor(name: string, parent: Category) {
+    constructor(name: string, parent: string) {
         this.name = name;
         this.parent = parent;
     }

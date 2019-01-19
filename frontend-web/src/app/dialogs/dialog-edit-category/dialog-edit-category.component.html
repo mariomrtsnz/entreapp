@@ -1,12 +1,13 @@
 <div fxLayout="column" fFlexFill>
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Name" [(ngModel)]="category.name" [formControl]="form.controls['name']">
+    <input matInput placeholder="Name" [formControl]="form.controls['name']" required>
   </mat-form-field>
-  <mat-select placeholder="Categoría" [formControl]="form.controls['categories']" [value]="categorySelected">
-    <mat-option *ngFor="let category of categories.rows" [value]="category.id">
-      <!--<small *ngIf="category.id.equals('categoryList.id')">You cannot choose the same category!</small>-->
-      {{category.name}}
-    </mat-option>
+  <mat-select placeholder="Direct Parent Category" [formControl]="form.controls['parent']">
+    <ng-container *ngFor="let parent of categories">
+      <mat-option [value]="parent.id" *ngIf="parent.name != category.name">
+        {{parent.name}}
+      </mat-option>
+    </ng-container>
   </mat-select>
-  <button mat-raised-button color="primary" (click)="editCategory()">Edit</button>
+  <button mat-raised-button color="primary" (click)="editCategory()">EDIT</button>
 </div>

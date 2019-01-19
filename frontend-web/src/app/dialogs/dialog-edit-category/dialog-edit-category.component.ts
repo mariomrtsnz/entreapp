@@ -1,3 +1,4 @@
+import { CategoryCreateDto } from './../../dto/create-category.dto';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Category } from '../../interfaces/category';
 import { CategoryService } from '../../services/category.service';
@@ -12,8 +13,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class DialogEditCategoryComponent implements OnInit {
   category: Category;
-  categorySelected: Category;
-  categories: CategoriesResponse;
+  categories: Category[];
   public form: FormGroup;
 
   constructor(private fb: FormBuilder, private categoryService: CategoryService,
@@ -22,24 +22,22 @@ export class DialogEditCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.category = this.data.category;
-    this.form = this.fb.group ( {
-      name: [this.data.category.name , Validators.compose ( [ Validators.required ] )],
-      categories: [this.categories , Validators.compose ( [ Validators.required ] )]
-    });
     this.getCategories();
+    this.form = this.fb.group ( {
+      name: [this.data.category.name, Validators.compose ( [ Validators.required ] )],
+      parent: [this.data.category.parent, Validators.compose ( [ Validators.required ] )]
+    });
   }
 
   editCategory() {
-    this.categoryService.updateCategory(this.category).subscribe(categoria => {
+    const categoryEditDto: CategoryCreateDto = <CategoryCreateDto>this.form.value;
+    this.categoryService.updateCategory(this.category.id, categoryEditDto).subscribe(categoria => {
       this.dialogRef.close();
     });
   }
   getCategories() {
     this.categoryService.getAllCategories().subscribe(result => {
-      this.categories = result;
-      console.log('AQUI');
-    console.log(this.categories);
-    console.log(result);
+      this.categories = result.rows;
     });
   }
 }

@@ -1,0 +1,14 @@
+<div fxLayout="column" fFlexFill>
+  <form [formGroup]="form" (ngSubmit)="addCategory()">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Nombre" [formControl]="form.controls['name']" required>
+    </mat-form-field>
+    <br />
+    <mat-select placeholder="Parent Category" [formControl]="form.controls['parent']">
+      <mat-option *ngFor="let c of allCategories" [value]="c.id">
+        {{c.name}}
+      </mat-option>
+    </mat-select>
+    <button mat-raised-button color="primary" [disabled]="!form.valid">ADD</button>
+  </form>
+</div>

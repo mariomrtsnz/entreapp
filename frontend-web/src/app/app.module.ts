@@ -21,7 +21,7 @@ import { DialogDeleteRouteComponent } from './dialogs/dialog-delete-route/dialog
 import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-delete-user.component';
 import { DialogEditCategoryComponent } from './dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogEditUserComponent } from './dialogs/dialog-edit-user/dialog-edit-user.component';
-import { DialogNewCategoryComponent } from './dialogs/dialog-new-category/dialog-new-category.component';
+import { DialogCreateCategoryComponent } from './dialogs/dialog-create-category/dialog-create-category.component';
 import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/dialog-poi-delete.component';
 import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
@@ -31,7 +31,7 @@ import { MaterialModule } from './material-module';
   declarations: [
     AppComponent,
     DialogPoiDeleteComponent,
-    DialogNewCategoryComponent,
+    DialogCreateCategoryComponent,
     DialogEditCategoryComponent,
     DialogDeleteCategoryComponent,
     DialogUpdateProfileComponent,
@@ -65,7 +65,7 @@ import { MaterialModule } from './material-module';
     AngularFireAuthModule,
   ],
   entryComponents: [
-    DialogNewCategoryComponent,
+    DialogCreateCategoryComponent,
     DialogEditCategoryComponent,
     DialogDeleteCategoryComponent,
     DialogDeleteUserComponent,

@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Category } from 'src/app/interfaces/category';
 import { CategoriesResponse } from 'src/app/interfaces/categories-response';
-import { DialogNewCategoryComponent } from 'src/app/dialogs/dialog-new-category/dialog-new-category.component';
+import { DialogCreateCategoryComponent } from 'src/app/dialogs/dialog-create-category/dialog-create-category.component';
 import { DialogEditCategoryComponent } from 'src/app/dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogDeleteCategoryComponent } from 'src/app/dialogs/dialog-delete-category/dialog-delete-category.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -15,7 +15,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = ['name', 'parent', 'actions'];
   dataSource;
   categoriesList: Category[];
   categories: CategoriesResponse;
@@ -46,7 +46,7 @@ export class CategoriesComponent implements OnInit {
     .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }
   openDialogNewCategory() {
-    const dialogoNuevoCategory = this.dialog.open(DialogNewCategoryComponent);
+    const dialogoNuevoCategory = this.dialog.open(DialogCreateCategoryComponent);
 
     dialogoNuevoCategory.afterClosed().subscribe(result => {
       this.getListCategories('Category created');
