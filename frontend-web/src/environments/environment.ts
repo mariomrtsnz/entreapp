@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://entreapp.herokuapp.com',
+  // apiUrl: 'http://localhost:9000',
   masterKey: '{"access_token": "WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX"}',
 
 };

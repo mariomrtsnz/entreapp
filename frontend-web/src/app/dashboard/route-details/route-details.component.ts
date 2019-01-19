@@ -7,6 +7,7 @@ import { OneRouteResponse } from 'src/app/interfaces/one-route-response';
 import { RouteService } from 'src/app/services/route.service';
 import { Router } from '@angular/router';
 import { RouteResponse } from 'src/app/interfaces/route-response';
+import { PoiService } from 'src/app/services/poi.service';
 
 @Component({
   selector: 'app-route-details',
@@ -16,11 +17,12 @@ import { RouteResponse } from 'src/app/interfaces/route-response';
 export class RouteDetailsComponent implements OnInit {
   route: OneRouteResponse;
 
-  constructor(private routeService: RouteService, public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private poiService: PoiService, private routeService: RouteService, public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     if (this.routeService.selectedRoute == null) {
-      this.router.navigate(['home']);
+      this.router.navigate(['home/routes']);
     } else {
       this.getData();
     }
@@ -29,29 +31,35 @@ export class RouteDetailsComponent implements OnInit {
   getData() {
     this.routeService.getOne(this.routeService.selectedRoute.id).subscribe(r => {
       this.route = r;
-    })
+    });
   }
 
-  openDialogEditRoute(r: RouteResponse) {
-    const dialogEditRoute = this.dialog.open(DialogRouteComponent, {data: {route: r}, width: '500px' });
+  openDialogEditRoute() {
+    const dialogEditRoute = this.dialog.open(DialogRouteComponent, {data: {route: this.route}, width: '500px' });
     dialogEditRoute.afterClosed().subscribe(res => res === 'confirm' ? this.router.navigate['/home/routes'] : null,
     err => this.snackBar.open('There was an error when we were updating this Route.', 'Close', {duration: 3000}));
   }
 
-  openDialogDeleteRoute(r: OneRouteResponse) {
+  openDialogDeleteRoute() {
     // tslint:disable-next-line:max-line-length
-    const dialogDeleteRoute = this.dialog.open(DialogDeleteRouteComponent, {panelClass: 'delete-dialog', data: {routeId: r.id, routeName: r.name}});
+    const dialogDeleteRoute = this.dialog.open(DialogDeleteRouteComponent, {panelClass: 'delete-dialog', data: {routeId: this.route.id, routeName: this.route.name}});
     dialogDeleteRoute.afterClosed().subscribe(res => res === 'confirm' ? this.router.navigate['/home/routes'] : null,
     err => this.snackBar.open('There was an error when we were deleting this Route.', 'Close', {duration: 3000}));
   }
 
-  calcTotalDistanceInKm(r: OneRouteResponse) {
+  calcTotalDistanceInKm() {
+    // TODO: Search how to calculate total distance between coordinates in Google Maps.
     return 0;
   }
 
-  calcWidth(r: OneRouteResponse) {
+  calcWidth() {
     const maxImgWidthPcntg = 100;
-    return maxImgWidthPcntg / r.pois.length;
+    return maxImgWidthPcntg / this.route.pois.length;
+  }
+
+  goPoiDetails(p) {
+    this.poiService.selectedPoi = p;
+    this.router.navigate(['home/details']);
   }
 
 }

@@ -16,7 +16,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Route.count(query)
-    .then(count => Route.find(query, select, cursor).populate('pois', 'id name coverImage')
+    .then(count => Route.find(query, select, cursor).populate('pois', 'id name coverImage coordinates')
       .then((routes) => ({
         count,
         rows: routes.map((route) => route.view())
@@ -27,6 +27,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
 
 export const show = ({ params }, res, next) =>
   Route.findById(params.id)
+  .populate('pois', 'id name coverImage coordinates')
     .then(notFound(res))
     .then((route) => route ? route.view() : null)
     .then(success(res))
