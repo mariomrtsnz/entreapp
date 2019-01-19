@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Category } from 'src/app/interfaces/category';
+import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 import { DialogNewCategoryComponent } from 'src/app/dialogs/dialog-new-category/dialog-new-category.component';
 import { DialogEditCategoryComponent } from 'src/app/dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogDeleteCategoryComponent } from 'src/app/dialogs/dialog-delete-category/dialog-delete-category.component';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -14,27 +16,30 @@ import { DialogDeleteCategoryComponent } from 'src/app/dialogs/dialog-delete-cat
 })
 export class CategoriesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'actions'];
-  dataSource: Category[];
+  dataSource;
+  categoriesList: Category[];
+  categories: CategoriesResponse;
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar,
     public dialog: MatDialog, private authService: AuthenticationService) { }
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
     this.getListCategories('List of categories loaded');
   }
+  // applyFilter(filterValue: string) {
+  //   filterValue = filterValue.trim(); // Remove whitespace
+  //   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+  //   this.dataSource.filter = filterValue;
+  // }
 
   getListCategories(mensaje: string) {
-    this.categoryService.getAllCategories().subscribe(listaCategories => {
-      this.dataSource = listaCategories;
-
-      this.snackBar.open(mensaje, 'Close', {
-        duration: 3000,
-        verticalPosition: 'top'
-      });
-    }, error =>  {
-      this.snackBar.open('Error', 'Close', {
-        duration: 3000,
-      });
-    });
+    const totalSum = 0;
+    this.categoryService.getAllCategories().toPromise()
+    .then(receivedCategories => {
+      // receivedUsers.rows.forEach(badges => {totalSum+=badge.points})
+      this.dataSource = new MatTableDataSource(receivedCategories.rows);
+      this.dataSource.paginator = this.paginator;
+    })
+    .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }
   openDialogNewCategory() {
     const dialogoNuevoCategory = this.dialog.open(DialogNewCategoryComponent);
