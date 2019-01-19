@@ -7,15 +7,14 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="openEditPoi(p)">
         <mat-icon>edit</mat-icon>
-        <span>Editar</span>
+        <span>Edit</span>
       </button>
       <button mat-menu-item (click)="openDialogDeletePoi(p)">
         <mat-icon>delete</mat-icon>
-        <span>Eliminar</span>
+        <span>Delete</span>
       </button>
     </mat-menu>
     <mat-card-header>
-      <!-- <div mat-card-avatar class="example-header-image"></div> -->
       <mat-card-title>{{p.name}}</mat-card-title>
       <!-- <mat-card-subtitle>{{p.category[0].name}}</mat-card-subtitle> -->
     </mat-card-header>
@@ -25,7 +24,7 @@
         <mat-icon>star</mat-icon>
         <mat-icon>star</mat-icon>
         <mat-icon>star</mat-icon>
-        <button mat-button style="float:right;" (click)="goPoiDetails(p)">See more</button>
+        <button mat-button style="float:right;" (click)="goPoiDetails(p)">Show more</button>
       </mat-card-actions>
   </mat-card>
 </div>
