@@ -1,7 +1,13 @@
 <div class="tabla">
-  <div fxFlex="100%" fxFlexFill>
-    <button mat-raised-button color="primary" (click)="openDialogNewCategory()">New Category</button>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" fxFlexFill>
+    <div fxFlex fxFlexFill>
+        <div fxGap="100px">
+    <h2 id="titleTable">Categories list</h2>
+    <mat-form-field>
+        <input matInput class="search" (keyup)="applyFilter($event.target.value)" placeholder="Search category">
+      </mat-form-field>
+      <br/>
+    <!-- <button mat-raised-button color="primary" (click)="openDialogNewCategory()">New Category</button> -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 white container" fxFlexFill>
       <!-- <mat-form-field fxFlex="300px">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search category by name.">
       </mat-form-field> -->
@@ -9,15 +15,23 @@
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
-      <ng-container matColumnDef="actions">
+      <ng-container matColumnDef="actions" class="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="openDialogEditCategory(element)">Edit</button>
-          <button mat-raised-button color="danger" (click)="openDialogDeleteCategory(element)">Delete</button>
+          <button mat-raised-button color="primary" (click)="openDialogEditCategory(element)">
+            <mat-icon>border_color</mat-icon>
+          </button>
+          <button mat-raised-button color="danger" (click)="openDialogDeleteCategory(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
   </div>
 </div>
+<button mat-fab id="addFloatingButton" (click)="openDialogNewCategory()">
+  <mat-icon>add</mat-icon>
+</button>

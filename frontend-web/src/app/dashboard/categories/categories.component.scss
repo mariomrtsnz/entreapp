@@ -1,0 +1,37 @@
+.white{
+    background-color: white;
+}
+img {
+    border-radius: 50%;
+    width: 40px;
+  }
+.container{
+    width: 100vh;
+}
+
+.actions{
+    float: right;
+}
+
+.search{
+    width: 35%;
+}
+#titleTable{
+    padding-bottom: 10px;
+    text-align: center;
+}
+#selectFilter{
+    margin-left: 47%;
+}
+
+#addFloatingButton {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    z-index: 9999999;
+    background-color: var(--color-primary-dark);
+
+    .mat-icon {
+        color: white;
+    }
+}
