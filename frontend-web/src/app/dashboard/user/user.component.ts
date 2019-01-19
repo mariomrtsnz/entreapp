@@ -44,20 +44,17 @@ export class UserComponent implements OnInit {
   }
   openDialogDeleteUser(u: UserResponse) {
     const dialogDeleteUser = this.dialog.open(DialogDeleteUserComponent, {data: {user: u}});
-    dialogDeleteUser.afterClosed().toPromise()
-    .then(() => this.getAll())
-    .catch(() => this.snackBar.open('There was an error when we were deleting this USER.', 'Close', {duration: 3000}));
+    dialogDeleteUser.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
+    err => this.snackBar.open('There was an error when we were deleting this User.', 'Close', {duration: 3000}));
   }
   openDialogNewUser() {
     const dialogNewUser = this.dialog.open(DialogCreateUserComponent, {width: '500px'});
-    dialogNewUser.afterClosed().toPromise()
-    .then(() => this.getAll())
-    .catch(() => this.snackBar.open('There was an error when we were creating a new USER.', 'Close', {duration: 3000}));
+    dialogNewUser.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
+    err => this.snackBar.open('There was an error when we were creating a new User.', 'Close', {duration: 3000}));
   }
   openDialogUpdateUser(userResponse: UserResponse) {
     const dialogUpdateUser = this.dialog.open(DialogEditUserComponent,  {width: '500px', data: {user: userResponse}});
-    dialogUpdateUser.afterClosed().toPromise()
-    .then(() => this.getAll())
-    .catch(() => this.snackBar.open('There was an error when we were updating a  USER.', 'Close', {duration: 3000}));
+    dialogUpdateUser.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
+    err => this.snackBar.open('There was an error when we were updating this User.', 'Close', {duration: 3000}));
   }
 }

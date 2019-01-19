@@ -31,8 +31,6 @@ export class UserService {
     .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }*/
   getAll(): Observable<UsersResponse> {
-    console.log('get all service');
-    console.log(this.token);
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
   }
 
