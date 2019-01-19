@@ -30,7 +30,11 @@ export class CategoriesComponent implements OnInit {
   //   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
   //   this.dataSource.filter = filterValue;
   // }
-
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
   getListCategories(mensaje: string) {
     const totalSum = 0;
     this.categoryService.getAllCategories().toPromise()
