@@ -45,7 +45,7 @@ export class DialogUpdateProfileComponent implements OnInit {
       console.log(result);
     }, error => {
       console.log(error);
-      console.log(this.user.password)
+      console.log(this.user.password);
       this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
     });
 }

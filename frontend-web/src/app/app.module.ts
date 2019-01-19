@@ -1,14 +1,14 @@
 import { AgmCoreModule } from '@agm/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule } from 'angular-6-social-login';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { QuillModule } from 'ngx-quill';
 
 import { routes } from './app-routing.module';
@@ -22,36 +22,15 @@ import { DialogDeleteUserComponent } from './dialogs/dialog-delete-user/dialog-d
 import { DialogEditCategoryComponent } from './dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogEditUserComponent } from './dialogs/dialog-edit-user/dialog-edit-user.component';
 import { DialogNewCategoryComponent } from './dialogs/dialog-new-category/dialog-new-category.component';
-import { DialogPoiCreateComponent } from './dialogs/dialog-poi-create/dialog-poi-create.component';
 import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/dialog-poi-delete.component';
-import { DialogPoiEditComponent } from './dialogs/dialog-poi-edit/dialog-poi-edit.component';
 import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
-// Configs
-export function getAuthServiceConfigs() {
-  const config = new AuthServiceConfig(
-      [
-        {
-          id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider('Your-Facebook-app-id')
-        },
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('Your-Google-Client-Id')
-        }
-      ]
-  );
-  return config;
-}
 @NgModule({
   declarations: [
     AppComponent,
-    DialogPoiCreateComponent,
     DialogPoiDeleteComponent,
-    DialogPoiEditComponent,
     DialogNewCategoryComponent,
     DialogEditCategoryComponent,
     DialogDeleteCategoryComponent,
@@ -72,7 +51,6 @@ export function getAuthServiceConfigs() {
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    SocialLoginModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA-JcBiiDwRaudqbUlqAC4c-Ehn4uPCsqY'
     }),
@@ -84,6 +62,7 @@ export function getAuthServiceConfigs() {
     }),
     AngularFireStorageModule,
     GooglePlaceModule,
+    AngularFireAuthModule,
   ],
   entryComponents: [
     DialogNewCategoryComponent,
@@ -92,19 +71,14 @@ export function getAuthServiceConfigs() {
     DialogDeleteUserComponent,
     DialogCreateUserComponent,
     DialogEditUserComponent,
-    DialogPoiCreateComponent,
     DialogPoiDeleteComponent,
-    DialogPoiEditComponent,
     DialogBadgeComponent,
     DialogDeleteBadgeComponent,
     DialogRouteComponent,
     DialogDeleteRouteComponent,
     DialogUpdateProfileComponent
   ],
-  providers: [ {provide: MAT_DIALOG_DATA, useValue: {}}, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},    {
-    provide: AuthServiceConfig,
-    useFactory: getAuthServiceConfigs
-  }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

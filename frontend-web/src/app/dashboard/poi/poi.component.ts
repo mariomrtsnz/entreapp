@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { DialogPoiCreateComponent } from 'src/app/dialogs/dialog-poi-create/dialog-poi-create.component';
 import { DialogPoiDeleteComponent } from 'src/app/dialogs/dialog-poi-delete/dialog-poi-delete.component';
-import { DialogPoiEditComponent } from 'src/app/dialogs/dialog-poi-edit/dialog-poi-edit.component';
 import { PoiService } from 'src/app/services/poi.service';
 
 import { PoiResponse } from './../../interfaces/poi-response';
@@ -38,18 +36,6 @@ export class PoiComponent implements OnInit {
     this.poiService.selectedPoi = p;
     this.router.navigate(['home/edit']);
   }
-
-  // openDialogNewPoi() {
-  //   const dialogNewPoi = this.dialog.open(DialogPoiCreateComponent, {width: '500px'});
-  //   dialogNewPoi.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
-  //   err => this.snackBar.open('There was an error when we were creating a new POI.', 'Close', {duration: 3000}));
-  // }
-
-  // openDialogEditPoi(p: PoiResponse) {
-  //   const dialogEditPoi = this.dialog.open(DialogPoiEditComponent, {data: {poi: p}, width: '500px' });
-  //   dialogEditPoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
-  //   err => this.snackBar.open('There was an error when we were updating this POI.', 'Close', {duration: 3000}));
-  // }
 
   openDialogDeletePoi(p: PoiResponse) {
     const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, {data: {poi: p}});
