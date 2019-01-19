@@ -31,8 +31,6 @@ export class UserService {
     .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
   }*/
   getAll(): Observable<UsersResponse> {
-    console.log('get all service');
-    console.log(this.token);
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
   }
 
@@ -41,8 +39,6 @@ export class UserService {
   }
 
   getMe(): Observable<UserResponse> {
-    console.log('get me');
-    console.log(this.token);
     return this.http.get<UserResponse>(`${userUrl}/me${this.token}`);
   }
   getRoles(): Observable<Roles> {
@@ -68,11 +64,11 @@ export class UserService {
     return this.http.delete<UserResponse[]>(`${userUrl}/${id}${this.token}`);
   }
   create(resource: UserCreateDto): Observable<UserResponse> {
+    console.log('servicio usuario');
+    console.log(UserCreateDto);
     return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
   }
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {
-    console.log(id);
-    console.log(UserUpdateDto);
     return this.http.put<UserResponse>(`${userUrl}/editRole/${id}${this.token}`, resource);
   }
   editMyProfile(user: UserResponse, id: string): Observable<UserResponse> {

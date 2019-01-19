@@ -10,7 +10,7 @@ import { CustomValidators } from 'ng2-validation';
 // import { AuthService } from 'angular-6-social-login';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
-const password = new FormControl('', Validators.required);
+const password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16)]));
 
 const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 
@@ -92,15 +92,16 @@ export class DialogCreateUserComponent implements OnInit {
   }
   onSubmit() {
     const newUser: UserCreateDto = <UserCreateDto>this.form.value;
-    newUser.picture = 'https://gravatar.com/avatar/801fce29ee6b494ec10dc47af131b1ba?d=identicon';
     console.log(newUser);
+    newUser.picture = 'https://gravatar.com/avatar/801fce29ee6b494ec10dc47af131b1ba?d=identicon';
     this.userService.create(newUser).toPromise()
       .then(resp => {
         console.log('aqui');
         console.log(resp);
         this.dialogRef.close(resp);
       })
-      .catch(() => this.snackBar.open('Error creating user.', 'Cerrar', { duration: 3000 }));
+      // .catch(() => this.snackBar.open('Error creating user.', 'Cerrar', { duration: 3000 }));
+      .catch(() => console.log('error creando usuario'));
   }
   obtainRoles() {
     this.userService.getRoles().toPromise()
