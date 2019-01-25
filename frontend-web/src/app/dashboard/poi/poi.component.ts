@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
@@ -17,9 +18,10 @@ export class PoiComponent implements OnInit {
 
 
   constructor(private poiService: PoiService, public dialog: MatDialog,
-    public router: Router, public snackBar: MatSnackBar) { }
+    public router: Router, public snackBar: MatSnackBar, private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Home - Points of Interests');
     this.getAll();
   }
 

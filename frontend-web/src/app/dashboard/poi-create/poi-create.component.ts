@@ -8,6 +8,7 @@ import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 import { CategoryService } from 'src/app/services/category.service';
 import { PoiService } from 'src/app/services/poi.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -29,11 +30,12 @@ export class PoiCreateComponent implements OnInit {
   descriptionForm: FormGroup;
 
   constructor(private fb: FormBuilder, private poiService: PoiService, private categoryService: CategoryService,
-    public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage) { }
+    public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage, private titleService: Title) { }
 
   ngOnInit() {
     this.createForm();
     this.getCategories();
+    this.titleService.setTitle('Create - POI');
   }
 
   getCategories() {

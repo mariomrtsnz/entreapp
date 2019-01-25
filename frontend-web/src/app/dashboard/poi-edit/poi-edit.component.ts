@@ -11,6 +11,7 @@ import { PoiResponse } from 'src/app/interfaces/poi-response';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 import { CategoryService } from 'src/app/services/category.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-poi-edit',
@@ -32,7 +33,7 @@ export class PoiEditComponent implements OnInit {
   descriptionForm: FormGroup;
 
   constructor(private fb: FormBuilder, private poiService: PoiService, private categoryService: CategoryService,
-    public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage) { }
+    public router: Router, public snackBar: MatSnackBar, private afStorage: AngularFireStorage, private titleService: Title) { }
 
   ngOnInit() {
     if (this.poiService.selectedPoi == null) {
@@ -41,6 +42,7 @@ export class PoiEditComponent implements OnInit {
       this.createForm();
       this.getData();
     }
+    this.titleService.setTitle('Edit - POI');
   }
 
   getData() {
