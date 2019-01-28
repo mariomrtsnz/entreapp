@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
@@ -18,7 +19,7 @@ export class PoiDetailsComponent implements OnInit {
   showSettings = false;
 
   constructor(private poiService: PoiService, public router: Router,
-    public dialog: MatDialog, public snackBar: MatSnackBar) { }
+    public dialog: MatDialog, public snackBar: MatSnackBar, private titleService: Title) { }
 
   ngOnInit() {
     if (this.poiService.selectedPoi == null) {
@@ -26,6 +27,7 @@ export class PoiDetailsComponent implements OnInit {
     } else {
       this.getData();
     }
+    this.titleService.setTitle('Details - POI');
   }
 
   getData() {

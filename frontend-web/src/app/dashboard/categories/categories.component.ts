@@ -9,6 +9,7 @@ import { DialogCreateCategoryComponent } from 'src/app/dialogs/dialog-create-cat
 import { DialogEditCategoryComponent } from 'src/app/dialogs/dialog-edit-category/dialog-edit-category.component';
 import { DialogDeleteCategoryComponent } from 'src/app/dialogs/dialog-delete-category/dialog-delete-category.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -20,9 +21,10 @@ export class CategoriesComponent implements OnInit {
   categoriesList: Category[];
   categories: CategoriesResponse;
   constructor(private categoryService: CategoryService, public snackBar: MatSnackBar,
-    public dialog: MatDialog, private authService: AuthenticationService) { }
+    public dialog: MatDialog, private authService: AuthenticationService, private titleService: Title) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
+    this.titleService.setTitle('Categories');
     this.getListCategories('List of categories loaded');
   }
   // applyFilter(filterValue: string) {

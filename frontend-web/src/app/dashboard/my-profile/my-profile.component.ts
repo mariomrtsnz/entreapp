@@ -8,6 +8,7 @@ import { AuthenticationService} from '../../services/authentication.service';
 import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
 import { DialogUpdateProfileComponent } from 'src/app/dialogs/dialog-update-profile/dialog-update-profile.component';
 import { UserUpdateMyProfileDto } from 'src/app/dto/user-update-my-profile.dto';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
@@ -38,13 +39,11 @@ export class MyProfileComponent implements OnInit {
 
   constructor(private userService: UserService,  private router: Router,
     private authService: AuthenticationService,
-    public snackBar: MatSnackBar, public dialog: MatDialog) {
+    public snackBar: MatSnackBar, public dialog: MatDialog, private titleService: Title) {}
 
-    }
-
-  ngOnInit() {
+    ngOnInit() {
+    this.titleService.setTitle('My Profile');
     this.getMe();
-
   }
 
   getMe() {

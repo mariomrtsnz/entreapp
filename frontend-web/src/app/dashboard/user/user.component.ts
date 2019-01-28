@@ -10,6 +10,7 @@ import { UsersResponse } from 'src/app/interfaces/users-response';
 import { DialogDeleteUserComponent } from 'src/app/dialogs/dialog-delete-user/dialog-delete-user.component';
 import { DialogCreateUserComponent } from 'src/app/dialogs/dialog-create-user/dialog-create-user.component';
 import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user',
@@ -22,10 +23,12 @@ export class UserComponent implements OnInit {
   displayedColumns: string[] = ['picture', 'name', 'email', 'points', 'actions'];
   dataSource;
   roles: string[];
-  constructor(private snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private userService: UserService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private userService: UserService, private titleService: Title) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
     this.getAll();
+    this.titleService.setTitle('Users');
   }
   getAll() {
     const totalSum = 0;

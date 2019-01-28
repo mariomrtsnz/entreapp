@@ -8,6 +8,7 @@ import { RouteService } from 'src/app/services/route.service';
 import { Router } from '@angular/router';
 import { RouteResponse } from 'src/app/interfaces/route-response';
 import { PoiService } from 'src/app/services/poi.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-route-details',
@@ -18,7 +19,7 @@ export class RouteDetailsComponent implements OnInit {
   route: OneRouteResponse;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private poiService: PoiService, private routeService: RouteService, public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+  constructor(private poiService: PoiService, private routeService: RouteService, public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar, private titleService: Title) { }
 
   ngOnInit() {
     if (this.routeService.selectedRoute == null) {
@@ -26,6 +27,7 @@ export class RouteDetailsComponent implements OnInit {
     } else {
       this.getData();
     }
+    this.titleService.setTitle('Details - Routes');
   }
 
   getData() {
