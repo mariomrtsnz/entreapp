@@ -17,7 +17,7 @@
     </mat-form-field>-->
   </div>
   <div>
-    <table fxFlexFill fxFlex mat-table [dataSource]="dataSource" class="mat-elevation-z8 white container" fxFlex="80%"
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 white container" fxFlex="80%"
       fxLayoutGap="200px">
       <ng-container matColumnDef="picture">
         <th mat-header-cell *matHeaderCellDef> </th>
@@ -80,7 +80,8 @@
     </table>
 
   </div>
-  <div>  <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons fxFlex="80%"></mat-paginator>
+  <div class="paginator">
+    <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons fxFlex="85%"></mat-paginator>
   </div>
 </div>
 <button mat-fab id="addFloatingButton" (click)="openDialogNewUser()">

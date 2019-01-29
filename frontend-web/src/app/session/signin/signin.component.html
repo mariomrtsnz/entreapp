@@ -11,9 +11,9 @@
         <input matInput placeholder="Password" [formControl]="form.controls['password']" [type]="hide ? 'password' : 'text'">
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
-      <button mat-raised-button class="btn btn-social btn-email w-50" [disabled]="!form.valid"><i class="fas fa-envelope"></i>Login</button>
+      <button  mat-raised-button class="btn btn-social btn-email w-50" [disabled]="!form.valid"><i class="fas fa-envelope"></i>Login</button>
     </form>
-    <button mat-raised-button class="btn btn-social btn-google w-50" (click)="doGoogleLogin()"><i class="fab fa-google"></i>Google</button>
-    <button mat-raised-button class="btn btn-social btn-facebook w-50" (click)="doFacebookLogin()"><i class="fab fa-facebook"></i>Facebook</button>
+    <button mat-raised-button  class="btn btn-social btn-google w-50" (click)="doGoogleLogin()"><i class="fab fa-google"></i>Google</button>
+    <button mat-raised-button   class="btn btn-social btn-facebook w-50" (click)="doFacebookLogin()"><i class="fab fa-facebook"></i>Facebook</button>
   </div>
 </div>

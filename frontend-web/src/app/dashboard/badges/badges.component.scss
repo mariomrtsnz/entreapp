@@ -1,8 +1,19 @@
 img {
     border-radius: 50%;
   }
+
+table {
+    margin:auto;
+}
 .container{
     width: 100vh;
+}
+
+.paginator{
+    margin:auto;
+    position: relative;
+    left:7.1%;
+    width: 94.25%;
 }
 #titleTable{
     padding-bottom: 10px;

@@ -1,6 +1,7 @@
 import { AgmCoreModule } from '@agm/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import {angularResponsive} from 'angular-responsive';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -10,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { QuillModule } from 'ngx-quill';
-
 import { routes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DialogBadgeComponent } from './dialogs/dialog-badge/dialog-badge.component';
