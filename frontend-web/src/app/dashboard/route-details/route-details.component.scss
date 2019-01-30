@@ -1,0 +1,70 @@
+@import "../../../colors.scss";
+
+#addFloatingButton {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    z-index: 9999999;
+    background-color: var(--color-primary-dark);
+
+    .mat-icon {
+        color: white;
+    }
+}
+
+.mat-fab-bottom-right {
+    top: auto;
+    right: 20px;
+    bottom: 1rem;
+    left: auto;
+    position: fixed;
+}
+
+.mat-card.settings-panel {
+    position: fixed;
+    bottom: 6px;
+    right: 6px;
+    width: 250px;
+    z-index: 9;
+  }
+
+#EditFloatingButton {
+    position: fixed;
+    right: 10%;
+    bottom: 5%;
+    z-index: 9999999;
+    background-color: var(--color-primary-dark);
+
+    .mat-icon {
+        color: white;
+    }
+}
+
+agm-map {
+    height: 300px;
+  }
+
+#coverImage {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+
+
+@media only screen and (max-width: 720px) {
+    agm-map {
+        display: none;
+    }
+}
+
+audio {
+    width: 100%;
+}
+
+mat-chip {
+    cursor: pointer;
+}

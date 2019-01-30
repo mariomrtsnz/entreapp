@@ -45,15 +45,17 @@ export class DialogUpdateProfileComponent implements OnInit {
       console.log(result);
     }, error => {
       console.log(error);
-      console.log(this.user.password)
+      console.log(this.user.password);
       this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
     });
 }
   obtainRoles() {
-    this.userService.getRoles().toPromise()
-      .then(receivedRoles => {
-        this.roles = receivedRoles.roles;
-      })
-      .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
+    this.userService.getRoles().subscribe(receivedRoles => {
+      this.roles = receivedRoles.roles;
+    }, error => {
+      this.snackBar.open('There was an error when we were loading data.', 'Close', {
+        duration: 3000
+      });
+    });
   }
 }

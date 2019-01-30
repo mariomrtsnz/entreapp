@@ -1,15 +1,17 @@
 import { success, notFound } from '../../services/response/'
 import { Category } from '.'
+import mongoose from '../../services/mongoose';
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({ bodymen: { body } }, res, next) => {
   Category.create(body)
     .then((category) => category.view(true))
     .then(success(res, 201))
     .catch(next)
+}
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Category.count(query)
-    .then(count => Category.find(query, select, cursor)
+    .then(count => Category.find(query, select, cursor).populate('parent', 'id name')
       .then((categories) => ({
         count,
         rows: categories.map((category) => category.view())

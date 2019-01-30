@@ -33,7 +33,6 @@ export class DialogDeleteRouteComponent implements OnInit {
   }
 
   delete() {
-    console.log(this.elementId);
     this.routeService.remove(this.elementId).subscribe(result => {
       this.dialogRef.close('confirm');
     }, error => {

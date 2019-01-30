@@ -1,13 +1,14 @@
-<h1 mat-dialog-title>¿Borrar {{ this.data.user.name }}?</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div mat-dialog-content>
-        <p>Para confirmar inserte "ELIMINAR" todo en mayusculas y pulse Borrar.</p>
-        <mat-form-field>
-            <input matInput placeholder="ELIMINAR" type="text" [formControl]="form.controls['borrar']" required>
-        </mat-form-field>
+<h1 mat-dialog-title>Are you sure you want to delete user: {{ this.data.user.name }}?</h1>
+<div>
+  <div mat-dialog-content>
+    <div class="checkbox-container">
+      <mat-checkbox [(ngModel)]="checkedRobot"><span>Click to confirm you are not a robot.</span></mat-checkbox>
     </div>
-    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
-        <button mat-button [mat-dialog-close]>Volver atrás</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Borrar</button>
-    </div>
-</form>
+  </div>
+  <div mat-dialog-actions class="button-container">
+    <button mat-raised-button color="primary" (click)="delete()" [disabled]="!captcha()">
+      <mat-icon>delete_forever</mat-icon>DELETE
+    </button>
+    <button mat-raised-button color="accent" [mat-dialog-close]>CANCEL</button>
+  </div>
+</div>

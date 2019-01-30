@@ -1,4 +1,7 @@
-<h1 mat-dialog-title><ng-template [ngIf]="!edit">New</ng-template><ng-template [ngIf]="edit">Edit</ng-template> Badge</h1>
+<h1 mat-dialog-title>
+  <ng-template [ngIf]="!edit">New</ng-template>
+  <ng-template [ngIf]="edit">Edit</ng-template> Badge
+</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!edit;else edit_form">
   <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
     <mat-form-field class="w-100">
@@ -10,9 +13,16 @@
     <mat-form-field class="w-100">
       <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']" required></textarea>
     </mat-form-field>
-    <mat-form-field class="w-100">
-      <input matInput placeholder="Icon" type="text" [formControl]="form.controls['icon']" required>
-    </mat-form-field>
+    <div class="w-100">
+      Icon
+      <a mat-stroked-button (click)="fileInput.click()" class="w-100 dragNdrop">
+        Drag your icon here or click in this area
+        <input mat-stroked-button #fileInput type="file" (change)="upload($event)" />
+      </a>
+      <div fxLayout="row wrap" fxLayoutGap="2px">
+        <img [src]="urlImage" alt="" width="50px" *ngIf="urlImage">
+      </div>
+    </div>
     <mat-form-field>
       <mat-select placeholder="POIs" [formControl]="form.controls['pois']" multiple>
         <mat-option *ngFor="let poi of allPois" [value]="poi.id">{{poi.name}}</mat-option>
@@ -35,9 +45,16 @@
       <mat-form-field class="w-100">
         <textarea matInput placeholder="Description" type="text" [formControl]="form.controls['description']" required></textarea>
       </mat-form-field>
-      <mat-form-field class="w-100">
-        <input matInput placeholder="Icon" type="text" [formControl]="form.controls['icon']" required>
-      </mat-form-field>
+      <div class="w-100">
+        Icon
+        <a mat-stroked-button (click)="fileInput.click()" class="w-100 dragNdrop">
+          Drag your icon here or click in this area
+          <input mat-stroked-button #fileInput type="file" (change)="upload($event)" />
+        </a>
+        <div fxLayout="row wrap" fxLayoutGap="2px">
+          <img [src]="urlImage" alt="" width="50px">
+        </div>
+      </div>
       <mat-form-field>
         <mat-select placeholder="POIs" [formControl]="form.controls['pois']" multiple>
           <mat-option *ngFor="let poi of allPois" [value]="poi.id">{{poi.name}}</mat-option>

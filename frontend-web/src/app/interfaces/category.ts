@@ -1,4 +1,5 @@
 export interface Category {
-    id: number;
+    id: string;
     name: String;
+    parent: Category;
 }

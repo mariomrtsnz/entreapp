@@ -8,7 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./dialog-delete-category.component.scss']
 })
 export class DialogDeleteCategoryComponent implements OnInit {
-  word: string;
+  checkedRobot: boolean;
+
   constructor(private categoryService: CategoryService,
     public dialogRef: MatDialogRef<DialogDeleteCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -16,16 +17,18 @@ export class DialogDeleteCategoryComponent implements OnInit {
   ngOnInit() {
   }
 
-  checkWord() {
-    if (this.word === 'DELETE') {
+  captcha() {
+    if (this.checkedRobot) {
       return true;
     } else {
       return false;
     }
   }
-  deleteCategory() {
+  delete() {
     this.categoryService.deleteCategory(this.data.id).subscribe(resp => {
-      console.log(resp);
+      this.dialogRef.close('confirm');
+    }, error => {
+      console.log(error);
     });
   }
 }

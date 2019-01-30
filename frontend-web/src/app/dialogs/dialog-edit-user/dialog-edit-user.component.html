@@ -1,9 +1,7 @@
 <h1 mat-dialog-title>Edit role user</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-around">
-
     <h4>Role</h4>
-
     <mat-form-field class="w-100">
       <mat-select placeholder="User role" [formControl]="form.controls['role']" [(value)]="roleSelected" name="role">
         <mat-option *ngFor="let role of roles" [value]="role">
@@ -11,11 +9,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-
   </div>
   <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
     <!--<button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>-->
-    <button mat-raised-button color="primary" type="submit">Edit</button>
+    <button mat-raised-button color="primary" type="submit">EDIT</button>
   </div>
 </form>

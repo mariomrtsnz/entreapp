@@ -1,10 +1,13 @@
+import { Category } from '../interfaces/category';
+
 export class CategoryCreateDto {
 
     name: string;
-    idSuperCategoria: number;
+    parent: string;
 
-    constructor(name: string, idSuperCategoria: number) {
+
+    constructor(name: string, parent: string) {
         this.name = name;
-        this.idSuperCategoria = idSuperCategoria;
+        this.parent = parent;
     }
 }

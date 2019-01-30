@@ -33,7 +33,6 @@ export class DialogDeleteBadgeComponent implements OnInit {
   }
 
   delete() {
-    console.log(this.elementId);
     this.badgeService.remove(this.elementId).subscribe(result => {
       this.dialogRef.close('confirm');
     }, error => {

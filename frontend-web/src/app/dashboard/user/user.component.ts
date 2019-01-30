@@ -10,6 +10,7 @@ import { UsersResponse } from 'src/app/interfaces/users-response';
 import { DialogDeleteUserComponent } from 'src/app/dialogs/dialog-delete-user/dialog-delete-user.component';
 import { DialogCreateUserComponent } from 'src/app/dialogs/dialog-create-user/dialog-create-user.component';
 import { DialogEditUserComponent } from '../../dialogs/dialog-edit-user/dialog-edit-user.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user',
@@ -22,16 +23,18 @@ export class UserComponent implements OnInit {
   displayedColumns: string[] = ['picture', 'name', 'email', 'points', 'actions'];
   dataSource;
   roles: string[];
-  constructor(private snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private userService: UserService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private snackBar: MatSnackBar, private router: Router, public dialog: MatDialog, private userService: UserService, private titleService: Title) { }
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
     this.getAll();
+    this.titleService.setTitle('Users');
   }
   getAll() {
-    let totalSum=0;
+    const totalSum = 0;
     this.userService.getAll().toPromise()
     .then(receivedUsers => {
-      //receivedUsers.rows.forEach(badges => {totalSum+=badge.points})
+      // receivedUsers.rows.forEach(badges => {totalSum+=badge.points})
       this.dataSource = new MatTableDataSource(receivedUsers.rows);
       this.dataSource.paginator = this.paginator;
     })
@@ -44,20 +47,17 @@ export class UserComponent implements OnInit {
   }
   openDialogDeleteUser(u: UserResponse) {
     const dialogDeleteUser = this.dialog.open(DialogDeleteUserComponent, {data: {user: u}});
-    dialogDeleteUser.afterClosed().toPromise()
-    .then(() => this.getAll())
-    .catch(() => this.snackBar.open('There was an error when we were deleting this USER.', 'Close', {duration: 3000}));
+    dialogDeleteUser.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
+    err => this.snackBar.open('There was an error when we were deleting this User.', 'Close', {duration: 3000}));
   }
   openDialogNewUser() {
     const dialogNewUser = this.dialog.open(DialogCreateUserComponent, {width: '500px'});
-    dialogNewUser.afterClosed().toPromise()
-    .then(() => this.getAll())
-    .catch(() => this.snackBar.open('There was an error when we were creating a new USER.', 'Close', {duration: 3000}));
+    dialogNewUser.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
+    err => this.snackBar.open('There was an error when we were creating a new User.', 'Close', {duration: 3000}));
   }
   openDialogUpdateUser(userResponse: UserResponse) {
     const dialogUpdateUser = this.dialog.open(DialogEditUserComponent,  {width: '500px', data: {user: userResponse}});
-    dialogUpdateUser.afterClosed().toPromise()
-    .then(() => this.getAll())
-    .catch(() => this.snackBar.open('There was an error when we were updating a  USER.', 'Close', {duration: 3000}));
+    dialogUpdateUser.afterClosed().subscribe(res => (res === 'confirm') ? this.getAll() : null,
+    err => this.snackBar.open('There was an error when we were updating this User.', 'Close', {duration: 3000}));
   }
 }

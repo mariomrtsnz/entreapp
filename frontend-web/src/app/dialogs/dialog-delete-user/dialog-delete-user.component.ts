@@ -11,25 +11,30 @@ import { UserService } from 'src/app/services/user.service';
 export class DialogDeleteUserComponent implements OnInit {
 
   public form: FormGroup;
+  checkedRobot: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
   private userService: UserService, public dialogRef: MatDialogRef<DialogDeleteUserComponent>,
   public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.createForm();
+
   }
 
-  createForm() {
-    this.form = this.fb.group ( {
-      borrar: [null , Validators.compose ( [ Validators.required, Validators.pattern(/ELIMINAR$/) ] )]
+  captcha() {
+    if (this.checkedRobot) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  delete() {
+    this.userService.remove(this.data.user.id).subscribe(result => {
+      this.dialogRef.close('confirm');
+    }, error => {
+      console.log(error);
     });
-  }
-
-  onSubmit() {
-    this.userService.remove(this.data.user.id).toPromise()
-    .then(resp => this.dialogRef.close(resp))
-    .catch(() => this.snackBar.open('Error al borrar el usuario.', 'Cerrar', {duration: 3000}));
   }
 
 }

@@ -1,3 +1,5 @@
+import { finalize } from 'rxjs/operators';
+import { AngularFireStorageReference, AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -22,9 +24,12 @@ export class DialogBadgeComponent implements OnInit {
   allPois: OnePoiResponse[];
   badgeId: string;
   form: FormGroup;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  urlImage: string;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogBadgeComponent>) { }
+  constructor(private afStorage: AngularFireStorage, private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogBadgeComponent>) { }
 
   ngOnInit() {
     this.getAllPois();
@@ -32,6 +37,7 @@ export class DialogBadgeComponent implements OnInit {
     if (this.data.badge) {
       this.edit = true;
       this.badgeId = this.data.badge.id;
+      this.urlImage = this.data.badge.icon;
     } else {
       this.edit = false;
     }
@@ -58,7 +64,7 @@ export class DialogBadgeComponent implements OnInit {
   }
 
   createForm() {
-    if (this.data.badge) {
+    if (this.data) {
       const editForm: FormGroup = this.fb.group ({
         name: [this.data.badge.name, Validators.compose ([ Validators.required ])],
         points: [this.data.badge.points, Validators.compose ([ Validators.required ])],
@@ -69,11 +75,11 @@ export class DialogBadgeComponent implements OnInit {
       this.form = editForm;
     } else {
       const newForm: FormGroup = this.fb.group ({
-        name: ['', Validators.compose ([ Validators.required ])],
-        points: ['', Validators.compose ([ Validators.required ])],
-        description: ['', Validators.compose ([ Validators.required ])],
-        icon: ['', Validators.compose ([ Validators.required ])],
-        pois: ['', Validators.compose ([ Validators.required ])]
+        name: [null, Validators.compose ([ Validators.required ])],
+        points: [null, Validators.compose ([ Validators.required ])],
+        description: [null, Validators.compose ([ Validators.required ])],
+        icon: [null, Validators.compose ([ Validators.required ])],
+        pois: [null, Validators.compose ([ Validators.required ])]
       });
       this.form = newForm;
     }
@@ -100,6 +106,21 @@ export class DialogBadgeComponent implements OnInit {
         this.dialogRef.close('confirm');
       }
     );
+  }
+
+  upload(e) {
+    console.log('length', e.target.files);
+    const id = Math.random().toString(36).substring(2);
+    const file = e.target.files[0];
+    const filePath = `${e.target.files[0].type}/${id}`;
+    const ref = this.afStorage.ref(filePath);
+    const task = this.afStorage.upload(filePath, file);
+
+    task.snapshotChanges().pipe(finalize(() =>
+      ref.getDownloadURL().subscribe(r => {
+        this.urlImage = r;
+        this.form.controls['icon'].setValue(this.urlImage);
+      }))).subscribe();
   }
 
   editBadge() {

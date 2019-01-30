@@ -6,56 +6,31 @@ import { environment } from 'src/environments/environment';
 import { CategoryCreateDto } from '../dto/create-category.dto';
 import { Category } from '../interfaces/category';
 import { AuthenticationService } from './authentication.service';
+import { CategoriesComponent } from '../dashboard/categories/categories.component';
+import { CategoriesResponse } from '../interfaces/categories-response';
 
-const categoryUrl = `${environment.apiUrl}/category`;
+const categoryUrl = `${environment.apiUrl}/categories`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-
+  token = `?access_token=${this.authService.getToken()}`;
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
-  getAllCategories(): Observable<Category[]> {
-    const requestOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authService.getToken()}`
-      })
-    };
-
-    return this.http.get<Category[]>(`${categoryUrl}/all`, requestOptions);
+  getAllCategories(): Observable<CategoriesResponse> {
+    return this.http.get<CategoriesResponse>(`${categoryUrl}${this.token}`);
   }
 
   createCategory(categoryCreateDto: CategoryCreateDto): Observable<Category> {
-    const requestOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authService.getToken()}`
-      })
-    };
-
-    return this.http.post<Category>(`${categoryUrl}/create`, categoryCreateDto, requestOptions);
+    return this.http.post<Category>(`${categoryUrl}${this.token}`, categoryCreateDto);
   }
 
-  updateCategory(category: Category): Observable<Category> {
-    const requestOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authService.getToken()}`
-      })
-    };
-    return this.http.put<Category>(`${categoryUrl}/edit/${category.id}`, category, requestOptions);
+  updateCategory(id: string, resource: CategoryCreateDto): Observable<Category> {
+    return this.http.put<Category>(`${categoryUrl}/${id}${this.token}`, resource);
   }
 
   deleteCategory(id: number): Observable<Category> {
-    const requestOptions = {
-      headers: new HttpHeaders({
-        'Content-Type' : 'application/json',
-        'Authorization': `Bearer ${this.authService.getToken()}`,
-        'Access-Control-Allow-Origin': '*'
-      })
-    };
-    return this.http.delete<Category>(`${categoryUrl}/${id}`, requestOptions);
+    return this.http.delete<Category>(`${categoryUrl}/${id}${this.token}`);
   }
 }

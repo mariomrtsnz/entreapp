@@ -1,0 +1,45 @@
+<div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%" *ngIf="route">
+  <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
+    <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
+      <div>
+        <div *ngFor="let poi of route.pois" alt="" id="coverImage" [ngStyle]="{'width': calcWidth() + '%'}" [style.background-image]="'url('+poi.coverImage+')'"
+        style="background-size: cover; background-repeat: no-repeat; background-position: center; float: left;"> </div>
+      </div>
+      <agm-map [latitude]="route.pois[0].coordinates.lat" [longitude]="route.pois[0].coordinates.lng" [zoom]="15">
+        <agm-marker *ngFor="let poi of route.pois" [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng"></agm-marker>
+      </agm-map>
+    </div>
+    <div fxFlex.gt-md="50" fxFlex="100">
+      <h1>{{ route.name }}</h1>
+      <hr>
+      <mat-chip-list>
+        <mat-chip *ngFor="let p of route.pois" (click)="goPoiDetails(p)" title="Go to POI Details">{{p.name}}</mat-chip>
+      </mat-chip-list>
+      <!-- <div>Description</div> -->
+    </div>
+
+  </mat-card>
+  <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+    <mat-card>
+      <p>Distance: {{calcTotalDistanceInKm()}} Km</p>
+    </mat-card>
+    <!-- <mat-card>
+      <h3>Audioguides</h3>
+      <audio controls></audio>
+    </mat-card> -->
+  </div>
+</div>
+
+<a mat-fab id="addFloatingButton" [matMenuTriggerFor]="menu">
+    <mat-icon>more_horiz</mat-icon>
+  </a>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openDialogEditRoute()">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="openDialogDeleteRoute()">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>

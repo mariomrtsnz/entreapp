@@ -34,8 +34,6 @@ export class DialogEditUserComponent implements OnInit {
     this.createForm();
     this.obtainRoles();
     this.getAllCountries();
-    console.log('datos');
-    console.log(this.data);
   }
 
   createForm() {
@@ -45,11 +43,11 @@ export class DialogEditUserComponent implements OnInit {
   }
 
   getAllCountries() {
-    this.userService.getAllCountries().toPromise()
-      .then(receivedCountries => {
-        this.countries = receivedCountries;
-      })
-      .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
+    this.userService.getAllCountries().subscribe(receivedCountries => {
+      this.countries = receivedCountries;
+    }, error => {
+      this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
+    });
   }
 
   /*onSubmit() {
@@ -64,21 +62,22 @@ export class DialogEditUserComponent implements OnInit {
       });
   }*/
   onSubmit() {
-    const editedUser: UserUpdateDto = <UserUpdateDto>this.form.value;
+    const editedUser: UserUpdateDto = < UserUpdateDto > this.form.value;
     this.userService.edit(this.data.user.id, editedUser).subscribe(result => {
-      console.log('success');
-      console.log(result);
+      this.dialogRef.close(result);
     }, error => {
       console.log(error);
-      this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
+      this.snackBar.open('Failed to update user.', 'Close', {
+        duration: 3000
+      });
     });
-}
+  }
   obtainRoles() {
-    this.userService.getRoles().toPromise()
-      .then(receivedRoles => {
-        this.roles = receivedRoles.roles;
-      })
-      .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
+    this.userService.getRoles().subscribe(receivedRoles => {
+      this.roles = receivedRoles.roles;
+    }, error => {
+      this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
+    });
   }
 
 }

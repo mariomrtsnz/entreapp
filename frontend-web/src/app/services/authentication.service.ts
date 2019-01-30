@@ -1,11 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { auth } from 'firebase/app';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { isNull } from 'util';
 
 import { LoginDto } from '../dto/login-dto';
+import { GoogleSignResponse } from '../interfaces/google-sign-response';
 import { LoginResponse } from '../interfaces/login-response';
 
 const authUrl = `${environment.apiUrl}`;
@@ -28,10 +31,11 @@ export class AuthenticationService {
     return requestOptions;
   }
 
-  constructor(private http: HttpClient) {}
-  login(loginDto: LoginDto): Observable < LoginResponse > {
+  constructor(private http: HttpClient, public afAuth: AngularFireAuth) { }
+
+  login(loginDto: LoginDto): Observable<LoginResponse> {
     const requestOptions = this.request(loginDto.email, loginDto.password);
-    return this.http.post < LoginResponse > (`${authUrl}/auth`, environment.masterKey, requestOptions);
+    return this.http.post<LoginResponse>(`${authUrl}/auth`, environment.masterKey, requestOptions);
   }
 
   setLoginData(loginResponse: LoginResponse) {
@@ -81,19 +85,25 @@ export class AuthenticationService {
     return localStorage.getItem('role') === 'admin';
   }
 
-  googleLogin() {
-    return true;
+  googleLogin(): Promise<Observable<LoginResponse>> {
+    let googleToken: GoogleSignResponse;
+    return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+      .then((res) => {
+        googleToken = <GoogleSignResponse><unknown>res.credential;
+        return this.http.post<LoginResponse>(`${authUrl}/auth/google`, { 'access_token': googleToken.accessToken });
+      });
   }
 
-  googleLogout() {
-    return false;
+  facebookLogin(): Promise<Observable<LoginResponse>> {
+    let facebookToken: GoogleSignResponse;
+    return this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
+      .then((res) => {
+        facebookToken = <GoogleSignResponse><unknown>res.credential;
+        return this.http.post<LoginResponse>(`${authUrl}/auth/facebook`, { 'access_token': facebookToken.accessToken });
+      });
   }
 
-  facebookLogin() {
-    return true;
-  }
-
-   checkToken(): boolean {
+  checkToken(): boolean {
     const re = /^[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.([a-zA-Z0-9\-_]+)$/;
     if (isNull(this.getToken())) {
       localStorage.clear();
@@ -104,16 +114,16 @@ export class AuthenticationService {
     }
   }
 
-/*  getTokenData(): UserResponse {
-    const helper = new JwtHelperService();
-    let loggedUser: UserResponse;
-    this.userService.getOne(helper.decodeToken(this.getToken()).id).subscribe(u => {
-      loggedUser.name = u.name;
-      loggedUser.role = u.role;
-      loggedUser.email = u.email;
-      loggedUser.picture = u.picture;
-    });
-    return loggedUser;
-  } */
+  /*  getTokenData(): UserResponse {
+      const helper = new JwtHelperService();
+      let loggedUser: UserResponse;
+      this.userService.getOne(helper.decodeToken(this.getToken()).id).subscribe(u => {
+        loggedUser.name = u.name;
+        loggedUser.role = u.role;
+        loggedUser.email = u.email;
+        loggedUser.picture = u.picture;
+      });
+      return loggedUser;
+    } */
 
 }
