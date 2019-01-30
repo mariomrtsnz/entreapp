@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 import { Category } from 'src/app/interfaces/category';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
-import { finalize } from 'rxjs/operators';
 
 const URL = 'http://localhost:9000/uploads';
 
@@ -20,9 +19,7 @@ const URL = 'http://localhost:9000/uploads';
 export class PoiCreateComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  downloadURL: Observable<any>;
   urlImage: Array<string> = [];
-  url = '';
 
   poi: OnePoiResponse;
   categories: Category;
