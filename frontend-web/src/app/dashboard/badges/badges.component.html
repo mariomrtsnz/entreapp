@@ -22,14 +22,14 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="points">
-        <th mat-header-cell *matHeaderCellDef>Points</th>
-        <td mat-cell *matCellDef="let element">{{element.points}}</td>
+      <ng-container matColumnDef="points" fxShow.lt-md="false">
+        <th mat-header-cell *matHeaderCellDef fxShow.lt-md="false">Points</th>
+        <td mat-cell *matCellDef="let element" fxShow.lt-md="false">{{element.points}}</td>
       </ng-container>
 
       <ng-container matColumnDef="description" fxShow.lt-xs="false">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{element.description}}</td>
+        <th mat-header-cell *matHeaderCellDef fxShow.lt-md="false">Description</th>
+        <td mat-cell *matCellDef="let element" fxShow.lt-md="false">{{element.description}}</td>
       </ng-container>
 
       <ng-container matColumnDef="pois" fxShow.lt-xs="false">
