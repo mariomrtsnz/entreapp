@@ -25,7 +25,10 @@ const poiSchema = new Schema({
     // Lenguaje por defecto, en nuestro caso siempre ingles. Escribimos el codigo del lenguaje solo.
     language: {
       // ejemplo: "en"
-      type: String
+      language: {
+        type: Schema.Types.ObjectId,
+        ref: 'Language'
+      }
     },
     // Fichero por defecto, en nuestro caso en ingles.
     originalFile: {
@@ -37,7 +40,10 @@ const poiSchema = new Schema({
       {
         language: {
           // ejemplo: "es"
-          type: String
+          language: {
+            type: Schema.Types.ObjectId,
+            ref: 'Language'
+          }
         },
         translatedFile: {
           // ejemplo: "es-giralda.mp3"
@@ -48,7 +54,10 @@ const poiSchema = new Schema({
   },
   description: {
     language: {
-      type: String
+      language: {
+        type: Schema.Types.ObjectId,
+        ref: 'Language'
+      }
     },
     originalDescription: {
       type: String
@@ -56,7 +65,10 @@ const poiSchema = new Schema({
     translations: [
       {
         language: {
-          type: String
+          language: {
+            type: Schema.Types.ObjectId,
+            ref: 'Language'
+          }
         },
         translatedDescription: {
           type: String

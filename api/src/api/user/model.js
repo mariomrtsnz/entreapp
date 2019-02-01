@@ -59,7 +59,8 @@ const userSchema = new Schema({
     type: String
   },
   language: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: 'Language'
   },
   friends: [{
     type: Schema.Types.ObjectId,
