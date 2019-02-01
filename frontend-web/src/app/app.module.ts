@@ -26,6 +26,7 @@ import { DialogPoiDeleteComponent } from './dialogs/dialog-poi-delete/dialog-poi
 import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.component';
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
+import { LanguageComponent } from './dialogs/language/language.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MaterialModule } from './material-module';
     DialogBadgeComponent,
     DialogDeleteBadgeComponent,
     DialogRouteComponent,
-    DialogDeleteRouteComponent
+    DialogDeleteRouteComponent,
+    LanguageComponent
   ],
   imports: [
     BrowserModule,
