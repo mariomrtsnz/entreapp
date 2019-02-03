@@ -24,7 +24,13 @@
         <mat-icon>star</mat-icon>
         <mat-icon>star</mat-icon>
         <mat-icon>star</mat-icon>
-        <button mat-button style="float:right;" (click)="goPoiDetails(p)">Show more</button>
+        <div style="float:right;">
+          <button *ngIf="this.authService.isContributor()" mat-button  (click)="openDialogTranslatePoi(p)" >
+            Translate
+          </button>
+          <button mat-button  (click)="goPoiDetails(p)">Show more</button>
+        </div>
+        
       </mat-card-actions>
   </mat-card>
 </div>

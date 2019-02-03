@@ -6,6 +6,9 @@ import { DialogPoiDeleteComponent } from 'src/app/dialogs/dialog-poi-delete/dial
 import { PoiService } from 'src/app/services/poi.service';
 
 import { PoiResponse } from './../../interfaces/poi-response';
+import { AuthService } from 'angular-6-social-login';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogTranslatePoiComponent } from 'src/app/dialogs/dialog-translate-poi/dialog-translate-poi.component';
 
 @Component({
   selector: 'app-poi',
@@ -18,7 +21,7 @@ export class PoiComponent implements OnInit {
 
 
   constructor(private poiService: PoiService, public dialog: MatDialog,
-    public router: Router, public snackBar: MatSnackBar, private titleService: Title) { }
+    public router: Router, public snackBar: MatSnackBar, private titleService: Title, public authService: AuthenticationService) { }
 
   ngOnInit() {
     this.titleService.setTitle('Home - Points of Interests');
@@ -43,6 +46,11 @@ export class PoiComponent implements OnInit {
     const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, {data: {poi: p}});
     dialogDeletePoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
     err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', {duration: 3000}));
+  }
+  openDialogTranslatePoi(p: PoiResponse) {
+    const dialogTranslatePoi = this.dialog.open(DialogTranslatePoiComponent, {data: {poi: p}});
+    dialogTranslatePoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
+    err => this.snackBar.open('There was an error when we were translating this POI.', 'Close', {duration: 3000}));
   }
 
   goPoiDetails(p) {

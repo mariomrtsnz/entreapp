@@ -1,0 +1,59 @@
+<h1 mat-dialog-title>Translate POI</h1>
+<h2>IDIOMA</h2>
+<form [formGroup]="form" [formGroup]="coordinatesForm" [formGroup]="audioguidesForm" [formGroup]="descriptionForm"
+  (ngSubmit)="onSubmit()">
+  <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
+    <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
+      
+      <div fxFlex.gt-md="50" fxFlex="100">
+        <!-- Descripción con librería -->
+        <quill-editor [formControl]="descriptionForm.controls['originalDescription']" required>
+          <div quill-editor-toolbar>
+            <span class="ql-formats">
+              <button class="ql-bold" [title]="'Bold'"></button>
+              <button class="ql-italic" [title]="'italic'"></button>
+              <button class="ql-underline" [title]="'underline'"></button>
+              <button class="ql-strike" [title]="'strike'"></button>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-list" value="ordered" [title]="'Ordered List'"></button>
+              <button class="ql-list" value="bullet" [title]="'Dots List'"></button>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-align" [title]="'Aligment'">
+                <option selected></option>
+                <option value="center"></option>
+                <option value="right"></option>
+                <option value="justify"></option>
+              </select>
+            </span>
+          </div>
+        </quill-editor>
+      </div>
+    </mat-card>
+    <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+      <mat-card>
+        <!-- Precio, estado, horarios -->
+        <mat-form-field class="w-50">
+          <input matInput placeholder="price" type="number" [formControl]="form.controls['price']">
+        </mat-form-field>
+        <mat-form-field class="w-50">
+          <input matInput placeholder="status" type="text" [formControl]="form.controls['status']" required>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <textarea matInput placeholder="schedule" type="text" [formControl]="form.controls['schedule']" required></textarea>
+        </mat-form-field>
+      </mat-card>
+      <mat-card>
+        <h3>Audioguides</h3>
+        <div id="uploadContent" class="w-100" style="height: 50px">
+          <input type="file" name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
+          <p style="margin-top: -38px">Drag & Drop or click to upload</p>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <button mat-fab id="addFloatingButton" type="submit" [disabled]="!form.valid">
+    <mat-icon>send</mat-icon>
+  </button>
+</form>
