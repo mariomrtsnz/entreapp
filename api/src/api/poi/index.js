@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, update, destroy, translationIndex } from './controller'
 import { schema } from './model'
 export Poi, { schema } from './model'
 
@@ -54,7 +54,10 @@ router.get('/',
   token({ required: true }),
   query(),
   index)
-
+router.get('/translated',
+  token({ required: true }),
+  query(),
+  translationIndex)
 /**
  * @api {get} /pois/:id Retrieve poi
  * @apiName RetrievePoi
