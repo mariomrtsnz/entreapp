@@ -92,6 +92,10 @@
           <input type="file" name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
           <p style="margin-top: -38px">Drag & Drop or click to upload</p>
         </div>
+        <table>
+          <td>{{ audioguidesForm.controls['originalFile'] }}</td>
+          <td></td>
+        </table>
       </mat-card>
     </div>
   </div>

@@ -12,6 +12,7 @@ import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 import { CategoryService } from 'src/app/services/category.service';
 import { Title } from '@angular/platform-browser';
+import { Timestamp } from 'rxjs/internal/operators/timestamp';
 
 @Component({
   selector: 'app-poi-edit',
@@ -93,13 +94,14 @@ export class PoiEditComponent implements OnInit {
     });
 
     this.descriptionForm = this.fb.group({
-      originalDescription: [this.poi.description.originalDescription.substr(3), Validators.compose([Validators.required])]
+      originalDescription: [this.poi.description.originalDescription, Validators.compose([Validators.required])]
     });
 
     this.form = this.fb.group({
       name: [this.poi.name, Validators.compose([Validators.required])],
       year: [this.poi.year, Validators.compose([Validators.required])],
       creator: [this.poi.creator],
+      coverImage: [this.poi.coverImage],
       images: [this.poi.images, Validators.compose([Validators.required])],
       categories: [this.poi.categories, Validators.compose([Validators.required])],
       status: [this.poi.status, Validators.compose([Validators.required])],
@@ -114,11 +116,10 @@ export class PoiEditComponent implements OnInit {
 
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
-    this.descriptionForm.controls['originalDescription'].setValue('en-' + this.descriptionForm.controls['originalDescription'].value);
     newPoi.coordinates = this.coordinatesForm.value;
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
-    newPoi.coverImage = this.form.controls['images'].value;
+    newPoi.coverImage ? null : newPoi.coverImage = newPoi.images[0];
     this.poiService.edit(this.poi.id, newPoi).subscribe(() => {
       this.router.navigate(['/home']);
     }, error => {
@@ -128,9 +129,10 @@ export class PoiEditComponent implements OnInit {
 
   ImgUpload(e) {
     for (let i = 0; i < e.target.files.length; i++) {
+      const timestamp = new Date().getTime();
       const id = Math.random().toString(36).substring(2);
       const file = e.target.files[i];
-      const filePath = `img/poi/${id}`;
+      const filePath = `img/poi/${id}-${timestamp}`;
       const ref = this.afStorage.ref(filePath);
       const task = this.afStorage.upload(filePath, file);
 
@@ -145,9 +147,10 @@ export class PoiEditComponent implements OnInit {
   }
 
   audioUpload(e) {
-    const id = Math.random().toString(36).substring(2);
+    // const id = Math.random().toString(36).substring(2);
+    const id = new Date().getTime();
     const file = e.target.files[0];
-    const filePath = `audioguides/en-${id}`;
+    const filePath = `audioguides/${id}`;
     const ref = this.afStorage.ref(filePath);
     const task = this.afStorage.upload(filePath, file);
 

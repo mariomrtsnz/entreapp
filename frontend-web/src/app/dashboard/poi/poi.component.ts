@@ -6,7 +6,6 @@ import { DialogPoiDeleteComponent } from 'src/app/dialogs/dialog-poi-delete/dial
 import { PoiService } from 'src/app/services/poi.service';
 
 import { PoiResponse } from './../../interfaces/poi-response';
-import { AuthService } from 'angular-6-social-login';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogTranslatePoiComponent } from 'src/app/dialogs/dialog-translate-poi/dialog-translate-poi.component';
 
