@@ -27,6 +27,8 @@ import { DialogRouteComponent } from './dialogs/dialog-route/dialog-route.compon
 import { DialogUpdateProfileComponent } from './dialogs/dialog-update-profile/dialog-update-profile.component';
 import { MaterialModule } from './material-module';
 
+import { DialogTranslatePoiComponent } from './dialogs/dialog-translate-poi/dialog-translate-poi.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,8 @@ import { MaterialModule } from './material-module';
     DialogBadgeComponent,
     DialogDeleteBadgeComponent,
     DialogRouteComponent,
-    DialogDeleteRouteComponent
+    DialogDeleteRouteComponent,
+    DialogTranslatePoiComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,8 @@ import { MaterialModule } from './material-module';
     DialogDeleteBadgeComponent,
     DialogRouteComponent,
     DialogDeleteRouteComponent,
-    DialogUpdateProfileComponent
+    DialogUpdateProfileComponent,
+    DialogTranslatePoiComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

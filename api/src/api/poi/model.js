@@ -118,16 +118,47 @@ poiSchema.methods = {
       year: this.year,
       creator: this.creator,
     }
-
-    return full ? {
-      ...view,
-      coordinates: this.coordinates,
+    const translationView = {
+      // simple view
+      id: this.id,
+      name: this.name,  
+      description: this.description,
       audioguides: this.audioguides,
-      images: this.images,
-      status: this.status,
-      schedule: this.schedule,
-      price: this.price,
-    } : view
+    }
+    const fullView = {
+      // simple view
+      id: this.id,
+      name: this.name,
+      categories: this.categories,
+      qrCode: this.qrCode,  
+      description: this.description,
+      coverImage: this.coverImage,     
+      year: this.year,
+      creator: this.creator,
+      coordinates: this.coordinates,
+          audioguides: this.audioguides,
+          images: this.images,
+          status: this.status,
+          schedule: this.schedule,
+          price: this.price,
+    }
+    switch (full) {
+      case 0:
+        return view;
+        break;
+      case 1:
+        return fullView;
+        break;
+      case 2:
+      console.log('caso 2');
+        return translationView;
+        
+        break;
+      default:
+        return view;
+        break;
+    }
+   
   }
 }
 

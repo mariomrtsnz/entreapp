@@ -84,6 +84,9 @@ export class AuthenticationService {
   isAdmin() {
     return localStorage.getItem('role') === 'admin';
   }
+  isContributor() {
+    return localStorage.getItem('role') === 'contributor';
+  }
 
   googleLogin(): Promise<Observable<LoginResponse>> {
     let googleToken: GoogleSignResponse;
