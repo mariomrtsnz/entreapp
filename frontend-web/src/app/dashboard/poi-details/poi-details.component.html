@@ -16,7 +16,7 @@
         <mat-chip *ngFor="let c of poi.categories">{{c.name}}</mat-chip>
       </mat-chip-list>
       <p>{{poi.creator}} - {{poi.year}}</p>
-      <div [innerHtml]="poi.description.originalDescription.substr(3)"></div>
+      <div [innerHtml]="poi.description.originalDescription"></div>
     </div>
 
   </mat-card>

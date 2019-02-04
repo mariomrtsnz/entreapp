@@ -20,6 +20,7 @@ export class PoiCreateComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   urlImage: Array<string> = [];
+  urlAudiogude: string;
 
   poi: PoiCreateDto;
   allCategories: CategoriesResponse;
@@ -71,7 +72,6 @@ export class PoiCreateComponent implements OnInit {
 
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
-    this.descriptionForm.controls['originalDescription'].setValue('en-' + this.descriptionForm.controls['originalDescription'].value);
     newPoi.coordinates = this.coordinatesForm.value;
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
@@ -105,7 +105,7 @@ export class PoiCreateComponent implements OnInit {
   audioUpload(e) {
     const id = Math.random().toString(36).substring(2);
     const file = e.target.files[0];
-    const filePath = `audioguides/en-${id}`;
+    const filePath = `audioguides/${id}`;
     const ref = this.afStorage.ref(filePath);
     const task = this.afStorage.upload(filePath, file);
 

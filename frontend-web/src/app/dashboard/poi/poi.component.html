@@ -18,7 +18,7 @@
       <mat-card-title>{{p.name}}</mat-card-title>
       <!-- <mat-card-subtitle>{{p.category[0].name}}</mat-card-subtitle> -->
     </mat-card-header>
-      <mat-card-content [innerHtml]="p.description.originalDescription.substring(3, 140) + '...'">
+      <mat-card-content [innerHtml]="p.description.originalDescription.substr(0, 140) + '...'">
       </mat-card-content>
       <mat-card-actions>
         <mat-icon>star</mat-icon>
