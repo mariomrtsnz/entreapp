@@ -100,6 +100,7 @@ export class PoiEditComponent implements OnInit {
       name: [this.poi.name, Validators.compose([Validators.required])],
       year: [this.poi.year, Validators.compose([Validators.required])],
       creator: [this.poi.creator],
+      coverImage: [this.poi.coverImage],
       images: [this.poi.images, Validators.compose([Validators.required])],
       categories: [this.poi.categories, Validators.compose([Validators.required])],
       status: [this.poi.status, Validators.compose([Validators.required])],
@@ -118,7 +119,7 @@ export class PoiEditComponent implements OnInit {
     newPoi.coordinates = this.coordinatesForm.value;
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
-    newPoi.coverImage = this.form.controls['images'].value;
+    newPoi.coverImage ? null : newPoi.coverImage = newPoi.images[0];
     this.poiService.edit(this.poi.id, newPoi).subscribe(() => {
       this.router.navigate(['/home']);
     }, error => {
