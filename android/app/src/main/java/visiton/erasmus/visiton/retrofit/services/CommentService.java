@@ -12,18 +12,20 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface CommentService {
 
-    @GET("/comments")
+    String BASE_URL = "/comments/";
+
+    @GET(BASE_URL)
     Call<ResponseContainer<Comment>> listComments();
 
-    @GET("/comments/{id}")
+    @GET(BASE_URL + "/{id}")
     Call<Comment> getComment(@Path("id") Long id);
 
-    @POST("/comments")
+    @POST(BASE_URL)
     Call<Comment> createComment(@Body Comment c);
 
-    @PUT("/comment/{id}")
+    @PUT(BASE_URL + "/{id}")
     Call<Comment> editComment(@Path("id") Long id, Comment c);
 
-    @DELETE("/comments/{id}")
+    @DELETE(BASE_URL + "/{id}")
     Call<Comment> deleteComment(@Path("id") Long id);
 }

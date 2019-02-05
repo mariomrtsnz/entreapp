@@ -8,9 +8,11 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface RouteService {
 
-    @GET("/routes")
+    String BASE_URL = "/routes";
+
+    @GET(BASE_URL)
     Call<ResponseContainer<Route>> listRoutes();
 
-    @GET("/routes/{id}")
+    @GET(BASE_URL + "/{id}")
     Call<Route> getBadge(@Path("id") Long id);
 }

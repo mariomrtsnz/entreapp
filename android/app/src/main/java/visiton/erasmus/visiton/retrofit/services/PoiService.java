@@ -8,9 +8,11 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface PoiService {
 
-    @GET("/pois")
+    String BASE_URL = "/pois";
+
+    @GET(BASE_URL)
     Call<ResponseContainer<Poi>> listPois();
 
-    @GET("/pois/{id}")
+    @GET(BASE_URL + "/{id}")
     Call<Poi> getPoi(@Path("id") Long id);
 }

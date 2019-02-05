@@ -8,9 +8,11 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface LanguageService {
 
-    @GET("/languages")
+    String BASE_URL = "/languages";
+
+    @GET(BASE_URL)
     Call<ResponseContainer<Language>> listLanguages();
 
-    @GET("/languages/{id}")
+    @GET(BASE_URL + "/{id}")
     Call<Language> getLanguage(@Path("id") Long id);
 }

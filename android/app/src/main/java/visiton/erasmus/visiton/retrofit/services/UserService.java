@@ -11,19 +11,22 @@ import visiton.erasmus.visiton.model.User;
 import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface UserService {
-    @GET("/users")
+
+    String BASE_URL = "/users";
+
+    @GET(BASE_URL)
     Call<ResponseContainer<User>> listUsers();
 
-    @GET("/users/{id}")
+    @GET(BASE_URL+"/{id}")
     Call<User> getUser(@Path("id") Long id);
 
-    @GET("/users/me")
+    @GET(BASE_URL+"/me")
     Call<User> getMe();
 
-    @PUT("/users/{id}")
+    @PUT(BASE_URL+"/{id}")
     Call<User> editUser(@Path("id") Long id, @Body User user);
 
-    @PUT("/users/{id}/password")
+    @PUT(BASE_URL+"/{id}/password")
     Call<User> editPassword(@Path("id") Long id, @Body String password);
 
     // It should be /me, must do in api first

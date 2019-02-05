@@ -8,9 +8,11 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface CategoryService {
 
-    @GET("/categories")
+    String BASE_URL = "/categories";
+
+    @GET(BASE_URL)
     Call<ResponseContainer<Category>> listCategories();
 
-    @GET("/categories/{id}")
+    @GET(BASE_URL + "/{id}")
     Call<Category> getCategory(@Path("id") Long id);
 }
