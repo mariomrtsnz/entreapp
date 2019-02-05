@@ -9,8 +9,10 @@
             <input type="file" name="photo" (change)="ImgUpload($event)" multiple accept="image/*" />
             <p>Drag your images here or click in this area.</p>
           </div>
-          <div fxLayout="row wrap" fxLayoutGap="2px">
-            <img *ngFor="let i of urlImage" [src]="i" alt="" width="150px">
+          <div fxLayout="row wrap" fxLayoutGap="2px" style="margin-top: 10px">
+            <div class="imgContainer" *ngFor="let i of urlImage" [style.background-image]="'url(' + i + ')'">
+              <a class="imgButtonDelete" mat-icon-button><mat-icon style="color: red">cancel</mat-icon></a>
+            </div>
           </div>
         </div>
         <!-- Coordenadas google maps  -->
