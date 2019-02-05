@@ -20,7 +20,7 @@ export class PoiCreateComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   urlImage: Array<string> = [];
-  urlAudiogude: string;
+  urlAudioguide: string;
 
   poi: PoiCreateDto;
   allCategories: CategoriesResponse;
@@ -112,6 +112,7 @@ export class PoiCreateComponent implements OnInit {
     task.snapshotChanges().pipe(
       finalize(() => ref.getDownloadURL()
         .subscribe(r => {
+          this.urlAudioguide = r;
           this.audioguidesForm.controls['originalFile'].setValue(r);
         })))
       .subscribe();

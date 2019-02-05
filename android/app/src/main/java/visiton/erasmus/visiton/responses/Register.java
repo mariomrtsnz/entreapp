@@ -1,6 +1,6 @@
 package visiton.erasmus.visiton.responses;
 
-public class Registro {
+public class Register {
 
     private String name;
     private String email;
@@ -8,9 +8,10 @@ public class Registro {
     private String picture;
     private String role;
 
-    public Registro() { }
+    public Register() {
+    }
 
-    public Registro(String name, String email, String password, String picture, String role) {
+    public Register(String name, String email, String password, String picture, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -18,7 +19,7 @@ public class Registro {
         this.role = role;
     }
 
-    public Registro(String name, String email, String password) {
+    public Register(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;

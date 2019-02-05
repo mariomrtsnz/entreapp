@@ -40,50 +40,22 @@ export class PoiEditComponent implements OnInit {
     if (this.poiService.selectedPoi == null) {
       this.router.navigate(['home']);
     } else {
-      this.createForm();
       this.getData();
     }
     this.titleService.setTitle('Edit - POI');
   }
 
   getData() {
+    this.categoryService.getAllCategories()
+        .subscribe(r => this.allCategories = r);
     this.poiService.getOne(this.poiService.selectedPoi.id).subscribe(p => {
       this.poi = p;
       this.urlImage = p.images;
-      this.setForms();
+      this.createForm();
     });
-      this.categoryService.getAllCategories()
-        .subscribe(r => this.allCategories = r);
-
   }
 
   createForm() {
-    this.coordinatesForm = this.fb.group({
-      lat: [null, Validators.compose([Validators.required])],
-      lng: [null, Validators.compose([Validators.required])]
-    });
-
-    this.audioguidesForm = this.fb.group({
-      originalFile: [null, Validators.compose([Validators.required])]
-    });
-
-    this.descriptionForm = this.fb.group({
-      originalDescription: [null, Validators.compose([Validators.required])]
-    });
-
-    this.form = this.fb.group({
-      name: [null, Validators.compose([Validators.required])],
-      year: [null, Validators.compose([Validators.required])],
-      creator: [null],
-      images: [null, Validators.compose([Validators.required])],
-      categories: [null, Validators.compose([Validators.required])],
-      status: [null, Validators.compose([Validators.required])],
-      schedule: [null, Validators.compose([Validators.required])],
-      price: [null],
-    });
-  }
-
-  setForms() {
     this.coordinatesForm = this.fb.group({
       lat: [this.poi.coordinates.lat, Validators.compose([Validators.required])],
       lng: [this.poi.coordinates.lng, Validators.compose([Validators.required])]

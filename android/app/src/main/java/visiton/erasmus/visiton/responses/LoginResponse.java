@@ -15,10 +15,10 @@ public class LoginResponse {
     private User user;
 
 
-    public LoginResponse() { }
+    public LoginResponse() {
+    }
 
     /**
-     *
      * @param token
      * @param user
      */

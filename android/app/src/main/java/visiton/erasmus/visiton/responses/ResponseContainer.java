@@ -7,7 +7,8 @@ public class ResponseContainer<T> {
     private List<T> rows;
     private long count;
 
-    public ResponseContainer() { }
+    public ResponseContainer() {
+    }
 
     public ResponseContainer(List<T> rows, long count) {
         this.rows = rows;
