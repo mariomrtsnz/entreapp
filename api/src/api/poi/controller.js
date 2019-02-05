@@ -20,11 +20,13 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .then(success(res))
     .catch(next)
 export const showTranslated = ({ params }, res, next) =>
-  Poi.findById(params.id)
+  //Poi.findOne({id: params.id, "description.translations.language":params.idUserLanguage})
+  Poi.findOne().where('id').equals(params.id)
         .then(notFound(res))
         .then((poi) => poi ? poi.view(2) : null)
         .then(success(res))
         .catch(next)
+    
 export const show = ({ params }, res, next) =>
   Poi.findById(params.id).populate('categories', 'id name')
     .then(notFound(res))
