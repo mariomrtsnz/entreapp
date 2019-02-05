@@ -1,6 +1,6 @@
 <form [formGroup]="form" [formGroup]="coordinatesForm" [formGroup]="audioguidesForm" [formGroup]="descriptionForm"
-  (ngSubmit)="onSubmit()">
-  <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
+  (ngSubmit)="onSubmit()" *ngIf=poi>
+  <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%" *ngIf="poi">
     <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
       <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
         <div>
@@ -38,7 +38,7 @@
         <!-- Categorías -->
         <mat-form-field class="w-100">
           <mat-select placeholder="Categories" [formControl]="form.controls['categories']" multiple>
-            <mat-option *ngFor="let c of allCategories.rows" [value]="c.id">{{c.name}}</mat-option>
+            <mat-option *ngFor="let c of allCategories?.rows" [value]="c.id">{{c.name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <!-- Autor/Anyo -->
@@ -88,10 +88,11 @@
       </mat-card>
       <mat-card>
         <h3>Audioguides</h3>
-        <div id="uploadContent" class="w-100" style="height: 50px">
+        <div id="uploadContent" class="w-100" style="height: 50px; margin-bottom: 5px">
           <input type="file" name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
           <p style="margin-top: -38px">Drag & Drop or click to upload</p>
         </div>
+        <audio *ngIf="poi.audioguides.originalFile" controls [src]="poi.audioguides.originalFile"></audio>
       </mat-card>
     </div>
   </div>
