@@ -3,16 +3,16 @@ package visiton.erasmus.visiton.retrofit.services;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import visiton.erasmus.visiton.model.Badge;
+import visiton.erasmus.visiton.model.Route;
 import visiton.erasmus.visiton.responses.ResponseContainer;
 
-public interface BadgeService {
+public interface RouteService {
 
-    String BASE_URL = "/badges";
+    String BASE_URL = "/routes";
 
     @GET(BASE_URL)
-    Call<ResponseContainer<Badge>> listBadges();
+    Call<ResponseContainer<Route>> listRoutes();
 
     @GET(BASE_URL + "/{id}")
-    Call<Badge> getBadge(@Path("id") Long id);
+    Call<Route> getBadge(@Path("id") Long id);
 }
