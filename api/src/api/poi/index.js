@@ -69,7 +69,7 @@ router.get('/',
 router.get('/:id',
   token({ required: true }),
   show)
-router.get('/:id/:isocode',
+router.get('/:id/:idUserLanguage',
   token({ required: true }),
   showTranslated)
 

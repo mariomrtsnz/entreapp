@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Translate POI</h1>
 <h2>IDIOMA</h2>
-<form [formGroup]="form" [formGroup]="coordinatesForm" [formGroup]="audioguidesForm" [formGroup]="descriptionForm"
+<form  [formGroup]="audioguidesForm" [formGroup]="descriptionForm"
   (ngSubmit)="onSubmit()">
   <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%">
     <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
@@ -31,10 +31,10 @@
         </quill-editor>
       </div>
     </mat-card>
-    <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
-      <mat-card>
+    <!--<div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
+      <mat-card>-->
         <!-- Precio, estado, horarios -->
-        <mat-form-field class="w-50">
+        <!--<mat-form-field class="w-50">
           <input matInput placeholder="price" type="number" [formControl]="form.controls['price']">
         </mat-form-field>
         <mat-form-field class="w-50">
@@ -51,9 +51,9 @@
           <p style="margin-top: -38px">Drag & Drop or click to upload</p>
         </div>
       </mat-card>
-    </div>
+    </div>-->
   </div>
-  <button mat-fab id="addFloatingButton" type="submit" [disabled]="!form.valid">
+  <button mat-fab id="addFloatingButton" type="submit" [disabled]="!descriptionForm.valid && !audioguidesForm.valid">
     <mat-icon>send</mat-icon>
   </button>
 </form>
