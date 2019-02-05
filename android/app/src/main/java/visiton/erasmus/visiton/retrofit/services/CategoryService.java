@@ -8,9 +8,9 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface CategoryService {
 
-    @GET("/category")
+    @GET("/categories")
     Call<ResponseContainer<Category>> listCategories();
 
-    @GET("/category/{id}")
+    @GET("/categories/{id}")
     Call<Category> getCategory(@Path("id") Long id);
 }

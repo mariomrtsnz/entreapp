@@ -8,9 +8,9 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface RouteService {
 
-    @GET("/route")
+    @GET("/routes")
     Call<ResponseContainer<Route>> listRoutes();
 
-    @GET("/route/{id}")
+    @GET("/routes/{id}")
     Call<Route> getBadge(@Path("id") Long id);
 }

@@ -8,9 +8,9 @@ import visiton.erasmus.visiton.responses.ResponseContainer;
 
 public interface BadgeService {
 
-    @GET("/badge")
+    @GET("/badges")
     Call<ResponseContainer<Badge>> listBadges();
 
-    @GET("/badge/{id}")
+    @GET("/badges/{id}")
     Call<Badge> getBadge(@Path("id") Long id);
 }
