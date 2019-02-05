@@ -1,4 +1,4 @@
-package visiton.erasmus.visiton.retrofit;
+package visiton.erasmus.visiton.retrofit.generator;
 
 import java.io.IOException;
 
@@ -11,6 +11,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import visiton.erasmus.visiton.retrofit.generator.AuthType;
 
 public class ServiceGenerator {
 
