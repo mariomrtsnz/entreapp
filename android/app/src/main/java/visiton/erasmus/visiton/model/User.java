@@ -1,7 +1,6 @@
 package visiton.erasmus.visiton.model;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class User {
 

@@ -8,7 +8,8 @@ public class Registro {
     private String picture;
     private String role;
 
-    public Registro() { }
+    public Registro() {
+    }
 
     public Registro(String name, String email, String password, String picture, String role) {
         this.name = name;
