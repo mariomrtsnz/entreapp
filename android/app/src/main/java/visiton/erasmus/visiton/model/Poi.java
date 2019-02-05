@@ -18,7 +18,7 @@ public class Poi {
     private String schedule;
     private double price;
 
-    public Poi () {
+    public Poi() {
 
     }
 
