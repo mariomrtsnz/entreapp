@@ -20,21 +20,13 @@ public interface UserService {
     @GET("/users/me")
     Call<User> getMe();
 
-    @GET("/users/roles")
-    Call<User> getRoles();
-
-    @POST("/users")
-    Call<User> addUser(@Body User user);
-
     @PUT("/users/{id}")
     Call<User> editUser(@Path("id") Long id, @Body User user);
-
-    @PUT("/users/editRole/{id}")
-    Call<User> editRole(@Path("id") Long id, @Body String role);
 
     @PUT("/users/{id}/password")
     Call<User> editPassword(@Path("id") Long id, @Body String password);
 
-    @DELETE("/users/{id}")
-    Call<User> deleteUser(@Path("id") Long id);
+    // It should be /me, must do in api first
+//    @DELETE("/users/{id}")
+//    Call<User> deleteUser(@Path("id") Long id);
 }
