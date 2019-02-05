@@ -11,7 +11,9 @@
           </div>
           <div fxLayout="row wrap" fxLayoutGap="2px" style="margin-top: 10px">
             <div class="imgContainer" *ngFor="let i of urlImage" [style.background-image]="'url(' + i + ')'">
-              <a class="imgButtonDelete" mat-icon-button><mat-icon style="color: red">cancel</mat-icon></a>
+              <a class="imgButtonDelete" mat-icon-button (click)="removeImage(i)">
+                <mat-icon style="color: red">cancel</mat-icon>
+              </a>
             </div>
           </div>
         </div>

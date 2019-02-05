@@ -63,3 +63,23 @@ audio {
         cursor: pointer;
     }
 }
+
+.imgContainer {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 25%;
+    padding-top: 14.0625%;
+  
+    .imgButtonDelete {
+      position: absolute;
+      top: 15%;
+      left: 90%;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      border: none;
+      cursor: pointer;
+    }
+  }

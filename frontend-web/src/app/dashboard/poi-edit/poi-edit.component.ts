@@ -134,4 +134,8 @@ export class PoiEditComponent implements OnInit {
       .subscribe();
   }
 
+  removeImage(i) {
+    this.urlImage.splice(this.urlImage.indexOf(i), 1);
+  }
+
 }
