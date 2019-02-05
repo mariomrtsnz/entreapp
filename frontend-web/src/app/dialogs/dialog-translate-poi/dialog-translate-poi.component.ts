@@ -8,10 +8,25 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./dialog-translate-poi.component.scss']
 })
 export class DialogTranslatePoiComponent implements OnInit {
-
-  constructor() { }
+  audioguidesForm: FormGroup;
+  descriptionForm: FormGroup;
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.createForm();
   }
+  createForm() {
+   
+
+    this.audioguidesForm = this.fb.group({
+      originalFile: [null, Validators.compose([Validators.required])]
+    });
+
+    this.descriptionForm = this.fb.group({
+      originalDescription: [null, Validators.compose([Validators.required])]
+    });
+
+  }
+
 
 }

@@ -1,5 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import { Poi } from '.'
+import mongoose from '../../services/mongoose'
 
 export const create = ({ bodymen: { body } }, res, next) => {
   body.coverImage = body.images[0];
@@ -19,13 +20,17 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     )
     .then(success(res))
     .catch(next)
-export const showTranslated = ({ params }, res, next) =>
-  //Poi.findOne({id: params.id, "description.translations.language":params.idUserLanguage})
-  Poi.findOne().where('id').equals(params.id)
-        .then(notFound(res))
-        .then((poi) => poi ? poi.view(2) : null)
-        .then(success(res))
-        .catch(next)
+export const showTranslated = ({ params }, res, next) => {
+  let query = {
+    id: (mongoose.Types.ObjectId(params.id)),
+    idUserLanguage: (mongoose.Types.ObjectId(params.idUserLanguage))
+  }
+    Poi.findOne({id: query.id, "description.translations.language":query.idUserLanguage})
+          .then(notFound(res))
+          .then((poi) => poi ? poi.view(2) : null)
+          .then(success(res))
+          .catch(next)
+}
     
 export const show = ({ params }, res, next) =>
   Poi.findById(params.id).populate('categories', 'id name')
