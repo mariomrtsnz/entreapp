@@ -11,6 +11,6 @@ public interface PoiService {
     @GET("/pois")
     Call<ResponseContainer<Poi>> listPois();
 
-    @GET("/poi/{id}")
+    @GET("/pois/{id}")
     Call<Poi> getPoi(@Path("id") Long id);
 }
