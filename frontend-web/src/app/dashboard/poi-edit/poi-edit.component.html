@@ -10,10 +10,13 @@
             <p>Drag your images here or click in this area.</p>
           </div>
           <div fxLayout="row wrap" fxLayoutGap="2px" style="margin-top: 10px">
-            <div class="imgContainer" *ngFor="let i of urlImage" [style.background-image]="'url(' + i + ')'">
-              <a class="imgButtonDelete" mat-icon-button (click)="removeImage(i)">
-                <mat-icon style="color: red">cancel</mat-icon>
-              </a>
+            <div *ngFor="let i of urlImage">
+              <input type="radio" class="radio-item" [value]="i" name="item" id="radio{{urlImage.indexOf(i)}}" [formControl]="form.controls['coverImage']">
+              <label class="label_item" for="radio{{urlImage.indexOf(i)}}" [style.background-image]="'url(' + i + ')'">
+                  <a mat-icon-button class="imgButtonDelete" (click)="removeImage(i)">
+                    <mat-icon>cancel</mat-icon>
+                  </a>
+                </label>
             </div>
           </div>
         </div>

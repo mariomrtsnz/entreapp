@@ -18,28 +18,6 @@
   }
 }
 
-agm-map {
-  height: 300px;
-}
-
-#coverImage {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%;
-  /* 16:9 Aspect Ratio */
-}
-
-
-
-@media only screen and (max-width: 720px) {
-  agm-map {
-    display: none;
-  }
-}
-
 audio {
   width: 100%;
 }
@@ -65,14 +43,6 @@ audio {
   }
 }
 
-.imgContainer {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  width: 25%;
-  padding-top: 14.0625%;
 
   .imgButtonDelete {
     position: absolute;
@@ -83,4 +53,25 @@ audio {
     border: none;
     cursor: pointer;
   }
+
+.radio-item {
+  display: none !important;
 }
+label {
+  cursor: pointer;   
+  display: inline-block;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  width: 150px;
+  height: 100px;
+}
+.radio-item:checked + label {
+  outline: 2px orange solid;
+  opacity: 1;
+}
+
+
+
