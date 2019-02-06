@@ -1,0 +1,17 @@
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="color_sign_up">#f51f0166</color>
+    <color name="color_log_in">#eff10783</color>
+
+    <color name="color_logo_sign_up">#d1bdff</color>
+    <color name="color_logo_log_in">#fdbbde</color>
+
+    <color name="white_trans">#b3fffcfc</color>
+    <color name="color_text">#fafafa</color>
+
+    <color name="color_input_hint">#FFF</color>
+    <color name="color_text_highlight">#fafafa</color>
+</resources>
