@@ -5,6 +5,7 @@ export interface LoginResponse {
     email: string;
     role: string;
     picture: string;
+    language: string;
   };
 
 }

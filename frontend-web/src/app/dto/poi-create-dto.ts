@@ -1,6 +1,12 @@
 export class PoiCreateDto {
     audioguides: {
         originalFile: string;
+        translations:[
+            {
+                id:string,
+                translatedFile:string
+            }
+        ]
     };
     categories?: string[];
     coordinates: {
@@ -10,6 +16,12 @@ export class PoiCreateDto {
     creator?: string;
     description: {
         originalDescription: string;
+        translations:[
+            {
+                idLanguage:string,
+                translatedDescription:string
+            }
+        ]
     };
     name: string;
     coverImage: string;

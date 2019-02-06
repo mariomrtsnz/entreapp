@@ -10,6 +10,7 @@ import { Roles } from '../interfaces/roles';
 import { CountryResponse } from '../interfaces/country-response';
 import { UserUpdateDto } from '../dto/update-user.dto';
 import { UserUpdateMyProfileDto } from '../dto/user-update-my-profile.dto';
+import { LanguageResponse } from '../interfaces/language-response';
 
 const userUrl = `${environment.apiUrl}/users`;
 const countryUrlApi = 'https://restcountries.eu/rest/v2/all?fields=name;';
@@ -18,7 +19,6 @@ const masterKey = '?access_token=WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX';
   providedIn: 'root'
 })
 export class UserService {
-  // token = `?access_token=${this.authService.getToken()}`;
   // tslint:disable-next-line:max-line-length
   token = `?access_token=${this.authService.getToken()}`;
   constructor(private http: HttpClient, private authService: AuthenticationService) { }

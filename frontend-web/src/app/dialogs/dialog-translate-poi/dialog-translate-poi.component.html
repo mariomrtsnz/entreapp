@@ -2,15 +2,15 @@
 <form  [formGroup]="audioguidesForm" [formGroup]="descriptionForm"
   (ngSubmit)="onSubmit()">
   <div id="container" fxLayout.gt-sm="row" fxLayout="column" fxLayoutGap="5%" class="center">
-      <h1 mat-dialog-title>Translate POI</h1>
-      <h2>IDIOMA</h2>
+      <h1 mat-dialog-title>{{data.poi.name}}</h1>
+      <h2>{{authService.getLanguage()}}</h2>
     <mat-card fxLayout.gt-md="row" fxLayout="column" fxFlex.gt-sm="80" fxFlex="100" fxLayoutGap="2%">
       
       <div fxFlex.gt-md="50" fxFlex="100">
         <!-- Descripción con librería -->
         <quill-editor [formControl]="descriptionForm.controls['originalDescription']" required>
           <div quill-editor-toolbar>
-            <span class="ql-formats">
+            <span class="ql-format">
               <button class="ql-bold" [title]="'Bold'"></button>
               <button class="ql-italic" [title]="'italic'"></button>
               <button class="ql-underline" [title]="'underline'"></button>
@@ -34,16 +34,10 @@
     </mat-card>
     <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
      
-      <mat-card>
-        <h3>Audioguides</h3>
-        <div id="uploadContent" class="w-100" style="height: 50px">
-          <input type="file" [formControl]="audioguidesForm.controls['originalFile']" required name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
-          <p style="margin-top: -38px">Drag & Drop or click to upload</p>
-        </div>
-      </mat-card>
+      
     </div>
   </div>
   
-  <button mat-raised-button style="float: right;" color="primary" fxFlex="50%" mat-dialog-close [disabled]="!audioguidesForm.valid || !descriptionForm.valid">Translate</button>
+  <button (click)="onSubmit()" mat-raised-button style="float: right;" color="primary" fxFlex="50%" mat-dialog-close [disabled]="!descriptionForm.valid">Translate</button>
 
 </form>
