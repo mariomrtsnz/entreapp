@@ -3,7 +3,8 @@ package eramus.visiton.mobile.app.responses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import visiton.erasmus.visiton.model.User;
+import eramus.visiton.mobile.app.model.User;
+
 
 public class LoginResponse {
 

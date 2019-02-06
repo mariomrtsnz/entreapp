@@ -1,10 +1,11 @@
 package eramus.visiton.mobile.app.retrofit.services;
 
+import eramus.visiton.mobile.app.model.Category;
+import eramus.visiton.mobile.app.responses.ResponseContainer;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import visiton.erasmus.visiton.model.Category;
-import visiton.erasmus.visiton.responses.ResponseContainer;
+
 
 public interface CategoryService {
 

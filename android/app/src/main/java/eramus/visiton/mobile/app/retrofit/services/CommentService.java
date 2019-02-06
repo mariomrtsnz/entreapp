@@ -1,5 +1,7 @@
 package eramus.visiton.mobile.app.retrofit.services;
 
+import eramus.visiton.mobile.app.model.Comment;
+import eramus.visiton.mobile.app.responses.ResponseContainer;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -7,8 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import visiton.erasmus.visiton.model.Comment;
-import visiton.erasmus.visiton.responses.ResponseContainer;
+
 
 public interface CommentService {
 
