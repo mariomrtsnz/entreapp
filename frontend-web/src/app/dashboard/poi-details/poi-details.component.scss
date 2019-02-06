@@ -64,3 +64,11 @@ agm-map {
 audio {
     width: 100%;
 }
+
+drag-scroll {
+    max-height: 250px;
+    img {
+        width: 100%; 
+        display: block!important;
+    }
+}

@@ -4,6 +4,10 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FileSelectDirective } from 'ng2-file-upload';
+import { DragScrollModule } from 'ngx-drag-scroll/lib';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { QuillModule } from 'ngx-quill';
 
 import { MaterialModule } from './../material-module';
 import { BadgesComponent } from './badges/badges.component';
@@ -15,12 +19,9 @@ import { PoiCreateComponent } from './poi-create/poi-create.component';
 import { PoiDetailsComponent } from './poi-details/poi-details.component';
 import { PoiEditComponent } from './poi-edit/poi-edit.component';
 import { PoiComponent } from './poi/poi.component';
+import { RouteDetailsComponent } from './route-details/route-details.component';
 import { RouteComponent } from './route/route.component';
 import { UserComponent } from './user/user.component';
-import { QuillModule } from 'ngx-quill';
-import { FileSelectDirective } from 'ng2-file-upload';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { RouteDetailsComponent } from './route-details/route-details.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { RouteDetailsComponent } from './route-details/route-details.component';
     }),
     QuillModule,
     GooglePlaceModule,
+    DragScrollModule,
   ],
   // tslint:disable-next-line:max-line-length
   declarations: [

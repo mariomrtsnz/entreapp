@@ -48,5 +48,9 @@ export class PoiDetailsComponent implements OnInit {
     err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', {duration: 3000}));
   }
 
+  setAsCover(image: string) {
+    this.coverImage = image;
+  }
+
 
 }
