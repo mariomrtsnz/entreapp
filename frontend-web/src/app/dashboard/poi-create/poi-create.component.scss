@@ -64,22 +64,31 @@ audio {
     }
 }
 
-.imgContainer {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    width: 25%;
-    padding-top: 14.0625%;
-  
-    .imgButtonDelete {
-      position: absolute;
-      top: 15%;
-      left: 90%;
-      transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-      border: none;
-      cursor: pointer;
-    }
+.imgButtonDelete {
+    position: absolute;
+    top: 15%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    border: none;
+    cursor: pointer;
   }
+
+.radio-item {
+  display: none !important;
+}
+label {
+  cursor: pointer;   
+  display: inline-block;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  width: 150px;
+  height: 100px;
+}
+.radio-item:checked + label {
+  outline: 2px orange solid;
+  opacity: 1;
+}
