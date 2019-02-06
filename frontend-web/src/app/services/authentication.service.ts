@@ -10,6 +10,8 @@ import { isNull } from 'util';
 import { LoginDto } from '../dto/login-dto';
 import { GoogleSignResponse } from '../interfaces/google-sign-response';
 import { LoginResponse } from '../interfaces/login-response';
+import { UserService } from './user.service';
+import { LanguageService } from './language.service';
 
 const authUrl = `${environment.apiUrl}`;
 
@@ -31,7 +33,7 @@ export class AuthenticationService {
     return requestOptions;
   }
 
-  constructor(private http: HttpClient, public afAuth: AngularFireAuth) { }
+  constructor(private http: HttpClient, public afAuth: AngularFireAuth, private languageService: LanguageService) { }
 
   login(loginDto: LoginDto): Observable<LoginResponse> {
     const requestOptions = this.request(loginDto.email, loginDto.password);
@@ -44,6 +46,13 @@ export class AuthenticationService {
     localStorage.setItem('email', loginResponse.user.email);
     localStorage.setItem('role', loginResponse.user.role);
     localStorage.setItem('picture', loginResponse.user.picture);
+    this.languageService.getUserLanguage(loginResponse.user.language, loginResponse.token).subscribe(res => {
+      localStorage.setItem('language', res.name);
+      localStorage.setItem('languageId', res.id);
+
+    }), error => {
+      console.log(error);
+    };
   }
   randomPassword(length) {
     // tslint:disable-next-line:prefer-const
@@ -79,6 +88,12 @@ export class AuthenticationService {
 
   getPicture(): string {
     return localStorage.getItem('picture');
+  }
+  getLanguage(): string {
+    return localStorage.getItem('language');
+  }
+  getLanguageId(): string {
+    return localStorage.getItem('languageId');
   }
 
   isAdmin() {
