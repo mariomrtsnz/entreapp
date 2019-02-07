@@ -23,10 +23,11 @@ export class PoiEditComponent implements OnInit {
 
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  urlImage: Array<string> = [];
 
   poi: OnePoiResponse;
+  urlImage: Array<string> = [];
   allCategories: CategoriesResponse;
+  selectedCategories = [];
 
   coordinatesForm: FormGroup;
   form: FormGroup;
@@ -51,6 +52,7 @@ export class PoiEditComponent implements OnInit {
     this.poiService.getOne(this.poiService.selectedPoi.id).subscribe(p => {
       this.poi = p;
       this.urlImage = p.images;
+      p.categories.forEach(c => this.selectedCategories.push(c.id));
       this.createForm();
     });
   }
@@ -75,7 +77,7 @@ export class PoiEditComponent implements OnInit {
       creator: [this.poi.creator],
       coverImage: [this.poi.coverImage],
       images: [this.poi.images, Validators.compose([Validators.required])],
-      categories: [this.poi.categories, Validators.compose([Validators.required])],
+      categories: [this.selectedCategories, Validators.compose([Validators.required])],
       status: [this.poi.status, Validators.compose([Validators.required])],
       schedule: [this.poi.schedule, Validators.compose([Validators.required])],
       price: [this.poi.price],
