@@ -42,7 +42,6 @@ export const show = ({ params }, res, next) =>
 export const update = ({ bodymen: { body }, params }, res, next) =>
   Poi.findById(params.id)
     .then(notFound(res))
-    .then((poi) => poi.coverImage == null ? poi.coverImage = poi.images[0] : null)
     .then((poi) => poi ? Object.assign(poi, body).save() : null)
     .then((poi) => poi ? poi.view(1) : null)
     .then(success(res))
