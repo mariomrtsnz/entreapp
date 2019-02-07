@@ -16,11 +16,21 @@ import { AngularFireStorage } from '@angular/fire/storage';
 export class DialogTranslatePoiComponent implements OnInit {
   audioguidesForm: FormGroup;
   descriptionForm: FormGroup;
+  urlAudioguide: string;
+  poiObtenido;
   constructor(private afStorage: AngularFireStorage, public snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogTranslatePoiComponent>, public poiService: PoiService,private fb: FormBuilder, public authService: AuthenticationService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.createForm();
-    console.log('dialog translated')
+    this.getOnePoi();
+
+  }
+  getOnePoi(){
+    this.poiService.getOne(this.data.poi.id)
+      .subscribe(r => {
+        this.poiObtenido = r
+      });
+  
   }
   createForm() {
    
@@ -34,30 +44,48 @@ export class DialogTranslatePoiComponent implements OnInit {
     });
 
   }
+
+  
   onSubmit() {
-    console.log('onSubmit')
-    const translatedPoi: PoiCreateDto = < PoiCreateDto > this.data.poi;
-    console.log('1º translatedpoi '+translatedPoi);
+    
+    const translatedPoi: any =  this.poiObtenido;
+    let posicionAudio=-1, posicionDescripcion=-1;
     //translatedPoi.description.
     const languageId: string = this.authService.getLanguageId();
     const audioG: string= this.audioguidesForm.value;
+    console.log(audioG)
+    console.log(languageId)
     let tempTranslation = null;
     const translation = {
       'id': languageId,
       'translatedFile': audioG
     }
-
-    translatedPoi.audioguides.translations.forEach((translation => {
-      if (translation.id != languageId) {
-        tempTranslation = translation;
-      } else {
-        translation.translatedFile = audioG;
-      }
-    }))
-    if (tempTranslation != null) {
-      translatedPoi.audioguides.translations.push(translation);
+    
+    //comprobar si el audio existe
+    for (let index = 0; index < translatedPoi.audioguides.translations.length; index++) {
+      if (translatedPoi.audioguides.translations[index].id != languageId) {
+        posicionAudio = index;
+      }  
     }
-    console.log('2º translated poi '+translatedPoi)
+    if(posicionAudio!=-1){
+      translatedPoi.audioguides.translations.splice(posicionAudio)
+    }
+    translatedPoi.audioguides.translations.push(translation);
+    //comprobar si la descripcion existe
+    
+    for (let index = 0; index < translatedPoi.descriptions.translations.length; index++) {
+      if (translatedPoi.descriptions.translations[index].id != languageId) {
+        posicionDescripcion = index;
+      }  
+    }
+    console.log(posicionDescripcion)
+
+    if(posicionDescripcion!=-1){
+      translatedPoi.descriptions.translations.splice(posicionDescripcion)
+    }
+    //translatedPoi.descriptions.translations.push(translation);
+    console.log('2º translated poi ')
+    console.log(translatedPoi);
 
     this.poiService.edit(this.data.poi.id, translatedPoi).subscribe(result => {
       this.dialogRef.close(result);
@@ -79,8 +107,11 @@ export class DialogTranslatePoiComponent implements OnInit {
 
     task.snapshotChanges().pipe(
       finalize(() => ref.getDownloadURL()
-        .subscribe(r => 
+        .subscribe(r => {
+          this.urlAudioguide = r;
           this.audioguidesForm.controls['originalFile'].setValue(r)
+        }
+          
         )))
       .subscribe();
   }

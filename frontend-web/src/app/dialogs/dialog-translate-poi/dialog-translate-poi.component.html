@@ -32,12 +32,20 @@
         </quill-editor>
       </div>
     </mat-card>
+
     <div fxLayout="column" fxLayoutGap="5%" fxFlex.gt-sm="20" fxFlex="100">
-     
+     <mat-card>
+        <h3>Audioguides</h3>
+        <div id="uploadContent" class="w-100" style="height: 50px">
+          <input type="file" name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
+          <p style="margin-top: -38px">Drag & Drop or click to upload</p>
+        </div>
+        <audio *ngIf="urlAudioguide" controls [src]="urlAudioguide"></audio>
+      </mat-card>
       
     </div>
   </div>
   
-  <button (click)="onSubmit()" mat-raised-button style="float: right;" color="primary" fxFlex="50%" mat-dialog-close [disabled]="!descriptionForm.valid">Translate</button>
+  <button (click)="onSubmit()"  mat-raised-button style="float: right;" color="primary" fxFlex="50%" mat-dialog-close [disabled]="!descriptionForm.valid">Translate</button>
 
 </form>
