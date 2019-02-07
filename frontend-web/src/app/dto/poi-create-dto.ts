@@ -1,25 +1,25 @@
 export class PoiCreateDto {
     audioguides: {
         originalFile: string;
-        translations:[
+        translations: [
             {
-                id:string,
-                translatedFile:string
+                id: string,
+                translatedFile: string
             }
         ]
     };
     categories?: string[];
     coordinates: {
-        lat: string,
-        lon: string
+        lat: number,
+        lng: number
     };
     creator?: string;
     description: {
         originalDescription: string;
-        translations:[
+        translations: [
             {
-                idLanguage:string,
-                translatedDescription:string
+                id: string,
+                translatedDescription: string
             }
         ]
     };
@@ -29,5 +29,5 @@ export class PoiCreateDto {
     price: number;
     schedule: string;
     status: string;
-    year: Date;
+    year: number;
 }

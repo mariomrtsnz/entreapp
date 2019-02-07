@@ -10,20 +10,20 @@ export interface OnePoiResponse {
     qrCode: string;
     audioguides: {
         originalFile: string;
-        translations:[
+        translations: [
             {
-                id:string,
-                translatedFile:string
+                id: string,
+                translatedFile: string
             }
         ]
     };
-    
+
     description: {
         originalDescription: string;
-        translations:[
+        translations: [
             {
-                idLanguage:string,
-                translatedDescription:string
+                id: string,
+                translatedDescription: string
             }
         ]
     };

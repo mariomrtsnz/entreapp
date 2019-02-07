@@ -8,7 +8,7 @@
       
       <div fxFlex.gt-md="50" fxFlex="100">
         <!-- Descripción con librería -->
-        <quill-editor [formControl]="descriptionForm.controls['originalDescription']" required>
+        <quill-editor [formControl]="descriptionForm.controls['translatedDescription']" required>
           <div quill-editor-toolbar>
             <span class="ql-format">
               <button class="ql-bold" [title]="'Bold'"></button>
@@ -46,6 +46,6 @@
     </div>
   </div>
   
-  <button (click)="onSubmit()"  mat-raised-button style="float: right;" color="primary" fxFlex="50%" mat-dialog-close [disabled]="!descriptionForm.valid">Translate</button>
+  <button (click)="onSubmit()"  mat-raised-button style="float: right;" color="primary" fxFlex="50%" mat-dialog-close [disabled]="!descriptionForm.valid || !audioguidesForm.valid">Translate</button>
 
 </form>
