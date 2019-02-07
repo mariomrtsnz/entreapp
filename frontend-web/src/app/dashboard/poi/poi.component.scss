@@ -20,9 +20,13 @@
         height: 230px;
     }
 
-    .mat-card-actions .mat-icon {
-        line-height: 36px;
-    }
+    .mat-card-actions {
+        margin-bottom: 0px!important;
+        .mat-icon {
+            line-height: 36px;
+        }    
+    } 
+    
     
     .card-floating-button {
         position: absolute;
