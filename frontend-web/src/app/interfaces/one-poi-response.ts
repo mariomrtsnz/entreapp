@@ -9,6 +9,9 @@ export interface OnePoiResponse {
     stars: number;
     qrCode: string;
     audioguides: {
+        language: {
+            language: string;
+        }
         originalFile: string;
         translations: [
             {
@@ -19,6 +22,9 @@ export interface OnePoiResponse {
     };
 
     description: {
+        language: {
+            language: string;
+        }
         originalDescription: string;
         translations: [
             {

@@ -1,5 +1,8 @@
 export class PoiCreateDto {
     audioguides: {
+        language: {
+            language: string;
+        }
         originalFile: string;
         translations: [
             {
@@ -15,6 +18,9 @@ export class PoiCreateDto {
     };
     creator?: string;
     description: {
+        language: {
+            language: string;
+        }
         originalDescription: string;
         translations: [
             {
