@@ -3,10 +3,10 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
+import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PoiService } from 'src/app/services/poi.service';
-import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 
 @Component({
   selector: 'app-dialog-translate-poi',
@@ -30,7 +30,7 @@ export class DialogTranslatePoiComponent implements OnInit {
   }
   getOnePoi() {
     this.poiService.getOne(this.data.poi.id)
-      .subscribe(r => {this.poiObtenido = r; });
+      .subscribe(r => this.poiObtenido = r);
 
   }
   createForm() {
@@ -130,24 +130,26 @@ export class DialogTranslatePoiComponent implements OnInit {
     });
     // Inserto la nueva traduccion
     newPoi.description.translations.push(
-      { id: this.authService.getLanguageId(),
+      {
+        id: this.authService.getLanguageId(),
         translatedDescription: this.descriptionForm.controls['translatedDescription'].value
       });
     newPoi.audioguides.translations.push(
-      { id: this.authService.getLanguageId(),
+      {
+        id: this.authService.getLanguageId(),
         translatedFile: this.audioguidesForm.controls['translatedFile'].value
       });
-      // Se envía
-      this.poiService.edit(this.poiObtenido.id, newPoi)
+    // Se envía
+    this.poiService.edit(this.poiObtenido.id, newPoi)
       .subscribe(r => this.dialogRef.close('confirm'),
-                e =>  this.snackBar.open('There was an error updating the data.', 'Close', { duration: 3000 }));
+        e => this.snackBar.open('There was an error updating the data.', 'Close', { duration: 3000 }));
   }
 
   audioUpload(e) {
-    // const id = Math.random().toString(36).substring(2);
-    const id = new Date().getTime();
+    const randomId = Math.random().toString(36).substring(2);
+    const timeId = new Date().getTime();
     const file = e.target.files[0];
-    const filePath = `audioguides/${id}`;
+    const filePath = `audioguides/${randomId}-${timeId}`;
     const ref = this.afStorage.ref(filePath);
     const task = this.afStorage.upload(filePath, file);
 
@@ -156,7 +158,6 @@ export class DialogTranslatePoiComponent implements OnInit {
         .subscribe(r => {
           this.urlAudioguide = r;
           this.audioguidesForm.controls['translatedFile'].setValue(r);
-          console.log(this.audioguidesForm.controls['translatedFile'].value);
         }
 
         )))

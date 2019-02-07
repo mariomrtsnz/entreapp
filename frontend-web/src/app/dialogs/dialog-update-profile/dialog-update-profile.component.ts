@@ -1,12 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { UserResponse } from '../../interfaces/user-response';
-import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { CustomValidators } from 'ng2-validation';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { UserUpdateMyProfileDto } from 'src/app/dto/user-update-my-profile.dto';
+
+import { UserResponse } from '../../interfaces/user-response';
+import { UserService } from '../../services/user.service';
+
 const password = new FormControl('');
 const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
+
 @Component({
   selector: 'app-dialog-update-profile',
   templateUrl: './dialog-update-profile.component.html',
@@ -40,19 +42,14 @@ export class DialogUpdateProfileComponent implements OnInit {
 
   updateProfile() {
     this.user.password = this.password;
-    this.userService.editMyProfile(this.user, this.user.id.toString()).subscribe(result => {
-      console.log('success');
-      console.log(result);
-    }, error => {
-      console.log(error);
-      console.log(this.user.password);
-      this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
-    });
-}
+    this.userService.editMyProfile(this.user, this.user.id.toString())
+      .subscribe(r => this.snackBar.open('User updated successfully.', 'Close', { duration: 3000 }),
+        e => this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 }));
+  }
   obtainRoles() {
     this.userService.getRoles().subscribe(receivedRoles => {
       this.roles = receivedRoles.roles;
-    }, error => {
+    }, e => {
       this.snackBar.open('There was an error when we were loading data.', 'Close', {
         duration: 3000
       });

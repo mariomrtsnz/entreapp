@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,8 +14,8 @@ export class DialogDeleteUserComponent implements OnInit {
   checkedRobot: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
-  private userService: UserService, public dialogRef: MatDialogRef<DialogDeleteUserComponent>,
-  public snackBar: MatSnackBar) { }
+    private userService: UserService, public dialogRef: MatDialogRef<DialogDeleteUserComponent>,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
@@ -32,9 +32,7 @@ export class DialogDeleteUserComponent implements OnInit {
   delete() {
     this.userService.remove(this.data.user.id).subscribe(result => {
       this.dialogRef.close('confirm');
-    }, error => {
-      console.log(error);
-    });
+    }, error => this.snackBar.open('There was an error when trying to delete this user.', 'Close', { duration: 3000 }));
   }
 
 }

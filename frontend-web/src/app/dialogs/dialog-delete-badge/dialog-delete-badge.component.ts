@@ -1,6 +1,7 @@
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+
 import { BadgeService } from './../../services/badge.service';
-import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-dialog-delete-badge',
@@ -13,7 +14,8 @@ export class DialogDeleteBadgeComponent implements OnInit {
   checkedRobot: boolean;
 
   // tslint:disable-next-line:max-line-length
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private badgeService: BadgeService, public dialogRef: MatDialogRef<DialogDeleteBadgeComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private badgeService: BadgeService,
+    public dialogRef: MatDialogRef<DialogDeleteBadgeComponent>, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.elementId = this.data.badgeId;
@@ -35,9 +37,7 @@ export class DialogDeleteBadgeComponent implements OnInit {
   delete() {
     this.badgeService.remove(this.elementId).subscribe(result => {
       this.dialogRef.close('confirm');
-    }, error => {
-      console.log(error);
-    });
+    }, error => this.snackBar.open('There was an error when trying to delete this badge.', 'Close', { duration: 3000 }));
   }
 
 }

@@ -1,13 +1,14 @@
-import { finalize } from 'rxjs/operators';
-import { AngularFireStorageReference, AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { BadgeService } from './../../services/badge.service';
-import { BadgeDto } from './../../dto/badge.dto';
-import { PoiService } from './../../services/poi.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { finalize } from 'rxjs/operators';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
+
+import { BadgeDto } from './../../dto/badge.dto';
+import { BadgeService } from './../../services/badge.service';
+import { PoiService } from './../../services/poi.service';
 
 @Component({
   selector: 'app-dialog-badge',
@@ -48,38 +49,32 @@ export class DialogBadgeComponent implements OnInit {
       const editedBadge: BadgeDto = <BadgeDto>this.form.value;
       this.badgeService.edit(this.badgeId, editedBadge).subscribe(result => {
         this.dialogRef.close('confirm');
-      }, error => {
-        console.log(error);
-        this.snackBar.open('Failed to edit.', 'Close', {duration: 3000});
-      });
+      }, error => this.snackBar.open('There was an error when were trying to edit this badge.', 'Close', { duration: 3000 }));
     } else {
       const newBadge: BadgeDto = <BadgeDto>this.form.value;
       this.badgeService.create(newBadge).subscribe(result => {
         this.dialogRef.close('confirm');
-      }, error => {
-        console.log(error);
-        this.snackBar.open('Failed to create.', 'Close', {duration: 3000});
-      });
+      }, error => this.snackBar.open('There was an error when were trying to create this badge.', 'Close', { duration: 3000 }));
     }
   }
 
   createForm() {
     if (this.data) {
-      const editForm: FormGroup = this.fb.group ({
-        name: [this.data.badge.name, Validators.compose ([ Validators.required ])],
-        points: [this.data.badge.points, Validators.compose ([ Validators.required ])],
-        description: [this.data.badge.description, Validators.compose ([ Validators.required ])],
-        icon: [this.data.badge.icon, Validators.compose ([ Validators.required ])],
-        pois: [this.data.badge.pois, Validators.compose ([ Validators.required ])]
+      const editForm: FormGroup = this.fb.group({
+        name: [this.data.badge.name, Validators.compose([Validators.required])],
+        points: [this.data.badge.points, Validators.compose([Validators.required])],
+        description: [this.data.badge.description, Validators.compose([Validators.required])],
+        icon: [this.data.badge.icon, Validators.compose([Validators.required])],
+        pois: [this.data.badge.pois, Validators.compose([Validators.required])]
       });
       this.form = editForm;
     } else {
-      const newForm: FormGroup = this.fb.group ({
-        name: [null, Validators.compose ([ Validators.required ])],
-        points: [null, Validators.compose ([ Validators.required ])],
-        description: [null, Validators.compose ([ Validators.required ])],
-        icon: [null, Validators.compose ([ Validators.required ])],
-        pois: [null, Validators.compose ([ Validators.required ])]
+      const newForm: FormGroup = this.fb.group({
+        name: [null, Validators.compose([Validators.required])],
+        points: [null, Validators.compose([Validators.required])],
+        description: [null, Validators.compose([Validators.required])],
+        icon: [null, Validators.compose([Validators.required])],
+        pois: [null, Validators.compose([Validators.required])]
       });
       this.form = newForm;
     }
@@ -88,11 +83,8 @@ export class DialogBadgeComponent implements OnInit {
   getAllPois() {
     this.poisService.getAll().subscribe(
       pois => {
-          this.allPois = pois.rows;
-      }, error => {
-        console.log(error);
-      }
-    );
+        this.allPois = pois.rows;
+      }, error => this.snackBar.open('There was an error when were loading data.', 'Close', { duration: 3000 }));
   }
 
   addBadge() {
@@ -109,7 +101,6 @@ export class DialogBadgeComponent implements OnInit {
   }
 
   upload(e) {
-    console.log('length', e.target.files);
     const id = Math.random().toString(36).substring(2);
     const file = e.target.files[0];
     const filePath = `${e.target.files[0].type}/${id}`;

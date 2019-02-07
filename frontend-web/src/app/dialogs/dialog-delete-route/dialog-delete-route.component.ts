@@ -1,4 +1,4 @@
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 import { RouteService } from 'src/app/services/route.service';
 
@@ -13,7 +13,8 @@ export class DialogDeleteRouteComponent implements OnInit {
   checkedRobot: boolean;
 
   // tslint:disable-next-line:max-line-length
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private routeService: RouteService, public dialogRef: MatDialogRef<DialogDeleteRouteComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public snackBar: MatSnackBar,
+  private routeService: RouteService, public dialogRef: MatDialogRef<DialogDeleteRouteComponent>) { }
 
   ngOnInit() {
     this.elementId = this.data.routeId;
@@ -35,9 +36,7 @@ export class DialogDeleteRouteComponent implements OnInit {
   delete() {
     this.routeService.remove(this.elementId).subscribe(result => {
       this.dialogRef.close('confirm');
-    }, error => {
-      console.log(error);
-    });
+    }, error => this.snackBar.open('There was an error when trying to delete this route.', 'Close', {duration: 3000}));
   }
 
 }
