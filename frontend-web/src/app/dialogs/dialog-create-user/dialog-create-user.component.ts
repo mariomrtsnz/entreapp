@@ -9,6 +9,8 @@ import { CountryResponse } from 'src/app/interfaces/country-response';
 import { CustomValidators } from 'ng2-validation';
 // import { AuthService } from 'angular-6-social-login';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LanguagesResponse } from 'src/app/interfaces/languages-response';
+import { LanguageService } from 'src/app/services/language.service';
 
 const password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16)]));
 
@@ -31,10 +33,12 @@ export class DialogCreateUserComponent implements OnInit {
   hideDos = true;
   type = 'password';
   roles: string[];
-  constructor(private fb: FormBuilder, private userService: UserService,
+  languages: LanguagesResponse;
+  constructor(public languageService: LanguageService,private fb: FormBuilder, private userService: UserService,
     public dialogRef: MatDialogRef<DialogCreateUserComponent>, public snackBar: MatSnackBar, public authService: AuthenticationService) { }
 
   ngOnInit() {
+    this.getAllLanguages();
     this.createForm();
     this.obtainRoles();
     this.getAllCountries();
@@ -90,9 +94,17 @@ export class DialogCreateUserComponent implements OnInit {
       this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
     });
   }
+  getAllLanguages() {
+    this.languageService.getAllLanguages(this.authService.getToken()).subscribe(receivedLanguages => {
+      this.languages = receivedLanguages;
+    }, error => {
+      this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
+    });
+  }
   onSubmit() {
     console.log('se mete')
     const newUser: UserCreateDto = <UserCreateDto>this.form.value;
+    console.log(newUser)
     newUser.picture = 'https://gravatar.com/avatar/801fce29ee6b494ec10dc47af131b1ba?d=identicon';
     this.userService.create(newUser).subscribe(resp => {
       this.dialogRef.close(resp);

@@ -40,13 +40,12 @@
     
     <h4 class="w-100">Language</h4>
 
-    <mat-form-field  class="w-100">
-      <select matNativeControl  [formControl]="form.controls['language']">
-        <option value="SPANISH">Spanish</option>
-        <option value="ENGLISH" selected>English</option>
-        <option value="FRENCH">French</option>
-        <option value="BASQUE">Basque</option>
-      </select>
+    <mat-form-field class="w-100">
+      <mat-select placeholder="Language" [formControl]="form.controls['language']"  name="language">
+        <mat-option *ngFor="let language of languages.rows" [value]="language.id">
+          {{language.name}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
   </div>
