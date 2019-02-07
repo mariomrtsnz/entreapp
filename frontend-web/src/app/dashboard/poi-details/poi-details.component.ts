@@ -15,7 +15,6 @@ export class PoiDetailsComponent implements OnInit {
 
   poi: OnePoiResponse;
   coverImage: string;
-  images = ['https://bit.ly/2AHGQIw', 'https://bit.ly/2QCBEuO', 'https://on.natgeo.com/2TOioMO'];
   showSettings = false;
 
   constructor(private poiService: PoiService, public router: Router,
@@ -25,7 +24,7 @@ export class PoiDetailsComponent implements OnInit {
     if (this.poiService.selectedPoi == null) {
       this.router.navigate(['home']);
     } else {
-      this.getData();
+      this.getData();     
     }
     this.titleService.setTitle('Details - POI');
   }
