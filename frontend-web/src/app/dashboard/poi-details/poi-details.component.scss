@@ -44,7 +44,7 @@ agm-map {
     height: 300px;
   }
 
-#coverImage {
+  #coverImage {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -52,8 +52,6 @@ agm-map {
     width: 100%;
     padding-top: 56.25%; /* 16:9 Aspect Ratio */
 }
-
-
 
 @media only screen and (max-width: 720px) {
     agm-map {
@@ -66,9 +64,14 @@ audio {
 }
 
 drag-scroll {
-    max-height: 250px;
-    img {
-        width: 100%; 
+    .scrollableImage {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
         display: block!important;
+        margin-bottom: 5px;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
     }
 }
