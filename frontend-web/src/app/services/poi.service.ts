@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { PoiCreateDto } from '../dto/poi-create-dto';
-import { PoiResponse } from '../interfaces/poi-response';
 import { OnePoiResponse } from '../interfaces/one-poi-response';
+import { PoiResponse } from '../interfaces/poi-response';
 import { AuthenticationService } from './authentication.service';
 
 const url = `${environment.apiUrl}/pois`;

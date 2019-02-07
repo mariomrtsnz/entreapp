@@ -1,13 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { CategoryCreateDto } from '../dto/create-category.dto';
+import { CategoriesResponse } from '../interfaces/categories-response';
 import { Category } from '../interfaces/category';
 import { AuthenticationService } from './authentication.service';
-import { CategoriesComponent } from '../dashboard/categories/categories.component';
-import { CategoriesResponse } from '../interfaces/categories-response';
 
 const categoryUrl = `${environment.apiUrl}/categories`;
 

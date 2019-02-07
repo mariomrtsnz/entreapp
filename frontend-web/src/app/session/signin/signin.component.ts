@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -16,7 +17,7 @@ export class SigninComponent implements OnInit {
   hide = true;
 
   public form: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router,
+  constructor(private fb: FormBuilder, private router: Router, public snackBar: MatSnackBar,
     private authService: AuthenticationService, private ngZone: NgZone) { }
 
   ngOnInit() {
@@ -32,7 +33,9 @@ export class SigninComponent implements OnInit {
       this.authService.setLoginData(loginResp);
       this.router.navigate(['/home']);
     }, error => {
-      console.log('Error en petición de login');
+      this.snackBar.open('There was an error when we were trying to login.', 'Close', {
+        duration: 3000
+      });
     }
     );
   }
