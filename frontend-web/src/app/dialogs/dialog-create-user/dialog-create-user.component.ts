@@ -91,10 +91,15 @@ export class DialogCreateUserComponent implements OnInit {
     });
   }
   onSubmit() {
+    console.log('se mete')
     const newUser: UserCreateDto = <UserCreateDto>this.form.value;
     newUser.picture = 'https://gravatar.com/avatar/801fce29ee6b494ec10dc47af131b1ba?d=identicon';
     this.userService.create(newUser).subscribe(resp => {
       this.dialogRef.close(resp);
+      console.log('se mete2')
+      console.log(resp)
+
+
     }, error => {
       console.log(error);
     });

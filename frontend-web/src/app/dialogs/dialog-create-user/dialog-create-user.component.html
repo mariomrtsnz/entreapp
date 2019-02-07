@@ -52,6 +52,6 @@
   </div>
   <div mat-dialog-actions fxLayout="column" fxLayoutAlign="space-around">
     <!--<button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Añadir</button>-->
-    <button mat-raised-button color="primary" fxFlex="50%" mat-dialog-close [disabled]="!form.valid">ADD</button>
+    <button (click)="onSubmit()" mat-raised-button color="primary" fxFlex="50%" mat-dialog-close [disabled]="!form.valid">ADD</button>
   </div>
 </form>
