@@ -3,7 +3,7 @@
     <div fxFlex.gt-md="50" fxFlex="100" fxLayout="column" fxLayoutGap="5%">
       <div fxLayout="row" fxLayoutGap="5px">
         <drag-scroll fxFlex="20" [style.height.px]="myCoverImage.offsetHeight">
-            <div drag-scroll-item *ngFor="let i of poi.images" [style.background-image]="'url('+i+')'" class="scrollableImage"></div>
+            <div drag-scroll-item *ngFor="let i of poi.images" [style.background-image]="'url('+i+')'" class="scrollableImage" (mouseover)="setAsCover(i)"></div>
         </drag-scroll>
         <div fxFlex="80">
           <div #myCoverImage id="coverImage" [style.background-image]="'url(' + coverImage + ')'"> </div>
