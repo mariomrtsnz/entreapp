@@ -8,6 +8,7 @@ import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 import { finalize } from 'rxjs/operators';
 
 import { AngularFireStorage } from '@angular/fire/storage';
+import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 @Component({
   selector: 'app-dialog-translate-poi',
   templateUrl: './dialog-translate-poi.component.html',
@@ -17,7 +18,7 @@ export class DialogTranslatePoiComponent implements OnInit {
   audioguidesForm: FormGroup;
   descriptionForm: FormGroup;
   urlAudioguide: string;
-  poiObtenido;
+  poiObtenido: OnePoiResponse;
   constructor(private afStorage: AngularFireStorage, public snackBar: MatSnackBar, public dialogRef: MatDialogRef<DialogTranslatePoiComponent>, public poiService: PoiService,private fb: FormBuilder, public authService: AuthenticationService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
@@ -27,9 +28,7 @@ export class DialogTranslatePoiComponent implements OnInit {
   }
   getOnePoi(){
     this.poiService.getOne(this.data.poi.id)
-      .subscribe(r => {
-        this.poiObtenido = r
-      });
+      .subscribe(r => this.poiObtenido = r);
   
   }
   createForm() {
@@ -48,17 +47,27 @@ export class DialogTranslatePoiComponent implements OnInit {
   
   onSubmit() {
     
-    const translatedPoi: any =  this.poiObtenido;
+    const translatedPoi: PoiCreateDto = <PoiCreateDto><unknown> this.poiObtenido;
+    console.log(this.poiObtenido.categories);
+    
+    translatedPoi.categories = [];
+    for (let i = 0; i < this.poiObtenido.categories.length; i++) {      
+      translatedPoi.categories.push(this.poiObtenido.categories[0].id);
+      console.log(this.poiObtenido.categories[0]);
+    }
+
+    this.poiObtenido.categories.forEach(c => {
+      translatedPoi.categories.push(c.id);
+    });
     let posicionAudio=-1, posicionDescripcion=-1;
     //translatedPoi.description.
     const languageId: string = this.authService.getLanguageId();
-    const audioG: string= this.audioguidesForm.value;
-    console.log(audioG)
-    console.log(languageId)
+    
+    
     let tempTranslation = null;
     const translation = {
       'id': languageId,
-      'translatedFile': audioG
+      'translatedFile': this.audioguidesForm.controls['originalFile'].value
     }
     
     //comprobar si el audio existe
@@ -73,16 +82,21 @@ export class DialogTranslatePoiComponent implements OnInit {
     translatedPoi.audioguides.translations.push(translation);
     //comprobar si la descripcion existe
     
-    for (let index = 0; index < translatedPoi.descriptions.translations.length; index++) {
-      if (translatedPoi.descriptions.translations[index].id != languageId) {
+    for (let index = 0; index < translatedPoi.description.translations.length; index++) {
+      if (translatedPoi.description.translations[index].id != languageId) {
         posicionDescripcion = index;
       }  
     }
-    console.log(posicionDescripcion)
 
     if(posicionDescripcion!=-1){
-      translatedPoi.descriptions.translations.splice(posicionDescripcion)
+      translatedPoi.description.translations.splice(posicionDescripcion)
     }
+    const translationDescription = {
+      'id': languageId,
+      'translatedDescription': this.descriptionForm.controls['originalDescription'].value
+    }
+    translatedPoi.description.translations.push(translationDescription);
+
     //translatedPoi.descriptions.translations.push(translation);
     console.log('2º translated poi ')
     console.log(translatedPoi);
@@ -110,6 +124,7 @@ export class DialogTranslatePoiComponent implements OnInit {
         .subscribe(r => {
           this.urlAudioguide = r;
           this.audioguidesForm.controls['originalFile'].setValue(r)
+          console.log(this.audioguidesForm.controls['originalFile'].value)
         }
           
         )))

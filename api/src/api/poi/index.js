@@ -98,7 +98,7 @@ router.get('/:id/:idUserLanguage',
  * @apiError 401 admin access only.
  */
 router.put('/:id',
-  token({ required: true, roles: ['admin'] }),
+  token({ required: true, roles: ['admin', 'contributor'] }),
   body({ name, categories, coordinates, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price }),
   update)
 
