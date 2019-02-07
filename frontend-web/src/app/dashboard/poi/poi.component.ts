@@ -1,14 +1,13 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DialogPoiDeleteComponent } from 'src/app/dialogs/dialog-poi-delete/dialog-poi-delete.component';
+import { DialogTranslatePoiComponent } from 'src/app/dialogs/dialog-translate-poi/dialog-translate-poi.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PoiService } from 'src/app/services/poi.service';
 
 import { PoiResponse } from './../../interfaces/poi-response';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { DialogTranslatePoiComponent } from 'src/app/dialogs/dialog-translate-poi/dialog-translate-poi.component';
-import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 
 @Component({
   selector: 'app-poi',
@@ -30,7 +29,7 @@ export class PoiComponent implements OnInit {
 
   getAll() {
     this.poiService.getAll().subscribe(receivedPois => this.POIs = receivedPois,
-      err => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
+      err => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
   }
 
   openNewPoi() {
@@ -43,14 +42,14 @@ export class PoiComponent implements OnInit {
   }
 
   openDialogDeletePoi(p: PoiResponse) {
-    const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, {data: {poi: p}});
+    const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, { data: { poi: p } });
     dialogDeletePoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
-    err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', {duration: 3000}));
+      err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', { duration: 3000 }));
   }
   openDialogTranslatePoi(p) {
-    const dialogTranslatePoi = this.dialog.open(DialogTranslatePoiComponent, {data: {poi: p}});
+    const dialogTranslatePoi = this.dialog.open(DialogTranslatePoiComponent, { data: { poi: p } });
     dialogTranslatePoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
-    err => this.snackBar.open('There was an error when we were translating this POI.', 'Close', {duration: 3000}));
+      err => this.snackBar.open('There was an error when we were translating this POI.', 'Close', { duration: 3000 }));
   }
 
   goPoiDetails(p) {

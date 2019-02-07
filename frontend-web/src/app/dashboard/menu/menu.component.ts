@@ -1,10 +1,11 @@
-import { AuthenticationService } from '../../services/authentication.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { DialogUpdateProfileComponent } from 'src/app/dialogs/dialog-update-profile/dialog-update-profile.component';
+import { UserService } from 'src/app/services/user.service';
+
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -17,8 +18,8 @@ export class MenuComponent implements OnInit {
   loggedUser = null;
   alertMessage: string;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(private snackBar: MatSnackBar, public router: Router, public dialog: MatDialog, public authService: AuthenticationService, private userService: UserService) { }
+  constructor(private snackBar: MatSnackBar, public router: Router, public dialog: MatDialog,
+    public authService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
     this.loggedUser = this.getLoggedUserInfo();
@@ -34,8 +35,7 @@ export class MenuComponent implements OnInit {
 
   openUpdateProfile() {
     const editableUser = this.userService.getOneByEmail(this.authService.getEmail());
-    // tslint:disable-next-line:max-line-length
-    const editUserDialog = this.dialog.open(DialogUpdateProfileComponent, {panelClass: 'add-dialog', data: {usuario: editableUser}});
+    const editUserDialog = this.dialog.open(DialogUpdateProfileComponent, { panelClass: 'add-dialog', data: { usuario: editableUser } });
 
     editUserDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {

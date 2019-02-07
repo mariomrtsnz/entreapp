@@ -1,14 +1,14 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { OneRouteResponse } from 'src/app/interfaces/one-route-response';
+import { PoiService } from 'src/app/services/poi.service';
+import { RouteService } from 'src/app/services/route.service';
+
 import { DialogDeleteRouteComponent } from './../../dialogs/dialog-delete-route/dialog-delete-route.component';
 import { DialogRouteComponent } from './../../dialogs/dialog-route/dialog-route.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit } from '@angular/core';
-import { OneRouteResponse } from 'src/app/interfaces/one-route-response';
-import { RouteService } from 'src/app/services/route.service';
-import { Router } from '@angular/router';
-import { RouteResponse } from 'src/app/interfaces/route-response';
-import { PoiService } from 'src/app/services/poi.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-route-details',
@@ -18,8 +18,8 @@ import { Title } from '@angular/platform-browser';
 export class RouteDetailsComponent implements OnInit {
   route: OneRouteResponse;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(private poiService: PoiService, private routeService: RouteService, public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar, private titleService: Title) { }
+  constructor(private poiService: PoiService, private routeService: RouteService,
+    public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar, private titleService: Title) { }
 
   ngOnInit() {
     if (this.routeService.selectedRoute == null) {
@@ -37,16 +37,16 @@ export class RouteDetailsComponent implements OnInit {
   }
 
   openDialogEditRoute() {
-    const dialogEditRoute = this.dialog.open(DialogRouteComponent, {data: {route: this.route}, width: '500px' });
+    const dialogEditRoute = this.dialog.open(DialogRouteComponent, { data: { route: this.route }, width: '500px' });
     dialogEditRoute.afterClosed().subscribe(res => res === 'confirm' ? this.router.navigate['/home/routes'] : null,
-    err => this.snackBar.open('There was an error when we were updating this Route.', 'Close', {duration: 3000}));
+      err => this.snackBar.open('There was an error when we were updating this Route.', 'Close', { duration: 3000 }));
   }
 
   openDialogDeleteRoute() {
-    // tslint:disable-next-line:max-line-length
-    const dialogDeleteRoute = this.dialog.open(DialogDeleteRouteComponent, {panelClass: 'delete-dialog', data: {routeId: this.route.id, routeName: this.route.name}});
+    const dialogDeleteRoute = this.dialog.open(DialogDeleteRouteComponent,
+      { panelClass: 'delete-dialog', data: { routeId: this.route.id, routeName: this.route.name } });
     dialogDeleteRoute.afterClosed().subscribe(res => res === 'confirm' ? this.router.navigate['/home/routes'] : null,
-    err => this.snackBar.open('There was an error when we were deleting this Route.', 'Close', {duration: 3000}));
+      err => this.snackBar.open('There was an error when we were deleting this Route.', 'Close', { duration: 3000 }));
   }
 
   calcTotalDistanceInKm() {
