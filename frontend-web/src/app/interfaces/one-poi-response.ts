@@ -10,9 +10,22 @@ export interface OnePoiResponse {
     qrCode: string;
     audioguides: {
         originalFile: string;
+        translations:[
+            {
+                id:string,
+                translatedFile:string
+            }
+        ]
     };
+    
     description: {
         originalDescription: string;
+        translations:[
+            {
+                idLanguage:string,
+                translatedDescription:string
+            }
+        ]
     };
     coverImage: string;
     images: string[];
