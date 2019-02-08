@@ -49,6 +49,8 @@ export class AuthenticationService {
     this.languageService.getUserLanguage(loginResponse.user.language, loginResponse.token).subscribe(res => {
       localStorage.setItem('language', res.name);
       localStorage.setItem('languageId', res.id);
+      localStorage.setItem('isoCode', res.isoCode);
+
     }, error => {
       console.log(error);
     });
@@ -79,6 +81,9 @@ export class AuthenticationService {
 
   getName(): string {
     return localStorage.getItem('name');
+  }
+  getIsoCode(): string {
+    return localStorage.getItem('isoCode');
   }
 
   getEmail(): string {
