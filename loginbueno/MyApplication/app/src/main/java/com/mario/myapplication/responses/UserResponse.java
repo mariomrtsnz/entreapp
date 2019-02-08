@@ -11,13 +11,13 @@ public class UserResponse {
     private String createAt;
     private String country;
     private String language;
-    private BadgeResponse badges;
+    private String[] badges;
 
     public UserResponse() {
 
     }
 
-    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, BadgeResponse badges) {
+    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, String[] badges) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -102,11 +102,11 @@ public class UserResponse {
         this.language = language;
     }
 
-    public BadgeResponse getBadges() {
+    public String[] getBadges() {
         return badges;
     }
 
-    public void setBadges(BadgeResponse badges) {
+    public void setBadges(String[] badges) {
         this.badges = badges;
     }
 

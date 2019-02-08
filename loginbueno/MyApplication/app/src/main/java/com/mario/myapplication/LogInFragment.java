@@ -44,12 +44,6 @@ public class LogInFragment extends AuthFragment {
   VerticalTextView login;
   Context ctx = this.getContext();
 
-//  @Override
-//  public void onCreate(@Nullable Bundle savedInstanceState) {
-//    super.onCreate(savedInstanceState);
-//
-//
-//  }
 
   @BindViews(value = {R.id.email_input_edit, R.id.password_input_edit})
   protected List<TextInputEditText> views;
@@ -79,19 +73,19 @@ public class LogInFragment extends AuthFragment {
           if (response.code() != 201) {
             // error
             Log.e("RequestError", response.message());
-            Toast.makeText(ctx, "Error de petición", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), "Error de petición", Toast.LENGTH_SHORT).show();
           } else {
             // exito
-            UtilToken.setToken(ctx, response.body().getToken());
+            UtilToken.setToken(view.getContext(), response.body().getToken());
 
-            startActivity(new Intent(ctx, HomeActivity.class));
+            startActivity(new Intent(view.getContext(), HomeActivity.class));
           }
         }
 
         @Override
         public void onFailure(Call<LoginResponse> call, Throwable t) {
           Log.e("NetworkFailure", t.getMessage());
-          Toast.makeText(ctx, "Error de conexión", Toast.LENGTH_SHORT).show();
+          Toast.makeText(view.getContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
         }
       });
 
