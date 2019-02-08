@@ -2,6 +2,7 @@ package com.mario.myapplication.retrofit.services;
 
 import com.mario.myapplication.model.User;
 import com.mario.myapplication.responses.ResponseContainer;
+import com.mario.myapplication.responses.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,19 +16,19 @@ public interface UserService {
     String BASE_URL = "/users";
 
     @GET(BASE_URL)
-    Call<ResponseContainer<User>> listUsers();
+    Call<ResponseContainer<UserResponse>> listUsers();
 
     @GET(BASE_URL+"/{id}")
-    Call<User> getUser(@Path("id") Long id);
+    Call<UserResponse> getUser(@Path("id") Long id);
 
     @GET(BASE_URL+"/me")
-    Call<User> getMe();
+    Call<UserResponse> getMe();
 
     @PUT(BASE_URL+"/{id}")
-    Call<User> editUser(@Path("id") Long id, @Body User user);
+    Call<UserResponse> editUser(@Path("id") Long id, @Body User user);
 
     @PUT(BASE_URL+"/{id}/password")
-    Call<User> editPassword(@Path("id") Long id, @Body String password);
+    Call<UserResponse> editPassword(@Path("id") Long id, @Body String password);
 
     // It should be /me, must do in api first
 //    @DELETE("/users/{id}")
