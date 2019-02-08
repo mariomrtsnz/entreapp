@@ -22,6 +22,20 @@ public class Poi {
 
     }
 
+    public Poi(String name, Category[] categories, double[] coordinates, String qrCode, String audioguides, String description, String coverImage, String images, int year, String status, String schedule) {
+        this.name = name;
+        this.categories = categories;
+        this.coordinates = coordinates;
+        this.qrCode = qrCode;
+        this.audioguides = audioguides;
+        this.description = description;
+        this.coverImage = coverImage;
+        this.images = images;
+        this.year = year;
+        this.status = status;
+        this.schedule = schedule;
+    }
+
     public Poi(String name, Category[] categories, double[] coordinates, String qrCode, String audioguides, String description, String coverImage, String images, int year, String creator, String status, String schedule, double price) {
         this.name = name;
         this.categories = categories;
