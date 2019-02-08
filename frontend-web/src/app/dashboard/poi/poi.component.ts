@@ -46,10 +46,14 @@ export class PoiComponent implements OnInit {
     dialogDeletePoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
       err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', { duration: 3000 }));
   }
-  openDialogTranslatePoi(p) {
+  /*openDialogTranslatePoi(p) {
     const dialogTranslatePoi = this.dialog.open(DialogTranslatePoiComponent, { data: { poi: p } });
     dialogTranslatePoi.afterClosed().subscribe(res => res === 'confirm' ? this.getAll() : null,
       err => this.snackBar.open('There was an error when we were translating this POI.', 'Close', { duration: 3000 }));
+  }*/
+  openDialogTranslatePoi(p) {
+    const dialogTranslatePoi = this.dialog.open(DialogTranslatePoiComponent, { data: { poi: p } });
+    dialogTranslatePoi.afterClosed().subscribe(res => this.getAll());
   }
 
   goPoiDetails(p) {
