@@ -12,7 +12,7 @@ public class User {
     private String picture;
     private Category likes;
     private Poi visited;
-    private Poi badges;
+    private Badge badges[];
     private String city;
     private Language language;
     private User friends[];
@@ -21,7 +21,7 @@ public class User {
 
     }
 
-    public User(String email, String password, String name, String[] services, String role, String picture, Category likes, Poi visited, Poi badges, String city, Language language, User[] friends) {
+    public User(String email, String password, String name, String[] services, String role, String picture, Category likes, Poi visited, Badge[] badges, String city, Language language, User[] friends) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -100,11 +100,11 @@ public class User {
         this.visited = visited;
     }
 
-    public Poi getBadges() {
+    public Badge[] getBadges() {
         return badges;
     }
 
-    public void setBadges(Poi badges) {
+    public void setBadges(Badge[] badges) {
         this.badges = badges;
     }
 
