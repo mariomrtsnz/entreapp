@@ -1,13 +1,18 @@
 package com.mario.myapplication;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,6 +20,10 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.mario.myapplication.responses.LoginResponse;
+import com.mario.myapplication.retrofit.generator.ServiceGenerator;
+import com.mario.myapplication.retrofit.services.LoginService;
+import com.mario.myapplication.util.UtilToken;
 import com.transitionseverywhere.ChangeBounds;
 import com.transitionseverywhere.Transition;
 import com.transitionseverywhere.TransitionManager;
@@ -23,8 +32,24 @@ import com.transitionseverywhere.TransitionSet;
 import java.util.List;
 
 import butterknife.BindViews;
+import butterknife.ButterKnife;
+import okhttp3.Credentials;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LogInFragment extends AuthFragment {
+
+ TextInputLayout email_input, password_input;
+  VerticalTextView login;
+  Context ctx = this.getContext();
+
+//  @Override
+//  public void onCreate(@Nullable Bundle savedInstanceState) {
+//    super.onCreate(savedInstanceState);
+//
+//
+//  }
 
   @BindViews(value = {R.id.email_input_edit, R.id.password_input_edit})
   protected List<TextInputEditText> views;
@@ -32,6 +57,47 @@ public class LogInFragment extends AuthFragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+
+    email_input = getActivity().findViewById(R.id.email_input);
+    password_input = getActivity().findViewById(R.id.password_input);
+    login = getActivity().findViewById(R.id.caption);
+
+    login.setOnClickListener(v -> {
+
+
+      String username_txt = email_input.getEditText().getText().toString();
+      String password_txt = password_input.getEditText().getText().toString();
+
+      String credentials = Credentials.basic(username_txt, password_txt);
+
+      LoginService service = ServiceGenerator.createService(LoginService.class);
+      Call<LoginResponse> call = service.doLogin(credentials);
+
+      call.enqueue(new retrofit2.Callback<LoginResponse>() {
+        @Override
+        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+          if (response.code() != 201) {
+            // error
+            Log.e("RequestError", response.message());
+            Toast.makeText(ctx, "Error de petición", Toast.LENGTH_SHORT).show();
+          } else {
+            // exito
+            UtilToken.setToken(ctx, response.body().getToken());
+
+            startActivity(new Intent(ctx, HomeActivity.class));
+          }
+        }
+
+        @Override
+        public void onFailure(Call<LoginResponse> call, Throwable t) {
+          Log.e("NetworkFailure", t.getMessage());
+          Toast.makeText(ctx, "Error de conexión", Toast.LENGTH_SHORT).show();
+        }
+      });
+
+
+    });
+
     if (view != null) {
       caption.setText(getString(R.string.log_in_label));
       view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_log_in));

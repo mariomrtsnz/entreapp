@@ -13,4 +13,5 @@
     <dimen name="folded_label_padding">22sp</dimen>
     <dimen name="logo_size">64dp</dimen>
     <dimen name="guideline_margin">56dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
