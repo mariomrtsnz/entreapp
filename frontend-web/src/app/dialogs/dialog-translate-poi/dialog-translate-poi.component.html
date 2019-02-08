@@ -40,7 +40,7 @@
           <input type="file" name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
           <p style="margin-top: -38px">Drag & Drop or click to upload</p>
         </div>
-        <audio *ngIf="urlAudioguide" controls [src]="urlAudioguide"></audio>
+        <audio *ngIf="this.audioguidesForm.controls['translatedFile'].value" controls [src]="this.audioguidesForm.controls['translatedFile'].value"></audio>
       </mat-card>
       
     </div>

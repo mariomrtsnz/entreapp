@@ -1,6 +1,7 @@
 package com.mario.myapplication.retrofit.services;
 
 import com.mario.myapplication.model.Poi;
+import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 
 import retrofit2.Call;
@@ -13,8 +14,8 @@ public interface PoiService {
     String BASE_URL = "/pois";
 
     @GET(BASE_URL)
-    Call<ResponseContainer<Poi>> listPois();
+    Call<ResponseContainer<PoiResponse>> listPois();
 
     @GET(BASE_URL + "/{id}")
-    Call<Poi> getPoi(@Path("id") Long id);
+    Call<PoiResponse> getPoi(@Path("id") Long id);
 }

@@ -19,12 +19,14 @@ public class Register {
         this.role = role;
     }
 
-    public Register(String name, String email, String password) {
+    public Register( String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = "user";
+        this.role = role;
     }
+
+
 
     public String getName() {
         return name;

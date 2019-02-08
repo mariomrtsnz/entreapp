@@ -15,7 +15,7 @@ public interface LoginService {
 
 
     @POST("/users")
-    Call<LoginResponse> doRegister(@Body Register register);
+    Call<LoginResponse> doSignUp(@Body Register register);
 
 
 

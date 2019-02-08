@@ -57,7 +57,6 @@ export class PoiCreateComponent implements OnInit {
     this.descriptionForm = this.fb.group({
       originalDescription: [null, Validators.compose([Validators.required])]
     });
-
     this.form = this.fb.group({
       name: [null, Validators.compose([Validators.required])],
       year: [null, Validators.compose([Validators.required])],

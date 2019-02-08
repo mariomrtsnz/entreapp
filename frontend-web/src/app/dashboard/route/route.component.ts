@@ -32,6 +32,7 @@ export class RouteComponent implements OnInit {
     this.routeService.getAll().subscribe(result => {
       this.routes = result;
     }, err => {
+      console.log(err);
       this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
     });
   }

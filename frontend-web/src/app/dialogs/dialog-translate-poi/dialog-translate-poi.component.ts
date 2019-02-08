@@ -29,17 +29,23 @@ export class DialogTranslatePoiComponent implements OnInit {
     this.getOnePoi();
     this.createForm();
     this.idLanguage = this.authService.getLanguageId();
-    this.getUserIsoCode();
   }
   getUserIsoCode() {
     const token = this.authService.getToken();
     const languageId = this.authService.getLanguageId();
     this.languageService.getUserLanguage(languageId , token)
-      .subscribe(r => this.isoCode = r.isoCode);
+      .subscribe(r => {
+        this.isoCode = r.isoCode
+        this.checkAndSetTranslations(this.isoCode);
+      });
   }
   getOnePoi() {
     this.poiService.getOne(this.data.poi.id)
-      .subscribe(r => this.poiObtenido = r);
+      .subscribe(r => {
+        this.poiObtenido = r
+        this.getUserIsoCode();
+
+      });
 
   }
   createForm() {
@@ -53,69 +59,58 @@ export class DialogTranslatePoiComponent implements OnInit {
   }
 
 
-  // onSubmit() {
+  checkAndSetTranslations(userIsoCode: string) {
+    let posicionDescripcion = -1, posicionAudio = -1;
+    /* comprobamos el id del usuario
+    buscamos si existe traduccion con ese id  y la mostramos en el form control
+    si el usuario es ingles mostramos el texto original */
+    if(this.checkEnglishUser(userIsoCode)){
+      console.log(this.poiObtenido.audioguides.originalFile);
+      this.audioguidesForm.controls['translatedFile'].setValue(this.poiObtenido.audioguides.originalFile);
+      this.descriptionForm.controls['translatedDescription'].setValue(this.poiObtenido.description.originalDescription);
+    }else{
+     
 
-  //   const translatedPoi = this.poiObtenido;
-  //   console.log(this.poiObtenido.categories);
-  //   console.log(this.poiObtenido.categories.length);
-  //   const cats = [];
-  //   for (let i = 0; i <= this.poiObtenido.categories.length; i++) {
-  //     cats.push(this.poiObtenido.categories[i].id);
-  //     console.log(this.poiObtenido.categories[i]);
-  //   }
-  //   this.form.controls['categories'].setValue(cats);
+      posicionDescripcion = this.checkExistDescriptionTranslation(this.poiObtenido);
+      posicionAudio = this.checkExistAudioTranslation(this.poiObtenido);
+      if(posicionDescripcion != -1)
+        this.descriptionForm.controls['translatedDescription'].setValue(this.poiObtenido.description.translations[posicionDescripcion].translatedDescription);
+      if(posicionAudio != -1)
+        this.audioguidesForm.controls['translatedFile'].setValue(this.poiObtenido.audioguides.translations[posicionAudio].translatedFile);
 
-  //   let posicionAudio = -1, posicionDescripcion = -1;
-  //   // translatedPoi.description.
-  //   const languageId: string = this.authService.getLanguageId();
+      console.log(this.poiObtenido.description.translations[posicionDescripcion]);
+    }
+  }
+  checkEnglishUser(userIsoCode: string){
+    const englishIsoCode = 'en';
+    let result = false;
+    if(this.isoCode == null || this.isoCode == undefined){
+      result=true
+    }else{
+      result = this.isoCode.toLowerCase() == englishIsoCode.toLocaleLowerCase();
 
-  //   const translation = {
-  //     'id': languageId,
-  //     'translatedFile': this.audioguidesForm.controls['originalFile'].value
-  //   };
-
-  //   // comprobar si el audio existe
-  //   for (let index = 0; index < translatedPoi.audioguides.translations.length; index++) {
-  //     if (translatedPoi.audioguides.translations[index].id !== languageId) {
-  //       posicionAudio = index;
-  //     }
-  //   }
-  //   if (posicionAudio !== -1) {
-  //     translatedPoi.audioguides.translations.splice(posicionAudio);
-  //   }
-  //   translatedPoi.audioguides.translations.push(translation);
-  //   // comprobar si la descripcion existe
-
-  //   for (let index = 0; index < translatedPoi.description.translations.length; index++) {
-  //     if (translatedPoi.description.translations[index].id !== languageId) {
-  //       posicionDescripcion = index;
-  //     }
-  //   }
-
-  //   if (posicionDescripcion !== -1) {
-  //     translatedPoi.description.translations.splice(posicionDescripcion);
-  //   }
-  //   const translationDescription = {
-  //     'id': languageId,
-  //     'translatedDescription': this.descriptionForm.controls['originalDescription'].value
-  //   };
-
-  //   translatedPoi.description.translations.push(translationDescription);
-
-  //   // translatedPoi.descriptions.translations.push(translation);
-  //   console.log('2º translated poi ');
-  //   console.log(translatedPoi);
-
-  //   this.poiService.edit(this.data.poi.id, translatedPoi).subscribe(result => {
-  //     this.dialogRef.close(result);
-  //   }, error => {
-  //     console.log(error);
-  //     this.snackBar.open('Failed to translate POI.', 'Close', {
-  //       duration: 3000
-  //     });
-  //   });
-  // }
-
+    }
+    return result;
+      
+  }
+  checkExistDescriptionTranslation(newPoi){
+    let posicionDescripcion = -1;
+    for (let i = 0; i < newPoi.description.translations.length; i++) {
+      if (newPoi.description.translations[i].id !== this.idLanguage) {
+        posicionDescripcion = i;
+      }
+    }
+    return posicionDescripcion;
+  }
+  checkExistAudioTranslation(newPoi){
+    let posicionDescripcion = -1;
+    for (let i = 0; i < newPoi.audioguides.translations.length; i++) {
+      if (newPoi.audioguides.translations[i].id !== this.idLanguage) {
+        posicionDescripcion = i;
+      }
+    }
+    return posicionDescripcion;
+  }
   onSubmit() {
     // Creo un objeto PoiCreateDto con los datos del obtenido
     const englishIsoCode = 'en';
@@ -141,24 +136,16 @@ export class DialogTranslatePoiComponent implements OnInit {
 
     // compruebo si esta la nueva traduccion
     // si el idioma no es ingles se inserta en una nueva traduccion
-    if (this.isoCode.toLowerCase() !== englishIsoCode.toLocaleLowerCase()) {
+    if (!this.checkEnglishUser(this.isoCode)) {
       console.log('no es ingles');
-      for (let i = 0; i < newPoi.description.translations.length; i++) {
-        if (newPoi.description.translations[i].id !== this.idLanguage) {
-          posicionDescripcion = i;
-        }
-      }
+      posicionDescripcion = this.checkExistDescriptionTranslation(newPoi);
       // si existe la borro y añado nueva
       // tslint:disable-next-line:no-non-null-assertion
-      if (posicionDescripcion! = -1) {
+      if (posicionDescripcion != -1) {
         newPoi.description.translations.splice(posicionDescripcion);
       }
       // compruebo si esta el audio
-      for (let i = 0; i < newPoi.audioguides.translations.length; i++) {
-        if (newPoi.audioguides.translations[i].id !== this.idLanguage) {
-          posicionAudio = i;
-        }
-      }
+      posicionAudio = this.checkExistAudioTranslation(newPoi);
       // si existe la borro y añado nueva
       // tslint:disable-next-line:no-non-null-assertion
       if (posicionAudio! = -1) {

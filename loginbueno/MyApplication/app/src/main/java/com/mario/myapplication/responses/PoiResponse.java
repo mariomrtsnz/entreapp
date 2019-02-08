@@ -1,34 +1,40 @@
-package com.mario.myapplication.model;
+package com.mario.myapplication.responses;
 
-import java.util.Arrays;
+import com.mario.myapplication.model.Audioguide;
+import com.mario.myapplication.model.Category;
+import com.mario.myapplication.model.Description;
 
-public class Poi {
+public class PoiResponse {
 
+    private String id;
     private String name;
-    private Category categories[];
-    private double coordinates[];
+    private Category[] categories;
+    private float[] coordinates;
+    private String[] comments;
+    private float stars;
     private String qrCode;
-    private String audioguides;
-    private String description;
+    private Audioguide audioguides;
+    private Description descriptions;
     private String coverImage;
-    private String images;
+    private String[] images;
     private int year;
     private String creator;
     private String status;
     private String schedule;
-    private double price;
+    private float price;
 
-    public Poi() {
+    public PoiResponse() {}
 
-    }
-
-    public Poi(String name, Category[] categories, double[] coordinates, String qrCode, String audioguides, String description, String coverImage, String images, int year, String status, String schedule) {
+    public PoiResponse(String id, String name, Category[] categories, float[] coordinates, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String status, String schedule) {
+        this.id = id;
         this.name = name;
         this.categories = categories;
         this.coordinates = coordinates;
+        this.comments = comments;
+        this.stars = stars;
         this.qrCode = qrCode;
         this.audioguides = audioguides;
-        this.description = description;
+        this.descriptions = descriptions;
         this.coverImage = coverImage;
         this.images = images;
         this.year = year;
@@ -36,13 +42,16 @@ public class Poi {
         this.schedule = schedule;
     }
 
-    public Poi(String name, Category[] categories, double[] coordinates, String qrCode, String audioguides, String description, String coverImage, String images, int year, String creator, String status, String schedule, double price) {
+    public PoiResponse(String id, String name, Category[] categories, float[] coordinates, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String creator, String status, String schedule, float price) {
+        this.id = id;
         this.name = name;
         this.categories = categories;
         this.coordinates = coordinates;
+        this.comments = comments;
+        this.stars = stars;
         this.qrCode = qrCode;
         this.audioguides = audioguides;
-        this.description = description;
+        this.descriptions = descriptions;
         this.coverImage = coverImage;
         this.images = images;
         this.year = year;
@@ -50,6 +59,14 @@ public class Poi {
         this.status = status;
         this.schedule = schedule;
         this.price = price;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -68,12 +85,28 @@ public class Poi {
         this.categories = categories;
     }
 
-    public double[] getCoordinates() {
+    public float[] getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(double[] coordinates) {
+    public void setCoordinates(float[] coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public String[] getComments() {
+        return comments;
+    }
+
+    public void setComments(String[] comments) {
+        this.comments = comments;
+    }
+
+    public float getStars() {
+        return stars;
+    }
+
+    public void setStars(float stars) {
+        this.stars = stars;
     }
 
     public String getQrCode() {
@@ -84,20 +117,20 @@ public class Poi {
         this.qrCode = qrCode;
     }
 
-    public String getAudioguides() {
+    public Audioguide getAudioguides() {
         return audioguides;
     }
 
-    public void setAudioguides(String audioguides) {
+    public void setAudioguides(Audioguide audioguides) {
         this.audioguides = audioguides;
     }
 
-    public String getDescription() {
-        return description;
+    public Description getDescriptions() {
+        return descriptions;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(Description descriptions) {
+        this.descriptions = descriptions;
     }
 
     public String getCoverImage() {
@@ -108,11 +141,11 @@ public class Poi {
         this.coverImage = coverImage;
     }
 
-    public String getImages() {
+    public String[] getImages() {
         return images;
     }
 
-    public void setImages(String images) {
+    public void setImages(String[] images) {
         this.images = images;
     }
 
@@ -148,32 +181,11 @@ public class Poi {
         this.schedule = schedule;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
-
-    @Override
-    public String toString() {
-        return "Poi{" +
-                "name='" + name + '\'' +
-                ", categories=" + Arrays.toString(categories) +
-                ", coordinates=" + Arrays.toString(coordinates) +
-                ", qrCode='" + qrCode + '\'' +
-                ", audioguides='" + audioguides + '\'' +
-                ", description='" + description + '\'' +
-                ", coverImage='" + coverImage + '\'' +
-                ", images='" + images + '\'' +
-                ", year=" + year +
-                ", creator='" + creator + '\'' +
-                ", status='" + status + '\'' +
-                ", schedule='" + schedule + '\'' +
-                ", price=" + price +
-                '}';
-    }
-
-
 }

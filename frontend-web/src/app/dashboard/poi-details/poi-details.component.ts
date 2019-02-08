@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DialogPoiDeleteComponent } from 'src/app/dialogs/dialog-poi-delete/dialog-poi-delete.component';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { PoiService } from 'src/app/services/poi.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-poi-details',
@@ -16,9 +17,8 @@ export class PoiDetailsComponent implements OnInit {
   poi: OnePoiResponse;
   coverImage: string;
   showSettings = false;
-
   constructor(private poiService: PoiService, public router: Router,
-    public dialog: MatDialog, public snackBar: MatSnackBar, private titleService: Title) { }
+    public dialog: MatDialog, public snackBar: MatSnackBar, private titleService: Title, private authService: AuthenticationService) { }
 
   ngOnInit() {
     if (this.poiService.selectedPoi == null) {
@@ -28,12 +28,69 @@ export class PoiDetailsComponent implements OnInit {
     }
     this.titleService.setTitle('Details - POI');
   }
+  checkEnglishUser(){
+    const englishIsoCode = 'en';
+    const userIsoCode = this.authService.getIsoCode();
+    let result = false;
+    if(userIsoCode == null || userIsoCode == undefined){
+      result=true
+    }else{
+      result = userIsoCode.toLowerCase() == englishIsoCode.toLocaleLowerCase();
 
+    }
+    return result;
+      
+  }
+  checkExistDescriptionTranslation(newPoi){
+    let posicionDescripcion = -1;
+
+    for (let i = 0; i < newPoi.description.translations.length; i++) {
+      if (newPoi.description.translations[i].id !== this.authService.getLanguageId()) {
+        posicionDescripcion = i;
+      }
+    }
+    return posicionDescripcion;
+  }
+  checkExistAudioTranslation(newPoi){
+    let posicionDescripcion = -1;
+    for (let i = 0; i < newPoi.audioguides.translations.length; i++) {
+      if (newPoi.audioguides.translations[i].id !== this.authService.getLanguageId()) {
+        posicionDescripcion = i;
+      }
+    }
+    return posicionDescripcion;
+  }
   getData() {
     this.poiService.getOne(this.poiService.selectedPoi.id).subscribe(p => {
       this.poi = p;
       this.coverImage = p.coverImage;
+      let posicionDescripcion=-1, posicionAudio=-1;
+      let textoTraducido='', audioTraducido='';
+      if (!this.checkEnglishUser()) {
+        console.log('NO es ingles');
+        //obtenemos posicion del texto
+        posicionDescripcion = this.checkExistDescriptionTranslation(this.poi);
+        posicionAudio = this.checkExistAudioTranslation(this.poi);
+
+        if(posicionDescripcion!=-1){
+          console.log('primer if')
+          textoTraducido = this.poi.description.translations[posicionDescripcion].translatedDescription;
+          this.poi.description.originalDescription = textoTraducido;
+        }
+        if(posicionAudio!=-1){
+          console.log('segundo if')
+
+          audioTraducido = this.poi.audioguides.translations[posicionAudio].translatedFile;
+          this.poi.audioguides.originalFile = audioTraducido;
+        }
+
+      }
+
     });
+    //si el usuario es de otro idioma le seteo el texto original al poi para que muestre ese
+    //comprobamos si el usuario no es ingles,
+    //buscamos por la id de lenguage del usuario que posicion en el poi tiene su descripcion
+
   }
 
   openEditPoi() {
