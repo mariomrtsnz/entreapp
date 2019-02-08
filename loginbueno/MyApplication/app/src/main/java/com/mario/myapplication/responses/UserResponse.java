@@ -2,7 +2,7 @@ package com.mario.myapplication.responses;
 
 public class UserResponse {
 
-    private int id;
+    private String id;
     private String name;
     private String role;
     private String picture;
@@ -17,7 +17,7 @@ public class UserResponse {
 
     }
 
-    public UserResponse(int id, String name, String role, String picture, String password, String email, String createAt, String country, String language, BadgeResponse badges) {
+    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, BadgeResponse badges) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -30,11 +30,11 @@ public class UserResponse {
         this.badges = badges;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
