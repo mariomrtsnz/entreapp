@@ -18,7 +18,7 @@ export class DialogRouteComponent implements OnInit {
   edit: boolean;
   name: string;
   routeId: string;
-  selectedPois: string[];
+  selectedPois = [];
   form: FormGroup;
 
   constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -54,7 +54,7 @@ export class DialogRouteComponent implements OnInit {
     if (this.data) {
       const editForm: FormGroup = this.fb.group ({
         name: [this.data.route.name, Validators.compose ([ Validators.required ])],
-        pois: [this.data.route.pis, Validators.compose ([ Validators.required ])]
+        pois: [this.selectedPois, Validators.compose ([ Validators.required ])]
       });
       this.form = editForm;
     } else {
@@ -69,7 +69,11 @@ export class DialogRouteComponent implements OnInit {
   getAllPois() {
     this.poisService.getAll().subscribe(pois => {
       this.allPois = pois.rows;
-      
+      if (this.data.route) {
+        this.data.route.pois.forEach(p => {
+            this.selectedPois.push(p.id);
+          });
+      }
     }, error => this.snackBar.open('There was an error loading data.', 'Close', {duration: 3000}));
   }
 

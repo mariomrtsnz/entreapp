@@ -23,6 +23,7 @@ export class DialogBadgeComponent implements OnInit {
   icon: string;
   pois: OnePoiResponse[];
   allPois: OnePoiResponse[];
+  selectedPois = [];
   badgeId: string;
   form: FormGroup;
   ref: AngularFireStorageReference;
@@ -65,7 +66,7 @@ export class DialogBadgeComponent implements OnInit {
         points: [this.data.badge.points, Validators.compose([Validators.required])],
         description: [this.data.badge.description, Validators.compose([Validators.required])],
         icon: [this.data.badge.icon, Validators.compose([Validators.required])],
-        pois: [this.data.badge.pois, Validators.compose([Validators.required])]
+        pois: [this.selectedPois, Validators.compose([Validators.required])]
       });
       this.form = editForm;
     } else {
@@ -84,6 +85,11 @@ export class DialogBadgeComponent implements OnInit {
     this.poisService.getAll().subscribe(
       pois => {
         this.allPois = pois.rows;
+        if (this.data.badge) {
+          this.data.badge.pois.forEach(p => {
+            this.selectedPois.push(p.id);
+          });
+        }
       }, error => this.snackBar.open('There was an error when were loading data.', 'Close', { duration: 3000 }));
   }
 
