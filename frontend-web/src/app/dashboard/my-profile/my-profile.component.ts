@@ -59,8 +59,6 @@ export class MyProfileComponent implements OnInit {
       height: '70%'
     });
 
-    dialogEditUser.afterClosed().subscribe(result => {
-      console.log(result);
-    });
+    dialogEditUser.afterClosed().subscribe(result => result);
   }
 }

@@ -1,13 +1,14 @@
-import { DialogDeleteBadgeComponent } from './../../dialogs/dialog-delete-badge/dialog-delete-badge.component';
-import { BadgeService } from './../../services/badge.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { DialogBadgeComponent } from 'src/app/dialogs/dialog-badge/dialog-badge.component';
 import { OneBadgeResponse } from 'src/app/interfaces/one-badge-response';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
+
+import { DialogDeleteBadgeComponent } from './../../dialogs/dialog-delete-badge/dialog-delete-badge.component';
+import { BadgeService } from './../../services/badge.service';
 
 @Component({
   selector: 'app-badges',
@@ -22,8 +23,8 @@ export class BadgesComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(private titleService: Title, private snackBar: MatSnackBar, private badgeService: BadgeService, private router: Router, public dialog: MatDialog) { }
+  constructor(private titleService: Title, private snackBar: MatSnackBar,
+    private badgeService: BadgeService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.titleService.setTitle('Badges');
@@ -35,7 +36,7 @@ export class BadgesComponent implements OnInit {
       this.dataSource = new MatTableDataSource(receivedBadges.rows);
       this.dataSource.paginator = this.paginator;
     }, error => {
-      this.snackBar.open('There was an error loading the data.', 'Close', {duration: 3000});
+      this.snackBar.open('There was an error loading the data.', 'Close', { duration: 3000 });
     });
   }
 
@@ -44,7 +45,7 @@ export class BadgesComponent implements OnInit {
   }
 
   openDialogNewBadge() {
-    const newBadgeDialog = this.dialog.open(DialogBadgeComponent, {panelClass: 'add-dialog'});
+    const newBadgeDialog = this.dialog.open(DialogBadgeComponent, { panelClass: 'add-dialog' });
 
     newBadgeDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {
@@ -65,8 +66,8 @@ export class BadgesComponent implements OnInit {
   }
 
   openDialogDeleteBadge(badge: OneBadgeResponse) {
-    // tslint:disable-next-line:max-line-length
-    const deleteBadgeDialog = this.dialog.open(DialogDeleteBadgeComponent, {panelClass: 'delete-dialog', data: {badgeId: badge.id, badgeName: badge.name}});
+    const deleteBadgeDialog = this.dialog.open(DialogDeleteBadgeComponent,
+      { panelClass: 'delete-dialog', data: { badgeId: badge.id, badgeName: badge.name } });
 
     deleteBadgeDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {
@@ -78,7 +79,7 @@ export class BadgesComponent implements OnInit {
   }
 
   openDialogEditBadge(badge: OneBadgeResponse) {
-    const updateBadgeDialog = this.dialog.open(DialogBadgeComponent, {panelClass: 'add-dialog', data: {badge: badge}});
+    const updateBadgeDialog = this.dialog.open(DialogBadgeComponent, { panelClass: 'add-dialog', data: { badge: badge } });
 
     updateBadgeDialog.afterClosed().subscribe(result => {
       if (result === 'confirm') {

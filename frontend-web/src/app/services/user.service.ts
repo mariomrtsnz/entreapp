@@ -1,16 +1,15 @@
-import { environment } from './../../environments/environment';
-import { Observable } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { UserCreateDto } from '../dto/create-user.dto';
+import { UserUpdateDto } from '../dto/update-user.dto';
+import { CountryResponse } from '../interfaces/country-response';
+import { Roles } from '../interfaces/roles';
 import { UserResponse } from '../interfaces/user-response';
 import { UsersResponse } from '../interfaces/users-response';
-import { UserCreateDto } from '../dto/create-user.dto';
-import { Roles } from '../interfaces/roles';
-import { CountryResponse } from '../interfaces/country-response';
-import { UserUpdateDto } from '../dto/update-user.dto';
-import { UserUpdateMyProfileDto } from '../dto/user-update-my-profile.dto';
-import { LanguageResponse } from '../interfaces/language-response';
+import { environment } from './../../environments/environment';
+import { AuthenticationService } from './authentication.service';
 
 const userUrl = `${environment.apiUrl}/users`;
 const countryUrlApi = 'https://restcountries.eu/rest/v2/all?fields=name;';
@@ -23,13 +22,6 @@ export class UserService {
   token = `?access_token=${this.authService.getToken()}`;
   constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
-  /*getAll() {
-    this.poiService.getAll().toPromise()
-    .then(receivedPois => {
-      this.POIs = receivedPois;
-    })
-    .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', {duration: 3000}));
-  }*/
   getAll(): Observable<UsersResponse> {
     return this.http.get<UsersResponse>(`${userUrl}${this.token}`);
   }
@@ -47,7 +39,7 @@ export class UserService {
   getAllCountries(): Observable<CountryResponse[]> {
     return this.http.get<CountryResponse[]>(countryUrlApi);
   }
-  getAllUsers(): Observable<any[]>  {
+  getAllUsers(): Observable<any[]> {
     const requestOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -64,8 +56,6 @@ export class UserService {
     return this.http.delete<UserResponse[]>(`${userUrl}/${id}${this.token}`);
   }
   create(resource: UserCreateDto): Observable<UserResponse> {
-    console.log('servicio usuario');
-    console.log(UserCreateDto);
     return this.http.post<UserResponse>(`${userUrl}${masterKey}`, resource);
   }
   edit(id: string, resource: UserUpdateDto): Observable<UserResponse> {

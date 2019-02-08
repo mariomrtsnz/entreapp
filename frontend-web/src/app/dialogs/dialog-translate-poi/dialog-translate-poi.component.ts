@@ -3,10 +3,11 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
+import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PoiService } from 'src/app/services/poi.service';
-import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-dialog-translate-poi',
@@ -18,19 +19,27 @@ export class DialogTranslatePoiComponent implements OnInit {
   descriptionForm: FormGroup;
   urlAudioguide: string;
   poiObtenido: OnePoiResponse;
-
+  idLanguage: String;
+  isoCode: string;
   constructor(private afStorage: AngularFireStorage, public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogTranslatePoiComponent>, public poiService: PoiService, private fb: FormBuilder,
-    public authService: AuthenticationService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public authService: AuthenticationService, @Inject(MAT_DIALOG_DATA) public data: any, public languageService: LanguageService) { }
 
   ngOnInit() {
     this.getOnePoi();
     this.createForm();
-
+    this.idLanguage = this.authService.getLanguageId();
+    this.getUserIsoCode();
+  }
+  getUserIsoCode() {
+    const token = this.authService.getToken();
+    const languageId = this.authService.getLanguageId();
+    this.languageService.getUserLanguage(languageId , token)
+      .subscribe(r => this.isoCode = r.isoCode);
   }
   getOnePoi() {
     this.poiService.getOne(this.data.poi.id)
-      .subscribe(r => {this.poiObtenido = r; });
+      .subscribe(r => this.poiObtenido = r);
 
   }
   createForm() {
@@ -108,8 +117,8 @@ export class DialogTranslatePoiComponent implements OnInit {
   // }
 
   onSubmit() {
-
     // Creo un objeto PoiCreateDto con los datos del obtenido
+    const englishIsoCode = 'en';
     const newPoi: PoiCreateDto = {
       audioguides: this.poiObtenido.audioguides,
       coordinates: this.poiObtenido.coordinates,
@@ -124,30 +133,69 @@ export class DialogTranslatePoiComponent implements OnInit {
       year: this.poiObtenido.year,
       description: this.poiObtenido.description,
     };
+    const language = {
+      language: String(this.poiObtenido.description.language),
+    };
+
+    let posicionDescripcion = -1, posicionAudio = -1;
+
+    // compruebo si esta la nueva traduccion
+    // si el idioma no es ingles se inserta en una nueva traduccion
+    if (this.isoCode.toLowerCase() !== englishIsoCode.toLocaleLowerCase()) {
+      console.log('no es ingles');
+      for (let i = 0; i < newPoi.description.translations.length; i++) {
+        if (newPoi.description.translations[i].id !== this.idLanguage) {
+          posicionDescripcion = i;
+        }
+      }
+      // si existe la borro y añado nueva
+      // tslint:disable-next-line:no-non-null-assertion
+      if (posicionDescripcion! = -1) {
+        newPoi.description.translations.splice(posicionDescripcion);
+      }
+      // compruebo si esta el audio
+      for (let i = 0; i < newPoi.audioguides.translations.length; i++) {
+        if (newPoi.audioguides.translations[i].id !== this.idLanguage) {
+          posicionAudio = i;
+        }
+      }
+      // si existe la borro y añado nueva
+      // tslint:disable-next-line:no-non-null-assertion
+      if (posicionAudio! = -1) {
+        newPoi.audioguides.translations.splice(posicionDescripcion);
+      }
+
+      // Inserto la nueva traduccion
+      newPoi.description.translations.push(
+        {
+          id: this.authService.getLanguageId(),
+          translatedDescription: this.descriptionForm.controls['translatedDescription'].value
+        });
+      newPoi.audioguides.translations.push(
+        {
+          id: this.authService.getLanguageId(),
+          translatedFile: this.audioguidesForm.controls['translatedFile'].value
+        });
+    } else {
+      newPoi.description.originalDescription = this.descriptionForm.controls['translatedDescription'].value;
+      newPoi.audioguides.originalFile = this.audioguidesForm.controls['translatedFile'].value;
+    }
     // Introduzco las categorias.
     this.poiObtenido.categories.forEach(c => {
       newPoi.categories.push(c.id);
     });
-    // Inserto la nueva traduccion
-    newPoi.description.translations.push(
-      { id: this.authService.getLanguageId(),
-        translatedDescription: this.descriptionForm.controls['translatedDescription'].value
-      });
-    newPoi.audioguides.translations.push(
-      { id: this.authService.getLanguageId(),
-        translatedFile: this.audioguidesForm.controls['translatedFile'].value
-      });
-      // Se envía
-      this.poiService.edit(this.poiObtenido.id, newPoi)
+
+    // Se envía
+    this.poiService.edit(this.poiObtenido.id, newPoi)
       .subscribe(r => this.dialogRef.close('confirm'),
-                e =>  this.snackBar.open('There was an error updating the data.', 'Close', { duration: 3000 }));
+        e => this.snackBar.open('There was an error updating the data.', 'Close', { duration: 3000 }));
   }
 
   audioUpload(e) {
-    // const id = Math.random().toString(36).substring(2);
-    const id = new Date().getTime();
+    const randomId = Math.random().toString(36).substring(2);
+    const timeId = new Date().getTime();
     const file = e.target.files[0];
-    const filePath = `audioguides/${id}`;
+    const filePath = `audioguides/${randomId}-${timeId}`;
     const ref = this.afStorage.ref(filePath);
     const task = this.afStorage.upload(filePath, file);
 
@@ -156,7 +204,6 @@ export class DialogTranslatePoiComponent implements OnInit {
         .subscribe(r => {
           this.urlAudioguide = r;
           this.audioguidesForm.controls['translatedFile'].setValue(r);
-          console.log(this.audioguidesForm.controls['translatedFile'].value);
         }
 
         )))

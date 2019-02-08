@@ -1,10 +1,10 @@
-import { CategoryCreateDto } from './../../dto/create-category.dto';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { Category } from '../../interfaces/category';
 import { CategoryService } from '../../services/category.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CategoriesResponse } from 'src/app/interfaces/categories-response';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CategoryCreateDto } from './../../dto/create-category.dto';
 
 @Component({
   selector: 'app-dialog-edit-category',
@@ -23,9 +23,9 @@ export class DialogEditCategoryComponent implements OnInit {
   ngOnInit() {
     this.category = this.data.category;
     this.getCategories();
-    this.form = this.fb.group ( {
-      name: [this.data.category.name, Validators.compose ( [ Validators.required ] )],
-      parent: [this.data.category.parent, Validators.compose ( [ Validators.required ] )]
+    this.form = this.fb.group({
+      name: [this.data.category.name, Validators.compose([Validators.required])],
+      parent: [this.data.category.parent, Validators.compose([Validators.required])]
     });
   }
 

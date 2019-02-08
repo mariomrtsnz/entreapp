@@ -1,11 +1,12 @@
-import { Observable } from 'rxjs';
-import { environment } from './../../environments/environment.prod';
-import { RouteResponse } from './../interfaces/route-response';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OneRouteResponse } from '../interfaces/one-route-response';
+import { Observable } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
 import { RouteDto } from '../dto/route.dto';
+import { OneRouteResponse } from '../interfaces/one-route-response';
+import { environment } from './../../environments/environment.prod';
+import { RouteResponse } from './../interfaces/route-response';
 
 const routeUrl = `${environment.apiUrl}/routes`;
 

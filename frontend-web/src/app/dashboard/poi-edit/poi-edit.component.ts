@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-import { AngularFireStorageReference, AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
-import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
-import { Category } from 'src/app/interfaces/category';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PoiService } from 'src/app/services/poi.service';
-import { Router } from '@angular/router';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { PoiResponse } from 'src/app/interfaces/poi-response';
-import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
-import { CategoriesResponse } from 'src/app/interfaces/categories-response';
-import { CategoryService } from 'src/app/services/category.service';
 import { Title } from '@angular/platform-browser';
-import { Timestamp } from 'rxjs/internal/operators/timestamp';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
+import { CategoriesResponse } from 'src/app/interfaces/categories-response';
+import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
+import { CategoryService } from 'src/app/services/category.service';
+import { PoiService } from 'src/app/services/poi.service';
 
 @Component({
   selector: 'app-poi-edit',
@@ -23,10 +20,11 @@ export class PoiEditComponent implements OnInit {
 
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
-  urlImage: Array<string> = [];
 
   poi: OnePoiResponse;
+  urlImage: Array<string> = [];
   allCategories: CategoriesResponse;
+  selectedCategories = [];
 
   coordinatesForm: FormGroup;
   form: FormGroup;
@@ -47,10 +45,11 @@ export class PoiEditComponent implements OnInit {
 
   getData() {
     this.categoryService.getAllCategories()
-        .subscribe(r => this.allCategories = r);
+      .subscribe(r => this.allCategories = r);
     this.poiService.getOne(this.poiService.selectedPoi.id).subscribe(p => {
       this.poi = p;
       this.urlImage = p.images;
+      p.categories.forEach(c => this.selectedCategories.push(c.id));
       this.createForm();
     });
   }
@@ -75,15 +74,11 @@ export class PoiEditComponent implements OnInit {
       creator: [this.poi.creator],
       coverImage: [this.poi.coverImage],
       images: [this.poi.images, Validators.compose([Validators.required])],
-      categories: [this.poi.categories, Validators.compose([Validators.required])],
+      categories: [this.selectedCategories, Validators.compose([Validators.required])],
       status: [this.poi.status, Validators.compose([Validators.required])],
       schedule: [this.poi.schedule, Validators.compose([Validators.required])],
       price: [this.poi.price],
     });
-  }
-
-  showPoi() {
-    console.log(this.poi);
   }
 
   onSubmit() {
@@ -109,29 +104,23 @@ export class PoiEditComponent implements OnInit {
       const task = this.afStorage.upload(filePath, file);
 
       task.snapshotChanges().pipe(
-        finalize(() => ref.getDownloadURL()
-          .subscribe(r => {
-            this.urlImage.push(r);
-            this.form.controls['images'].setValue(this.urlImage);
-          })))
-        .subscribe();
+        finalize(() => ref.getDownloadURL().subscribe(r => {
+          this.urlImage.push(r);
+          this.form.controls['images'].setValue(this.urlImage);
+        }))).subscribe();
     }
   }
 
   audioUpload(e) {
-    // const id = Math.random().toString(36).substring(2);
-    const id = new Date().getTime();
+    const randomId = Math.random().toString(36).substring(2);
+    const timeId = new Date().getTime();
     const file = e.target.files[0];
-    const filePath = `audioguides/${id}`;
+    const filePath = `audioguides/${randomId}-${timeId}`;
     const ref = this.afStorage.ref(filePath);
     const task = this.afStorage.upload(filePath, file);
 
     task.snapshotChanges().pipe(
-      finalize(() => ref.getDownloadURL()
-        .subscribe(r => {
-          this.audioguidesForm.controls['originalFile'].setValue(r);
-        })))
-      .subscribe();
+      finalize(() => ref.getDownloadURL().subscribe(r => this.audioguidesForm.controls['originalFile'].setValue(r)))).subscribe();
   }
 
   removeImage(i) {

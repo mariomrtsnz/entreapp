@@ -20,8 +20,8 @@ export class DialogRouteComponent implements OnInit {
   routeId: string;
   form: FormGroup;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private poisService: PoiService, private routeService: RouteService, public dialogRef: MatDialogRef<DialogRouteComponent>) { }
+  constructor(private snackBar: MatSnackBar, private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any,
+  private poisService: PoiService, private routeService: RouteService, public dialogRef: MatDialogRef<DialogRouteComponent>) { }
 
   ngOnInit() {
     this.getAllPois();
@@ -37,20 +37,15 @@ export class DialogRouteComponent implements OnInit {
   onSubmit() {
     if (this.edit) {
       const editedRoute: RouteDto = <RouteDto>this.form.value;
-      this.routeService.edit(this.routeId, editedRoute).subscribe(result => {
+      this.routeService.edit(this.routeId, editedRoute).subscribe(r => {
         this.dialogRef.close('confirm');
-      }, error => {
-        console.log(error);
+      }, e => {
         this.snackBar.open('Failed to create.', 'Close', {duration: 3000});
       });
     } else {
       const newRoute: RouteDto = <RouteDto>this.form.value;
-      this.routeService.create(newRoute).subscribe(result => {
-        this.dialogRef.close('confirm');
-      }, error => {
-        console.log(error);
-        this.snackBar.open('Failed to create.', 'Close', {duration: 3000});
-      });
+      this.routeService.create(newRoute).subscribe(r => this.dialogRef.close('confirm'),
+      e => this.snackBar.open('Failed to create.', 'Close', {duration: 3000}));
     }
   }
 
@@ -73,9 +68,7 @@ export class DialogRouteComponent implements OnInit {
   getAllPois() {
     this.poisService.getAll().subscribe(pois => {
       this.allPois = pois.rows;
-    }, error => {
-      console.log(error);
-    });
+    }, error => this.snackBar.open('There was an error loading data.', 'Close', {duration: 3000}));
   }
 
   addRoute() {

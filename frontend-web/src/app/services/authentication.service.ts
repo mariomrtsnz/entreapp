@@ -49,10 +49,9 @@ export class AuthenticationService {
     this.languageService.getUserLanguage(loginResponse.user.language, loginResponse.token).subscribe(res => {
       localStorage.setItem('language', res.name);
       localStorage.setItem('languageId', res.id);
-
-    }), error => {
+    }, error => {
       console.log(error);
-    };
+    });
   }
   randomPassword(length) {
     // tslint:disable-next-line:prefer-const

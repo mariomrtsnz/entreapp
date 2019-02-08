@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { UserResponse } from '../../interfaces/user-response';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
-import { UserCreateDto } from 'src/app/dto/create-user.dto';
-import { Roles } from 'src/app/interfaces/roles';
-import { CountryResponse } from 'src/app/interfaces/country-response';
 import { CustomValidators } from 'ng2-validation';
-// import { AuthService } from 'angular-6-social-login';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserCreateDto } from 'src/app/dto/create-user.dto';
+import { CountryResponse } from 'src/app/interfaces/country-response';
 import { LanguagesResponse } from 'src/app/interfaces/languages-response';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LanguageService } from 'src/app/services/language.service';
+
+import { UserResponse } from '../../interfaces/user-response';
+import { UserService } from '../../services/user.service';
 
 const password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16)]));
 
@@ -34,7 +33,7 @@ export class DialogCreateUserComponent implements OnInit {
   type = 'password';
   roles: string[];
   languages: LanguagesResponse;
-  constructor(public languageService: LanguageService,private fb: FormBuilder, private userService: UserService,
+  constructor(public languageService: LanguageService, private fb: FormBuilder, private userService: UserService,
     public dialogRef: MatDialogRef<DialogCreateUserComponent>, public snackBar: MatSnackBar, public authService: AuthenticationService) { }
 
   ngOnInit() {
@@ -44,9 +43,9 @@ export class DialogCreateUserComponent implements OnInit {
     this.getAllCountries();
     // this.getData();
   }
-  generateNewPassword () {
-  this.passGenerada = this.authService.generateNewPassword();
-  this.passGeneradaDos = this.passGenerada;
+  generateNewPassword() {
+    this.passGenerada = this.authService.generateNewPassword();
+    this.passGeneradaDos = this.passGenerada;
   }
   /*email: String;
           password: String;
@@ -56,8 +55,7 @@ export class DialogCreateUserComponent implements OnInit {
           city: String;
           language: String;*/
   randomPassword(length) {
-    // tslint:disable-next-line:prefer-const
-    let chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890';
+    const chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890';
     let pass = '';
     for (let x = 0; x < length; x++) {
       const i = Math.floor(Math.random() * chars.length);
@@ -102,26 +100,16 @@ export class DialogCreateUserComponent implements OnInit {
     });
   }
   onSubmit() {
-    console.log('se mete')
     const newUser: UserCreateDto = <UserCreateDto>this.form.value;
-    console.log(newUser)
     newUser.picture = 'https://gravatar.com/avatar/801fce29ee6b494ec10dc47af131b1ba?d=identicon';
     this.userService.create(newUser).subscribe(resp => {
       this.dialogRef.close(resp);
-      console.log('se mete2')
-      console.log(resp)
-
-
-    }, error => {
-      console.log(error);
-    });
+    }, error => this.snackBar.open('There was an error when trying to create this user.', 'Close', { duration: 3000 }));
   }
   obtainRoles() {
     this.userService.getRoles().subscribe(receivedRoles => {
       this.roles = receivedRoles.roles;
-    }, error => {
-      this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
-    });
+    }, error => this.snackBar.open('There was an error when were loading data.', 'Close', { duration: 3000 }));
   }
   /*onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;

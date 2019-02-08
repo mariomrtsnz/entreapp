@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { PoiService } from 'src/app/services/poi.service';
 
@@ -15,8 +15,8 @@ export class DialogPoiDeleteComponent implements OnInit {
   public form: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder,
-  private poiService: PoiService, public dialogRef: MatDialogRef<DialogPoiDeleteComponent>,
-  public snackBar: MatSnackBar) { }
+    private poiService: PoiService, public dialogRef: MatDialogRef<DialogPoiDeleteComponent>,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -29,9 +29,9 @@ export class DialogPoiDeleteComponent implements OnInit {
     }
   }
 
-  delete()  {
+  delete() {
     this.poiService.remove(this.data.poi.id).subscribe(() => this.dialogRef.close('confirm'),
-    err => this.snackBar.open('Error deleting this POI.', 'Close', {duration: 3000}));
+      err => this.snackBar.open('Error deleting this POI.', 'Close', { duration: 3000 }));
   }
 
 }

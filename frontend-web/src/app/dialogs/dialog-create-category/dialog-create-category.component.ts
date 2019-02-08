@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { CategoryService } from '../../services/category.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { CategoryCreateDto } from '../../dto/create-category.dto';
 import { Category } from 'src/app/interfaces/category';
-import { CategoriesResponse } from 'src/app/interfaces/categories-response';
+
+import { CategoryCreateDto } from '../../dto/create-category.dto';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-dialog-create-category.component',
@@ -15,7 +15,6 @@ export class DialogCreateCategoryComponent implements OnInit {
   allCategories: Category[];
   form: FormGroup;
 
-  // tslint:disable-next-line:max-line-length
   constructor(private fb: FormBuilder, private categoryService: CategoryService,
     public dialogRef: MatDialogRef<DialogCreateCategoryComponent>) { }
 
@@ -23,7 +22,7 @@ export class DialogCreateCategoryComponent implements OnInit {
     this.getCategories();
     this.createForm();
   }
-  createForm()  {
+  createForm() {
     this.form = this.fb.group({
       name: [null, Validators.compose([Validators.required])],
       parent: [null]

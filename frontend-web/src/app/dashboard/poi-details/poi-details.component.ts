@@ -1,10 +1,10 @@
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
-import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
-import { PoiService } from 'src/app/services/poi.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DialogPoiDeleteComponent } from 'src/app/dialogs/dialog-poi-delete/dialog-poi-delete.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { OnePoiResponse } from 'src/app/interfaces/one-poi-response';
+import { PoiService } from 'src/app/services/poi.service';
 
 @Component({
   selector: 'app-poi-details',
@@ -24,7 +24,7 @@ export class PoiDetailsComponent implements OnInit {
     if (this.poiService.selectedPoi == null) {
       this.router.navigate(['home']);
     } else {
-      this.getData();     
+      this.getData();
     }
     this.titleService.setTitle('Details - POI');
   }
@@ -42,9 +42,9 @@ export class PoiDetailsComponent implements OnInit {
   }
 
   openDialogDeletePoi() {
-    const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, {data: {poi: this.poi}});
+    const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, { data: { poi: this.poi } });
     dialogDeletePoi.afterClosed().subscribe(res => res === 'confirm' ? this.router.navigate['/home'] : null,
-    err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', {duration: 3000}));
+      err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', { duration: 3000 }));
   }
 
   setAsCover(image: string) {

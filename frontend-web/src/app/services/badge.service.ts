@@ -1,11 +1,13 @@
-import { BadgeResponse } from './../interfaces/badge-response';
-import { BadgeDto } from './../dto/badge.dto';
-import { Observable } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from './../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { OneBadgeResponse } from '../interfaces/one-badge-response';
+import { environment } from './../../environments/environment';
+import { BadgeDto } from './../dto/badge.dto';
+import { BadgeResponse } from './../interfaces/badge-response';
+import { AuthenticationService } from './authentication.service';
+
 const badgeUrl = `${environment.apiUrl}/badges`;
 
 const requestOptions = {

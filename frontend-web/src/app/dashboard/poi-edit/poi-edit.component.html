@@ -99,7 +99,7 @@
           <input type="file" name="audioguide" (change)="audioUpload($event)" accept="audio/*" />
           <p style="margin-top: -38px">Drag & Drop or click to upload</p>
         </div>
-        <audio *ngIf="poi.audioguides.originalFile" controls [src]="poi.audioguides.originalFile"></audio>
+        <audio *ngIf="this.audioguidesForm.controls['originalFile'].value" controls [src]="this.audioguidesForm.controls['originalFile'].value"></audio>
       </mat-card>
     </div>
   </div>

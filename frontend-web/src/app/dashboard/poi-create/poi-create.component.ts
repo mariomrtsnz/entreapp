@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { PoiCreateDto } from 'src/app/dto/poi-create-dto';
 import { CategoriesResponse } from 'src/app/interfaces/categories-response';
 import { CategoryService } from 'src/app/services/category.service';
 import { PoiService } from 'src/app/services/poi.service';
-import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -110,12 +110,7 @@ export class PoiCreateComponent implements OnInit {
     const task = this.afStorage.upload(filePath, file);
 
     task.snapshotChanges().pipe(
-      finalize(() => ref.getDownloadURL()
-        .subscribe(r => {
-          this.urlAudioguide = r;
-          this.audioguidesForm.controls['originalFile'].setValue(r);
-        })))
-      .subscribe();
+      finalize(() => ref.getDownloadURL().subscribe(r => this.audioguidesForm.controls['originalFile'].setValue(r)))).subscribe();
   }
 
   removeImage(i) {
