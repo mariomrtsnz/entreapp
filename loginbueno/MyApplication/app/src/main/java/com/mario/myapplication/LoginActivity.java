@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     //load a very big image and resize it, so it fits our needs
     Glide.with(this).asBitmap()
-            .load(R.drawable.busy)
+            .load(R.drawable.login_bg)
             .into(new ImageViewTarget<Bitmap>(background) {
               @Override
               protected void setResource(Bitmap resource) {
@@ -51,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
                   //we need to scroll to the very left edge of the image
                   //fire the scale animation
                   background.scrollTo(-background.getWidth() / 2, 0);
-                  ObjectAnimator xAnimator = ObjectAnimator.ofFloat(background, View.SCALE_X, 4f, background.getScaleX());
-                  ObjectAnimator yAnimator = ObjectAnimator.ofFloat(background, View.SCALE_Y, 4f, background.getScaleY());
+                  ObjectAnimator xAnimator = ObjectAnimator.ofFloat(background, View.SCALE_X, 1f, background.getScaleX());
+                  ObjectAnimator yAnimator = ObjectAnimator.ofFloat(background, View.SCALE_Y, 1f, background.getScaleY());
                   AnimatorSet set = new AnimatorSet();
                   set.playTogether(xAnimator, yAnimator);
                   set.setDuration(getResources().getInteger(R.integer.duration));

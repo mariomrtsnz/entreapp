@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ff5555</color>
+    <color name="colorPrimaryDark">#a33737</color>
+    <color name="colorAccent">#4d4d4d</color>
 
-    <color name="color_log_in">#94019c8f</color>
-    <color name="color_sign_up">#93303f9f</color>
+    <color name="color_log_in">#93ff5555</color>
+    <color name="color_sign_up">#94418e9a</color>
 
     <color name="white_transparent">#fafafa</color>
 
