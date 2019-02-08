@@ -8,6 +8,8 @@ import android.text.Editable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,70 +36,71 @@ import retrofit2.Response;
 
 
 public class SignUpFragment extends AuthFragment {
-    @BindViews(value = {R.id.email_input_edit,
-            R.id.password_input_edit,
+    @BindViews(value = {R.id.email_input_edit_sign,
+            R.id.password_input_edit_sign,
             R.id.confirm_password_edit})
     protected List<TextInputEditText> views;
-    TextInputLayout email_input, password_input, confirm_password;
+    EditText email_input, password_input, confirm_password;
     VerticalTextView signup;
+    Button signupButton;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        email_input = getActivity().findViewById(R.id.email_input);
-        password_input = getActivity().findViewById(R.id.password_input);
-        confirm_password = getActivity().findViewById(R.id.confirm_password);
+        email_input = getActivity().findViewById(R.id.email_input_edit_sign);
+        password_input = getActivity().findViewById(R.id.password_input_edit_sign);
+        confirm_password = getActivity().findViewById(R.id.confirm_password_edit);
+        signupButton = getActivity().findViewById(R.id.btn_signup);
+        //                } else {
+//                    Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_LONG).show();
+//                }
+// }
+        signupButton.setOnClickListener(v -> {
 
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            // Recoger los datos del formulario
+            String email = email_input.getText().toString();
+            String password = password_input.getText().toString();
+            String confirm = confirm_password.getText().toString();
 
-                // Recoger los datos del formulario
-                String email = email_input.getEditText().getText().toString().trim();
-                String password = password_input.getEditText().getText().toString();
-                String confirm = confirm_password.getEditText().getText().toString();
+            if (password.equals(confirm)) {
+                Register register = new Register(null, email, password, null, null);
 
-                if (password.equals(confirm)) {
-                    Register register = new Register(email, password);
+                LoginService service = ServiceGenerator.createService(LoginService.class);
 
-                    LoginService service = ServiceGenerator.createService(LoginService.class);
+                Call<LoginResponse> loginReponseCall = service.doSignUp(register);
 
-                    Call<LoginResponse> loginReponseCall = service.doSignUp(register);
+                loginReponseCall.enqueue(new retrofit2.Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        if (response.code() == 201) {
+                            // éxito
 
-                    loginReponseCall.enqueue(new retrofit2.Callback<LoginResponse>() {
-                        @Override
-                        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                            if (response.code() == 201) {
-                                // éxito
-
-                                UtilToken.setToken(view.getContext(), response.body().getToken());
-                                startActivity(new Intent(view.getContext(), HomeActivity.class));
+                            UtilToken.setToken(view.getContext(), response.body().getToken());
+                            startActivity(new Intent(view.getContext(), HomeActivity.class));
 
 
-                            } else {
-                                // error
-                                Toast.makeText(view.getContext(), "Error while signing up.", Toast.LENGTH_LONG).show();
-                            }
+                        } else {
+                            // error
+                            Toast.makeText(view.getContext(), "Error while signing up.", Toast.LENGTH_LONG).show();
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call<LoginResponse> call, Throwable t) {
-                            Log.e("NetworkFailure", t.getMessage());
-                            Toast.makeText(view.getContext(), "Network Connection Failure", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Log.e("NetworkFailure", t.getMessage());
+                        Toast.makeText(view.getContext(), "Network Connection Failure", Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
-
-                } else {
-                    Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_LONG).show();
-                }
+                    }
+                });
+            }else{
+                Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
             }
         });
 
         if (view != null) {
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_sign_up));
-            caption.setText(getString(R.string.sign_up_label));
+            caption.setText("");
             for (TextInputEditText editText : views) {
                 if (editText.getId() == R.id.password_input_edit) {
                     final TextInputLayout inputLayout = getActivity().findViewById(R.id.password_input);

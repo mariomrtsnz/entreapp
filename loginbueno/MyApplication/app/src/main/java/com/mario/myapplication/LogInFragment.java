@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,10 +31,8 @@ import com.transitionseverywhere.TransitionSet;
 import java.util.List;
 
 import butterknife.BindViews;
-import butterknife.ButterKnife;
 import okhttp3.Credentials;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LogInFragment extends AuthFragment {
