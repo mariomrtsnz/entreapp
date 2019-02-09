@@ -162,7 +162,7 @@ public class LogInFragment extends AuthFragment {
                             // exito
                             UtilToken.setToken(view.getContext(), response.body().getToken());
 
-                            startActivity(new Intent(view.getContext(), HomeActivity.class));
+                            // TODO: Cambiar activity a common startActivity(new Intent(view.getContext(), HomeActivity.class));
                         }
                     }
 

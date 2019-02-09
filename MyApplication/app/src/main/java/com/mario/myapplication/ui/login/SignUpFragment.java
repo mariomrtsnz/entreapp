@@ -171,7 +171,8 @@ public class SignUpFragment extends AuthFragment {
                         if (response.code() == 201) {
                             // éxito
                             UtilToken.setToken(view.getContext(), response.body().getToken());
-                            startActivity(new Intent(view.getContext(), HomeActivity.class));
+                           // startActivity(new Intent(view.getContext(),
+                                    // TODO: Common));
                         } else {
                             // error
                             Toast.makeText(view.getContext(), "Error while signing up.", Toast.LENGTH_LONG).show();
