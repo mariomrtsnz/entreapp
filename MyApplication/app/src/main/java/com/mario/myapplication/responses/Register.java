@@ -20,10 +20,8 @@ public class Register {
     }
 
     public Register( String email, String password) {
-        this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 
 

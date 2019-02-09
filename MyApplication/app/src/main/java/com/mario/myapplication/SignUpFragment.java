@@ -1,5 +1,6 @@
 package com.mario.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,7 +9,6 @@ import android.text.Editable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +29,7 @@ import com.transitionseverywhere.TransitionManager;
 import com.transitionseverywhere.TransitionSet;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindViews;
 import retrofit2.Call;
@@ -41,70 +42,24 @@ public class SignUpFragment extends AuthFragment {
             R.id.confirm_password_edit})
     protected List<TextInputEditText> views;
     EditText email_input, password_input, confirm_password;
-    VerticalTextView signup;
-    Button signupButton;
+    Context ctx = this.getContext();
 
+    // Acciones al crear el fragmento
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        ctx = view.getContext();
         email_input = getActivity().findViewById(R.id.email_input_edit_sign);
         password_input = getActivity().findViewById(R.id.password_input_edit_sign);
         confirm_password = getActivity().findViewById(R.id.confirm_password_edit);
-        signupButton = getActivity().findViewById(R.id.btn_signup);
-        //                } else {
-//                    Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_LONG).show();
-//                }
-// }
-        signupButton.setOnClickListener(v -> {
 
-            // Recoger los datos del formulario
-            String email = email_input.getText().toString();
-            String password = password_input.getText().toString();
-            String confirm = confirm_password.getText().toString();
-
-            if (password.equals(confirm)) {
-                Register register = new Register(null, email, password, null, null);
-
-                LoginService service = ServiceGenerator.createService(LoginService.class);
-
-                Call<LoginResponse> loginReponseCall = service.doSignUp(register);
-
-                loginReponseCall.enqueue(new retrofit2.Callback<LoginResponse>() {
-                    @Override
-                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                        if (response.code() == 201) {
-                            // éxito
-
-                            UtilToken.setToken(view.getContext(), response.body().getToken());
-                            startActivity(new Intent(view.getContext(), HomeActivity.class));
-
-
-                        } else {
-                            // error
-                            Toast.makeText(view.getContext(), "Error while signing up.", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<LoginResponse> call, Throwable t) {
-                        Log.e("NetworkFailure", t.getMessage());
-                        Toast.makeText(view.getContext(), "Network Connection Failure", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-            }else{
-                Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        if (view != null) {
+        if (this.getContext() != null) {
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_sign_up));
-            caption.setText("");
+            caption.setText(getString(R.string.sign_up_label));
             for (TextInputEditText editText : views) {
                 if (editText.getId() == R.id.password_input_edit) {
-                    final TextInputLayout inputLayout = getActivity().findViewById(R.id.password_input);
-                    final TextInputLayout confirmLayout = getActivity().findViewById(R.id.confirm_password);
+                    final TextInputLayout inputLayout = view.findViewById(R.id.password_input);
+                    final TextInputLayout confirmLayout = view.findViewById(R.id.confirm_password);
                     Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
                     inputLayout.setTypeface(boldTypeface);
                     confirmLayout.setTypeface(boldTypeface);
@@ -138,6 +93,7 @@ public class SignUpFragment extends AuthFragment {
         for (View view : views) view.clearFocus();
     }
 
+    // Acciones al tener estar en el fragmento de al lado
     @Override
     public void fold() {
         lock = false;
@@ -167,6 +123,7 @@ public class SignUpFragment extends AuthFragment {
         TransitionManager.beginDelayedTransition(parent, set);
         foldStuff();
         caption.setTranslationX(-caption.getWidth() / 8 + getTextPadding());
+        caption.setClickable(false);
     }
 
     private void foldStuff() {
@@ -180,5 +137,54 @@ public class SignUpFragment extends AuthFragment {
 
     private float getTextPadding() {
         return getResources().getDimension(R.dimen.folded_label_padding) / 2.1f;
+    }
+
+    // Acciones cuando se está viendo el registro
+    @Override
+    public void unfold() {
+        super.unfold();
+        caption.setOnClickListener(view -> {
+
+            // Recoger los datos del formulario
+            String email = email_input.getText().toString();
+            String password = password_input.getText().toString();
+            String confirm = confirm_password.getText().toString();
+            final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
+
+            if (email.equals("") || password.equals("")) {
+                Toast.makeText(view.getContext(), "Fields can't be clear!", Toast.LENGTH_SHORT).show();
+            } else if (!EMAIL_REGEX.matcher(email).matches()) {
+                Toast.makeText(ctx, "You need to use a correct email!", Toast.LENGTH_LONG).show();
+            } else if (password.length() < 6) {
+                Toast.makeText(ctx, "Password must be at least 6 characters!", Toast.LENGTH_LONG).show();
+            } else if (!password.equals(confirm)) {
+                Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
+            }else{
+                Register register = new Register(email, password);
+                LoginService service = ServiceGenerator.createService(LoginService.class);
+                Call<LoginResponse> loginReponseCall = service.doSignUp(register);
+
+                loginReponseCall.enqueue(new retrofit2.Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        if (response.code() == 201) {
+                            // éxito
+                            UtilToken.setToken(view.getContext(), response.body().getToken());
+                            startActivity(new Intent(view.getContext(), HomeActivity.class));
+                        } else {
+                            // error
+                            Toast.makeText(view.getContext(), "Error while signing up.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Log.e("NetworkFailure", t.getMessage());
+                        Toast.makeText(view.getContext(), "Network Connection Failure", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
     }
 }
