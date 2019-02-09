@@ -38,7 +38,7 @@ public abstract class AuthFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setRetainInstance(true);
+    // setRetainInstance(true);
   }
 
   @Nullable
@@ -95,7 +95,7 @@ public abstract class AuthFragment extends Fragment {
   }
 
   protected ConstraintLayout.LayoutParams getParams() {
-    return ConstraintLayout.LayoutParams.class.cast(caption.getLayoutParams());
+    return (ConstraintLayout.LayoutParams) caption.getLayoutParams();
   }
 
   interface Callback {
