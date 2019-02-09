@@ -80,8 +80,8 @@ public class AuthAdapter extends FragmentStatePagerAdapter
       shiftAnimator.playTogether(shift);
     }
 
-    int color = ContextCompat.getColor(context, forward ? R.color.color_logo_sign_up : R.color.color_logo_log_in);
-    DrawableCompat.setTint(sharedElements.get(0).getDrawable(), color);
+    //int color = ContextCompat.getColor(context, forward ? R.color.color_logo_sign_up : R.color.color_logo_log_in);
+    // DrawableCompat.setTint(sharedElements.get(0).getDrawable(), color);
     //scroll the background by x
     int offset = authBackground.getWidth() / 2;
     ObjectAnimator scrollAnimator = ObjectAnimator.ofInt(authBackground, "scrollX", forward ? offset : -offset);

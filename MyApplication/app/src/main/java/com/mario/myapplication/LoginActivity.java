@@ -36,10 +36,10 @@ public class LoginActivity extends AppCompatActivity {
     final ImageView background = findViewById(R.id.scrolling_background);
     int[] screenSize = screenSize();
 
-    for (ImageView element : sharedElements) {
+/*    for (ImageView element : sharedElements) {
       @ColorRes int color = element.getId() != R.id.logo ? R.color.white_transparent : R.color.color_logo_log_in;
       DrawableCompat.setTint(element.getDrawable(), ContextCompat.getColor(this, color));
-    }
+    }*/
     //load a very big image and resize it, so it fits our needs
     Glide.with(this).asBitmap()
             .load(R.drawable.login_bg)
