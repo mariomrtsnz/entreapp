@@ -1,4 +1,4 @@
-package com.mario.myapplication;
+package com.mario.myapplication.ui.login;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mario.myapplication.R;
 import com.transitionseverywhere.Transition;
 import com.transitionseverywhere.TransitionValues;
 

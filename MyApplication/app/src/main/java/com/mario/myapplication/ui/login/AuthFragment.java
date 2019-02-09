@@ -1,4 +1,4 @@
-package com.mario.myapplication;
+package com.mario.myapplication.ui.login;
 
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -13,11 +13,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.mario.myapplication.R;
 import com.transitionseverywhere.ChangeBounds;
 import com.transitionseverywhere.TransitionManager;
 import com.transitionseverywhere.TransitionSet;
-
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

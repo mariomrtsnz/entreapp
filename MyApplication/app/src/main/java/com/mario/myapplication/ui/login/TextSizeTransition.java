@@ -1,4 +1,4 @@
-package com.mario.myapplication;
+package com.mario.myapplication.ui.login;
 
 
 /*

@@ -1,8 +1,10 @@
-package com.mario.myapplication;
+package com.mario.myapplication.ui.login;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mario.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 

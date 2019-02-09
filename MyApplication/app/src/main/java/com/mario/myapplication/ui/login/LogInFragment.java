@@ -1,4 +1,4 @@
-package com.mario.myapplication;
+package com.mario.myapplication.ui.login;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -19,8 +19,8 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.mario.myapplication.R;
 import com.mario.myapplication.responses.LoginResponse;
-import com.mario.myapplication.responses.Register;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LoginService;
 import com.mario.myapplication.util.UtilToken;

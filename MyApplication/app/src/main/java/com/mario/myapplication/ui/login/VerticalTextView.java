@@ -1,4 +1,4 @@
-package com.mario.myapplication;
+package com.mario.myapplication.ui.login;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,6 +7,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
+
+import com.mario.myapplication.R;
 
 public class VerticalTextView extends AppCompatTextView {
 

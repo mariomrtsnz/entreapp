@@ -71,7 +71,7 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.mario.myapplication.VerticalTextView
+    <com.mario.myapplication.ui.login.VerticalTextView
         android:id="@+id/caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

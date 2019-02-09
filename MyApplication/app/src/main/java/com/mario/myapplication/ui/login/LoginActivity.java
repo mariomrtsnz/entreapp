@@ -1,4 +1,4 @@
-package com.mario.myapplication;
+package com.mario.myapplication.ui.login;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -9,13 +9,11 @@ import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.mario.myapplication.R;
 
 import java.util.List;
 
