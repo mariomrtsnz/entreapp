@@ -23,6 +23,7 @@ import com.mario.myapplication.responses.LoginResponse;
 import com.mario.myapplication.responses.Register;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LoginService;
+import com.mario.myapplication.ui.common.DashboardActivity;
 import com.mario.myapplication.util.UtilToken;
 import com.transitionseverywhere.ChangeBounds;
 import com.transitionseverywhere.Transition;
@@ -171,8 +172,7 @@ public class SignUpFragment extends AuthFragment {
                         if (response.code() == 201) {
                             // éxito
                             UtilToken.setToken(view.getContext(), response.body().getToken());
-                           // startActivity(new Intent(view.getContext(),
-                                    // TODO: Common));
+                            startActivity(new Intent(view.getContext(), DashboardActivity.class));
                         } else {
                             // error
                             Toast.makeText(view.getContext(), "Error while signing up.", Toast.LENGTH_LONG).show();

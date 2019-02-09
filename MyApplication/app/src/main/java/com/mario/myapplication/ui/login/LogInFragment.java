@@ -23,6 +23,7 @@ import com.mario.myapplication.R;
 import com.mario.myapplication.responses.LoginResponse;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LoginService;
+import com.mario.myapplication.ui.common.DashboardActivity;
 import com.mario.myapplication.util.UtilToken;
 import com.transitionseverywhere.ChangeBounds;
 import com.transitionseverywhere.Transition;
@@ -162,7 +163,7 @@ public class LogInFragment extends AuthFragment {
                             // exito
                             UtilToken.setToken(view.getContext(), response.body().getToken());
 
-                            // TODO: Cambiar activity a common startActivity(new Intent(view.getContext(), HomeActivity.class));
+                            startActivity(new Intent(view.getContext(), DashboardActivity.class));
                         }
                     }
 
