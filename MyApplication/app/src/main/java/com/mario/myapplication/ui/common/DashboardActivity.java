@@ -33,8 +33,9 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
 
                 case R.id.navigation_pois:
                     //f = new PoiFragment();
-
-                    break;
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
+                    fragmentChanger.commit();
+                    return true;
                 case R.id.navigation_routes:
                     break;
                 case R.id.navigation_people:
