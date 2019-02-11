@@ -3,7 +3,7 @@ package com.mario.myapplication.ui.common;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mario.myapplication.PoiFragment;
+//import com.mario.myapplication.PoiFragment;
 import com.mario.myapplication.R;
 
 import androidx.appcompat.app.AppCompatActivity;
