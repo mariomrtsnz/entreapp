@@ -5,12 +5,9 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 //import com.mario.myapplication.PoiFragment;
 import com.mario.myapplication.R;
-<<<<<<< HEAD
 import com.mario.myapplication.ui.badges.BadgesFragment;
-=======
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.categories.CategoryFragment;
->>>>>>> b6e2d37b05eb0daa4afc0def5b02da5ceb18c06b
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -23,7 +20,7 @@ import android.widget.TextView;
 public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentInteractionListener {
     private TextView mTextMessage;
     FragmentTransaction fragmentChanger;
-    private Fragment badges;
+    private Fragment badges, pois;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -67,9 +64,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         badges = new BadgesFragment();
-
         // Para que por defecto cargue el fragmento de POIs (general)
-        //fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
+        fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
 
         /*getSupportFragmentManager()

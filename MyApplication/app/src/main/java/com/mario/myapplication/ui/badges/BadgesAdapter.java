@@ -31,18 +31,14 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.nota_custom, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.badges_custom_item, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.mItem = data.get(i);
-        viewHolder.title.setText(data.get(i).getTitle());
-        if (data.get(i).isFav()) {
-            viewHolder.fav.setImageResource(R.drawable.ic_favorite_black_24dp);
-        } else {
-            viewHolder.fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-        }
+        viewHolder.title.setText(data.get(i).getName());
+        viewHolder.body.setText(data.get(i).getDescription());
         viewHolder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
