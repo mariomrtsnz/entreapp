@@ -76,10 +76,10 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
 
-        getSupportFragmentManager()
+        /*getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.contenedor, new MyProfile())
-                .commit();
+                .commit();*/
     }
 
     @Override
