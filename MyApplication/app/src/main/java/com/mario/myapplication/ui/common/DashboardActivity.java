@@ -16,10 +16,12 @@ import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.pois.MapPoiFragment;
+import com.mario.myapplication.ui.profile.MyProfile;
+import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois;
     private TextView mTextMessage;
@@ -38,6 +40,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                 case R.id.navigation_routes:
                     break;
                 case R.id.navigation_people:
+                    f = new MyProfile();
+
                     break;
                 case R.id.navigation_badges:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
@@ -71,14 +75,19 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
 
-        /*getSupportFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.contenedor, new PoiFragment())
-                .commit();*/
+                .add(R.id.contenedor, new MyProfile())
+                .commit();
     }
 
     @Override
     public void onListFragmentCategoryInteraction(CategoryResponse item) {
+
+    }
+
+    @Override
+    public void clickOnCamera() {
 
     }
 }
