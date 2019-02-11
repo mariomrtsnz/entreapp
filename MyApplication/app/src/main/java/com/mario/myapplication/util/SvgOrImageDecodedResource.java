@@ -13,6 +13,9 @@ public class SvgOrImageDecodedResource {
         this.bitmap = bitmap;
     }
 
+    public SvgOrImageDecodedResource() {
+    }
+
     public SVG getSvg() {
         return svg;
     }
