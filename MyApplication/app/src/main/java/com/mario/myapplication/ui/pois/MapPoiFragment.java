@@ -1,15 +1,21 @@
 package com.mario.myapplication.ui.pois;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,45 +23,48 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.tasks.Task;
 import com.mario.myapplication.R;
 
+import java.util.concurrent.Executor;
+
 public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private GoogleMap mMap;
+    private CameraPosition mCameraPosition;
 
-    private SupportMapFragment mMapFragment;
-/*
-    private OnFragmentInteractionListener mListener;
-*/
+    // The entry point to the Fused Location Provider.
+    private FusedLocationProviderClient mFusedLocationProviderClient;
 
-    public MapPoiFragment() {
-        // Required empty public constructor
-    }
+    // A default location (Sydney, Australia) and default zoom to use when location permission is
+    // not granted.
+    private final LatLng mDefaultLocation = new LatLng(37.3866245, -5.9942548);
+    private static final int DEFAULT_ZOOM = 15;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private boolean mLocationPermissionGranted;
 
-    // TODO: Rename and change types and number of parameters
-    public static MapPoiFragment newInstance(String param1, String param2) {
-        MapPoiFragment fragment = new MapPoiFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    // The geographical location where the device is currently located. That is, the last-known
+    // location retrieved by the Fused Location Provider.
+    private Location mLastKnownLocation;
+
+    // Keys for storing activity state.
+    private static final String KEY_CAMERA_POSITION = "camera_position";
+    private static final String KEY_LOCATION = "location";
+
+    // Used for selecting the current place.
+    private static final int M_MAX_ENTRIES = 5;
+    private String[] mLikelyPlaceNames;
+    private String[] mLikelyPlaceAddresses;
+    private String[] mLikelyPlaceAttributions;
+    private LatLng[] mLikelyPlaceLatLngs;
+
+
+    public MapPoiFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -63,58 +72,140 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map_poi, container, false);
 
-        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mMapFragment.getMapAsync(this);
+
+        // Construct a FusedLocationProviderClient.
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
+
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         return v;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-/*        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }*/
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        /*mListener = null;*/
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(37.3866245, -5.9942548);
+        mMap = googleMap;
+        // Use a custom info window adapter to handle multiple lines of text in the
+        // info window contents.
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
+            }
+
+        });
+
+        // Prompt the user for permission.
+        getLocationPermission();
+
+        // Turn on the My Location layer and the related control on the map.
+        updateLocationUI();
+
+        // Get the current location of the device and set the position of the map.
+        getDeviceLocation();
+
+/*        LatLng sydney = new LatLng(37.3866245, -5.9942548);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(14.0f).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         googleMap.moveCamera(cameraUpdate);
+
+        if (ActivityCompat.checkSelfPermission(this.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        mMap.setMyLocationEnabled(true);*/
+
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-/*    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
+
+    private void getDeviceLocation() {
+        try {
+            if (mLocationPermissionGranted) {
+                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(this.getActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        mLastKnownLocation = task.getResult();
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                new LatLng(mLastKnownLocation.getLatitude(),
+                                        mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                    } else {
+                        Log.d("Hola", "Current location is null. Using defaults.");
+                        Log.e("Hola", "Exception: %s", task.getException());
+                        mMap.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                    }
+                });
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this.getActivity(),
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+        updateLocationUI();
+    }
+
+    private void updateLocationUI() {
+        if (mMap == null) {
+            return;
+        }
+        try {
+            if (mLocationPermissionGranted) {
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mLastKnownLocation = null;
+                getLocationPermission();
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+
+
+
 }
