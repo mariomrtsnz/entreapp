@@ -31,6 +31,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'com.andkulikov:transitionseverywhere:1.8.1'
     implementation 'com.jakewharton:butterknife:10.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.2.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
