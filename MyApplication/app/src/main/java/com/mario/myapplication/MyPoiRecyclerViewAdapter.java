@@ -1,17 +1,14 @@
-package com.mario.myapplication.ui.categories;
+package com.mario.myapplication;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mario.myapplication.R;
-import com.mario.myapplication.responses.CategoryResponse;
-import com.mario.myapplication.ui.categories.CategoryFragment.OnListFragmentInteractionListener;
-import com.mario.myapplication.ui.categories.dummy.DummyContent.DummyItem;
+import com.mario.myapplication.PoiFragment.OnListFragmentInteractionListener;
+import com.mario.myapplication.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
@@ -20,12 +17,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyclerViewAdapter.ViewHolder> {
+public class MyPoiRecyclerViewAdapter extends RecyclerView.Adapter<MyPoiRecyclerViewAdapter.ViewHolder> {
 
-    private final List<CategoryResponse> mValues;
+    private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyCategoryRecyclerViewAdapter(List<CategoryResponse> items, OnListFragmentInteractionListener listener) {
+    public MyPoiRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -33,20 +30,15 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_category, parent, false);
+                .inflate(R.layout.fragment_poi, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.name.setText(mValues.get(position).getName());
-        holder.name.setText(mValues.get(position).getCategory().getName());
-        if(mValues.get(position).isFav()){
-            holder.fav.setImageResource(R.drawable.ic_fav_24dp);
-        }else{
-            holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
-        }
+        holder.mIdView.setText(mValues.get(position).id);
+        holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,18 +59,20 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView name;
-        public final TextView parent;
-        public final ImageView fav;
-        public CategoryResponse mItem;
+        public final TextView mIdView;
+        public final TextView mContentView;
+        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            name = view.findViewById(R.id.category_name);
-            parent = view.findViewById(R.id.category_parent);
-            fav = view.findViewById(R.id.category_fav);
+            mIdView = (TextView) view.findViewById(R.id.item_number);
+            mContentView = (TextView) view.findViewById(R.id.content);
         }
 
+        @Override
+        public String toString() {
+            return super.toString() + " '" + mContentView.getText() + "'";
+        }
     }
 }
