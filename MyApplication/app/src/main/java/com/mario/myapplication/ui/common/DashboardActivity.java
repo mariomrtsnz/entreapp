@@ -1,26 +1,34 @@
 package com.mario.myapplication.ui.common;
 
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-//import com.mario.myapplication.PoiFragment;
-import com.mario.myapplication.R;
-import com.mario.myapplication.ui.badges.BadgesFragment;
-import com.mario.myapplication.responses.CategoryResponse;
-import com.mario.myapplication.ui.categories.CategoryFragment;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentInteractionListener {
-    private TextView mTextMessage;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mario.myapplication.R;
+<<<<<<< HEAD
+import com.mario.myapplication.ui.badges.BadgesFragment;
+=======
+>>>>>>> d3c1e2bedff7b9d98d14865bd9b185b6dd5b555d
+import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.ui.badges.BadgesFragment;
+import com.mario.myapplication.ui.categories.CategoryFragment;
+
+//import com.mario.myapplication.PoiFragment;
+
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener {
     FragmentTransaction fragmentChanger;
+<<<<<<< HEAD
     private Fragment badges, pois;
+=======
+    private TextView mTextMessage;
+    private Fragment badges;
+>>>>>>> d3c1e2bedff7b9d98d14865bd9b185b6dd5b555d
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -75,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     }
 
     @Override
-    public void onListFragmentInteraction(CategoryResponse item) {
+    public void onListFragmentCategoryInteraction(CategoryResponse item) {
 
     }
 }

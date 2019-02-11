@@ -11,22 +11,22 @@ import android.widget.TextView;
 
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.CategoryResponse;
-import com.mario.myapplication.ui.categories.CategoryFragment.OnListFragmentInteractionListener;
+import com.mario.myapplication.ui.categories.CategoryFragment.OnListFragmentCategoryInteractionListener;
 
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link }.
  * TODO: Replace the implementation with code for your data type.
  */
 class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyclerViewAdapter.ViewHolder> {
 
     private final List<CategoryResponse> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnListFragmentCategoryInteractionListener mListener;
 
-    public MyCategoryRecyclerViewAdapter(Context ctx, List<CategoryResponse> items, OnListFragmentInteractionListener listener) {
+    public MyCategoryRecyclerViewAdapter(Context ctx, List<CategoryResponse> items, OnListFragmentCategoryInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -59,7 +59,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentCategoryInteraction(holder.mItem);
                 }
             }
         });
