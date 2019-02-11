@@ -2,6 +2,7 @@ package com.mario.myapplication.ui.common;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.BadgeResponse;
+import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.badges.BadgesFragment;
@@ -19,7 +22,7 @@ import com.mario.myapplication.ui.pois.MapPoiFragment;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois;
     private TextView mTextMessage;
@@ -79,6 +82,11 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
 
     @Override
     public void onListFragmentCategoryInteraction(CategoryResponse item) {
+
+    }
+
+    @Override
+    public void onBadgeClick(View v, BadgeResponse b) {
 
     }
 }

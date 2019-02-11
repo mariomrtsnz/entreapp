@@ -39,7 +39,7 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
         viewHolder.mItem = data.get(i);
         viewHolder.title.setText(data.get(i).getName());
         viewHolder.body.setText(data.get(i).getDescription());
-        viewHolder.fav.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onBadgeClick(v, viewHolder.mItem);
@@ -53,16 +53,20 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        public final View mView;
         public BadgeResponse mItem;
         public final TextView title, body;
-        public final ImageView fav;
+        public final ImageView earned;
+        public final ImageView icon;
         public CardView card;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            mView = itemView;
             title = itemView.findViewById(R.id.tv_card_title);
             body = itemView.findViewById(R.id.tv_card_body);
-            fav = itemView.findViewById(R.id.iv_fav_icon);
+            earned = itemView.findViewById(R.id.iv_earned_icon);
+            icon = itemView.findViewById(R.id.iv_badge_icon);
             card = itemView.findViewById(R.id.card);
         }
 
