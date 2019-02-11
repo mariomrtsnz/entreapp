@@ -32,7 +32,6 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
             switch (item.getItemId()) {
 
                 case R.id.navigation_pois:
-                    //f = new PoiFragment();
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
                     fragmentChanger.commit();
                     return true;
@@ -72,10 +71,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
 
-        /*getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.contenedor, new PoiFragment())
-                .commit();*/
+
     }
 
     @Override
