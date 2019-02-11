@@ -1,5 +1,8 @@
 package com.mario.myapplication.responses;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserResponse {
 
     private String id;
@@ -12,12 +15,13 @@ public class UserResponse {
     private String country;
     private String language;
     private String[] badges;
+    private List<CategoryResponse> likes  = new ArrayList<>();
 
     public UserResponse() {
 
     }
 
-    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, String[] badges) {
+    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, String[] badges, List<CategoryResponse> likes) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -28,6 +32,7 @@ public class UserResponse {
         this.country = country;
         this.language = language;
         this.badges = badges;
+        this.likes = likes;
     }
 
     public String getId() {
@@ -108,6 +113,14 @@ public class UserResponse {
 
     public void setBadges(String[] badges) {
         this.badges = badges;
+    }
+
+    public List<CategoryResponse> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<CategoryResponse> likes) {
+        this.likes = likes;
     }
 
     @Override

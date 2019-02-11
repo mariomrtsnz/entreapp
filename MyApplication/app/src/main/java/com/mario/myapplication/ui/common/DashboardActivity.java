@@ -19,10 +19,12 @@ import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.pois.MapPoiFragment;
+import com.mario.myapplication.ui.profile.MyProfile;
+import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois;
     private TextView mTextMessage;
@@ -36,11 +38,14 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
 
                 case R.id.navigation_pois:
                     //f = new PoiFragment();
-
-                    break;
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
+                    fragmentChanger.commit();
+                    return true;
                 case R.id.navigation_routes:
                     break;
                 case R.id.navigation_people:
+                    f = new MyProfile();
+
                     break;
                 case R.id.navigation_badges:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
@@ -76,7 +81,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
 
         /*getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.contenedor, new PoiFragment())
+                .add(R.id.contenedor, new MyProfile())
                 .commit();*/
     }
 
@@ -86,7 +91,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     }
 
     @Override
-    public void onBadgeClick(View v, BadgeResponse b) {
+    public void onBadgeClick(View v, BadgeResponse b) { }
+    public void clickOnCamera() {
 
     }
 }
