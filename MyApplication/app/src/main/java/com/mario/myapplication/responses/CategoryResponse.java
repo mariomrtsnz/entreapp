@@ -6,17 +6,17 @@ public class CategoryResponse {
 
     private String id;
     private String name;
-    private Category category;
+    private CategoryResponse parent;
     private boolean fav;
 
     public CategoryResponse() {
 
     }
 
-    public CategoryResponse(String id, String name, Category category) {
+    public CategoryResponse(String id, String name, CategoryResponse parent) {
         this.id = id;
         this.name = name;
-        this.category = category;
+        this.parent = parent;
     }
 
     public String getId() {
@@ -35,12 +35,12 @@ public class CategoryResponse {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
+    public CategoryResponse getParent() {
+        return parent;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setParent(CategoryResponse parent) {
+        this.parent = parent;
     }
 
     public boolean isFav() {
@@ -51,13 +51,6 @@ public class CategoryResponse {
         this.fav = fav;
     }
 
-    @Override
-    public String toString() {
-        return "CategoryResponse{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", category=" + category +
-                '}';
-    }
+
 
 }
