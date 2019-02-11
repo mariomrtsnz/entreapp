@@ -1,28 +1,25 @@
 package com.mario.myapplication.ui.common;
 
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-//import com.mario.myapplication.PoiFragment;
-import com.mario.myapplication.R;
-<<<<<<< HEAD
-import com.mario.myapplication.ui.badges.BadgesFragment;
-=======
-import com.mario.myapplication.responses.CategoryResponse;
-import com.mario.myapplication.ui.categories.CategoryFragment;
->>>>>>> b6e2d37b05eb0daa4afc0def5b02da5ceb18c06b
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentInteractionListener {
-    private TextView mTextMessage;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mario.myapplication.R;
+import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.ui.badges.BadgesFragment;
+import com.mario.myapplication.ui.categories.CategoryFragment;
+
+//import com.mario.myapplication.PoiFragment;
+
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener {
     FragmentTransaction fragmentChanger;
+    private TextView mTextMessage;
     private Fragment badges;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -79,7 +76,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     }
 
     @Override
-    public void onListFragmentInteraction(CategoryResponse item) {
+    public void onListFragmentCategoryInteraction(CategoryResponse item) {
 
     }
 }

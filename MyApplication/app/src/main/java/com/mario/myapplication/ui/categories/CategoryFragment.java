@@ -32,7 +32,7 @@ import retrofit2.Response;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link }
  * interface.
  */
 public class CategoryFragment extends Fragment {
@@ -46,7 +46,7 @@ public class CategoryFragment extends Fragment {
     String jwt;
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private OnListFragmentCategoryInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -155,8 +155,8 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnListFragmentCategoryInteractionListener) {
+            mListener = (OnListFragmentCategoryInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -179,9 +179,9 @@ public class CategoryFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
+    public interface OnListFragmentCategoryInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(CategoryResponse item);
+        void onListFragmentCategoryInteraction(CategoryResponse item);
     }
 
  /*   private class LoadDataTask extends AsyncTask<String, Void, List<CategoryResponse>> {
