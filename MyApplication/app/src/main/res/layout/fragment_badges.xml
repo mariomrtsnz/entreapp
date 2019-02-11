@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.mario.myapplication.ui.badges.BadgesFragment"
+    android:id="@+id/badges_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.badges.BadgesFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/badges_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        tools:listitem="@layout/fragment_badges"/>
-
-</FrameLayout>
+    android:layout_margin="10dp"
+    app:layoutManager="LinearLayoutManager"
+    tools:context=".ui.badges.BadgesFragment"
+    tools:listitem="@layout/fragment_badges" />

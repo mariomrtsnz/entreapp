@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BadgeResponse {
 
     private String name;
-    private float points;
+    private int points;
     private String description;
     private String icon;
     private PoiResponse[] pois;
@@ -14,7 +14,7 @@ public class BadgeResponse {
 
     }
 
-    public BadgeResponse(String name, float points, String description, String icon, PoiResponse[] pois) {
+    public BadgeResponse(String name, int points, String description, String icon, PoiResponse[] pois) {
         this.name = name;
         this.points = points;
         this.description = description;
@@ -30,11 +30,11 @@ public class BadgeResponse {
         this.name = name;
     }
 
-    public float getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    public void setPoints(float points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 

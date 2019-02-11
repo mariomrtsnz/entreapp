@@ -37,6 +37,7 @@ public class BadgesFragment extends Fragment {
     String jwt;
     BadgeService service;
     List<BadgeResponse> items;
+    BadgesAdapter adapter;
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
@@ -107,8 +108,7 @@ public class BadgesFragment extends Fragment {
                         Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                     } else {
                         items = response.body().getRows();
-
-                        RecyclerView.Adapter adapter = new BadgesAdapter(ctx, layout.getId(), items, mListener);
+                        adapter = new BadgesAdapter(ctx, items, mListener);
                         recycler.setAdapter(adapter);
                     }
                 }
