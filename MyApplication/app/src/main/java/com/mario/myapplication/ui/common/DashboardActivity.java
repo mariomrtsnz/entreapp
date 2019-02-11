@@ -5,17 +5,20 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 //import com.mario.myapplication.PoiFragment;
 import com.mario.myapplication.R;
+import com.mario.myapplication.ui.badges.BadgesFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DashboardActivity extends AppCompatActivity {
     private TextView mTextMessage;
-
+    FragmentTransaction fragmentChanger;
+    private Fragment badges;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -33,7 +36,9 @@ public class DashboardActivity extends AppCompatActivity {
                 case R.id.navigation_people:
                     break;
                 case R.id.navigation_badges:
-                    break;
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
+                    fragmentChanger.commit();
+                    return true;
                 case R.id.navigation_my_profile:
                     break;
             }
@@ -55,6 +60,12 @@ public class DashboardActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        badges = new BadgesFragment();
+
+        // Para que por defecto cargue el fragmento de POIs (general)
+        //fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
+        fragmentChanger.commit();
+
         /*getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.contenedor, new PoiFragment())

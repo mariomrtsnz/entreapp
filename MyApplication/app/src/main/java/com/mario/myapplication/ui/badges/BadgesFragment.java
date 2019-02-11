@@ -5,12 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.BadgeResponse;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +26,10 @@ import com.mario.myapplication.R;
  * create an instance of this fragment.
  */
 public class BadgesFragment extends Fragment {
+
+    private BadgeListener mListener;
+    private Context ctx;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,21 +76,20 @@ public class BadgesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_badges, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View layout = inflater.inflate(R.layout.fragment_badges, container, false);
+        //List<BadgeResponse> items = llamada a Retrofit getAllBadges.
+        RecyclerView recycler = layout.findViewById(R.id.badges_list);
+        RecyclerView.Adapter adapter = new BadgesAdapter(layout.getContext(), layout.getId(), items, mListener);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        recycler.setAdapter(adapter);
+        return layout;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+            mListener = (BadgeListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
