@@ -5,7 +5,12 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 //import com.mario.myapplication.PoiFragment;
 import com.mario.myapplication.R;
+<<<<<<< HEAD
 import com.mario.myapplication.ui.badges.BadgesFragment;
+=======
+import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.ui.categories.CategoryFragment;
+>>>>>>> b6e2d37b05eb0daa4afc0def5b02da5ceb18c06b
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -15,7 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentInteractionListener {
     private TextView mTextMessage;
     FragmentTransaction fragmentChanger;
     private Fragment badges;
@@ -40,6 +45,7 @@ public class DashboardActivity extends AppCompatActivity {
                     fragmentChanger.commit();
                     return true;
                 case R.id.navigation_my_profile:
+                    f = new CategoryFragment();
                     break;
             }
             if (f != null) {
@@ -72,4 +78,8 @@ public class DashboardActivity extends AppCompatActivity {
                 .commit();*/
     }
 
+    @Override
+    public void onListFragmentInteraction(CategoryResponse item) {
+
+    }
 }

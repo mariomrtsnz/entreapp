@@ -26,7 +26,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
     private final List<CategoryResponse> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyCategoryRecyclerViewAdapter(Context ctx, int layout, List<CategoryResponse> items, OnListFragmentInteractionListener listener) {
+    public MyCategoryRecyclerViewAdapter(Context ctx, List<CategoryResponse> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -42,7 +42,11 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.name.setText(mValues.get(position).getName());
-        holder.name.setText(mValues.get(position).getCategory().getName());
+        if (mValues.get(position).getParent() == null){
+            holder.parent.setText("No parent category");
+        }else{
+            holder.parent.setText(mValues.get(position).getParent().getName());
+        }
         if(mValues.get(position).isFav()){
             holder.fav.setImageResource(R.drawable.ic_fav_24dp);
         }else{
