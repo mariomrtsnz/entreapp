@@ -7,7 +7,7 @@ public class CategoryResponse {
     private String id;
     private String name;
     private Category category;
-
+    private boolean fav;
 
     public CategoryResponse() {
 
@@ -41,6 +41,14 @@ public class CategoryResponse {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public boolean isFav() {
+        return fav;
+    }
+
+    public void setFav(boolean fav) {
+        this.fav = fav;
     }
 
     @Override

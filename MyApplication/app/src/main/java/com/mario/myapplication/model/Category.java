@@ -2,14 +2,17 @@ package com.mario.myapplication.model;
 
 public class Category {
 
+    private String id;
     private String name;
     private Category parent;
+    private boolean fav;
 
     public Category() {
 
     }
 
-    public Category(String name, Category parent) {
+    public Category(String id, String name, Category parent) {
+        this.id = id;
         this.name = name;
         this.parent = parent;
     }
@@ -28,6 +31,22 @@ public class Category {
 
     public void setParent(Category parent) {
         this.parent = parent;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isFav() {
+        return fav;
+    }
+
+    public void setFav(boolean fav) {
+        this.fav = fav;
     }
 
     @Override

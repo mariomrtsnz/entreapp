@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mario.myapplication.R;
+import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.categories.CategoryFragment.OnListFragmentInteractionListener;
 import com.mario.myapplication.ui.categories.dummy.DummyContent.DummyItem;
 
@@ -19,10 +22,10 @@ import java.util.List;
  */
 public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<CategoryResponse> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyCategoryRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyCategoryRecyclerViewAdapter(List<CategoryResponse> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +40,13 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.name.setText(mValues.get(position).getName());
+        holder.name.setText(mValues.get(position).getCategory().getName());
+        if(mValues.get(position).isFav()){
+            holder.fav.setImageResource(R.drawable.ic_fav_24dp);
+        }else{
+            holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +67,18 @@ public class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCatego
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView name;
+        public final TextView parent;
+        public final ImageView fav;
+        public CategoryResponse mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            name = view.findViewById(R.id.category_name);
+            parent = view.findViewById(R.id.category_parent);
+            fav = view.findViewById(R.id.category_fav);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
 }
