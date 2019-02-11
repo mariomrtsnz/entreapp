@@ -11,10 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
-<<<<<<< HEAD
 import com.mario.myapplication.ui.badges.BadgesFragment;
-=======
->>>>>>> d3c1e2bedff7b9d98d14865bd9b185b6dd5b555d
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
@@ -23,12 +20,9 @@ import com.mario.myapplication.ui.categories.CategoryFragment;
 
 public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener {
     FragmentTransaction fragmentChanger;
-<<<<<<< HEAD
     private Fragment badges, pois;
-=======
     private TextView mTextMessage;
     private Fragment badges;
->>>>>>> d3c1e2bedff7b9d98d14865bd9b185b6dd5b555d
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
