@@ -5,36 +5,53 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
+import com.mario.myapplication.responses.ResponseContainer;
+import com.mario.myapplication.retrofit.generator.AuthType;
+import com.mario.myapplication.retrofit.generator.ServiceGenerator;
+import com.mario.myapplication.retrofit.services.BadgeService;
+import com.mario.myapplication.util.UtilToken;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BadgesFragment extends Fragment {
 
     private BadgeListener mListener;
     private Context ctx;
+    String jwt;
+    BadgeService service;
+    List<BadgeResponse> items;
+    private static final String ARG_COLUMN_COUNT = "column-count";
+    private int mColumnCount = 1;
 
     public BadgesFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-//    public static BadgesFragment newInstance(String param1, String param2) {
-//        BadgesFragment fragment = new BadgesFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+    public static BadgesFragment newInstance(int columnCount) {
+        BadgesFragment fragment = new BadgesFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +60,28 @@ public class BadgesFragment extends Fragment {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
+        jwt = UtilToken.getToken(getContext());
+        if (jwt == null) {
+
+        }
+        BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
+        Call<ResponseContainer<BadgeResponse>> callList = service.listBadges();
+        callList.enqueue(new Callback<ResponseContainer<BadgeResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<BadgeResponse>> call, Response<ResponseContainer<BadgeResponse>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<BadgeResponse>> call, Throwable t) {
+
+            }
+        });
+        if (getArguments() != null){
+            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+        }
     }
 
     @Override
@@ -50,22 +89,48 @@ public class BadgesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_badges, container, false);
-        List<BadgeResponse> items = null;
-        RecyclerView recycler = layout.findViewById(R.id.badges_list);
-        RecyclerView.Adapter adapter = new BadgesAdapter(layout.getContext(), layout.getId(), items, mListener);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        recycler.setAdapter(adapter);
+        if (layout instanceof RecyclerView) {
+            ctx = layout.getContext();
+            RecyclerView recycler = layout.findViewById(R.id.badges_list);
+            if (mColumnCount <= 1) {
+                recycler.setLayoutManager(new LinearLayoutManager(ctx));
+            } else {
+                recycler.setLayoutManager(new GridLayoutManager(ctx, mColumnCount));
+            }
+            items = new ArrayList<>();
+            BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
+            Call<ResponseContainer<BadgeResponse>> call = service.listBadges();
+            call.enqueue(new Callback<ResponseContainer<BadgeResponse>>() {
+                @Override
+                public void onResponse(Call<ResponseContainer<BadgeResponse>> call, Response<ResponseContainer<BadgeResponse>> response) {
+                    if (response.code() != 200) {
+                        Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                    } else {
+                        items = response.body().getRows();
+
+                        RecyclerView.Adapter adapter = new BadgesAdapter(ctx, layout.getId(), items, mListener);
+                        recycler.setAdapter(adapter);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseContainer<BadgeResponse>> call, Throwable t) {
+                    Log.e("Network Failure", t.getMessage());
+                    Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         return layout;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        if (context instanceof BadgeListener) {
             mListener = (BadgeListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement BadgeListener");
         }
     }
 
@@ -73,20 +138,5 @@ public class BadgesFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

@@ -2,6 +2,7 @@ package com.mario.myapplication.ui.common;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,15 +12,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.BadgeResponse;
+import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.pois.MapPoiFragment;
+import com.mario.myapplication.ui.profile.MyProfile;
+import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois;
     private TextView mTextMessage;
@@ -38,6 +43,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                 case R.id.navigation_routes:
                     break;
                 case R.id.navigation_people:
+                    f = new MyProfile();
+
                     break;
                 case R.id.navigation_badges:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
@@ -70,12 +77,16 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         // Para que por defecto cargue el fragmento de POIs (general)
         fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
-
-
     }
 
     @Override
     public void onListFragmentCategoryInteraction(CategoryResponse item) {
+
+    }
+
+    @Override
+    public void onBadgeClick(View v, BadgeResponse b) { }
+    public void clickOnCamera() {
 
     }
 }

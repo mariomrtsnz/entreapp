@@ -19,16 +19,16 @@ public interface UserService {
     Call<ResponseContainer<UserResponse>> listUsers();
 
     @GET(BASE_URL+"/{id}")
-    Call<UserResponse> getUser(@Path("id") Long id);
+    Call<UserResponse> getUser(@Path("id") String id);
 
     @GET(BASE_URL+"/me")
     Call<UserResponse> getMe();
 
     @PUT(BASE_URL+"/{id}")
-    Call<UserResponse> editUser(@Path("id") Long id, @Body User user);
+    Call<UserResponse> editUser(@Path("id") String id, @Body UserResponse user);
 
     @PUT(BASE_URL+"/{id}/password")
-    Call<UserResponse> editPassword(@Path("id") Long id, @Body String password);
+    Call<UserResponse> editPassword(@Path("id") String id, @Body String password);
 
     // It should be /me, must do in api first
 //    @DELETE("/users/{id}")
