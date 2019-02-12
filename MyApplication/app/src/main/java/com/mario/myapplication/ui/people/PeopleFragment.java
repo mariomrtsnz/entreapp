@@ -8,17 +8,28 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserResponse;
+import com.mario.myapplication.retrofit.generator.AuthType;
+import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.ui.people.dummy.DummyContent;
 import com.mario.myapplication.ui.people.dummy.DummyContent.DummyItem;
+import com.mario.myapplication.util.UtilToken;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A fragment representing a list of Items.
@@ -59,6 +70,36 @@ public class PeopleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        jwt = UtilToken.getToken(getContext());
+
+        if (jwt == null) {
+            // No hay token
+            // ¿Qué haces en este activity?
+            // Una de dos
+            //      - O consigues otro token
+            //      - O te vas a .... el formulario de Login
+        }
+
+        UserService service = ServiceGenerator.createService(UserService.class,
+                jwt, AuthType.JWT);
+
+        Call<ResponseContainer<UserResponse>> callList = service.listUsers();
+
+        callList.enqueue(new Callback<ResponseContainer<UserResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<UserResponse>> call, Response<ResponseContainer<UserResponse>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("flama", "vas flama");
+                } else {
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
+                Toast.makeText(ctx, "TokenFailure", Toast.LENGTH_LONG).show();
+            }
+        });
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -79,7 +120,9 @@ public class PeopleFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyPeopleRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            users = new ArrayList<>();
+
         }
         return view;
     }

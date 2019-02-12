@@ -13,11 +13,11 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
+import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
-import com.mario.myapplication.responses.CategoryResponse;
-import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
+import com.mario.myapplication.ui.people.PeopleFragment;
 import com.mario.myapplication.ui.pois.MapPoiFragment;
 import com.mario.myapplication.ui.profile.MyProfile;
 import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
@@ -41,17 +41,17 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                     fragmentChanger.commit();
                     return true;
                 case R.id.navigation_routes:
+                    f = new CategoryFragment();
                     break;
                 case R.id.navigation_people:
-                    f = new MyProfile();
-
+                    f = new PeopleFragment();
                     break;
                 case R.id.navigation_badges:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
                     fragmentChanger.commit();
                     return true;
                 case R.id.navigation_my_profile:
-                    f = new CategoryFragment();
+                    f = new MyProfile();
                     break;
             }
             if (f != null) {
@@ -85,7 +85,9 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     }
 
     @Override
-    public void onBadgeClick(View v, BadgeResponse b) { }
+    public void onBadgeClick(View v, BadgeResponse b) {
+    }
+
     public void clickOnCamera() {
 
     }
