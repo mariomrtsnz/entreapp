@@ -122,6 +122,23 @@ public class PeopleFragment extends Fragment {
             }
 
             users = new ArrayList<>();
+            Call<ResponseContainer<UserResponse>> callList = service.listUsers();
+
+            callList.enqueue(new Callback<ResponseContainer<UserResponse>>() {
+                @Override
+                public void onResponse(Call<ResponseContainer<UserResponse>> call, Response<ResponseContainer<UserResponse>> response) {
+                    if (response.code() != 200) {
+                        Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
+                    } else {
+                        users = response.body().getRows();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
+                    Toast.makeText(ctx, "TokenFailure", Toast.LENGTH_LONG).show();
+                }
+            });
 
         }
         return view;
