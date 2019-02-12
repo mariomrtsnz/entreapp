@@ -85,8 +85,8 @@ public class MyProfile extends Fragment {
         }
         service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
-        Call<UserResponse> callGetMe = service.getMe();
-        callGetMe.enqueue(new Callback<UserResponse>() {
+        Call<UserResponse> getOneUser = service.getUser(UtilToken.getId(getContext()));
+        getOneUser.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {

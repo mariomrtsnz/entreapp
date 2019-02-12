@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindViews;
 import okhttp3.Credentials;
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -162,6 +163,9 @@ public class LogInFragment extends AuthFragment {
                         } else {
                             // exito
                             UtilToken.setToken(view.getContext(), response.body().getToken());
+                            UtilToken.setId(view.getContext(), response.body().getUser().getId());
+
+                            Toast.makeText(view.getContext(), UtilToken.getId(getContext()), Toast.LENGTH_SHORT).show();
 
                             startActivity(new Intent(view.getContext(), DashboardActivity.class));
                         }
