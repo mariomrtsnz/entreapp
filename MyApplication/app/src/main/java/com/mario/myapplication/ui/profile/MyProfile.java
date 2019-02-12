@@ -34,6 +34,7 @@ public class MyProfile extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     String jwt;
     Context ctx;
+    String userId;
     UserService service;
     UserResponse userResponse;
     ImageView profile_image;
@@ -75,8 +76,11 @@ public class MyProfile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        jwt = UtilToken.getToken(getContext());
+        ctx= getContext();
+        jwt = UtilToken.getToken(ctx);
+        userId = UtilToken.getId(ctx);
         if (jwt == null) {
+
             // No hay token
             // ¿Qué haces en este activity?
             // Una de dos
@@ -85,20 +89,27 @@ public class MyProfile extends Fragment {
         }
         service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
-        Call<UserResponse> getOneUser = service.getUser(UtilToken.getId(getContext()));
+        Call<UserResponse> getOneUser = service.getUser(userId);
         getOneUser.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d("success", "user obtain successfully");
+                    Log.d("LOL", "user obtain successfully");
                     userResponse=response.body();
+
+                    Log.d("LOL2", userResponse.toString());
+
                 } else {
+                    Log.d("LOL3", "FALLITO BUENO");
+
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.d("LOL4", "FALLITO BUENO");
+
                 Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
 
 
@@ -115,10 +126,11 @@ public class MyProfile extends Fragment {
         // every element is looked for
         loadItemsFragment(view);
 
-
-
-
         // every element is set
+       /* textViewEmailWritten.setText(userResponse.getEmail());
+        textViewName.setText(userResponse.getName());
+        textViewLanguageWritten.setText(userResponse.getLanguage());*/
+
         //textViewName.setText(userResponse.getName());
         return view;
     }

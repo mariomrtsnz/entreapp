@@ -164,9 +164,6 @@ public class LogInFragment extends AuthFragment {
                             // exito
                             UtilToken.setToken(view.getContext(), response.body().getToken());
                             UtilToken.setId(view.getContext(), response.body().getUser().getId());
-
-                            Toast.makeText(view.getContext(), UtilToken.getId(getContext()), Toast.LENGTH_SHORT).show();
-
                             startActivity(new Intent(view.getContext(), DashboardActivity.class));
                         }
                     }
