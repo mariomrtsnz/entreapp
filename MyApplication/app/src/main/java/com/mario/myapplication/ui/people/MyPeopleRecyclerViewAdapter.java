@@ -7,22 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mario.myapplication.ui.people.PeopleFragment.OnListFragmentInteractionListener;
+import com.mario.myapplication.R;
+import com.mario.myapplication.responses.UserResponse;
+import com.mario.myapplication.ui.people.PeopleFragment.OnListFragmentUserInteractionListener;
 import com.mario.myapplication.ui.people.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final List<UserResponse> mValues;
+    private final PeopleFragment.OnListFragmentUserInteractionListener mListener;
 
-    public MyPeopleRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyPeopleRecyclerViewAdapter(List<UserResponse> items, OnListFragmentUserInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +39,8 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+//        holder.mIdView.setText(mValues.get(position).id);
+//        holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +48,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentUserInteraction(holder.mItem);
                 }
             }
         });
@@ -61,7 +63,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public UserResponse mItem;
 
         public ViewHolder(View view) {
             super(view);

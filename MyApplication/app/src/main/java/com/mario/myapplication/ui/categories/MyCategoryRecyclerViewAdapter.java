@@ -1,6 +1,5 @@
 package com.mario.myapplication.ui.categories;
 
-import androidx.core.content.res.TypedArrayUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -24,7 +23,6 @@ import com.mario.myapplication.util.UtilToken;
 
 import java.util.List;
 
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -170,7 +168,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            name = view.findViewById(R.id.category_name);
+            name = view.findViewById(R.id.user_name);
             parent = view.findViewById(R.id.category_parent);
             fav = view.findViewById(R.id.category_fav);
         }
