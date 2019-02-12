@@ -1,5 +1,7 @@
 package com.mario.myapplication.ui.pois;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,7 +17,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,7 +25,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mario.myapplication.R;
 
@@ -55,11 +55,18 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
 
 
     public MapPoiFragment() {
+        setRetainInstance(true);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        } else {
+            activateDeviceLocation();
+        }
     }
 
     @Override
@@ -77,6 +84,15 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (mMap != null) {
+            outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
+            outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
+            super.onSaveInstanceState(outState);
+        }
     }
 
     @Override
@@ -107,20 +123,18 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
-
-/*        LatLng sydney = new LatLng(37.3866245, -5.9942548);
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(14.0f).build();
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-        googleMap.moveCamera(cameraUpdate);
-
-        if (ActivityCompat.checkSelfPermission(this.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        mMap.setMyLocationEnabled(true);*/
-
     }
 
+    private void activateDeviceLocation() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder
+                .setTitle(R.string.need_gps_title)
+                .setMessage(R.string.need_gps_message)
+                .setPositiveButton(R.string.accept, (dialog, which) ->
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
+                .setNegativeButton(R.string.cancel, ((dialog, which) -> dialog.cancel()))
+                .create().show();
+    }
 
     private void getDeviceLocation() {
         try {
@@ -133,9 +147,7 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
                                 new LatLng(mLastKnownLocation.getLatitude(),
                                         mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                     } else {
-                        /*LocationRequest locationRequest = LocationRequest.create();
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));*/
-                        mMap.moveCamera(CameraUpdateFactory .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                         mMap.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
