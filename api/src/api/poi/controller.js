@@ -15,7 +15,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
         },
         type: 'svg'
       }
-      QRCode.toString(`http://entreapp.herokuapp.com/pois/${poi.id}`, opts).then(string => {
+      QRCode.toString(`https://entreapp.herokuapp.com/pois/${poi.id}`, opts).then(string => {
         Poi.findByIdAndUpdate({_id: poi.id},{$set:{qrCode:string.split('\n')[0]}},{new:true}).then((docs) => console.log(docs));
       });
     })
