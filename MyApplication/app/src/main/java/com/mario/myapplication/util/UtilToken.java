@@ -17,6 +17,7 @@ public class UtilToken {
     }
 
 
+
     public static String getToken(Context mContext) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(
                 mContext.getString(R.string.sharedpreferences_filename),

@@ -38,6 +38,7 @@ export const show = ({
   }, res, next) =>
   User.findById(params.id)
   .populate('badges')
+  .exec()
   .then(notFound(res))
   .then((user) => user ? user.view() : null)
   .then(success(res))
