@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mario.myapplication.R;
 
 import java.util.Objects;
@@ -35,7 +33,7 @@ import java.util.Objects;
 import static android.content.Context.LOCATION_SERVICE;
 
 
-public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
+public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
 
     private static final int DEFAULT_ZOOM = 15;
@@ -48,7 +46,7 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
     private Location mLastKnownLocation;
 
 
-    public MapPoiFragment() {
+    public PoiMapFragment() {
         setRetainInstance(true);
     }
 
@@ -78,7 +76,7 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
             checkDeviceLocation();
         }
 
-        View v = inflater.inflate(R.layout.fragment_map_poi, container, false);
+        View v = inflater.inflate(R.layout.fragment_poi_map, container, false);
 
         v.findViewById(R.id.showMyLoc).setOnClickListener(view -> {
             if (checkDeviceLocation()) getDeviceLocation();
@@ -112,12 +110,13 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private boolean checkDeviceLocation() {
-        LocationManager service = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
+        LocationManager service;
+        service = (LocationManager) Objects.requireNonNull(getContext()).getSystemService(LOCATION_SERVICE);
         return service.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void enableDeviceLocation() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         alertDialogBuilder.setTitle(R.string.need_gps_title)
                 .setMessage(R.string.need_gps_message)
                 .setPositiveButton(R.string.accept, (dialog, which) -> startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
@@ -176,7 +175,7 @@ public class MapPoiFragment extends Fragment implements OnMapReadyCallback {
 //    @Override
 //    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 //                             Bundle savedInstanceState) {
-//        View v = inflater.inflate(R.layout.fragment_map_poi, container, false);
+//        View v = inflater.inflate(R.layout.fragment_poi_map, container, false);
 //
 //
 //        // Construct a FusedLocationProviderClient.

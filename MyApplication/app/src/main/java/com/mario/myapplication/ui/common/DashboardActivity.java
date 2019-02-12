@@ -19,13 +19,14 @@ import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.people.PeopleFragment;
-import com.mario.myapplication.ui.pois.MapPoiFragment;
+import com.mario.myapplication.ui.pois.PoiMapFragment;
+import com.mario.myapplication.ui.pois.list.PoiListListener;
 import com.mario.myapplication.ui.profile.MyProfile;
 import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois;
     private TextView mTextMessage;
@@ -74,7 +75,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         badges = new BadgesFragment();
-        pois = new MapPoiFragment();
+        pois = new PoiMapFragment();
         // Para que por defecto cargue el fragmento de POIs (general)
         fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
