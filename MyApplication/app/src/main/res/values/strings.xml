@@ -20,6 +20,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_profile">Edit profile</string>
+
     <string name="email_example">email@gmail.com</string>
     <string name="Email">Email</string>
     <string name="Email_example">example@gmail.com</string>
