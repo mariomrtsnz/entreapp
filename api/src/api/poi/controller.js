@@ -1,11 +1,24 @@
 import { success, notFound } from '../../services/response/'
 import { Poi } from '.'
 import mongoose from '../../services/mongoose'
+import QRCode from 'qrcode'
 
 export const create = ({ bodymen: { body } }, res, next) => {
   body.coverImage = body.images[0];
   Poi.create(body)
-    .then((poi) => poi.view(2))
+    .then((poi) => {
+      poi.view(2);
+      var opts = {
+        color: {
+          dark: '#000',  // Blue dots
+          light: '#0000' // Transparent background
+        },
+        type: 'svg'
+      }
+      QRCode.toString(`http://entreapp.herokuapp.com/pois/${poi.id}`, opts).then(string => {
+        Poi.findByIdAndUpdate({_id: poi.id},{$set:{qrCode:string.split('\n')[0]}},{new:true}).then((docs) => console.log(docs));
+      });
+    })
     .then(success(res, 201))
     .catch(next)
 }

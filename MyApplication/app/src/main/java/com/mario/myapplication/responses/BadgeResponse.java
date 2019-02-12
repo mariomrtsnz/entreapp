@@ -3,7 +3,7 @@ package com.mario.myapplication.responses;
 import java.util.Arrays;
 
 public class BadgeResponse {
-
+    private String id;
     private String name;
     private int points;
     private String description;
@@ -14,12 +14,21 @@ public class BadgeResponse {
 
     }
 
-    public BadgeResponse(String name, int points, String description, String icon, PoiResponse[] pois) {
+    public BadgeResponse(String id, String name, int points, String description, String icon, PoiResponse[] pois) {
+        this.id = id;
         this.name = name;
         this.points = points;
         this.description = description;
         this.icon = icon;
         this.pois = pois;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
