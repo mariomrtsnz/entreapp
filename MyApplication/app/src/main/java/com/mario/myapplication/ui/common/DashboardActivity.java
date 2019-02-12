@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
 import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
@@ -24,7 +25,7 @@ import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois;
     private TextView mTextMessage;
@@ -89,6 +90,11 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     }
 
     public void clickOnCamera() {
+
+    }
+
+    @Override
+    public void onListFragmentUserInteraction(UserResponse item) {
 
     }
 }

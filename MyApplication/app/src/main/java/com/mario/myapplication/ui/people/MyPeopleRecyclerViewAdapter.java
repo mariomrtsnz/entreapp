@@ -48,7 +48,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
 //        holder.mContentView.setText(mValues.get(position).content);
         holder.name.setText(mValues.get(position).getName());
         holder.country.setText(mValues.get(position).getCountry());
-        Glide.with(ctx).load(mValues.get(position).getPicture()).into(holder.picture);
+        Glide.with(holder.mView).load(mValues.get(position).getPicture()).into(holder.picture);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
