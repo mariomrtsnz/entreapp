@@ -14,14 +14,14 @@ public class UserResponse {
     private String createAt;
     private String country;
     private String language;
-    private String[] badges;
+    private List<Object> badges = new ArrayList<>();
     private List<CategoryResponse> likes  = new ArrayList<>();
 
     public UserResponse() {
 
     }
 
-    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, String[] badges, List<CategoryResponse> likes) {
+    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, List<Object> badges, List<CategoryResponse> likes) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -107,11 +107,11 @@ public class UserResponse {
         this.language = language;
     }
 
-    public String[] getBadges() {
+    public List<Object> getBadges() {
         return badges;
     }
 
-    public void setBadges(String[] badges) {
+    public void setBadges(List<Object> badges) {
         this.badges = badges;
     }
 

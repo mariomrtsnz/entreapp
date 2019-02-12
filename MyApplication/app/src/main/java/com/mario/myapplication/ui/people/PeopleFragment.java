@@ -97,7 +97,7 @@ public class PeopleFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
-                Toast.makeText(ctx, "TokenFailure", Toast.LENGTH_LONG).show();
+//                Toast.makeText(ctx, "TokenFailure", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -122,6 +122,7 @@ public class PeopleFragment extends Fragment {
             }
 
             users = new ArrayList<>();
+            UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
             Call<ResponseContainer<UserResponse>> callList = service.listUsers();
 
             callList.enqueue(new Callback<ResponseContainer<UserResponse>>() {
@@ -131,12 +132,15 @@ public class PeopleFragment extends Fragment {
                         Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
                     } else {
                         users = response.body().getRows();
+                        adapter = new MyPeopleRecyclerViewAdapter(ctx, users, mListener);
+                        recyclerView.setAdapter(adapter);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
-                    Toast.makeText(ctx, "TokenFailure", Toast.LENGTH_LONG).show();
+                    Log.e("NetworkFailure", t.getMessage());
+                    Toast.makeText(getActivity(), "Network Failure", Toast.LENGTH_SHORT).show();
                 }
             });
 
