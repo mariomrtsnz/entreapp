@@ -83,13 +83,13 @@ public class MyProfile extends Fragment {
         super.onCreate(savedInstanceState);
         ctx= getContext();
         jwt = UtilToken.getToken(ctx);
-        userId = UtilToken.getId(ctx).toString();
+        userId = UtilToken.getId(ctx);
         if (jwt == null) {
 
         }
         service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
-        new LoadDataTask().execute(userId);
+//        new LoadDataTask().execute(userId);
 
         /*service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
@@ -134,25 +134,25 @@ public class MyProfile extends Fragment {
         // every element is set
         textViewEmailWritten.setText(userResponse.getEmail());
         textViewName.setText(userResponse.getName());
-        textViewLanguageWritten.setText(userResponse.getLanguage().getName());
+        textViewLanguageWritten.setText(userResponse.getLanguage());
 
         //textViewName.setText(userResponse.getName());
         return view;
     }
-    public int countPoints(UserResponse u){
-        int points = 0;
-        for (int i = 0; i<=u.getBadges().size();i++){
-            points = points+u.getBadges().get(i).getPoints();
-        }
-        return points;
-    }
-    public int countBadges(UserResponse u){
-        int badges = 0;
-        for (int i = 0; i<=u.getBadges().size();i++){
-            badges++;
-        }
-        return badges;
-    }
+//    public int countPoints(UserResponse u){
+//        int points = 0;
+//        for (int i = 0; i<=u.getBadges().size();i++){
+//            points = points+u.getBadges().get(i).getPoints();
+//        }
+//        return points;
+//    }
+//    public int countBadges(UserResponse u){
+//        int badges = 0;
+//        for (int i = 0; i<=u.getBadges().size();i++){
+//            badges++;
+//        }
+//        return badges;
+//    }
 
     public int countPoisVisited(UserResponse u){
         return u.getVisited().size();
@@ -205,41 +205,41 @@ public class MyProfile extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    private class LoadDataTask extends AsyncTask<String, Void, UserResponse> {
-
-        @Override
-        protected UserResponse doInBackground(String... strings) {
-
-            UserResponse result = null;
-
-
-            Call<UserResponse> getOneUser = service.getUser(strings[0]);
-
-            Response<UserResponse> responseRepos = null;
-
-            try {
-                responseRepos = getOneUser.execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (responseRepos.isSuccessful()) {
-
-                result = responseRepos.body();
-                userResponse=responseRepos.body();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(UserResponse repos) {
-            if (repos != null) {
-                userResponse=repos;
-            }
-
-        }
-
-
-    }
+//    private class LoadDataTask extends AsyncTask<String, Void, UserResponse> {
+//
+//        @Override
+//        protected UserResponse doInBackground(String... strings) {
+//
+//            UserResponse result = null;
+//
+//
+//            Call<UserResponse> getOneUser = service.getUser(strings[0]);
+//
+//            Response<UserResponse> responseRepos = null;
+//
+//            try {
+//                responseRepos = getOneUser.execute();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (responseRepos.isSuccessful()) {
+//
+//                result = responseRepos.body();
+//                userResponse=responseRepos.body();
+//            }
+//            return result;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(UserResponse repos) {
+//            if (repos != null) {
+//                userResponse=repos;
+//            }
+//
+//        }
+//
+//
+//    }
 
 }

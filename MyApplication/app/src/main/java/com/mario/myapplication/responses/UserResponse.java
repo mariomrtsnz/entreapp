@@ -13,15 +13,15 @@ public class UserResponse {
     private String email;
     private String createAt;
     private String country;
-    private LanguageResponse language;
+    private String language;
     private List<PoiResponse> visited = new ArrayList<>();
-    private List<BadgeResponse> badges = new ArrayList<>();
+    private List<Object> badges = new ArrayList<>();
     private List<CategoryResponse> likes  = new ArrayList<>();
 
     public UserResponse() {
     }
 
-    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> visited, List<BadgeResponse> badges, List<CategoryResponse> likes) {
+    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -100,11 +100,11 @@ public class UserResponse {
         this.country = country;
     }
 
-    public LanguageResponse getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(LanguageResponse language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
@@ -116,11 +116,11 @@ public class UserResponse {
         this.visited = visited;
     }
 
-    public List<BadgeResponse> getBadges() {
+    public List<Object> getBadges() {
         return badges;
     }
 
-    public void setBadges(List<BadgeResponse> badges) {
+    public void setBadges(List<Object> badges) {
         this.badges = badges;
     }
 
