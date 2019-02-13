@@ -1,6 +1,8 @@
 package com.mario.myapplication.ui.profile;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,11 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
+import com.mario.myapplication.util.GlideApp;
 import com.mario.myapplication.util.UtilToken;
 
 import java.io.IOException;
@@ -32,15 +36,17 @@ import retrofit2.Response;
 
 
 public class MyProfile extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int READ_REQUEST_CODE = 42;
+    Uri uriSelected;
+
     String jwt;
     Context ctx;
     String userId;
     UserService service;
-    UserResponse userResponse;
+    MyProfileResponse myProfileResponse;
     ImageView profile_image;
     TextView textViewName;
     TextView textViewPoints;
@@ -57,18 +63,9 @@ public class MyProfile extends Fragment {
     private MyProfileInteractionListener mListener;
 
     public MyProfile() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyProfile.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static MyProfile newInstance(String param1, String param2) {
         MyProfile fragment = new MyProfile();
         Bundle args = new Bundle();
@@ -83,25 +80,50 @@ public class MyProfile extends Fragment {
         super.onCreate(savedInstanceState);
         ctx= getContext();
         jwt = UtilToken.getToken(ctx);
-        userId = UtilToken.getId(ctx);
+        userId = UtilToken.getId(ctx).toString();
         if (jwt == null) {
-
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        ctx= getContext();
+        jwt = UtilToken.getToken(ctx);
+        userId = UtilToken.getId(ctx).toString();
+        View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        // every element is looked for
+        loadItemsFragment(view);
+        //callbacks
         service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
-//        new LoadDataTask().execute(userId);
+        Call<MyProfileResponse> getOneUser = service.getUser(userId);
 
-        /*service = ServiceGenerator.createService(UserService.class,
-                jwt, AuthType.JWT);
-        Call<UserResponse> getOneUser = service.getUser(userId);
-        getOneUser.enqueue(new Callback<UserResponse>() {
+        getOneUser.enqueue(new Callback<MyProfileResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+            public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
+                Resources res = getResources();
+                String points="";
                 if (response.isSuccessful()) {
                     Log.d("LOL", "user obtain successfully");
-                    userResponse=response.body();
+                    myProfileResponse=response.body();
+                    textViewEmailWritten.setText(myProfileResponse.getEmail());
+                    textViewName.setText(myProfileResponse.getName());
+                    if(myProfileResponse.getLanguage()!=null){
+                        textViewLanguageWritten.setText(myProfileResponse.getLanguage().getName());
+                    }else{
+                        textViewLanguageWritten.setText(R.string.defaultLanguage);
+                    }
 
-                    Log.d("LOL2", userResponse.toString());
+                    textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
+                    textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
+                    points = res.getString(R.string.points) +" "+ countPoints(myProfileResponse);
+                    textViewPoints.setText(points);
+                    //image
+                    GlideApp.with(ctx)
+                            .load(myProfileResponse.getPicture().toString())
+                            .into(profile_image);
+                    Log.d("LOL2", myProfileResponse.toString());
 
                 } else {
                     Log.d("LOL3", "FALLITO BUENO");
@@ -111,50 +133,64 @@ public class MyProfile extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+            public void onFailure(Call<MyProfileResponse> call, Throwable t) {
                 Log.d("LOL4", "FALLITO BUENO");
 
                 Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
 
-
             }
-        });*/
 
 
-    }
+        });
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
-        // every element is looked for
-        loadItemsFragment(view);
-
-        // every element is set
-        textViewEmailWritten.setText(userResponse.getEmail());
-        textViewName.setText(userResponse.getName());
-        textViewLanguageWritten.setText(userResponse.getLanguage());
-
-        //textViewName.setText(userResponse.getName());
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                performFileSearch();
+            }
+        });
         return view;
     }
-//    public int countPoints(UserResponse u){
-//        int points = 0;
-//        for (int i = 0; i<=u.getBadges().size();i++){
-//            points = points+u.getBadges().get(i).getPoints();
-//        }
-//        return points;
-//    }
-//    public int countBadges(UserResponse u){
-//        int badges = 0;
-//        for (int i = 0; i<=u.getBadges().size();i++){
-//            badges++;
-//        }
-//        return badges;
-//    }
+    public void performFileSearch() {
 
-    public int countPoisVisited(UserResponse u){
+        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+        // browser.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+        // Filter to only show results that can be "opened", such as a
+        // file (as opposed to a list of contacts or timezones)
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        // Filter to show only images, using the image MIME data type.
+        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+        // To search for all documents available via installed storage providers,
+        // it would be "*/*".
+        intent.setType("image/*");
+
+        startActivityForResult(intent, READ_REQUEST_CODE);
+    }
+
+    public int countPoints(MyProfileResponse u){
+        int points = 0;
+        if (u.getBadges().size()>=1){
+            for (int i = 0; i<u.getBadges().size();i++){
+                points = points+u.getBadges().get(i).getPoints();
+            }
+        }
+
+        return points;
+    }
+    public int countBadges(MyProfileResponse u) {
+        int badges = 0;
+        if (u.getBadges().size() >= 1){
+            for (int i = 0; i < u.getBadges().size(); i++) {
+                badges++;
+            }
+        }
+        return badges;
+    }
+
+    public int countPoisVisited(MyProfileResponse u){
         return u.getVisited().size();
     }
     public void loadItemsFragment(View view) {
@@ -164,6 +200,7 @@ public class MyProfile extends Fragment {
         textViewPoisWritten = view.findViewById(R.id.textViewPoisVisitedWritten);
         textViewName = view.findViewById(R.id.textViewName);
         textViewPoints = view.findViewById(R.id.textViewPoints);
+        profile_image = view.findViewById(R.id.profile_image);
 
     }
 
@@ -191,55 +228,10 @@ public class MyProfile extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-//    private class LoadDataTask extends AsyncTask<String, Void, UserResponse> {
-//
-//        @Override
-//        protected UserResponse doInBackground(String... strings) {
-//
-//            UserResponse result = null;
-//
-//
-//            Call<UserResponse> getOneUser = service.getUser(strings[0]);
-//
-//            Response<UserResponse> responseRepos = null;
-//
-//            try {
-//                responseRepos = getOneUser.execute();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (responseRepos.isSuccessful()) {
-//
-//                result = responseRepos.body();
-//                userResponse=responseRepos.body();
-//            }
-//            return result;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(UserResponse repos) {
-//            if (repos != null) {
-//                userResponse=repos;
-//            }
-//
-//        }
-//
-//
-//    }
 
 }

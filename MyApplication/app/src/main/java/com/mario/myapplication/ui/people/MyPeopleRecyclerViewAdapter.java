@@ -49,14 +49,11 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
         holder.name.setText(mValues.get(position).getName());
         holder.country.setText(mValues.get(position).getCountry());
         Glide.with(holder.mView).load(mValues.get(position).getPicture()).into(holder.picture);
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentUserInteraction(holder.mItem);
-                }
+        holder.mView.setOnClickListener(v -> {
+            if (null != mListener) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                mListener.onListFragmentUserInteraction(holder.mItem);
             }
         });
     }
