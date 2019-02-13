@@ -1,6 +1,7 @@
 package com.mario.myapplication.retrofit.services;
 
 import com.mario.myapplication.model.User;
+import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserResponse;
 
@@ -19,7 +20,7 @@ public interface UserService {
     Call<ResponseContainer<UserResponse>> listUsers();
 
     @GET(BASE_URL+"/{id}")
-    Call<UserResponse> getUser(@Path("id") String id);
+    Call<MyProfileResponse> getUser(@Path("id") String id);
 
     @GET(BASE_URL+"/me")
     Call<UserResponse> getMe();
