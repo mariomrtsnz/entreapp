@@ -1,6 +1,7 @@
 package com.mario.myapplication.ui.pois;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,15 +29,28 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.PoiResponse;
+import com.mario.myapplication.responses.ResponseContainer;
+import com.mario.myapplication.retrofit.generator.AuthType;
+import com.mario.myapplication.retrofit.generator.ServiceGenerator;
+import com.mario.myapplication.retrofit.services.PoiService;
+import com.mario.myapplication.ui.pois.list.PoiListAdapter;
+import com.mario.myapplication.util.UtilToken;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.Context.LOCATION_SERVICE;
 
 
 public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
-
+    // MAP
     private static final int DEFAULT_ZOOM = 15;
     private static final String KEY_LOCATION = "location";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -44,6 +59,11 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private boolean mLocationPermissionGranted;
     private Location mLastKnownLocation;
+
+    // POIs
+    private String jwt;
+    private Context ctx;
+    private List<PoiResponse> items;
 
 
     public PoiMapFragment() {
@@ -66,6 +86,24 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         } else {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
+
+        jwt = UtilToken.getToken(Objects.requireNonNull(getContext()));
+
+        PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
+        Call<ResponseContainer<PoiResponse>> callList = service.listPois();
+        callList.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     @Nullable
@@ -85,6 +123,26 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
         ((SupportMapFragment) Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.map))).getMapAsync(this);
+
+        // POIs
+        items = new ArrayList<>();
+        PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
+        Call<ResponseContainer<PoiResponse>> call = service.listPois();
+        call.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    items = Objects.requireNonNull(response.body()).getRows();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return v;
     }

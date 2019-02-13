@@ -52,7 +52,7 @@ router.post('/',
  */
 router.get('/',
   token({ required: true }),
-  query(),
+  query({near: { paths: ['coordinates'] }}, {near: true}),
   index)
 
 /**
