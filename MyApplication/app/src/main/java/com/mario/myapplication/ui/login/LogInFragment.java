@@ -143,7 +143,7 @@ public class LogInFragment extends AuthFragment {
             final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
 
             if (username_txt.equals("") || password_txt.equals("")) {
-                Toast.makeText(ctx, "Fields can't be clear!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Fields can't be empty!", Toast.LENGTH_LONG).show();
             } else if (!EMAIL_REGEX.matcher(username_txt).matches()) {
                 Toast.makeText(ctx, "You need to use a correct email!", Toast.LENGTH_LONG).show();
             } else if (password_txt.length() < 6) {
@@ -163,7 +163,7 @@ public class LogInFragment extends AuthFragment {
                         } else {
                             // exito
                             UtilToken.setToken(view.getContext(), response.body().getToken());
-                            UtilToken.setId(view.getContext(), response.body().getUser().getId());
+                            UtilToken.setId(view.getContext(), response.body().getUser().get_Id());
                             startActivity(new Intent(view.getContext(), DashboardActivity.class));
                         }
                     }

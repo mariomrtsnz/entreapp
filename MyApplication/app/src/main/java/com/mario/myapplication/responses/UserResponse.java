@@ -5,7 +5,7 @@ import java.util.List;
 
 public class UserResponse {
 
-    private String id;
+    private String _id;
     private String name;
     private String role;
     private String picture;
@@ -22,8 +22,8 @@ public class UserResponse {
     public UserResponse() {
     }
 
-    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes) {
-        this.id = id;
+    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes) {
+        this._id = _id;
         this.name = name;
         this.role = role;
         this.picture = picture;
@@ -37,12 +37,12 @@ public class UserResponse {
         this.likes = likes;
     }
 
-    public String getId() {
-        return id;
+    public String get_Id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_Id(String id) {
+        this._id = id;
     }
 
     public String getName() {
@@ -144,7 +144,7 @@ public class UserResponse {
     @Override
     public String toString() {
         return "UserResponse{" +
-                "id='" + id + '\'' +
+                "id='" + _id + '\'' +
                 ", name='" + name + '\'' +
                 ", role='" + role + '\'' +
                 ", picture='" + picture + '\'' +
