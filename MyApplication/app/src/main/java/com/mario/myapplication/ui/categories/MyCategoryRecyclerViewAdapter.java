@@ -24,6 +24,7 @@ import com.mario.myapplication.util.ConfigJSONParser;
 import com.mario.myapplication.util.UtilToken;
 
 
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -126,7 +127,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                     }
                 }
                 System.out.println(user);
-                UserEditDto edited = new UserEditDto(user.getEmail(), user.getName(), user.getCountry(), ConfigJSONParser.parseStringToObject(user.getLanguage()), user.getLikes(), user.getVisited(), user.getFriends() );
+                UserEditDto edited = new UserEditDto(user.getEmail(), user.getName(), user.getCountry(), user.getLanguage(), user.getLikes(), user.getVisited(), user.getFriends() );
                 Call<UserResponse> edit = service.editUser(user.getId(), edited);
                 edit.enqueue(new Callback<UserResponse>() {
                     @Override
