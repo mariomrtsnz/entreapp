@@ -1,6 +1,7 @@
 package com.mario.myapplication.ui.pois.list;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.UserResponse;
@@ -42,7 +45,7 @@ public class PoiListAdapter extends RecyclerView.Adapter<PoiListAdapter.ViewHold
     @NonNull
     @Override
     public PoiListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.badges_custom_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.poi_list_custom_item, viewGroup, false);
         // requestBuilder = Glide.with(context).as(PictureDrawable.class).listener(new SvgSoftwareLayerSetter<>());
         return new PoiListAdapter.ViewHolder(view);
     }
@@ -69,10 +72,9 @@ public class PoiListAdapter extends RecyclerView.Adapter<PoiListAdapter.ViewHold
 
         viewHolder.mItem = data.get(i);
         viewHolder.title.setText(viewHolder.mItem.getName());
-        viewHolder.body.setText(viewHolder.mItem.getStatus());
-        viewHolder.points.setText(String.valueOf(viewHolder.mItem.getCategories().length));
+        viewHolder.distance.setText(viewHolder.mItem.getStatus());
 
-        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.icon);
+        Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.bgImage);
 
         // requestBuilder.load(viewHolder.mItem.getCoverImage()).into(viewHolder.icon);
 
@@ -86,18 +88,15 @@ public class PoiListAdapter extends RecyclerView.Adapter<PoiListAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
         PoiResponse mItem;
-        final TextView title, body, points;
-        final ImageView earned;
-        final ImageView icon;
+        final TextView title, distance;
+        final ImageView bgImage;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
-            title = itemView.findViewById(R.id.tv_card_title);
-            body = itemView.findViewById(R.id.tv_card_body);
-            earned = itemView.findViewById(R.id.iv_earned_icon);
-            icon = itemView.findViewById(R.id.iv_badge_icon);
-            points = itemView.findViewById(R.id.tv_badge_points);
+            title = itemView.findViewById(R.id.poi_list_title);
+            distance = itemView.findViewById(R.id.poi_list_distance);
+            bgImage = itemView.findViewById(R.id.poi_list_bgImage);
         }
 
     }
