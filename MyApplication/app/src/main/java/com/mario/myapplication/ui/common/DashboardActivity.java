@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.maps.model.Dash;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
@@ -91,6 +93,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     }
 
     public void clickOnCamera() {
+        Toast.makeText(this, "CLICK ON CAMERA", Toast.LENGTH_LONG).show();
+
 
     }
 

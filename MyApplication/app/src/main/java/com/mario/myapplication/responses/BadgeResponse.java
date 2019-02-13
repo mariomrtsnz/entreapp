@@ -1,6 +1,8 @@
 package com.mario.myapplication.responses;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class BadgeResponse {
     private String id;
@@ -8,13 +10,13 @@ public class BadgeResponse {
     private int points;
     private String description;
     private String icon;
-    private PoiResponse[] pois;
+    private List<Object> pois = new ArrayList<>();
 
     public BadgeResponse() {
 
     }
 
-    public BadgeResponse(String id, String name, int points, String description, String icon, PoiResponse[] pois) {
+    public BadgeResponse(String id, String name, int points, String description, String icon, List<Object> pois) {
         this.id = id;
         this.name = name;
         this.points = points;
@@ -63,22 +65,23 @@ public class BadgeResponse {
         this.icon = icon;
     }
 
-    public PoiResponse[] getPois() {
+    public List<Object> getPois() {
         return pois;
     }
 
-    public void setPois(PoiResponse[] pois) {
+    public void setPois(List<Object> pois) {
         this.pois = pois;
     }
 
     @Override
     public String toString() {
         return "BadgeResponse{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", points=" + points +
                 ", description='" + description + '\'' +
                 ", icon='" + icon + '\'' +
-                ", pois=" + Arrays.toString(pois) +
+                ", pois=" + pois +
                 '}';
     }
 }

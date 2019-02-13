@@ -36,5 +36,8 @@
     <string name="cancel">Cancel</string>
     <string name="textview">TextView</string>
     <string name="defaultLanguage">English</string>
+    <string name="points">Points </string>
+    <string name="edit">Edit</string>
+    <string name="country">Country</string>
 
 </resources>

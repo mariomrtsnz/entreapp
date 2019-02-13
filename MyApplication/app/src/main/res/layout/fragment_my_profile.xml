@@ -24,21 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_camera"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-
-            android:layout_marginTop="128dp"
-            android:background="#FFFFFF"
-            android:src="@drawable/ic_camera_black_24dp"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="2dp"
-            app:civ_circle_background_color="#00DF6767"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/profile_image"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
@@ -55,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="TextView"
+            android:text="@string/points"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,13 +66,12 @@
             android:id="@+id/textViewLanguage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:text="@string/Language"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_edit_profile" />
+            app:layout_constraintStart_toStartOf="@+id/textViewCountryWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCountryWritten" />
 
         <TextView
             android:id="@+id/textViewLanguageWritten"
@@ -158,6 +142,27 @@
             android:text="@string/pois_visited"
             app:layout_constraintStart_toStartOf="@+id/textViewPoisVisited"
             app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisited" />
+
+        <TextView
+            android:id="@+id/textViewCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/country"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_edit_profile" />
+
+        <TextView
+            android:id="@+id/textViewCountryWritten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/country"
+            app:layout_constraintStart_toStartOf="@+id/textViewCountry"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

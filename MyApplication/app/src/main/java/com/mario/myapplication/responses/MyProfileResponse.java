@@ -2,27 +2,27 @@ package com.mario.myapplication.responses;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class UserResponse {
-
+public class MyProfileResponse {
     private String id;
     private String name;
     private String role;
     private String picture;
     private String password;
     private String email;
+
     private String createAt;
     private String country;
-    private String language;
+    private LanguageResponse language;
     private List<PoiResponse> visited = new ArrayList<>();
-    private List<Object> badges = new ArrayList<>();
+    private List<BadgeResponse> badges = new ArrayList<>();
     private List<CategoryResponse> likes  = new ArrayList<>();
-    private List<UserResponse> friends = new ArrayList<>();
 
-    public UserResponse() {
+    public MyProfileResponse() {
     }
 
-    public UserResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, String language, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes) {
+    public MyProfileResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> visited, List<BadgeResponse> badges, List<CategoryResponse> likes) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -101,11 +101,11 @@ public class UserResponse {
         this.country = country;
     }
 
-    public String getLanguage() {
+    public LanguageResponse getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(LanguageResponse language) {
         this.language = language;
     }
 
@@ -117,11 +117,11 @@ public class UserResponse {
         this.visited = visited;
     }
 
-    public List<Object> getBadges() {
+    public List<BadgeResponse> getBadges() {
         return badges;
     }
 
-    public void setBadges(List<Object> badges) {
+    public void setBadges(List<BadgeResponse> badges) {
         this.badges = badges;
     }
 
@@ -133,29 +133,23 @@ public class UserResponse {
         this.likes = likes;
     }
 
-    public List<UserResponse> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(List<UserResponse> friends) {
-        this.friends = friends;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyProfileResponse that = (MyProfileResponse) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(role, that.role) &&
+                Objects.equals(picture, that.picture) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(createAt, that.createAt) &&
+                Objects.equals(country, that.country);
     }
 
     @Override
-    public String toString() {
-        return "UserResponse{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", role='" + role + '\'' +
-                ", picture='" + picture + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", createAt='" + createAt + '\'' +
-                ", country='" + country + '\'' +
-                ", language=" + language +
-                ", visited=" + visited +
-                ", badges=" + badges +
-                ", likes=" + likes +
-                '}';
+    public int hashCode() {
+        return Objects.hash(id, name, role, picture, password, email, createAt, country);
     }
 }

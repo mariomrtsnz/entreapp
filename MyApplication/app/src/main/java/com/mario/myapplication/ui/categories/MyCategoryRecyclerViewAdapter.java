@@ -11,16 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mario.myapplication.R;
+import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.ui.categories.CategoryFragment.OnListFragmentCategoryInteractionListener;
+import com.mario.myapplication.util.ConfigJSONParser;
 import com.mario.myapplication.util.UtilToken;
 
 
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,9 +40,10 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
 
     private final List<CategoryResponse> mValues;
     private final OnListFragmentCategoryInteractionListener mListener;
-    private UserService service;
+    private UserService service ;
     private String jwt;
     Context ctx;
+    Gson gson = new Gson();
     UserResponse user;
     public MyCategoryRecyclerViewAdapter(Context ctx, List<CategoryResponse> items, OnListFragmentCategoryInteractionListener listener) {
         mValues = items;
@@ -92,59 +97,54 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
             holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
         }
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentCategoryInteraction(holder.mItem);
-                }
+        holder.mView.setOnClickListener(v -> {
+            if (null != mListener) {
+                // Notify the active callbacks interface (the activity, if the
+                // fragment is attached to one) that an item has been selected.
+                mListener.onListFragmentCategoryInteraction(holder.mItem);
             }
         });
 
         try {
-            holder.fav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(user.getLikes() == null){
-                        user.getLikes().add(holder.mItem);
-                        holder.fav.setImageResource(R.drawable.ic_fav_24dp);
-                    }else {
+            holder.fav.setOnClickListener(v -> {
+                if(user.getLikes().size() == 0){
+                    holder.mItem.setFav(true);
+                    user.getLikes().add(holder.mItem);
+                    holder.fav.setImageResource(R.drawable.ic_fav_24dp);
+                }else {
 
 
-                        for (CategoryResponse category : user.getLikes()) {
-                            if (holder.mItem.getName().equals(category.getName())) {
-                                user.getLikes().remove(category);
-                                holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
-                            } else {
-                                user.getLikes().add(category);
-                                holder.fav.setImageResource(R.drawable.ic_fav_24dp);
-                            }
+                    for (CategoryResponse category : user.getLikes()) {
+                        if (holder.mItem.getName().equals(category.getName())) {
+                            user.getLikes().remove(category);
+                            holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
+                        } else {
+                            category.setFav(true);
+                            user.getLikes().add(category);
+                            holder.fav.setImageResource(R.drawable.ic_fav_24dp);
+                        }
 
+                    }
+                }
+                System.out.println(user);
+                UserEditDto edited = new UserEditDto(user.getEmail(), user.getName(), user.getCountry(), user.getLanguage(), user.getLikes(), user.getVisited(), user.getFriends() );
+                Call<UserResponse> edit = service.editUser(user.getId(), edited);
+                edit.enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call1, Response<UserResponse> response) {
+                        System.out.println(response);
+                        if(response.code() == 200){
+                            Log.d("User edited", "User edited");
+                        }else{
+                            Toast.makeText(ctx, "User could not be edited", Toast.LENGTH_SHORT).show();
                         }
                     }
 
-                    Call<UserResponse> edit = service.editUser(user.getId(), user);
-                    edit.enqueue(new Callback<UserResponse>() {
-                        @Override
-                        public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                            if(response.isSuccessful()){
-                                Log.d("User edited", "User edited");
-                            }else{
-                                Toast.makeText(ctx, "User could not be edited", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<UserResponse> call, Throwable t) {
-                            Toast.makeText(ctx,"NetworkFailure", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-
-
+                    @Override
+                    public void onFailure(Call<UserResponse> call1, Throwable t) {
+                        Toast.makeText(ctx,"NetworkFailure", Toast.LENGTH_LONG).show();
+                    }
+                });
 
             });
         } catch (Exception e) {

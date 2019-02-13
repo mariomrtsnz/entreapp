@@ -10,14 +10,14 @@ export const create = ({ bodymen: { body } }, res, next) => {
       poi.view(2);
       var opts = {
         color: {
-          dark: '#000',  // Blue dots
+          dark: '#000',  // Black dots
           light: '#0000' // Transparent background
         },
         type: 'svg'
       }
       QRCode.toString(`https://entreapp.herokuapp.com/pois/${poi.id}`, opts).then(string => {
-        Poi.findByIdAndUpdate({_id: poi.id},{$set:{qrCode:string.split('\n')[0]}},{new:true}).then((docs) => console.log(docs));
-      });
+        Poi.findByIdAndUpdate({_id: poi.id},{$set:{qrCode:string.split('\n')[0]}},{new:true}).then(success(res, 200)).catch(next);
+      }).then(success(res, 200)).catch(next);
     })
     .then(success(res, 201))
     .catch(next)
