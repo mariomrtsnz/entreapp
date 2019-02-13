@@ -17,6 +17,7 @@ public class UserResponse {
     private List<PoiResponse> visited = new ArrayList<>();
     private List<Object> badges = new ArrayList<>();
     private List<CategoryResponse> likes  = new ArrayList<>();
+    private List<UserResponse> friends = new ArrayList<>();
 
     public UserResponse() {
     }
@@ -130,6 +131,14 @@ public class UserResponse {
 
     public void setLikes(List<CategoryResponse> likes) {
         this.likes = likes;
+    }
+
+    public List<UserResponse> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<UserResponse> friends) {
+        this.friends = friends;
     }
 
     @Override

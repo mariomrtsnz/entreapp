@@ -1,5 +1,6 @@
 package com.mario.myapplication.retrofit.services;
 
+import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.model.User;
 import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.responses.ResponseContainer;
@@ -26,7 +27,7 @@ public interface UserService {
     Call<UserResponse> getMe();
 
     @PUT(BASE_URL+"/{id}")
-    Call<UserResponse> editUser(@Path("id") String id, @Body UserResponse user);
+    Call<UserResponse> editUser(@Path("id") String id, @Body UserEditDto user);
 
     @PUT(BASE_URL+"/{id}/password")
     Call<UserResponse> editPassword(@Path("id") String id, @Body String password);
