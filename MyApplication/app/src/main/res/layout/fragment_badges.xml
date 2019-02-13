@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:name="com.mario.myapplication.ui.badges.BadgesFragment"
-    android:id="@+id/badges_list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.badges.BadgesFragment"
-    tools:listitem="@layout/fragment_badges" />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mario.myapplication.ui.badges.BadgesFragment"
+    android:id="@+id/swipeContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:name="com.mario.myapplication.ui.badges.BadgesFragment"
+        android:id="@+id/badges_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        tools:context=".ui.badges.BadgesFragment"
+        tools:listitem="@layout/fragment_badges" />
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

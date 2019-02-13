@@ -4,10 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +40,8 @@ public class BadgesFragment extends Fragment {
     BadgeService service;
     List<BadgeResponse> items;
     BadgesAdapter adapter;
+    SwipeRefreshLayout swipeLayout;
+    RecyclerView recycler;
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
 
@@ -90,37 +94,56 @@ public class BadgesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_badges, container, false);
-        if (layout instanceof RecyclerView) {
+
+        if (layout instanceof SwipeRefreshLayout) {
             ctx = layout.getContext();
-            RecyclerView recycler = layout.findViewById(R.id.badges_list);
+            recycler = layout.findViewById(R.id.badges_list);
             if (mColumnCount <= 1) {
                 recycler.setLayoutManager(new LinearLayoutManager(ctx));
             } else {
                 recycler.setLayoutManager(new GridLayoutManager(ctx, mColumnCount));
             }
             items = new ArrayList<>();
-            BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
-            Call<ResponseContainer<BadgeResponse>> call = service.listBadges();
-            call.enqueue(new Callback<ResponseContainer<BadgeResponse>>() {
-                @Override
-                public void onResponse(Call<ResponseContainer<BadgeResponse>> call, Response<ResponseContainer<BadgeResponse>> response) {
-                    if (response.code() != 200) {
-                        Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
-                    } else {
-                        items = response.body().getRows();
-                        adapter = new BadgesAdapter(ctx, items, mListener);
-                        recycler.setAdapter(adapter);
-                    }
-                }
+            getData();
+            adapter = new BadgesAdapter(ctx, items, mListener);
+            recycler.setAdapter(adapter);
 
+            swipeLayout = layout.findViewById(R.id.swipeContainer);
+            swipeLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary), ContextCompat.getColor(getContext(), R.color.colorAccent));
+            swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onFailure(Call<ResponseContainer<BadgeResponse>> call, Throwable t) {
-                    Log.e("Network Failure", t.getMessage());
-                    Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+                public void onRefresh() {
+                    getData();
+                    if (swipeLayout.isRefreshing()) {
+                        swipeLayout.setRefreshing(false);
+                    }
                 }
             });
         }
         return layout;
+    }
+
+    public void getData() {
+        BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
+        Call<ResponseContainer<BadgeResponse>> call = service.listBadges();
+        call.enqueue(new Callback<ResponseContainer<BadgeResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<BadgeResponse>> call, Response<ResponseContainer<BadgeResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    items = response.body().getRows();
+                    adapter = new BadgesAdapter(ctx, items, mListener);
+                    recycler.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<BadgeResponse>> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

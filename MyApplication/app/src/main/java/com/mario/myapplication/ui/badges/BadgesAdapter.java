@@ -25,6 +25,7 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.util.SvgDecoder;
 import com.mario.myapplication.util.SvgDrawableTranscoder;
+import com.mario.myapplication.util.SvgOrImageDecodedResource;
 import com.mario.myapplication.util.SvgSoftwareLayerSetter;
 import com.mario.myapplication.util.UtilToken;
 
@@ -85,7 +86,7 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
         viewHolder.body.setText(data.get(i).getDescription());
         viewHolder.points.setText(String.valueOf(data.get(i).getPoints()));
 
-        requestBuilder.load(data.get(i).getIcon()).into(viewHolder.icon);
+        Glide.with(context).load(data.get(i).getIcon()).into(viewHolder.icon);
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
