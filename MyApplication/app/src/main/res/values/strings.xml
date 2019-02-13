@@ -35,5 +35,6 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="textview">TextView</string>
+    <string name="defaultLanguage">English</string>
 
 </resources>
