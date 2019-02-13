@@ -4,6 +4,9 @@ package com.mario.myapplication.ui.pois;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -26,15 +30,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.PoiResponse;
-import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.PoiService;
-import com.mario.myapplication.ui.pois.list.PoiListAdapter;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -90,17 +95,19 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         jwt = UtilToken.getToken(Objects.requireNonNull(getContext()));
 
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<PoiResponse>> callList = service.listPois();
-        callList.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
+
+        String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
+        Call<ArrayList<PoiResponse>> callList = service.getNearestPois(coords, 2000);
+        callList.enqueue(new Callback<ArrayList<PoiResponse>>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
+            public void onResponse(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Response<ArrayList<PoiResponse>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
 
             }
         });
@@ -115,6 +122,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         }
 
         View v = inflater.inflate(R.layout.fragment_poi_map, container, false);
+        ctx = v.getContext();
 
         v.findViewById(R.id.showMyLoc).setOnClickListener(view -> {
             if (checkDeviceLocation()) getDeviceLocation();
@@ -129,20 +137,19 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
 
         String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
-        Call<ResponseContainer<PoiResponse>> call = service.getNearestPois(coords, 0, 2000);
+        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords,2000);
 
-        call.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
+        call.enqueue(new Callback<ArrayList<PoiResponse>>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
+            public void onResponse(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Response<ArrayList<PoiResponse>> response) {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-                    items = Objects.requireNonNull(response.body()).getRows();
-                    System.out.println(items);
+                    items = response.body();
                 }
             }
             @Override
-            public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
@@ -156,6 +163,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         getDeviceLocation();
+        showNearbyLocations();
     }
 
     private void getLocationPermissions() {
@@ -224,7 +232,24 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void showNearbyLocations() {
+        //for (PoiResponse i : items) {
+            mMap.addMarker(new MarkerOptions()
+            .position(new LatLng(mDefaultLocation.latitude, mDefaultLocation.longitude))
+            .title("Hello World")
+            .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
+        //}
+    }
 
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
+        Drawable background = ContextCompat.getDrawable(context, R.drawable.ic_restaurant_black_24dp);
+        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId);
+        vectorDrawable.setBounds(40, 20, vectorDrawable.getIntrinsicWidth() + 40, vectorDrawable.getIntrinsicHeight() + 20);
+        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        background.draw(canvas);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
 }
