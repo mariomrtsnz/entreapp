@@ -122,8 +122,24 @@ export const updateRole = ({
   .then((user) => user ? user.view(true) : null)
   .then(success(res))
   .catch(next)
+  
+/*export const updateLikes = ({
+    bodymen: {
+      body
+    },
+    params,
+    user
+  }, res, next) =>
+  User.findById(params.id === 'me' ? user.id : params.id)
+  .then(notFound(res))
+  .then((user) => user ? user.set({
+    likes: body.likes
+  }).save() : null)
+  .then((user) => user ? user.view(true) : null)
+  .then(success(res))
+  .catch(next)
 
-
+*/
 export const updatePassword = ({
     bodymen: {
       body
