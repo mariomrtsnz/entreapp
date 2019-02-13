@@ -127,7 +127,10 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         // POIs
         items = new ArrayList<>();
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<PoiResponse>> call = service.listPois();
+
+        String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
+        Call<ResponseContainer<PoiResponse>> call = service.getNearestPois(coords, 0, 2000);
+
         call.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
             @Override
             public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
@@ -135,6 +138,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     items = Objects.requireNonNull(response.body()).getRows();
+                    System.out.println(items);
                 }
             }
             @Override
