@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, showTranslated } from './controller'
+import { create, index, show, update, destroy, showTranslated, nearIndex } from './controller'
 import { schema } from './model'
 export Poi, { schema } from './model'
 
@@ -52,8 +52,25 @@ router.post('/',
  */
 router.get('/',
   token({ required: true }),
-  query({near: { paths: ['coordinates'] }}, {near: true}),
+  query(),
   index)
+
+/**
+* @api {get} /pois/nearest Retrieve nearests Pois
+* @apiName RetrieveNearestPois
+* @apiGroup Poi
+* @apiPermission user
+* @apiParam {String} access_token user access token.
+* @apiUse listParams
+* @apiSuccess {Number} count Total amount of pois near you.
+* @apiSuccess {Object[]} rows List of pois near you.
+* @apiError {Object} 400 Some parameters may contain invalid values.
+* @apiError 401 user access only.
+*/
+router.get('/nearest',
+  token({ required: true }),
+  query(),
+  nearIndex)
 
 /**
  * @api {get} /pois/:id Retrieve poi
@@ -69,6 +86,18 @@ router.get('/',
 router.get('/:id',
   token({ required: true }),
   show)
+
+/**
+* @api {get} /pois/:id Retrieve translated Poi
+* @apiName RetrieveTranslatedPoi
+* @apiGroup Poi
+* @apiPermission user
+* @apiParam {String} access_token user access token.
+* @apiSuccess {Object} poi Poi's data.
+* @apiError {Object} 400 Some parameters may contain invalid values.
+* @apiError 404 Poi not found.
+* @apiError 401 user access only.
+*/
 router.get('/:id/:idUserLanguage',
   token({ required: true }),
   showTranslated)
@@ -117,3 +146,4 @@ router.delete('/:id',
   destroy)
 
 export default router
+

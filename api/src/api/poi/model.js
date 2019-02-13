@@ -8,15 +8,19 @@ const poiSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category'
   }],
-  coordinates: {
-    lat: {
-      type: Number,
-      required: true
-    },
-    lng: {
-      type: Number,
-      required: true
-    }
+  // coordinates: {
+  //   lat: {
+  //     type: Number,
+  //     required: true
+  //   },
+  //   lng: {
+  //     type: Number,
+  //     required: true
+  //   }
+  // },
+  loc: {
+    type: { type: String, default: 'Point' },
+    coordinates: { type: [Number], index: '2dsphere' }
   },
   qrCode: {
     type: String
@@ -98,30 +102,30 @@ const poiSchema = new Schema({
     type: Number
   }
 }, {
-  timestamps: true,
-  toJSON: {
-    virtuals: true,
-    transform: (obj, ret) => { delete ret._id }
-  }
-})
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (obj, ret) => { delete ret._id }
+    }
+  })
 
 poiSchema.methods = {
-  view (full) {
+  view(full) {
     const view = {
       // simple view
       id: this.id,
       name: this.name,
       categories: this.categories,
-      qrCode: this.qrCode,  
+      qrCode: this.qrCode,
       description: this.description,
-      coverImage: this.coverImage,     
+      coverImage: this.coverImage,
       year: this.year,
       creator: this.creator,
     }
     const translationView = {
       // simple view
       id: this.id,
-      name: this.name,  
+      name: this.name,
       description: this.description,
       audioguides: this.audioguides,
     }
@@ -130,17 +134,17 @@ poiSchema.methods = {
       id: this.id,
       name: this.name,
       categories: this.categories,
-      qrCode: this.qrCode,  
+      qrCode: this.qrCode,
       description: this.description,
-      coverImage: this.coverImage,     
+      coverImage: this.coverImage,
       year: this.year,
       creator: this.creator,
       coordinates: this.coordinates,
-          audioguides: this.audioguides,
-          images: this.images,
-          status: this.status,
-          schedule: this.schedule,
-          price: this.price,
+      audioguides: this.audioguides,
+      images: this.images,
+      status: this.status,
+      schedule: this.schedule,
+      price: this.price,
     }
     switch (full) {
       case 0:
@@ -150,15 +154,14 @@ poiSchema.methods = {
         return fullView;
         break;
       case 2:
-      console.log('caso 2');
+        console.log('caso 2');
         return translationView;
-        
         break;
       default:
         return view;
         break;
     }
-   
+
   }
 }
 

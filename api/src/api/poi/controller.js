@@ -16,7 +16,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
         type: 'svg'
       }
       QRCode.toString(`https://entreapp.herokuapp.com/pois/${poi.id}`, opts).then(string => {
-        Poi.findByIdAndUpdate({_id: poi.id},{$set:{qrCode:string.split('\n')[0]}},{new:true}).then(success(res, 200)).catch(next);
+        Poi.findByIdAndUpdate({ _id: poi.id }, { $set: { qrCode: string.split('\n')[0] } }, { new: true }).then(success(res, 200)).catch(next);
       }).then(success(res, 200)).catch(next);
     })
     .then(success(res, 201))
@@ -38,13 +38,13 @@ export const showTranslated = ({ params }, res, next) => {
     id: (mongoose.Types.ObjectId(params.id)),
     idUserLanguage: (mongoose.Types.ObjectId(params.idUserLanguage))
   }
-    Poi.findOne({id: query.id, "description.translations.language":query.idUserLanguage})
-          .then(notFound(res))
-          .then((poi) => poi ? poi.view(2) : null)
-          .then(success(res))
-          .catch(next)
+  Poi.findOne({ id: query.id, "description.translations.language": query.idUserLanguage })
+    .then(notFound(res))
+    .then((poi) => poi ? poi.view(2) : null)
+    .then(success(res))
+    .catch(next)
 }
-    
+
 export const show = ({ params }, res, next) =>
   Poi.findById(params.id).populate('categories', 'id name')
     .then(notFound(res))
@@ -65,4 +65,19 @@ export const destroy = ({ params }, res, next) =>
     .then(notFound(res))
     .then((poi) => poi ? poi.remove() : null)
     .then(success(res, 204))
+    .catch(next)
+
+export const nearIndex = (req, res, next) =>
+  Poi.aggregate([
+    {
+      $geoNear: {
+        near: { type: "Point", coordinates: req.query.near.split(',').map(Number) },
+        spherical: true,
+        key: "loc",
+        maxDistance: parseInt(req.query.maxDistance),
+        distanceField: "loc.distance"
+      }
+    }
+  ])
+    .then(success(res))
     .catch(next)
