@@ -5,12 +5,14 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.mario.myapplication.model.Language;
 import com.mario.myapplication.responses.LanguageResponse;
@@ -22,7 +24,11 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LanguageService;
 import com.mario.myapplication.util.UtilToken;
 
+import java.util.List;
+
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyProfileEditFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -41,19 +47,11 @@ public class MyProfileEditFragment extends Fragment {
     private Context ctx;
     private String jwt;
     private String userId;
+    List<LanguageResponse> languages;
 
     public MyProfileEditFragment() {
-        // Required empty public constructor
     }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyProfileEdit.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static MyProfileEditFragment newInstance(String param1, String param2) {
         MyProfileEditFragment fragment = new MyProfileEditFragment();
         Bundle args = new Bundle();
@@ -99,7 +97,30 @@ public class MyProfileEditFragment extends Fragment {
         service = ServiceGenerator.createService(LanguageService.class,
                 jwt, AuthType.JWT);
         Call<ResponseContainer<LanguageResponse>> getAllLanguages = service.listLanguages();
+        getAllLanguages.enqueue(new Callback<ResponseContainer<LanguageResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<LanguageResponse>> call, Response<ResponseContainer<LanguageResponse>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("successLanguage", "languageObtained");
+                    languages = response.body().getRows();
+                    System.out.println(languages);
 
+                    ArrayAdapter<LanguageResponse> adapter =
+                            new ArrayAdapter<LanguageResponse>(ctx, android.R.layout.simple_spinner_dropdown_item, languages);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerLanguages.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<LanguageResponse>> call, Throwable t) {
+                Log.d("onFailure", "Fail in the request");
+                Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
+            }
+        });
         /*1º conseguir todos los idiomas
         * 2ºcrear array adapter y pasarselo
         * 3ºsetear spinner con adapter*/
@@ -110,6 +131,7 @@ public class MyProfileEditFragment extends Fragment {
 
         spinner.setAdapter(adapter);*/
     }
+    //public List<String>extractNameListFromLanguage
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

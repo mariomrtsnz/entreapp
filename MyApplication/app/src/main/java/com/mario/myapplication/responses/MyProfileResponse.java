@@ -152,4 +152,5 @@ public class MyProfileResponse {
     public int hashCode() {
         return Objects.hash(id, name, role, picture, password, email, createAt, country);
     }
+
 }
