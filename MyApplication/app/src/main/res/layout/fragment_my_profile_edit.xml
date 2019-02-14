@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.MyProfile">
+    tools:context=".ui.profile.MyProfileFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.profile.MyProfile">
+        tools:context=".ui.profile.MyProfileFragment">
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="140dp"
@@ -46,11 +46,12 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewPoints"
             tools:text="@string/edit_profile"
             />
+
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:text="@string/name"
             android:textSize="18sp"
             android:textStyle="bold"
