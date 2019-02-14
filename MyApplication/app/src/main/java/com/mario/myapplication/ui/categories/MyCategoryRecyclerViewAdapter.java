@@ -131,7 +131,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                     }
                 }
                 System.out.println(user);
-                UserEditDto edited = new UserEditDto(user.getEmail(), UserStringList.arrayFriends(user), UserStringList.arrayFavs(user), user.getLanguage().getId(), UserStringList.arrayLikes(user), user.getName() );
+                UserEditDto edited = new UserEditDto(user.getEmail(), UserStringList.arrayFriends(user), UserStringList.arrayFavs(user), /*user.getLanguage().getId(),*/ UserStringList.arrayLikes(user), user.getName() );
                 Call<UserResponse> edit = service.editUser(UtilToken.getId(ctx), edited);
                 edit.enqueue(new Callback<UserResponse>() {
                     @Override
