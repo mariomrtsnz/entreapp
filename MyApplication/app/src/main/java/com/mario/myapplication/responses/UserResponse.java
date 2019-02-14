@@ -14,6 +14,7 @@ public class UserResponse {
     private String createAt;
     private String country;
     private LanguageResponse language;
+    private List<PoiResponse> favs = new ArrayList<>();
     private List<PoiResponse> visited = new ArrayList<>();
     private List<Object> badges = new ArrayList<>();
     private List<CategoryResponse> likes  = new ArrayList<>();
@@ -22,7 +23,7 @@ public class UserResponse {
     public UserResponse() {
     }
 
-    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes) {
+    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> favs, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes, List<UserResponse> friends) {
         this._id = _id;
         this.name = name;
         this.role = role;
@@ -32,9 +33,27 @@ public class UserResponse {
         this.createAt = createAt;
         this.country = country;
         this.language = language;
+        this.favs = favs;
         this.visited = visited;
         this.badges = badges;
         this.likes = likes;
+        this.friends = friends;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public List<PoiResponse> getFavs() {
+        return favs;
+    }
+
+    public void setFavs(List<PoiResponse> favs) {
+        this.favs = favs;
     }
 
     public String get_Id() {
