@@ -57,12 +57,15 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         jwt = UtilToken.getToken(context);
         service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-        Call<UserResponse> call = service.getMe();
+        Call<UserResponse> call = service.getUserResponse(UtilToken.getId(context));
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
+                        if (user.getBadges().contains(data.get(i))) {
+                            viewHolder.icon.setImageResource(R.drawable.ic_earned_badge);
+                        }
                 } else {
                     Toast.makeText(context, "You have to be logged in", Toast.LENGTH_SHORT).show();
                 }
