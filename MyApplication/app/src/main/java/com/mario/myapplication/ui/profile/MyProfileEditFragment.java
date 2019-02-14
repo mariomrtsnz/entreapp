@@ -8,11 +8,21 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.mario.myapplication.model.Language;
+import com.mario.myapplication.responses.LanguageResponse;
+import com.mario.myapplication.responses.ResponseContainer;
+import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.MyProfileResponse;
+import com.mario.myapplication.retrofit.generator.ServiceGenerator;
+import com.mario.myapplication.retrofit.services.LanguageService;
+import com.mario.myapplication.util.UtilToken;
+
+import retrofit2.Call;
 
 public class MyProfileEditFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -27,6 +37,11 @@ public class MyProfileEditFragment extends Fragment {
     private Spinner spinnerLanguages;
     private MyProfileResponse updatedUser;
     private MyProfileInteractionListener mListener;
+    LanguageService service;
+    private Context ctx;
+    private String jwt;
+    private String userId;
+
     public MyProfileEditFragment() {
         // Required empty public constructor
     }
@@ -52,6 +67,9 @@ public class MyProfileEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ctx = getContext();
+        jwt = UtilToken.getToken(ctx);
+        userId = UtilToken.getId(ctx).toString();
         View v= inflater.inflate(R.layout.fragment_my_profile_edit, container, false);
         loadItemsFragment(v);
         setItemsFragment(updatedUser);
@@ -78,6 +96,19 @@ public class MyProfileEditFragment extends Fragment {
         }else{
             editTextcountry.setText(R.string.no_country);
         }
+        service = ServiceGenerator.createService(LanguageService.class,
+                jwt, AuthType.JWT);
+        Call<ResponseContainer<LanguageResponse>> getAllLanguages = service.listLanguages();
+
+        /*1º conseguir todos los idiomas
+        * 2ºcrear array adapter y pasarselo
+        * 3ºsetear spinner con adapter*/
+
+        /*ArrayAdapter<Contact> adapter =
+                new ArrayAdapter<Contact>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, contacts);
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);*/
     }
     @Override
     public void onAttach(Context context) {
