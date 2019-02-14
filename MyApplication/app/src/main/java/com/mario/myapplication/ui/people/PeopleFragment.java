@@ -1,18 +1,18 @@
 package com.mario.myapplication.ui.people;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.ResponseContainer;
@@ -20,8 +20,8 @@ import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
-import com.mario.myapplication.ui.people.dummy.DummyContent;
-import com.mario.myapplication.ui.people.dummy.DummyContent.DummyItem;
+import com.mario.myapplication.ui.common.DashboardActivity;
+import com.mario.myapplication.ui.login.LoginActivity;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -31,34 +31,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link }
- * interface.
- */
 public class PeopleFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentUserInteractionListener mListener;
     Context ctx;
     List<UserResponse> users;
     UserService service;
     String jwt;
     MyPeopleRecyclerViewAdapter adapter;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    private int mColumnCount = 1;
+    private OnListFragmentUserInteractionListener mListener;
+
+
     public PeopleFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
+
     public static PeopleFragment newInstance(int columnCount) {
         PeopleFragment fragment = new PeopleFragment();
         Bundle args = new Bundle();
@@ -73,11 +62,9 @@ public class PeopleFragment extends Fragment {
         jwt = UtilToken.getToken(getContext());
 
         if (jwt == null) {
-            // No hay token
-            // ¿Qué haces en este activity?
-            // Una de dos
-            //      - O consigues otro token
-            //      - O te vas a .... el formulario de Login
+
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            startActivity(i);
         }
 
         UserService service = ServiceGenerator.createService(UserService.class,
@@ -166,18 +153,7 @@ public class PeopleFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentUserInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentUserInteraction(UserResponse item);
     }
 }
