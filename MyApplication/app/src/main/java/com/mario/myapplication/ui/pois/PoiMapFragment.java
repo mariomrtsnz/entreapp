@@ -224,13 +224,13 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     items = response.body();
-                    for (PoiResponse i : items) {
-                        System.out.println(i.toString());
-                        mMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(i.getCoordinates()[0], i.getCoordinates()[1]))
-                                .title(i.getName())
-                                .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
-                    }
+//                    for (PoiResponse i : items) {
+//                        System.out.println(i.toString());
+//                        mMap.addMarker(new MarkerOptions()
+//                                .position(new LatLng(i.getCoordinates()[0], i.getCoordinates()[1]))
+//                                .title(i.getName())
+//                                .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
+//                    }
                 }
             }
             @Override
