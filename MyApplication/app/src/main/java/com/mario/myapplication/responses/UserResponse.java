@@ -23,7 +23,7 @@ public class UserResponse {
     public UserResponse() {
     }
 
-    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, String language, List<PoiResponse> favs, List<PoiResponse> visited, List<Object> badges, List<UserLikesResponse> likes, List<UserResponse> friends) {
+    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> favs, List<PoiResponse> visited, List<Object> badges, List<UserLikesResponse> likes, List<UserResponse> friends) {
         this._id = _id;
         this.name = name;
         this.role = role;
@@ -124,8 +124,8 @@ public class UserResponse {
         return language;
     }
 
-    public void setLanguage(String language) {
-        this.language.setId(language);
+    public void setLanguage(LanguageResponse language) {
+        this.language = language;
     }
 
     public List<PoiResponse> getVisited() {

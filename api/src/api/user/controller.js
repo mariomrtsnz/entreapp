@@ -9,6 +9,7 @@ import {
   sign
 } from '../../services/jwt'
 import {roles} from './model'
+import {Language} from '../language'
 
 export const index = ({
     querymen: {
@@ -19,7 +20,7 @@ export const index = ({
   }, res, next) =>
   User.count(query)
   .then(count => User.find(query, select, cursor)
-  .populate('badges', 'points').populate('likes', 'id name')
+  .populate('badges', 'points').populate('likes', 'id name').populate('language')
     .then(users => ({
       rows: users.map((user) => user.view(true)),
       count
@@ -55,28 +56,53 @@ export const create = ({
     bodymen: {
       body
     }
-  }, res, next) =>
-  User.create(body)
-  .then(user => {
-    sign(user.id)
-      .then((token) => ({
-        token,
-        user: user.view(true)
-      }))
-      .then(success(res, 201))
-  })
-  .catch((err) => {
-    /* istanbul ignore else */
-    if (err.name === 'MongoError' && err.code === 11000) {
-      res.status(409).json({
-        valid: false,
-        param: 'email',
-        message: 'email already registered'
-      })
+  }, res, next) => {
+    if (body.language == undefined || body.language == null) {
+      Language.findOne({
+        isoCode: 'en'
+      }).then(language => {
+        body.language = language.id;
+        User.create(body).then(user => {
+          sign(user.id).then((token) => ({
+            token,
+            user: user.view(true)
+          })).then(success(res, 201))
+        }).catch((err) => {
+          /* istanbul ignore else */
+          if (err.name === 'MongoError' && err.code === 11000) {
+            res.status(409).json({
+              valid: false,
+              param: 'email',
+              message: 'email already registered'
+            })
+          } else {
+            next(err)
+          }
+        })
+      });
     } else {
-      next(err)
+      User.create(body)
+        .then(user => {
+          sign(user.id)
+            .then((token) => ({
+              token,
+              user: user.view(true)
+            }))
+            .then(success(res, 201))
+        }).catch((err) => {
+          /* istanbul ignore else */
+          if (err.name === 'MongoError' && err.code === 11000) {
+            res.status(409).json({
+              valid: false,
+              param: 'email',
+              message: 'email already registered'
+            })
+          } else {
+            next(err)
+          }
+        })
     }
-  })
+    }
 
 export const update = ({
     bodymen: {
