@@ -13,7 +13,7 @@ public class UserResponse {
     private String email;
     private String createAt;
     private String country;
-    private LanguageResponse language;
+    private String language;
     private List<PoiResponse> favs = new ArrayList<>();
     private List<PoiResponse> visited = new ArrayList<>();
     private List<Object> badges = new ArrayList<>();
@@ -23,7 +23,7 @@ public class UserResponse {
     public UserResponse() {
     }
 
-    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> favs, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes, List<UserResponse> friends) {
+    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, String language, List<PoiResponse> favs, List<PoiResponse> visited, List<Object> badges, List<CategoryResponse> likes, List<UserResponse> friends) {
         this._id = _id;
         this.name = name;
         this.role = role;
@@ -112,11 +112,19 @@ public class UserResponse {
         this.country = country;
     }
 
-    public LanguageResponse getLanguage() {
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(LanguageResponse language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
