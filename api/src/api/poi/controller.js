@@ -33,6 +33,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     )
     .then(success(res))
     .catch(next)
+
 export const showTranslated = ({ params }, res, next) => {
   let query = {
     id: (mongoose.Types.ObjectId(params.id)),
@@ -79,5 +80,6 @@ export const nearIndex = (req, res, next) =>
       }
     }
   ])
-    .then(success(res))
-    .catch(next)
+  .then((poi) => Poi.populate( poi, {path: 'categories', select: 'id name'}))
+  .then(success(res))
+  .catch(next)
