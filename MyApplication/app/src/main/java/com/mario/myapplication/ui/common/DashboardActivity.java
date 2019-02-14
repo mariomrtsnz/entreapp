@@ -30,7 +30,7 @@ import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener {
     FragmentTransaction fragmentChanger;
-    private Fragment badges, pois;
+    private Fragment badges, pois, people, myProfile;
     private TextView mTextMessage;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,14 +48,16 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                     f = new CategoryFragment();
                     break;
                 case R.id.navigation_people:
-                    f = new PeopleFragment();
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, people);
+                    fragmentChanger.commit();
                     break;
                 case R.id.navigation_badges:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
                     fragmentChanger.commit();
                     return true;
                 case R.id.navigation_my_profile:
-                    f = new MyProfile();
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, myProfile);
+                    fragmentChanger.commit();
                     break;
             }
             if (f != null) {
@@ -78,6 +80,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         badges = new BadgesFragment();
         pois = new PoiMapFragment();
+        people = new PeopleFragment();
+        myProfile = new MyProfile();
         // Para que por defecto cargue el fragmento de POIs (general)
         fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
