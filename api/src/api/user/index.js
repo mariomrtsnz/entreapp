@@ -21,7 +21,7 @@ const { email, password, name, picture, role, city, language, likes, favs, frien
  * @apiError 401 Admin access only.
  */
 router.get('/',
-  token({ required: true, roles: ['admin'] }),
+  token({ required: true }),
   query(),
   index)
 

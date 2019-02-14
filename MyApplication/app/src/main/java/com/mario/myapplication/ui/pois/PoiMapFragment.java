@@ -132,30 +132,6 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
         ((SupportMapFragment) Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.map))).getMapAsync(this);
 
-        // POIs
-        items = new ArrayList<>();
-        PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
-
-        String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
-        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords, 2000);
-
-        call.enqueue(new Callback<ArrayList<PoiResponse>>() {
-            @Override
-            public void onResponse(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Response<ArrayList<PoiResponse>> response) {
-                if (response.code() != 200) {
-                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
-                } else {
-                    items = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
-                Log.e("Network Failure", t.getMessage());
-                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         return v;
     }
 
@@ -164,7 +140,6 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         getDeviceLocation();
-        showNearbyLocations();
     }
 
     private void getLocationPermissions() {
@@ -206,15 +181,18 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(mLastKnownLocation.getLatitude(),
                                         mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                        showNearbyLocations();
                     } else if (mLastKnownLocation != null) {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(mLastKnownLocation.getLatitude(),
                                         mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                        showNearbyLocations();
                     } else {
                         mMap.setMyLocationEnabled(false);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                        showNearbyLocations();
                     }
                 });
             } else if (mLastKnownLocation != null) {
@@ -233,12 +211,34 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void showNearbyLocations() {
-        //for (PoiResponse i : items) {
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(mDefaultLocation.latitude, mDefaultLocation.longitude))
-                .title("Hello World")
-                .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
-        //}
+        items = new ArrayList<>();
+        PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
+
+        String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
+        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords,2000);
+
+        call.enqueue(new Callback<ArrayList<PoiResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Response<ArrayList<PoiResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    items = response.body();
+                    for (PoiResponse i : items) {
+                        System.out.println(i.toString());
+                        mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(i.getCoordinates()[0], i.getCoordinates()[1]))
+                                .title(i.getName())
+                                .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {

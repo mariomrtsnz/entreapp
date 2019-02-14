@@ -15,7 +15,7 @@ export const login = ({ user }, res, next) => {
 })
   .then((data) => {
     return User.findById(data.user.id)
-    .populate('badges language').populate({path: 'likes', populate: {path: 'parent'}});
+    .populate('badges language likes');
   })
   .then(completeUser => 
     ({token: thetoken, user: completeUser})
