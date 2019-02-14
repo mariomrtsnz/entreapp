@@ -57,18 +57,22 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_edit_profile" />
+
         <EditText
             android:id="@+id/editTextName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="@string/name"
             android:inputType="textPersonName"
             android:text="Name"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewName"
             app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+
         <TextView
             android:id="@+id/textViewCountry"
             android:layout_width="wrap_content"
@@ -79,15 +83,18 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/editTextName"
             app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
         <EditText
             android:id="@+id/editTextCountry"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="42dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="@string/country"
             android:inputType="textPersonName"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewCountry"
             app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
         <TextView
@@ -119,9 +126,10 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/spinnerLanguage"
             app:layout_constraintTop_toBottomOf="@+id/spinnerLanguage" />
+
         <EditText
             android:id="@+id/editTextEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
@@ -129,6 +137,7 @@
             android:hint="@string/Email_example"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewEmail"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
     </androidx.constraintlayout.widget.ConstraintLayout>
