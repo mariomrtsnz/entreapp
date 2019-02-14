@@ -57,31 +57,52 @@ export const create = ({
       body
     }
   }, res, next) => {
-    if (body.language == null) {
-      body.language == Language.findOne({isoCode: 'en'}).then(success(res, 200)).catch(next);
-    }
-    User.create(body)
-    .then(user => {
-      sign(user.id)
-        .then((token) => ({
-          token,
-          user: user.view(true)
-        }))
-        .then(success(res, 201))
-    })
-    .catch((err) => {
-      /* istanbul ignore else */
-      if (err.name === 'MongoError' && err.code === 11000) {
-        res.status(409).json({
-          valid: false,
-          param: 'email',
-          message: 'email already registered'
+    if (body.language == undefined || body.language == null) {
+      Language.findOne({
+        isoCode: 'en'
+      }).then(language => {
+        body.language = language.id;
+        User.create(body).then(user => {
+          sign(user.id).then((token) => ({
+            token,
+            user: user.view(true)
+          })).then(success(res, 201))
+        }).catch((err) => {
+          /* istanbul ignore else */
+          if (err.name === 'MongoError' && err.code === 11000) {
+            res.status(409).json({
+              valid: false,
+              param: 'email',
+              message: 'email already registered'
+            })
+          } else {
+            next(err)
+          }
         })
-      } else {
-        next(err)
-      }
-    })
-  }
+      });
+    } else {
+      User.create(body)
+        .then(user => {
+          sign(user.id)
+            .then((token) => ({
+              token,
+              user: user.view(true)
+            }))
+            .then(success(res, 201))
+        }).catch((err) => {
+          /* istanbul ignore else */
+          if (err.name === 'MongoError' && err.code === 11000) {
+            res.status(409).json({
+              valid: false,
+              param: 'email',
+              message: 'email already registered'
+            })
+          } else {
+            next(err)
+          }
+        })
+    }
+    }
 
 export const update = ({
     bodymen: {
