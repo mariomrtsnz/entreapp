@@ -35,7 +35,7 @@ export const index = ({
     .catch(next)*/
 export const show = ({params}, res, next) =>
   User.findById(params.id)
-  .populate('badges language').populate({path: 'likes', populate: {path: 'parent'}})
+  .populate('badges language likes')
   .then(notFound(res))
   .then((user) => user ? user.view("true") : null)
   .then(success(res))
@@ -50,8 +50,6 @@ export const obtainRoles = (req, res) => {
   res.status(200).send({
     roles
   });
-
-
 }
 export const create = ({
     bodymen: {
