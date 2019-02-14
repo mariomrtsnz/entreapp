@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
 import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
@@ -24,11 +25,12 @@ import com.mario.myapplication.ui.people.PeopleFragment;
 import com.mario.myapplication.ui.pois.PoiMapFragment;
 import com.mario.myapplication.ui.pois.list.PoiListListener;
 import com.mario.myapplication.ui.profile.MyProfile;
+import com.mario.myapplication.ui.profile.MyProfileEdit;
 import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener {
+public class DashboardActivity extends AppCompatActivity implements  CategoryFragment.OnListFragmentCategoryInteractionListener,  BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois;
     private TextView mTextMessage;
@@ -92,11 +94,23 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     public void onBadgeClick(View v, BadgeResponse b) {
     }
 
-    public void clickOnCamera() {
+    /*public void clickOnCamera() {
         Toast.makeText(this, "CLICK ON CAMERA", Toast.LENGTH_LONG).show();
 
 
     }
+
+    @Override
+    public void editUser(MyProfileResponse u) {
+        Toast.makeText(this, "CLICK ON EDIT USER", Toast.LENGTH_LONG).show();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contenedor, new MyProfileEdit())
+                .commit();
+
+
+    }*/
 
     @Override
     public void onListFragmentUserInteraction(UserResponse item) {

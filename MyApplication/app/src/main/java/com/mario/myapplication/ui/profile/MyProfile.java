@@ -1,22 +1,21 @@
 package com.mario.myapplication.ui.profile;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.responses.ResponseContainer;
@@ -26,22 +25,16 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.util.GlideApp;
 import com.mario.myapplication.util.UtilToken;
-
 import java.io.IOException;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-
 public class MyProfile extends Fragment {
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int READ_REQUEST_CODE = 42;
     Uri uriSelected;
-
     String jwt;
     Context ctx;
     String userId;
@@ -54,18 +47,15 @@ public class MyProfile extends Fragment {
     TextView textViewBadgesWritten;
     TextView textViewEmailWritten;
     TextView textViewPoisWritten;
-
+    TextView texViewCountryWritten;
+    Button btn_edit;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private MyProfileInteractionListener mListener;
-
     public MyProfile() {
     }
-
-
     public static MyProfile newInstance(String param1, String param2) {
         MyProfile fragment = new MyProfile();
         Bundle args = new Bundle();
@@ -74,7 +64,6 @@ public class MyProfile extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +73,6 @@ public class MyProfile extends Fragment {
         if (jwt == null) {
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,7 +86,6 @@ public class MyProfile extends Fragment {
         service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
         Call<MyProfileResponse> getOneUser = service.getUser(userId);
-
         getOneUser.enqueue(new Callback<MyProfileResponse>() {
             @Override
             public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
@@ -114,7 +101,11 @@ public class MyProfile extends Fragment {
                     }else{
                         textViewLanguageWritten.setText(R.string.defaultLanguage);
                     }
-
+                    if(myProfileResponse.getCountry()!=null){
+                        texViewCountryWritten.setText(myProfileResponse.getCountry());
+                    }else{
+                        texViewCountryWritten.setText(R.string.no_country);
+                    }
                     textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
                     textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
                     points = res.getString(R.string.points) +" "+ countPoints(myProfileResponse);
@@ -124,25 +115,28 @@ public class MyProfile extends Fragment {
                             .load(myProfileResponse.getPicture().toString())
                             .into(profile_image);
                     Log.d("LOL2", myProfileResponse.toString());
+                    btn_edit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(ctx, "EDITING USER!", Toast.LENGTH_LONG).show();
 
+                            getFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.contenedor, new MyProfileEdit())
+                                    .commit();
+                        }
+                    });
                 } else {
                     Log.d("LOL3", "FALLITO BUENO");
-
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<MyProfileResponse> call, Throwable t) {
                 Log.d("LOL4", "FALLITO BUENO");
-
                 Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
-
             }
-
-
         });
-
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,24 +146,11 @@ public class MyProfile extends Fragment {
         return view;
     }
     public void performFileSearch() {
-
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-        // browser.
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones)
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        // Filter to show only images, using the image MIME data type.
-        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-        // To search for all documents available via installed storage providers,
-        // it would be "*/*".
         intent.setType("image/*");
-
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
-
     public int countPoints(MyProfileResponse u){
         int points = 0;
         if (u.getBadges().size()>=1){
@@ -177,7 +158,6 @@ public class MyProfile extends Fragment {
                 points = points+u.getBadges().get(i).getPoints();
             }
         }
-
         return points;
     }
     public int countBadges(MyProfileResponse u) {
@@ -189,7 +169,6 @@ public class MyProfile extends Fragment {
         }
         return badges;
     }
-
     public int countPoisVisited(MyProfileResponse u){
         return u.getVisited().size();
     }
@@ -201,37 +180,37 @@ public class MyProfile extends Fragment {
         textViewName = view.findViewById(R.id.textViewName);
         textViewPoints = view.findViewById(R.id.textViewPoints);
         profile_image = view.findViewById(R.id.profile_image);
-
+        texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten);
+        btn_edit = view.findViewById(R.id.btn_edit_profile);
     }
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.clickOnCamera();
         }
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof MyProfileInteractionListener) {
+       /* if (context instanceof MyProfileInteractionListener) {
             mListener = (MyProfileInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
-
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
-
-
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }
+
+
+
+
+
