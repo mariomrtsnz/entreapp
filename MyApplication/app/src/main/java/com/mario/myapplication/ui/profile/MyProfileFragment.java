@@ -3,7 +3,6 @@ package com.mario.myapplication.ui.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +42,7 @@ public class MyProfileFragment extends Fragment {
     MyProfileResponse myProfileResponse;
     ImageView profile_image;
     TextView textViewName;
-    TextView textViewPoints;
+    TextView textViewPointsWritten;
     TextView textViewLanguageWritten;
     TextView textViewBadgesWritten;
     TextView textViewEmailWritten;
@@ -95,12 +94,13 @@ public class MyProfileFragment extends Fragment {
         getOneUser.enqueue(new Callback<MyProfileResponse>() {
             @Override
             public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
-                Resources res = getResources();
+                //Resources res = getResources();
                 String points = "";
                 if (response.isSuccessful()) {
                     Log.d("LOL", "user obtain successfully");
                     myProfileResponse = response.body();
-                    textViewEmailWritten.setText(myProfileResponse.getEmail());
+                    //textViewEmailWritten.setText(myProfileResponse.getEmail());
+                    textViewEmailWritten.setText("22222222222222222222222222222222222222222222222222222222222222222222");
                     textViewName.setText(myProfileResponse.getName());
                     if (myProfileResponse.getLanguage() != null) {
                         textViewLanguageWritten.setText(myProfileResponse.getLanguage().getName());
@@ -114,8 +114,9 @@ public class MyProfileFragment extends Fragment {
                     }
                     textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
                     textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
-                    points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
-                    textViewPoints.setText(points);
+                    //points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
+                    points = String.valueOf(countPoints(myProfileResponse));
+                    textViewPointsWritten.setText(points);
                     mViewModel.selectUser(myProfileResponse);
 
                     //image
@@ -192,7 +193,7 @@ public class MyProfileFragment extends Fragment {
         textViewLanguageWritten = view.findViewById(R.id.textViewLanguageWritten);
         textViewPoisWritten = view.findViewById(R.id.textViewPoisVisitedWritten);
         textViewName = view.findViewById(R.id.textViewName);
-        textViewPoints = view.findViewById(R.id.textViewPoints);
+        textViewPointsWritten = view.findViewById(R.id.textViewPointsWritten);
         profile_image = view.findViewById(R.id.profile_image);
         texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten);
         btn_edit = view.findViewById(R.id.btn_edit_profile);
