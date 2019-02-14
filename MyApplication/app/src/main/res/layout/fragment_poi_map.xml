@@ -12,7 +12,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/showMyLoc"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,15 +21,31 @@
         android:id="@+id/showMyLoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_my_location_black_24dp"
         app:backgroundTint="@color/color_text"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/btn_qrScan"
+        app:layout_constraintEnd_toEndOf="@+id/btn_qrScan"
+        app:layout_constraintStart_toStartOf="@+id/btn_qrScan"
+        app:rippleColor="#fff" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_qrScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#FFF"
+        android:clickable="true"
+        android:src="@drawable/ic_qr_button_icon"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="#fff"
+        app:maxImageSize="34dp"
+        app:rippleColor="#FFF"
         android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
