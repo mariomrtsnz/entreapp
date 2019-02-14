@@ -77,7 +77,7 @@ export const nearIndex = (req, res, next) =>
         key: "loc",
         maxDistance: parseInt(req.query.maxDistance),
         distanceField: "loc.distance"
-      }
+      },
     }
   ])
   .then((poi) => Poi.populate( poi, {path: 'categories', select: 'id name'}))
