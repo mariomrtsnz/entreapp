@@ -3,6 +3,7 @@ package com.mario.myapplication.ui.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,21 +15,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
-import com.mario.myapplication.util.GlideApp;
 import com.mario.myapplication.util.UtilToken;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyProfile extends Fragment {
+public class MyProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int READ_REQUEST_CODE = 42;
@@ -47,17 +50,18 @@ public class MyProfile extends Fragment {
     TextView textViewPoisWritten;
     TextView texViewCountryWritten;
     Button btn_edit;
+    private UserViewModel mViewModel;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private MyProfileInteractionListener mListener;
 
-    public MyProfile() {
+    public MyProfileFragment() {
     }
 
-    public static MyProfile newInstance(String param1, String param2) {
-        MyProfile fragment = new MyProfile();
+    public static MyProfileFragment newInstance(String param1, String param2) {
+        MyProfileFragment fragment = new MyProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -113,7 +117,7 @@ public class MyProfile extends Fragment {
                     points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
                     textViewPoints.setText(points);
                     //image
-                    GlideApp.with(ctx)
+                    Glide.with(ctx)
                             .load(myProfileResponse.getPicture().toString())
                             .into(profile_image);
                     Log.d("LOL2", myProfileResponse.toString());
@@ -124,7 +128,7 @@ public class MyProfile extends Fragment {
 
                             getFragmentManager()
                                     .beginTransaction()
-                                    .replace(R.id.contenedor, new MyProfileEdit())
+                                    .replace(R.id.contenedor, new MyProfileEditFragment())
                                     .commit();
                         }
                     });
@@ -219,6 +223,13 @@ public class MyProfile extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+
     }
 }
 

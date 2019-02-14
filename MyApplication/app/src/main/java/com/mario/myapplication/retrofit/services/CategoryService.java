@@ -16,5 +16,5 @@ public interface CategoryService {
     Call<ResponseContainer<CategoryResponse>> listCategories();
 
     @GET(BASE_URL + "/{id}")
-    Call<CategoryResponse> getCategory(@Path("id") Long id);
+    Call<CategoryResponse> getCategory(@Path("id") String id);
 }

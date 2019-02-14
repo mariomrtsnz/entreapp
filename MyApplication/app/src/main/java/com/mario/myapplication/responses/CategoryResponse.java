@@ -6,14 +6,14 @@ public class CategoryResponse {
 
     private String id;
     private String name;
-    private CategoryResponse parent;
+    private String parent;
     private boolean fav;
 
     public CategoryResponse() {
 
     }
 
-    public CategoryResponse(String id, String name, CategoryResponse parent) {
+    public CategoryResponse(String id, String name, String parent) {
         this.id = id;
         this.name = name;
         this.parent = parent;
@@ -35,11 +35,11 @@ public class CategoryResponse {
         this.name = name;
     }
 
-    public CategoryResponse getParent() {
+    public String getParent() {
         return parent;
     }
 
-    public void setParent(CategoryResponse parent) {
+    public void setParent(String parent) {
         this.parent = parent;
     }
 
