@@ -23,6 +23,9 @@ public interface UserService {
     @GET(BASE_URL+"/{id}")
     Call<MyProfileResponse> getUser(@Path("id") String id);
 
+    @GET(BASE_URL+"/{id}")
+    Call<UserResponse> getUserResponse(@Path("id") String id);
+
     @GET(BASE_URL+"/me")
     Call<UserResponse> getMe();
 

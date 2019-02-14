@@ -15,15 +15,18 @@ import com.google.gson.Gson;
 import com.mario.myapplication.R;
 import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.ui.categories.CategoryFragment.OnListFragmentCategoryInteractionListener;
 import com.mario.myapplication.util.ConfigJSONParser;
+import com.mario.myapplication.util.UserStringList;
 import com.mario.myapplication.util.UtilToken;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +48,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
     Context ctx;
     Gson gson = new Gson();
     UserResponse user;
+    String idUser;
     public MyCategoryRecyclerViewAdapter(Context ctx, List<CategoryResponse> items, OnListFragmentCategoryInteractionListener listener) {
         mValues = items;
         mListener = listener;
@@ -61,11 +65,11 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         jwt = UtilToken.getToken(ctx);
-
+        idUser = UtilToken.getId(ctx);
 
         service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
 
-        Call<UserResponse> call = service.getMe();
+        Call<UserResponse> call = service.getUserResponse(idUser);
 
         call.enqueue(new Callback<UserResponse>() {
             @Override
@@ -127,7 +131,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                     }
                 }
                 System.out.println(user);
-                UserEditDto edited = new UserEditDto(user.getEmail(), user.getName(), user.getCountry(), user.getLanguage(), user.getLikes(), user.getVisited(), user.getFriends() );
+                UserEditDto edited = new UserEditDto(user.getEmail(), UserStringList.arrayFriends(user), UserStringList.arrayFavs(user), user.getLanguage().getId(), UserStringList.arrayLikes(user), user.getName() );
                 Call<UserResponse> edit = service.editUser(UtilToken.getId(ctx), edited);
                 edit.enqueue(new Callback<UserResponse>() {
                     @Override
@@ -152,6 +156,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
         }
 
     }
+
 
     @Override
     public int getItemCount() {
