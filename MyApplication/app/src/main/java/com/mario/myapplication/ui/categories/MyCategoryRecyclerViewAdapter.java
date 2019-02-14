@@ -18,11 +18,13 @@ import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
+import com.mario.myapplication.retrofit.services.CategoryService;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.ui.categories.CategoryFragment.OnListFragmentCategoryInteractionListener;
 import com.mario.myapplication.util.UserStringList;
 import com.mario.myapplication.util.UtilToken;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,6 +40,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
     UserResponse user;
     String idUser;
     private UserService service;
+    private CategoryService serviceC;
     private String jwt;
 
     public MyCategoryRecyclerViewAdapter(Context ctx, List<CategoryResponse> items, OnListFragmentCategoryInteractionListener listener) {
@@ -59,7 +62,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
         idUser = UtilToken.getId(ctx);
 
         service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-
+        serviceC = ServiceGenerator.createService(CategoryService.class, jwt, AuthType.JWT);
         Call<UserResponse> call = service.getUserResponse(idUser);
 
         call.enqueue(new Callback<UserResponse>() {
@@ -68,25 +71,33 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                 if (response.isSuccessful()) {
                     user = response.body();
                 } else {
-  //                  Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
+                    //                  Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-     //           Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
+                //           Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
             }
         });
 
 
         holder.mItem = mValues.get(position);
         holder.name.setText(mValues.get(position).getName());
-        if (mValues.get(position).getParent() == null) {
-            holder.parent.setText("No parent category");
-        } else {
-            holder.parent.setText(mValues.get(position).getParent().getName());
+        Call<CategoryResponse> callC = serviceC.getCategory(holder.mItem.getParent());
+
+        try {
+            CategoryResponse parent = callC.execute().body();
+            if (mValues.get(position).getParent() == null) {
+                holder.parent.setText("No parent category");
+            } else {
+                holder.parent.setText(parent.getName());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if (mValues.get(position).isFav()) {
+
+        if (holder.mItem.isFav()) {
             holder.fav.setImageResource(R.drawable.ic_fav_24dp);
         } else {
             holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
@@ -99,7 +110,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                 mListener.onListFragmentCategoryInteraction(holder.mItem);
             }
         });
-
+        // TODO cambiar el parent de CategoryResponse a String y setearlo con un getOne y el id
         try {
             holder.fav.setOnClickListener(v -> {
                 if (user.getLikes().size() == 0) {
@@ -111,10 +122,11 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
 
                     for (CategoryResponse category : user.getLikes()) {
                         if (holder.mItem.getName().equals(category.getName())) {
+                            holder.mItem.setFav(false);
                             user.getLikes().remove(category);
                             holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
                         } else {
-                            category.setFav(true);
+                            holder.mItem.setFav(true);
                             user.getLikes().add(category);
                             holder.fav.setImageResource(R.drawable.ic_fav_24dp);
                         }
@@ -137,7 +149,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
 
                     @Override
                     public void onFailure(Call<UserResponse> call1, Throwable t) {
-                       // Toast.makeText(ctx, "NetworkFailure", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(ctx, "NetworkFailure", Toast.LENGTH_LONG).show();
                     }
                 });
 
