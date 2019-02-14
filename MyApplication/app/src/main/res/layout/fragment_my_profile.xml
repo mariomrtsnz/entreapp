@@ -5,12 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.profile.MyProfile">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".ui.profile.MyProfile">
-
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="140dp"
@@ -23,7 +21,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
@@ -34,7 +31,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
-
         <TextView
             android:id="@+id/textViewPoints"
             android:layout_width="wrap_content"
@@ -45,9 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewName" />
-
         <Button
-
             android:id="@+id/btn_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,13 +49,13 @@
             android:background="@drawable/roundbtn"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="Button"
+            android:text="@string/edit_profile"
             android:textColor="@color/color_input_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPoints"
-            tools:text="@string/edit_profile" />
-
+            tools:text="@string/edit_profile"
+            />
         <TextView
             android:id="@+id/textViewLanguage"
             android:layout_width="wrap_content"
@@ -72,7 +66,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textViewCountryWritten"
             app:layout_constraintTop_toBottomOf="@+id/textViewCountryWritten" />
-
         <TextView
             android:id="@+id/textViewLanguageWritten"
             android:layout_width="wrap_content"
@@ -82,7 +75,6 @@
             android:text="@string/Language"
             app:layout_constraintStart_toStartOf="@+id/textViewLanguage"
             app:layout_constraintTop_toBottomOf="@+id/textViewLanguage" />
-
         <TextView
             android:id="@+id/textViewEmail"
             android:layout_width="wrap_content"
@@ -93,7 +85,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textViewLanguageWritten"
             app:layout_constraintTop_toBottomOf="@+id/textViewLanguageWritten" />
-
         <TextView
             android:id="@+id/textViewEmailWritten"
             android:layout_width="wrap_content"
@@ -102,7 +93,6 @@
             android:text="@string/Email_example"
             app:layout_constraintStart_toStartOf="@+id/textViewEmail"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
-
         <TextView
             android:id="@+id/textViewPoisVisited"
             android:layout_width="wrap_content"
@@ -113,7 +103,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textViewEmailWritten"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmailWritten" />
-
         <TextView
             android:id="@+id/textViewBadges"
             android:layout_width="wrap_content"
@@ -124,7 +113,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textViewPoisVisitedWritten"
             app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisitedWritten" />
-
         <TextView
             android:id="@+id/textViewBadgesWritten"
             android:layout_width="wrap_content"
@@ -133,7 +121,6 @@
             android:text="@string/badges"
             app:layout_constraintStart_toStartOf="@+id/textViewBadges"
             app:layout_constraintTop_toBottomOf="@+id/textViewBadges" />
-
         <TextView
             android:id="@+id/textViewPoisVisitedWritten"
             android:layout_width="wrap_content"
@@ -142,7 +129,6 @@
             android:text="@string/pois_visited"
             app:layout_constraintStart_toStartOf="@+id/textViewPoisVisited"
             app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisited" />
-
         <TextView
             android:id="@+id/textViewCountry"
             android:layout_width="wrap_content"
@@ -154,7 +140,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_edit_profile" />
-
         <TextView
             android:id="@+id/textViewCountryWritten"
             android:layout_width="wrap_content"
@@ -163,7 +148,5 @@
             android:text="@string/country"
             app:layout_constraintStart_toStartOf="@+id/textViewCountry"
             app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
