@@ -35,104 +35,101 @@ import java.util.regex.Pattern;
 
 import butterknife.BindViews;
 import okhttp3.Credentials;
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class LogInFragment extends AuthFragment {
 
- TextInputLayout email_input, password_input;
-  Context ctx = this.getContext();
+    @BindViews(value = {R.id.email_input_edit, R.id.password_input_edit})
+    protected List<TextInputEditText> views;
+    TextInputLayout email_input, password_input;
+    Context ctx = this.getContext();
 
+    // Acciones al crearse el fragmento
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ctx = view.getContext();
 
-  @BindViews(value = {R.id.email_input_edit, R.id.password_input_edit})
-  protected List<TextInputEditText> views;
+        email_input = getActivity().findViewById(R.id.email_input);
+        password_input = getActivity().findViewById(R.id.password_input);
 
-  // Acciones al crearse el fragmento
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    ctx = view.getContext();
-
-    email_input = getActivity().findViewById(R.id.email_input);
-    password_input = getActivity().findViewById(R.id.password_input);
-
-    if (this.getContext() != null) {
-      caption.setText(getString(R.string.log_in_label));
-      view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_log_in));
-      for (TextInputEditText editText : views) {
-        if (editText.getId() == R.id.password_input_edit) {
-          final TextInputLayout inputLayout = view.findViewById(R.id.password_input);
-          Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
-          inputLayout.setTypeface(boldTypeface);
-          editText.addTextChangedListener(new TextWatcherAdapter() {
-            @Override
-            public void afterTextChanged(Editable editable) {
-              inputLayout.setPasswordVisibilityToggleEnabled(editable.length() > 0);
+        if (this.getContext() != null) {
+            caption.setText(getString(R.string.log_in_label));
+            view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_log_in));
+            for (TextInputEditText editText : views) {
+                if (editText.getId() == R.id.password_input_edit) {
+                    final TextInputLayout inputLayout = view.findViewById(R.id.password_input);
+                    Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+                    inputLayout.setTypeface(boldTypeface);
+                    editText.addTextChangedListener(new TextWatcherAdapter() {
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            inputLayout.setPasswordVisibilityToggleEnabled(editable.length() > 0);
+                        }
+                    });
+                }
+                editText.setOnFocusChangeListener((temp, hasFocus) -> {
+                    if (!hasFocus) {
+                        boolean isEnabled = editText.getText().length() > 0;
+                        editText.setSelected(isEnabled);
+                    }
+                });
             }
-          });
         }
-        editText.setOnFocusChangeListener((temp, hasFocus) -> {
-          if (!hasFocus) {
-            boolean isEnabled = editText.getText().length() > 0;
-            editText.setSelected(isEnabled);
-          }
-        });
-      }
     }
-  }
 
-  @Override
-  public int authLayout() {
-    return R.layout.fragment_log_in;
-  }
+    @Override
+    public int authLayout() {
+        return R.layout.fragment_log_in;
+    }
 
-  // Acciones cuando el fragmento está en el lateral (Solo se ven las letras)
-  @Override
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public void fold() {
-    lock = false;
-    Rotate transition = new Rotate();
-    transition.setEndAngle(-90f);
-    transition.addTarget(caption);
-    TransitionSet set = new TransitionSet();
-    set.setDuration(getResources().getInteger(R.integer.duration));
-    ChangeBounds changeBounds = new ChangeBounds();
-    set.addTransition(changeBounds);
-    set.addTransition(transition);
-    TextSizeTransition sizeTransition = new TextSizeTransition();
-    sizeTransition.addTarget(caption);
-    set.addTransition(sizeTransition);
-    set.setOrdering(TransitionSet.ORDERING_TOGETHER);
-    final float padding = getResources().getDimension(R.dimen.folded_label_padding) / 2;
-    set.addListener(new Transition.TransitionListenerAdapter() {
-      @Override
-      public void onTransitionEnd(Transition transition) {
-        super.onTransitionEnd(transition);
-        caption.setTranslationX(-padding);
-        caption.setRotation(0);
-        caption.setVerticalText(true);
-        caption.requestLayout();
+    // Acciones cuando el fragmento está en el lateral (Solo se ven las letras)
+    @Override
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void fold() {
+        lock = false;
+        Rotate transition = new Rotate();
+        transition.setEndAngle(-90f);
+        transition.addTarget(caption);
+        TransitionSet set = new TransitionSet();
+        set.setDuration(getResources().getInteger(R.integer.duration));
+        ChangeBounds changeBounds = new ChangeBounds();
+        set.addTransition(changeBounds);
+        set.addTransition(transition);
+        TextSizeTransition sizeTransition = new TextSizeTransition();
+        sizeTransition.addTarget(caption);
+        set.addTransition(sizeTransition);
+        set.setOrdering(TransitionSet.ORDERING_TOGETHER);
+        final float padding = getResources().getDimension(R.dimen.folded_label_padding) / 2;
+        set.addListener(new Transition.TransitionListenerAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                super.onTransitionEnd(transition);
+                caption.setTranslationX(-padding);
+                caption.setRotation(0);
+                caption.setVerticalText(true);
+                caption.requestLayout();
 
-      }
-    });
-    TransitionManager.beginDelayedTransition(parent, set);
-    caption.setTextSize(TypedValue.COMPLEX_UNIT_PX, caption.getTextSize() / 2);
-    caption.setTextColor(Color.WHITE);
-    ConstraintLayout.LayoutParams params = getParams();
-    params.leftToLeft = ConstraintLayout.LayoutParams.UNSET;
-    params.verticalBias = 0.5f;
-    caption.setLayoutParams(params);
-    caption.setTranslationX(caption.getWidth() / 8 - padding);
-    caption.setClickable(false);
-  }
+            }
+        });
+        TransitionManager.beginDelayedTransition(parent, set);
+        caption.setTextSize(TypedValue.COMPLEX_UNIT_PX, caption.getTextSize() / 2);
+        caption.setTextColor(Color.WHITE);
+        ConstraintLayout.LayoutParams params = getParams();
+        params.leftToLeft = ConstraintLayout.LayoutParams.UNSET;
+        params.verticalBias = 0.5f;
+        caption.setLayoutParams(params);
+        caption.setTranslationX(caption.getWidth() / 8 - padding);
+        caption.setClickable(false);
+    }
 
-  @Override
-  public void clearFocus() {
-    for (View view : views) view.clearFocus();
-  }
+    @Override
+    public void clearFocus() {
+        for (View view : views) view.clearFocus();
+    }
 
-  // Acciones cuando el fragmento está viendose
+    // Acciones cuando el fragmento está viendose
     @Override
     public void unfold() {
         super.unfold();

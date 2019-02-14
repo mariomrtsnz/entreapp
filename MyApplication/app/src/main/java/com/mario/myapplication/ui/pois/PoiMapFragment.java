@@ -137,7 +137,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
 
         String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
-        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords,2000);
+        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords, 2000);
 
         call.enqueue(new Callback<ArrayList<PoiResponse>>() {
             @Override
@@ -148,6 +148,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                     items = response.body();
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
                 Log.e("Network Failure", t.getMessage());
@@ -233,10 +234,10 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
     private void showNearbyLocations() {
         //for (PoiResponse i : items) {
-            mMap.addMarker(new MarkerOptions()
-            .position(new LatLng(mDefaultLocation.latitude, mDefaultLocation.longitude))
-            .title("Hello World")
-            .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(mDefaultLocation.latitude, mDefaultLocation.longitude))
+                .title("Hello World")
+                .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
         //}
     }
 

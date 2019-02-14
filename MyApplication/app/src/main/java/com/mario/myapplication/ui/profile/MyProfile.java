@@ -1,13 +1,10 @@
 package com.mario.myapplication.ui.profile;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,20 +13,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.MyProfileResponse;
-import com.mario.myapplication.responses.ResponseContainer;
-import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.util.GlideApp;
 import com.mario.myapplication.util.UtilToken;
-import java.io.IOException;
-import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 public class MyProfile extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -54,8 +52,10 @@ public class MyProfile extends Fragment {
     private String mParam1;
     private String mParam2;
     private MyProfileInteractionListener mListener;
+
     public MyProfile() {
     }
+
     public static MyProfile newInstance(String param1, String param2) {
         MyProfile fragment = new MyProfile();
         Bundle args = new Bundle();
@@ -64,19 +64,21 @@ public class MyProfile extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ctx= getContext();
+        ctx = getContext();
         jwt = UtilToken.getToken(ctx);
         userId = UtilToken.getId(ctx).toString();
         if (jwt == null) {
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ctx= getContext();
+        ctx = getContext();
         jwt = UtilToken.getToken(ctx);
         userId = UtilToken.getId(ctx).toString();
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
@@ -90,25 +92,25 @@ public class MyProfile extends Fragment {
             @Override
             public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
                 Resources res = getResources();
-                String points="";
+                String points = "";
                 if (response.isSuccessful()) {
                     Log.d("LOL", "user obtain successfully");
-                    myProfileResponse=response.body();
+                    myProfileResponse = response.body();
                     textViewEmailWritten.setText(myProfileResponse.getEmail());
                     textViewName.setText(myProfileResponse.getName());
-                    if(myProfileResponse.getLanguage()!=null){
+                    if (myProfileResponse.getLanguage() != null) {
                         textViewLanguageWritten.setText(myProfileResponse.getLanguage().getName());
-                    }else{
+                    } else {
                         textViewLanguageWritten.setText(R.string.defaultLanguage);
                     }
-                    if(myProfileResponse.getCountry()!=null){
+                    if (myProfileResponse.getCountry() != null) {
                         texViewCountryWritten.setText(myProfileResponse.getCountry());
-                    }else{
+                    } else {
                         texViewCountryWritten.setText(R.string.no_country);
                     }
                     textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
                     textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
-                    points = res.getString(R.string.points) +" "+ countPoints(myProfileResponse);
+                    points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
                     textViewPoints.setText(points);
                     //image
                     GlideApp.with(ctx)
@@ -131,6 +133,7 @@ public class MyProfile extends Fragment {
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<MyProfileResponse> call, Throwable t) {
                 Log.d("LOL4", "FALLITO BUENO");
@@ -145,33 +148,38 @@ public class MyProfile extends Fragment {
         });
         return view;
     }
+
     public void performFileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
-    public int countPoints(MyProfileResponse u){
+
+    public int countPoints(MyProfileResponse u) {
         int points = 0;
-        if (u.getBadges().size()>=1){
-            for (int i = 0; i<u.getBadges().size();i++){
-                points = points+u.getBadges().get(i).getPoints();
+        if (u.getBadges().size() >= 1) {
+            for (int i = 0; i < u.getBadges().size(); i++) {
+                points = points + u.getBadges().get(i).getPoints();
             }
         }
         return points;
     }
+
     public int countBadges(MyProfileResponse u) {
         int badges = 0;
-        if (u.getBadges().size() >= 1){
+        if (u.getBadges().size() >= 1) {
             for (int i = 0; i < u.getBadges().size(); i++) {
                 badges++;
             }
         }
         return badges;
     }
-    public int countPoisVisited(MyProfileResponse u){
+
+    public int countPoisVisited(MyProfileResponse u) {
         return u.getVisited().size();
     }
+
     public void loadItemsFragment(View view) {
         textViewBadgesWritten = view.findViewById(R.id.textViewBadgesWritten);
         textViewEmailWritten = view.findViewById(R.id.textViewEmailWritten);
@@ -183,12 +191,14 @@ public class MyProfile extends Fragment {
         texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten);
         btn_edit = view.findViewById(R.id.btn_edit_profile);
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.clickOnCamera();
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -199,11 +209,13 @@ public class MyProfile extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }*/
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

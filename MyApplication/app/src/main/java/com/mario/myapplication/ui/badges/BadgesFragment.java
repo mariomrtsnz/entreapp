@@ -1,8 +1,12 @@
 package com.mario.myapplication.ui.badges;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -10,12 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
@@ -34,15 +32,15 @@ import retrofit2.Response;
 
 public class BadgesFragment extends Fragment {
 
-    private BadgeListener mListener;
-    private Context ctx;
+    private static final String ARG_COLUMN_COUNT = "column-count";
     String jwt;
     BadgeService service;
     List<BadgeResponse> items;
     BadgesAdapter adapter;
     SwipeRefreshLayout swipeLayout;
     RecyclerView recycler;
-    private static final String ARG_COLUMN_COUNT = "column-count";
+    private BadgeListener mListener;
+    private Context ctx;
     private int mColumnCount = 1;
 
     public BadgesFragment() {
@@ -84,7 +82,7 @@ public class BadgesFragment extends Fragment {
 
             }
         });
-        if (getArguments() != null){
+        if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
