@@ -32,7 +32,7 @@ public class UserResponse {
         this.email = email;
         this.createAt = createAt;
         this.country = country;
-        this.language = language;
+        this.language.setId(language);
         this.favs = favs;
         this.visited = visited;
         this.badges = badges;

@@ -31,21 +31,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+
         <TextView
-            android:id="@+id/textViewPoints"
+            android:id="@+id/textViewPointsWritten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="@string/points"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/textViewPoints"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPoints" />
+
         <Button
             android:id="@+id/btn_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/roundbtn"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -53,19 +54,21 @@
             android:textColor="@color/color_input_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPoints"
-            tools:text="@string/edit_profile"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            tools:text="@string/edit_profile" />
+
         <TextView
             android:id="@+id/textViewLanguage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/Language"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textViewCountryWritten"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCountryWritten" />
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/btn_edit_profile" />
+
         <TextView
             android:id="@+id/textViewLanguageWritten"
             android:layout_width="wrap_content"
@@ -75,6 +78,7 @@
             android:text="@string/Language"
             app:layout_constraintStart_toStartOf="@+id/textViewLanguage"
             app:layout_constraintTop_toBottomOf="@+id/textViewLanguage" />
+
         <TextView
             android:id="@+id/textViewEmail"
             android:layout_width="wrap_content"
@@ -83,14 +87,17 @@
             android:text="@string/Email"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textViewLanguageWritten"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLanguageWritten" />
+            app:layout_constraintStart_toStartOf="@+id/textViewCountryWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCountryWritten" />
+
         <TextView
             android:id="@+id/textViewEmailWritten"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/Email_example"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/textViewEmail"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
         <TextView
@@ -103,6 +110,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textViewEmailWritten"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmailWritten" />
+
         <TextView
             android:id="@+id/textViewBadges"
             android:layout_width="wrap_content"
@@ -111,8 +119,8 @@
             android:text="@string/badges"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textViewPoisVisitedWritten"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisitedWritten" />
+            app:layout_constraintStart_toStartOf="@+id/textViewLanguageWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLanguageWritten" />
         <TextView
             android:id="@+id/textViewBadgesWritten"
             android:layout_width="wrap_content"
@@ -121,12 +129,15 @@
             android:text="@string/badges"
             app:layout_constraintStart_toStartOf="@+id/textViewBadges"
             app:layout_constraintTop_toBottomOf="@+id/textViewBadges" />
+
         <TextView
             android:id="@+id/textViewPoisVisitedWritten"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/pois_visited"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/textViewPoisVisited"
             app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisited" />
 
@@ -135,19 +146,64 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/country"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_edit_profile" />
+
         <TextView
             android:id="@+id/textViewCountryWritten"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/country"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/textViewCountry"
             app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
+
+        <Button
+            android:id="@+id/buttonCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_shape_round"
+            android:text="Button"
+            app:layout_constraintStart_toStartOf="@+id/textViewCategories"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCategories" />
+
+        <TextView
+            android:id="@+id/textViewCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/categories"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textViewPoisVisitedWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisitedWritten"
+            tools:text="@string/categories" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="205dp"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/textViewPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textViewBadgesWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBadgesWritten" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

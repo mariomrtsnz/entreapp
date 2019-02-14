@@ -42,10 +42,6 @@ public class LanguageResponse {
 
     @Override
     public String toString() {
-        return "LanguageResponse{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", isoCode='" + isoCode + '\'' +
-                '}';
+        return name;
     }
 }
