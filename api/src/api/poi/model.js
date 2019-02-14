@@ -121,6 +121,7 @@ poiSchema.methods = {
       coverImage: this.coverImage,
       year: this.year,
       creator: this.creator,
+      coordinates: this.loc.coordinates
     }
     const translationView = {
       // simple view
@@ -139,7 +140,7 @@ poiSchema.methods = {
       coverImage: this.coverImage,
       year: this.year,
       creator: this.creator,
-      coordinates: this.coordinates,
+      coordinates: this.loc.coordinates,
       audioguides: this.audioguides,
       images: this.images,
       status: this.status,
@@ -149,17 +150,12 @@ poiSchema.methods = {
     switch (full) {
       case 0:
         return view;
-        break;
       case 1:
         return fullView;
-        break;
       case 2:
-        console.log('caso 2');
         return translationView;
-        break;
       default:
         return view;
-        break;
     }
 
   }

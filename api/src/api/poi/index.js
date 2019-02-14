@@ -7,7 +7,7 @@ import { schema } from './model'
 export Poi, { schema } from './model'
 
 const router = new Router()
-const { name, categories, coordinates, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price } = schema.tree
+const { name, categories, loc, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price } = schema.tree
 
 /**
  * @api {post} /pois Create poi
@@ -35,7 +35,7 @@ const { name, categories, coordinates, qrCode, audioguides, description, coverIm
  */
 router.post('/',
   token({ required: true, roles: ['admin'] }),
-  body({ name, categories, coordinates, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price }),
+  body({ name, categories, loc, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price }),
   create)
 
 /**
@@ -128,7 +128,7 @@ router.get('/:id/:idUserLanguage',
  */
 router.put('/:id',
   token({ required: true, roles: ['admin', 'contributor'] }),
-  body({ name, categories, coordinates, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price }),
+  body({ name, categories, loc, qrCode, audioguides, description, coverImage, images, year, creator, status, schedule, price }),
   update)
 
 /**
