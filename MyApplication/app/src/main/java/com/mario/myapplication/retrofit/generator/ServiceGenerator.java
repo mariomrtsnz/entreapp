@@ -15,6 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     private static final String BASE_URL = "https://entreapp.herokuapp.com/";
+    // Lo de abajo es solo para testeo desde emulador.
+//    private static final String BASE_URL = "http://10.0.2.2:9000/";
     // private static final String BASE_URL = "http://localhost:9000/";
     public static String MASTER_KEY = "WYGSKxg0IwVvtZAWjDtVAWfWcbnugIbX";
 
