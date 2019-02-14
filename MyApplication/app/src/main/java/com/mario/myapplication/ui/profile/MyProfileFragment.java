@@ -116,6 +116,8 @@ public class MyProfileFragment extends Fragment {
                     textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
                     points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
                     textViewPoints.setText(points);
+                    mViewModel.selectUser(myProfileResponse);
+
                     //image
                     Glide.with(ctx)
                             .load(myProfileResponse.getPicture().toString())
