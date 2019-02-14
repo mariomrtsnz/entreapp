@@ -68,13 +68,13 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                 if (response.isSuccessful()) {
                     user = response.body();
                 } else {
-                    Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
+  //                  Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
+     //           Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
             }
         });
 

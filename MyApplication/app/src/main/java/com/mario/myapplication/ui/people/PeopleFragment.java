@@ -20,7 +20,6 @@ import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
-import com.mario.myapplication.ui.common.DashboardActivity;
 import com.mario.myapplication.ui.login.LoginActivity;
 import com.mario.myapplication.util.UtilToken;
 

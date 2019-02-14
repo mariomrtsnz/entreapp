@@ -161,7 +161,7 @@ public class SignUpFragment extends AuthFragment {
                 Toast.makeText(ctx, "Password must be at least 6 characters!", Toast.LENGTH_LONG).show();
             } else if (!password.equals(confirm)) {
                 Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Register register = new Register(email, password);
                 LoginService service = ServiceGenerator.createService(LoginService.class);
                 Call<LoginResponse> loginReponseCall = service.doSignUp(register);

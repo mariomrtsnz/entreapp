@@ -18,7 +18,5 @@ public interface LoginService {
     Call<LoginResponse> doSignUp(@Body Register register);
 
 
-
-
 }
 

@@ -1,6 +1,5 @@
 package com.mario.myapplication.retrofit.services;
 
-import com.mario.myapplication.model.Badge;
 import com.mario.myapplication.responses.BadgeResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 

@@ -1,9 +1,12 @@
 package com.mario.myapplication.ui.profile;
-import androidx.lifecycle.MutableLiveData;
+
 import androidx.lifecycle.ViewModel;
+
 import com.mario.myapplication.responses.MyProfileResponse;
+
 public class UserViewModel extends ViewModel {
     private final MyProfileResponse user = new MyProfileResponse();
+
     // Master > Detail (comunicación del dato)
     public void selectUser(MyProfileResponse u) {
         user.setBadges(u.getBadges());
@@ -18,6 +21,7 @@ public class UserViewModel extends ViewModel {
         user.setRole(u.getRole());
         user.setVisited(u.getVisited());
     }
+
     public MyProfileResponse getSelectedUser() {
         return user;
     }

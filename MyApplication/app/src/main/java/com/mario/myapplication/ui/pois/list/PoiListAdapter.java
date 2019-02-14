@@ -1,7 +1,6 @@
 package com.mario.myapplication.ui.pois.list;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.UserResponse;
@@ -87,9 +84,9 @@ public class PoiListAdapter extends RecyclerView.Adapter<PoiListAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        PoiResponse mItem;
         final TextView title, distance;
         final ImageView bgImage;
+        PoiResponse mItem;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -6,7 +6,8 @@ public class Audioguide {
     private String originalFile;
     private Translation[] translations;
 
-    public Audioguide() {}
+    public Audioguide() {
+    }
 
     public Audioguide(Language language, String originalFile, Translation[] translations) {
         this.language = language;

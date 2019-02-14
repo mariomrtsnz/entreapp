@@ -40,6 +40,7 @@ public class ServiceGenerator {
 
     /**
      * This method creates a no auth service, just adding the MASTER_KEY as a query param with "access_token"
+     *
      * @param serviceClass Service type that has to be created
      * @return Service created
      */

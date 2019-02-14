@@ -1,6 +1,5 @@
 package com.mario.myapplication.retrofit.services;
 
-import com.mario.myapplication.model.Route;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.RouteResponse;
 

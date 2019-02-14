@@ -1,9 +1,5 @@
 package com.mario.myapplication.dto;
 
-import com.mario.myapplication.responses.CategoryResponse;
-import com.mario.myapplication.responses.PoiResponse;
-import com.mario.myapplication.responses.UserResponse;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +8,15 @@ public class UserEditDto {
     private String email;
     private List<String> favs = new ArrayList<>();
     private List<String> friends = new ArrayList<>();
-//    private String language;
+    //    private String language;
     private List<String> likes = new ArrayList<>();
     private String name;
 
 
-    public UserEditDto(){};
+    public UserEditDto() {
+    }
+
+    ;
 
 
     public UserEditDto(String email, List<String> favs, List<String> friends, /*String language,*/ List<String> likes, String name) {
