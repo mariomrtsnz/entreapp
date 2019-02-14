@@ -43,5 +43,6 @@
     <string name="no_country">No country</string>
     <string name="save">Save</string>
     <string name="categories">Categories</string>
+    <string name="no_language">No language</string>
 
 </resources>

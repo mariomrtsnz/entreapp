@@ -105,7 +105,7 @@ public class MyProfileFragment extends Fragment {
                     if (myProfileResponse.getLanguage() != null) {
                         textViewLanguageWritten.setText(myProfileResponse.getLanguage().getName());
                     } else {
-                        textViewLanguageWritten.setText(R.string.defaultLanguage);
+                        textViewLanguageWritten.setText(R.string.no_language);
                     }
                     if (myProfileResponse.getCountry() != null) {
                         texViewCountryWritten.setText(myProfileResponse.getCountry());
