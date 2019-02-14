@@ -2,6 +2,7 @@ package com.mario.myapplication.util;
 
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.responses.PoiResponse;
+import com.mario.myapplication.responses.UserLikesResponse;
 import com.mario.myapplication.responses.UserResponse;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class UserStringList {
     public static List<String> arrayLikes(UserResponse user) {
         List<String> likes = new ArrayList<>();
 
-        for (CategoryResponse like : user.getLikes()) {
+        for (UserLikesResponse like : user.getLikes()) {
             likes.add(like.getId());
         }
 

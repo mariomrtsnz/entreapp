@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.mario.myapplication.R;
 import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.responses.UserLikesResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
@@ -70,6 +71,71 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
+                    // TODO cambiar el parent de CategoryResponse a String y setearlo con un getOne y el id
+                    try {
+                        holder.fav.setOnClickListener(v -> {
+                            if (user.getLikes().size() == 0) {
+                                holder.mItem.setFav(true);
+                                try {
+                                    if (holder.mItem.getParent().getId() == null) {
+                                        System.out.println("No tiene padre");
+                                    } else {
+                                        Call<CategoryResponse> callC = serviceC.getCategory(holder.mItem.getParent().getId());
+                                        CategoryResponse c = callC.execute().body();
+                                        user.getLikes().add(new UserLikesResponse(c.getId(), c.getName()));
+                                    }
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                holder.fav.setImageResource(R.drawable.ic_fav_24dp);
+                            } else {
+
+                                UserLikesResponse categoryU = new UserLikesResponse();
+                                for (UserLikesResponse category : user.getLikes()) {
+                                    if (holder.mItem.getId().equals(category.getId())) {
+                                        holder.mItem.setFav(false);
+                                        categoryU = category;
+                                        holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
+                                    } else {
+                                        holder.mItem.setFav(true);
+                                        categoryU = category;
+                                        holder.fav.setImageResource(R.drawable.ic_fav_24dp);
+                                    }
+
+
+                                }
+                                if (holder.mItem.isFav()) {
+                                    user.getLikes().add(categoryU);
+                                } else {
+                                    user.getLikes().remove(categoryU);
+                                }
+                            }
+                            System.out.println(user);
+                            UserEditDto edited = new UserEditDto(user.getEmail(), UserStringList.arrayFriends(user), UserStringList.arrayFavs(user), /*user.getLanguage().getId(),*/ UserStringList.arrayLikes(user), user.getName());
+                            Call<UserResponse> edit = service.editUser(UtilToken.getId(ctx), edited);
+                            edit.enqueue(new Callback<UserResponse>() {
+                                @Override
+                                public void onResponse(Call<UserResponse> call1, Response<UserResponse> response) {
+                                    System.out.println(response);
+                                    if (response.code() == 200) {
+                                        Log.d("User edited", "User edited");
+                                    } else {
+                                        Toast.makeText(ctx, "User could not be edited", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<UserResponse> call1, Throwable t) {
+                                    // Toast.makeText(ctx, "NetworkFailure", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     //                  Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
                 }
@@ -84,18 +150,15 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
 
         holder.mItem = mValues.get(position);
         holder.name.setText(mValues.get(position).getName());
-        Call<CategoryResponse> callC = serviceC.getCategory(holder.mItem.getParent());
 
-        try {
-            CategoryResponse parent = callC.execute().body();
-            if (mValues.get(position).getParent() == null) {
-                holder.parent.setText("No parent category");
-            } else {
-                holder.parent.setText(parent.getName());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        //     CategoryResponse parent = callC.execute().body();
+        if (mValues.get(position).getParent() == null) {
+            holder.parent.setText("No parent category");
+        } else {
+            holder.parent.setText(holder.mItem.getParent().getName());
         }
+
 
         if (holder.mItem.isFav()) {
             holder.fav.setImageResource(R.drawable.ic_fav_24dp);
@@ -110,53 +173,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
                 mListener.onListFragmentCategoryInteraction(holder.mItem);
             }
         });
-        // TODO cambiar el parent de CategoryResponse a String y setearlo con un getOne y el id
-        try {
-            holder.fav.setOnClickListener(v -> {
-                if (user.getLikes().size() == 0) {
-                    holder.mItem.setFav(true);
-                    user.getLikes().add(holder.mItem);
-                    holder.fav.setImageResource(R.drawable.ic_fav_24dp);
-                } else {
 
-
-                    for (CategoryResponse category : user.getLikes()) {
-                        if (holder.mItem.getName().equals(category.getName())) {
-                            holder.mItem.setFav(false);
-                            user.getLikes().remove(category);
-                            holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
-                        } else {
-                            holder.mItem.setFav(true);
-                            user.getLikes().add(category);
-                            holder.fav.setImageResource(R.drawable.ic_fav_24dp);
-                        }
-
-                    }
-                }
-                System.out.println(user);
-                UserEditDto edited = new UserEditDto(user.getEmail(), UserStringList.arrayFriends(user), UserStringList.arrayFavs(user), /*user.getLanguage().getId(),*/ UserStringList.arrayLikes(user), user.getName());
-                Call<UserResponse> edit = service.editUser(UtilToken.getId(ctx), edited);
-                edit.enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(Call<UserResponse> call1, Response<UserResponse> response) {
-                        System.out.println(response);
-                        if (response.code() == 200) {
-                            Log.d("User edited", "User edited");
-                        } else {
-                            Toast.makeText(ctx, "User could not be edited", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserResponse> call1, Throwable t) {
-                        // Toast.makeText(ctx, "NetworkFailure", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
