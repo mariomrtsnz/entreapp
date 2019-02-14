@@ -1,12 +1,8 @@
 package com.mario.myapplication.ui.pois;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -16,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -30,7 +25,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,7 +37,6 @@ import com.mario.myapplication.retrofit.services.PoiService;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -57,7 +50,6 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
     // MAP
     private static final int DEFAULT_ZOOM = 15;
-    private static final String KEY_LOCATION = "location";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private final LatLng mDefaultLocation = new LatLng(37.3866245, -5.9942548);
     private GoogleMap mMap;
@@ -67,62 +59,27 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
     // POIs
     private String jwt;
-    private Context ctx;
-    private List<PoiResponse> items;
-
-
-    public PoiMapFragment() {
-        setRetainInstance(true);
-    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        if (mMap != null) {
-            outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
-            super.onSaveInstanceState(outState);
-        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            getLocationPermissions();
-        } else {
-            mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-        }
+        getLocationPermissions();
 
         jwt = UtilToken.getToken(Objects.requireNonNull(getContext()));
-
-        PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
-
-        String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
-        Call<ArrayList<PoiResponse>> callList = service.getNearestPois(coords, 2000);
-        callList.enqueue(new Callback<ArrayList<PoiResponse>>() {
-            @Override
-            public void onResponse(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Response<ArrayList<PoiResponse>> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
-
-            }
-        });
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if (savedInstanceState == null) {
-            checkDeviceLocation();
-        }
+        checkDeviceLocation();
 
         View v = inflater.inflate(R.layout.fragment_poi_map, container, false);
-        ctx = v.getContext();
 
         v.findViewById(R.id.showMyLoc).setOnClickListener(view -> {
             if (checkDeviceLocation()) getDeviceLocation();
@@ -181,18 +138,18 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(mLastKnownLocation.getLatitude(),
                                         mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                        showNearbyLocations();
+                        showNearbyLocations(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                     } else if (mLastKnownLocation != null) {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(mLastKnownLocation.getLatitude(),
                                         mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                        showNearbyLocations();
+                        showNearbyLocations(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                     } else {
                         mMap.setMyLocationEnabled(false);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                        showNearbyLocations();
+                        showNearbyLocations(mDefaultLocation.latitude, mDefaultLocation.longitude);
                     }
                 });
             } else if (mLastKnownLocation != null) {
@@ -200,22 +157,23 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                         new LatLng(mLastKnownLocation.getLatitude(),
                                 mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                showNearbyLocations(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
             } else {
                 mMap.setMyLocationEnabled(false);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                showNearbyLocations(mDefaultLocation.latitude, mDefaultLocation.longitude);
             }
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
 
-    private void showNearbyLocations() {
-        items = new ArrayList<>();
+    private void showNearbyLocations(double latitude, double longitude) {
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
 
-        String coords = mDefaultLocation.latitude + "," + mDefaultLocation.longitude;
-        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords,2000);
+        String coords = latitude + "," + longitude;
+        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords, 2000);
 
         call.enqueue(new Callback<ArrayList<PoiResponse>>() {
             @Override
@@ -223,34 +181,22 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-                    items = response.body();
-//                    for (PoiResponse i : items) {
-//                        System.out.println(i.toString());
-//                        mMap.addMarker(new MarkerOptions()
-//                                .position(new LatLng(i.getCoordinates()[0], i.getCoordinates()[1]))
-//                                .title(i.getName())
-//                                .icon(bitmapDescriptorFromVector(getContext(), R.drawable.ic_restaurant_black_24dp)));
-//                    }
+                    mMap.clear();
+                    for (PoiResponse i : Objects.requireNonNull(response.body())) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(i.getloc().getCoordinates()[0], i.getloc().getCoordinates()[1]))
+                                .title(i.getName())
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_icon)));
+                    }
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
-        Drawable background = ContextCompat.getDrawable(context, R.drawable.ic_restaurant_black_24dp);
-        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId);
-        vectorDrawable.setBounds(40, 20, vectorDrawable.getIntrinsicWidth() + 40, vectorDrawable.getIntrinsicHeight() + 20);
-        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        background.draw(canvas);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
 }

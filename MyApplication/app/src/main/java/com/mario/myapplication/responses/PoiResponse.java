@@ -9,7 +9,7 @@ public class PoiResponse {
     private String id;
     private String name;
     private Category[] categories;
-    private float[] coordinates;
+    private CoordinatesResponse loc;
     private String[] comments;
     private float stars;
     private String qrCode;
@@ -25,11 +25,11 @@ public class PoiResponse {
 
     public PoiResponse() {}
 
-    public PoiResponse(String id, String name, Category[] categories, float[] coordinates, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String status, String schedule) {
+    public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String status, String schedule) {
         this.id = id;
         this.name = name;
         this.categories = categories;
-        this.coordinates = coordinates;
+        this.loc = loc;
         this.comments = comments;
         this.stars = stars;
         this.qrCode = qrCode;
@@ -42,11 +42,11 @@ public class PoiResponse {
         this.schedule = schedule;
     }
 
-    public PoiResponse(String id, String name, Category[] categories, float[] coordinates, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String creator, String status, String schedule, float price) {
+    public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String creator, String status, String schedule, float price) {
         this.id = id;
         this.name = name;
         this.categories = categories;
-        this.coordinates = coordinates;
+        this.loc = loc;
         this.comments = comments;
         this.stars = stars;
         this.qrCode = qrCode;
@@ -85,12 +85,12 @@ public class PoiResponse {
         this.categories = categories;
     }
 
-    public float[] getCoordinates() {
-        return coordinates;
+    public CoordinatesResponse getloc() {
+        return loc;
     }
 
-    public void setCoordinates(float[] coordinates) {
-        this.coordinates = coordinates;
+    public void setloc(CoordinatesResponse loc) {
+        this.loc = loc;
     }
 
     public String[] getComments() {
