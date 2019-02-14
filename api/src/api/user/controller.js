@@ -19,7 +19,7 @@ export const index = ({
   }, res, next) =>
   User.count(query)
   .then(count => User.find(query, select, cursor)
-  .populate('badges', 'points').populate('likes')
+  .populate('badges', 'points').populate('likes', 'id name')
     .then(users => ({
       rows: users.map((user) => user.view(true)),
       count
