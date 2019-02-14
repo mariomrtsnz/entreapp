@@ -40,7 +40,8 @@ public class PoiListFragment extends Fragment {
     private Context ctx;
     private int mColumnCount = 1;
 
-    public PoiListFragment() { }
+    public PoiListFragment() {
+    }
 
     /*
     public static PoiListFragment newInstance(int columnCount) {

@@ -13,57 +13,57 @@ import java.lang.reflect.Field;
 
 public class AnimatedViewPager extends ViewPager {
 
-  private int duration;
+    private int duration;
 
-  public AnimatedViewPager(Context context) {
-    super(context);
-    postInitViewPager();
-  }
-
-  public AnimatedViewPager(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    postInitViewPager();
-  }
-
-  private void postInitViewPager() {
-    try {
-      Field scroller = ViewPager.class.getDeclaredField("mScroller");
-      scroller.setAccessible(true);
-      ScrollerCustomDuration mScroller = new ScrollerCustomDuration(getContext(),
-              new DecelerateInterpolator());
-      scroller.set(this, mScroller);
-    } catch (Exception ignored) {
+    public AnimatedViewPager(Context context) {
+        super(context);
+        postInitViewPager();
     }
-  }
 
-  @Override
-  public boolean onInterceptTouchEvent(MotionEvent ev) {
-    return false;
-  }
+    public AnimatedViewPager(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        postInitViewPager();
+    }
 
-  @Override
-  public boolean onTouchEvent(MotionEvent ev) {
-    return false;
-  }
-
-  public void setDuration(int duration) {
-    this.duration = duration;
-  }
-
-  public class ScrollerCustomDuration extends Scroller {
-
-    ScrollerCustomDuration(Context context, Interpolator interpolator) {
-      super(context, interpolator);
+    private void postInitViewPager() {
+        try {
+            Field scroller = ViewPager.class.getDeclaredField("mScroller");
+            scroller.setAccessible(true);
+            ScrollerCustomDuration mScroller = new ScrollerCustomDuration(getContext(),
+                    new DecelerateInterpolator());
+            scroller.set(this, mScroller);
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
-    public void startScroll(int startX, int startY, int dx, int dy, int duratio) {
-      super.startScroll(startX, startY, dx, dy, duration);
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return false;
     }
 
     @Override
-    public void startScroll(int startX, int startY, int dx, int dy) {
-      super.startScroll(startX, startY, dx, dy, duration);
+    public boolean onTouchEvent(MotionEvent ev) {
+        return false;
     }
-  }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public class ScrollerCustomDuration extends Scroller {
+
+        ScrollerCustomDuration(Context context, Interpolator interpolator) {
+            super(context, interpolator);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy, int duratio) {
+            super.startScroll(startX, startY, dx, dy, duration);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy) {
+            super.startScroll(startX, startY, dx, dy, duration);
+        }
+    }
 }

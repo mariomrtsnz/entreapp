@@ -6,7 +6,8 @@ public class Description {
     private String originalDescription;
     private Translation[] translations;
 
-    public Description() {}
+    public Description() {
+    }
 
     public Description(Language language, String originalDescription, Translation[] translations) {
         this.language = language;

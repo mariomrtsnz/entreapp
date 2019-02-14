@@ -1,13 +1,11 @@
 package com.mario.myapplication.retrofit.services;
 
-import com.mario.myapplication.model.Category;
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-
 
 
 public interface CategoryService {

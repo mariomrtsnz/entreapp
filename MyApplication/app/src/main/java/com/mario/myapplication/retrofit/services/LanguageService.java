@@ -1,6 +1,5 @@
 package com.mario.myapplication.retrofit.services;
 
-import com.mario.myapplication.model.Language;
 import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 

@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.maps.model.Dash;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
@@ -24,13 +22,12 @@ import com.mario.myapplication.ui.people.PeopleFragment;
 import com.mario.myapplication.ui.pois.PoiMapFragment;
 import com.mario.myapplication.ui.pois.list.PoiListListener;
 import com.mario.myapplication.ui.profile.MyProfile;
-import com.mario.myapplication.ui.profile.MyProfileInteractionListener;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, MyProfileInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener {
     FragmentTransaction fragmentChanger;
-    private Fragment badges, pois;
+    private Fragment badges, pois, people, myProfile;
     private TextView mTextMessage;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,14 +45,16 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                     f = new CategoryFragment();
                     break;
                 case R.id.navigation_people:
-                    f = new PeopleFragment();
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, people);
+                    fragmentChanger.commit();
                     break;
                 case R.id.navigation_badges:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
                     fragmentChanger.commit();
                     return true;
                 case R.id.navigation_my_profile:
-                    f = new MyProfile();
+                    fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, myProfile);
+                    fragmentChanger.commit();
                     break;
             }
             if (f != null) {
@@ -78,6 +77,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         badges = new BadgesFragment();
         pois = new PoiMapFragment();
+        people = new PeopleFragment();
+        myProfile = new MyProfile();
         // Para que por defecto cargue el fragmento de POIs (general)
         fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pois);
         fragmentChanger.commit();
@@ -92,11 +93,23 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     public void onBadgeClick(View v, BadgeResponse b) {
     }
 
-    public void clickOnCamera() {
+    /*public void clickOnCamera() {
         Toast.makeText(this, "CLICK ON CAMERA", Toast.LENGTH_LONG).show();
 
 
     }
+
+    @Override
+    public void editUser(MyProfileResponse u) {
+        Toast.makeText(this, "CLICK ON EDIT USER", Toast.LENGTH_LONG).show();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contenedor, new MyProfileEdit())
+                .commit();
+
+
+    }*/
 
     @Override
     public void onListFragmentUserInteraction(UserResponse item) {

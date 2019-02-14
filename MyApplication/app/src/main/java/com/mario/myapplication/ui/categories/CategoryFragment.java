@@ -1,6 +1,7 @@
 package com.mario.myapplication.ui.categories;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mario.myapplication.R;
-import com.mario.myapplication.model.Category;
 import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.CategoryService;
+import com.mario.myapplication.ui.login.LoginActivity;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -72,11 +73,8 @@ public class CategoryFragment extends Fragment {
         jwt = UtilToken.getToken(getContext());
 
         if (jwt == null) {
-            // No hay token
-            // ¿Qué haces en este activity?
-            // Una de dos
-            //      - O consigues otro token
-            //      - O te vas a .... el formulario de Login
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            startActivity(i);
         }
 
         CategoryService service = ServiceGenerator.createService(CategoryService.class,
@@ -113,7 +111,6 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_list, container, false);
 
-        // Set the adapter
         if (view instanceof RecyclerView) {
             ctx = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -169,55 +166,11 @@ public class CategoryFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnListFragmentCategoryInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentCategoryInteraction(CategoryResponse item);
     }
 
- /*   private class LoadDataTask extends AsyncTask<String, Void, List<CategoryResponse>> {
-
-        @Override
-        protected List<CategoryResponse> doInBackground(String...Strings) {
-
-            List<CategoryResponse> result = null;
-
-
-            Call<ResponseContainer<CategoryResponse>> callCategory = service.listCategories();
-
-            Response<ResponseContainer<CategoryResponse>> responseCategory = null;
-
-            try {
-                responseCategory = callCategory.execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (responseCategory.isSuccessful()) {
-                result = (List<CategoryResponse>) responseCategory.body();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(List<CategoryResponse> repos) {
-            if (repos != null) {
-//                cargarDatos(repos);
-            }
-        }*/
 }
 
-/*    public void loadData(){
-        categories = new ArrayList<>();
-        categories = (List<CategoryResponse>)
-    }*/
 
