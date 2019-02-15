@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
@@ -133,6 +134,7 @@ public class MyProfileFragment extends Fragment {
     @SuppressLint("ResourceType")
     public void setItemsFragment(Response<MyProfileResponse> response, View v){
         String points="";
+        Resources res = getResources();
         myProfileResponse = response.body();
         //textViewEmailWritten.setText(myProfileResponse.getEmail());
         textViewEmailWritten.setText(myProfileResponse.getEmail());
@@ -149,8 +151,9 @@ public class MyProfileFragment extends Fragment {
         }
         textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
         textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
-        //points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
-        points = String.valueOf(countPoints(myProfileResponse));
+        textViewFriendsWritten.setText(String.valueOf(myProfileResponse.getFriends().size()));
+        points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
+        //points = String.valueOf(countPoints(myProfileResponse));
         textViewPointsWritten.setText(points);
         mViewModel.selectUser(myProfileResponse);
 
@@ -211,6 +214,7 @@ public class MyProfileFragment extends Fragment {
         }
         return badges;
     }
+    
 
     public int countPoisVisited(MyProfileResponse u) {
         return u.getVisited().size();

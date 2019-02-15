@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.model.Language;
+import com.mario.myapplication.responses.CategoryMyProfileResponse;
 import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.retrofit.generator.AuthType;
@@ -26,6 +27,7 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LanguageService;
 import com.mario.myapplication.util.UtilToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -163,6 +165,18 @@ public class MyProfileEditFragment extends Fragment {
     }
     public UserEditDto myProfileResponseToUserEditDto(MyProfileResponse user){
         UserEditDto userEditDto = new UserEditDto();
+        List<String> likes = new ArrayList<>();
+        userEditDto.setName(user.getName());
+        userEditDto.setLanguage(user.getLanguage().getId());
+        userEditDto.setEmail(user.getEmail());
+        userEditDto.setFavs(user.getFavs());
+        userEditDto.setFriends(user.getFriends());
+        //iterations
+        for (CategoryMyProfileResponse c:user.getLikes()){
+        likes.add(c.getId());
+        }
+        userEditDto.setLikes(likes);
+
 
         return userEditDto;
     }

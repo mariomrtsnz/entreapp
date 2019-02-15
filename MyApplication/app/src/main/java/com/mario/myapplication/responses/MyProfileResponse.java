@@ -28,15 +28,17 @@ public class MyProfileResponse {
 
     private String createAt;
     private String country;
-    private LanguageResponse language;
-    private List<PoiResponse> visited = new ArrayList<>();
-    private List<BadgeResponse> badges = new ArrayList<>();
-    private List<CategoryResponse> likes  = new ArrayList<>();
+    private LenguageResponseMyProfile language;
+    private List<String> favs = new ArrayList<>();
+    private List<String> friends = new ArrayList<>();
+    private List<String> visited = new ArrayList<>();
+    private List<BadgesMyProfileResponse> badges = new ArrayList<>();
+    private List<CategoryMyProfileResponse> likes  = new ArrayList<>();
 
     public MyProfileResponse() {
     }
 
-    public MyProfileResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> visited, List<BadgeResponse> badges, List<CategoryResponse> likes) {
+    public MyProfileResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, LenguageResponseMyProfile language, List<String> favs, List<String> friends, List<String> visited, List<BadgesMyProfileResponse> badges, List<CategoryMyProfileResponse> likes) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -46,6 +48,8 @@ public class MyProfileResponse {
         this.createAt = createAt;
         this.country = country;
         this.language = language;
+        this.favs = favs;
+        this.friends = friends;
         this.visited = visited;
         this.badges = badges;
         this.likes = likes;
@@ -115,35 +119,51 @@ public class MyProfileResponse {
         this.country = country;
     }
 
-    public LanguageResponse getLanguage() {
+    public LenguageResponseMyProfile getLanguage() {
         return language;
     }
 
-    public void setLanguage(LanguageResponse language) {
+    public void setLanguage(LenguageResponseMyProfile language) {
         this.language = language;
     }
 
-    public List<PoiResponse> getVisited() {
+    public List<String> getFavs() {
+        return favs;
+    }
+
+    public void setFavs(List<String> favs) {
+        this.favs = favs;
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
+    }
+
+    public List<String> getVisited() {
         return visited;
     }
 
-    public void setVisited(List<PoiResponse> visited) {
+    public void setVisited(List<String> visited) {
         this.visited = visited;
     }
 
-    public List<BadgeResponse> getBadges() {
+    public List<BadgesMyProfileResponse> getBadges() {
         return badges;
     }
 
-    public void setBadges(List<BadgeResponse> badges) {
+    public void setBadges(List<BadgesMyProfileResponse> badges) {
         this.badges = badges;
     }
 
-    public List<CategoryResponse> getLikes() {
+    public List<CategoryMyProfileResponse> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<CategoryResponse> likes) {
+    public void setLikes(List<CategoryMyProfileResponse> likes) {
         this.likes = likes;
     }
 
@@ -167,4 +187,23 @@ public class MyProfileResponse {
         return Objects.hash(id, name, role, picture, password, email, createAt, country);
     }
 
+    @Override
+    public String toString() {
+        return "MyProfileResponse{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", role='" + role + '\'' +
+                ", picture='" + picture + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", createAt='" + createAt + '\'' +
+                ", country='" + country + '\'' +
+                ", language=" + language +
+                ", favs=" + favs +
+                ", friends=" + friends +
+                ", visited=" + visited +
+                ", badges=" + badges +
+                ", likes=" + likes +
+                '}';
+    }
 }
