@@ -37,27 +37,25 @@ public class MyProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int READ_REQUEST_CODE = 42;
-    Uri uriSelected;
-    String jwt;
-    Context ctx;
-    String userId;
-    UserService service;
-    MyProfileResponse myProfileResponse;
-    ImageView profile_image;
-    TextView textViewName;
-    TextView textViewPointsWritten;
-    TextView textViewLanguageWritten;
-    TextView textViewBadgesWritten;
-    TextView textViewEmailWritten;
-    TextView textViewPoisWritten;
-    TextView texViewCountryWritten;
-    Button btn_edit, btn_category;
-    LinearLayout layaoutLikes;
+    private Uri uriSelected;
+    private String jwt;
+    private Context ctx;
+    private String userId;
+    private UserService service;
+    private MyProfileResponse myProfileResponse;
+    private ImageView profile_image;
+    private TextView textViewName;
+    private TextView textViewPointsWritten;
+    private TextView textViewLanguageWritten;
+    private TextView textViewBadgesWritten;
+    private TextView textViewEmailWritten;
+    private TextView textViewPoisWritten;
+    private TextView texViewCountryWritten;
+    private TextView textViewFriendsWritten;
+    private Button btn_edit;
     private UserViewModel mViewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
     private MyProfileInteractionListener mListener;
 
     public MyProfileFragment() {
@@ -79,8 +77,10 @@ public class MyProfileFragment extends Fragment {
         jwt = UtilToken.getToken(ctx);
         userId = UtilToken.getId(ctx).toString();
         if (jwt == null) {
+            //se manda al usuario al login
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,37 +92,44 @@ public class MyProfileFragment extends Fragment {
         // every element is looked for
         loadItemsFragment(view);
         //callbacks
-        service = ServiceGenerator.createService(UserService.class,
-                jwt, AuthType.JWT);
-        Call<MyProfileResponse> getOneUser = service.getUser(userId);
-        getOneUser.enqueue(new Callback<MyProfileResponse>() {
-            @Override
-            public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
-                //Resources res = getResources();
-                String points = "";
-                if (response.isSuccessful()) {
-                    Log.d("LOL", "user obtain successfully");
-                    setItemsFragment(response, view);
-                } else {
-                    Log.d("LOL3", "FALLITO BUENO");
-                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
-                }
-            }
+        getUser(view);
 
-            @Override
-            public void onFailure(Call<MyProfileResponse> call, Throwable t) {
-                Log.d("LOL4", "FALLITO BUENO");
-                Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
-            }
-        });
-        profile_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                performFileSearch();
-            }
-        });
         return view;
     }
+
+
+
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+       /* if (context instanceof MyProfileInteractionListener) {
+            mListener = (MyProfileInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }*/
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
+
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+
+    }
+
+    //own methods
     @SuppressLint("ResourceType")
     public void setItemsFragment(Response<MyProfileResponse> response, View v){
         String points="";
@@ -152,6 +159,9 @@ public class MyProfileFragment extends Fragment {
                 .load(myProfileResponse.getPicture().toString())
                 .into(profile_image);
         Log.d("LOL2", myProfileResponse.toString());
+
+        //click events
+        //edit user
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,8 +173,13 @@ public class MyProfileFragment extends Fragment {
                         .commit();
             }
         });
-        /*1º crear un boton de prueba
-        * 2º repetirlo por cada category con su nombre*/
+        //open my pictures
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                performFileSearch();
+            }
+        });
         System.out.println(myProfileResponse.getLikes());
 
 
@@ -202,6 +217,7 @@ public class MyProfileFragment extends Fragment {
     }
 
     public void loadItemsFragment(View view) {
+        textViewFriendsWritten = view.findViewById(R.id.textViewFriendsWritten);
         textViewBadgesWritten = view.findViewById(R.id.textViewBadgesWritten);
         textViewEmailWritten = view.findViewById(R.id.textViewEmailWritten);
         textViewLanguageWritten = view.findViewById(R.id.textViewLanguageWritten);
@@ -215,40 +231,30 @@ public class MyProfileFragment extends Fragment {
         //layaoutLikes=view.findViewById(R.id.layoutLikes);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.clickOnCamera();
-        }
-    }
+    public void getUser(View view){
+        service = ServiceGenerator.createService(UserService.class,
+                jwt, AuthType.JWT);
+        Call<MyProfileResponse> getOneUser = service.getUser(userId);
+        getOneUser.enqueue(new Callback<MyProfileResponse>() {
+            @Override
+            public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
+                //Resources res = getResources();
+                String points = "";
+                if (response.isSuccessful()) {
+                    Log.d("LOL", "user obtain successfully");
+                    setItemsFragment(response, view);
+                } else {
+                    Log.d("LOL3", "FALLITO BUENO");
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-       /* if (context instanceof MyProfileInteractionListener) {
-            mListener = (MyProfileInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
-
+            @Override
+            public void onFailure(Call<MyProfileResponse> call, Throwable t) {
+                Log.d("LOL4", "FALLITO BUENO");
+                Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
 

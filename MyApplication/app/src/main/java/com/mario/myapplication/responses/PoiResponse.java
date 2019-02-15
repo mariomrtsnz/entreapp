@@ -6,7 +6,7 @@ import com.mario.myapplication.model.Description;
 
 public class PoiResponse {
 
-    private String id;
+    private String _id;
     private String name;
     private Category[] categories;
     private CoordinatesResponse loc;
@@ -26,7 +26,7 @@ public class PoiResponse {
     public PoiResponse() {}
 
     public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String status, String schedule) {
-        this.id = id;
+        this._id = id;
         this.name = name;
         this.categories = categories;
         this.loc = loc;
@@ -43,7 +43,7 @@ public class PoiResponse {
     }
 
     public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String creator, String status, String schedule, float price) {
-        this.id = id;
+        this._id = id;
         this.name = name;
         this.categories = categories;
         this.loc = loc;
@@ -62,11 +62,11 @@ public class PoiResponse {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getName() {

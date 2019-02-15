@@ -55,7 +55,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                 case R.id.navigation_my_profile:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, myProfile);
                     fragmentChanger.commit();
-                    break;
+                    return true;
+
             }
             if (f != null) {
                 getSupportFragmentManager()

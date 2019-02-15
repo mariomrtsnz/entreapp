@@ -134,6 +134,7 @@ public class CategoryFragment extends Fragment {
 
                         adapter = new MyCategoryRecyclerViewAdapter(ctx, categories, mListener);
                         recyclerView.setAdapter(adapter);
+
                     }
                 }
 

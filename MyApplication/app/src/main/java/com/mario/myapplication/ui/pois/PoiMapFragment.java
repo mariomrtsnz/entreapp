@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.mario.myapplication.R;
@@ -34,6 +36,7 @@ import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.PoiService;
+import com.mario.myapplication.ui.pois.details.PoiDetailsFragment;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ import static android.content.Context.LOCATION_SERVICE;
 public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
     // MAP
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 16;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private final LatLng mDefaultLocation = new LatLng(37.3866245, -5.9942548);
     private GoogleMap mMap;
@@ -60,10 +63,6 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     // POIs
     private String jwt;
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,7 +95,15 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
         getDeviceLocation();
+        mMap.setOnMarkerClickListener(marker -> {
+            System.out.println(marker.getTag());
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.contenedor, new PoiDetailsFragment(marker.getTag().toString()))
+                    .commit();
+            return false;
+        });
     }
 
     private void getLocationPermissions() {
@@ -173,7 +180,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
 
         String coords = latitude + "," + longitude;
-        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords, 2000);
+        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords, 5000);
 
         call.enqueue(new Callback<ArrayList<PoiResponse>>() {
             @Override
@@ -186,7 +193,8 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                         mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(i.getloc().getCoordinates()[0], i.getloc().getCoordinates()[1]))
                                 .title(i.getName())
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_icon)));
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_icon))
+                        ).setTag(i.getId());
                     }
                 }
             }
@@ -198,5 +206,4 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
-
 }

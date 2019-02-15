@@ -1,5 +1,7 @@
 package com.mario.myapplication.responses;
 
+import java.util.Objects;
+
 public class LanguageResponse {
 
     private String id;
@@ -43,5 +45,19 @@ public class LanguageResponse {
     @Override
     public String toString() {
         return name;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LanguageResponse)) return false;
+        LanguageResponse that = (LanguageResponse) o;
+        return Objects.equals(getName(), that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

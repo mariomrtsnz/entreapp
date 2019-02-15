@@ -1,6 +1,7 @@
 package com.mario.myapplication.util;
 
 import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.UserLikesResponse;
 import com.mario.myapplication.responses.UserResponse;
@@ -49,5 +50,15 @@ public class UserStringList {
         }
 
         return likes;
+    }
+
+    public static List<String> arrayLanguages (List<LanguageResponse> list) {
+        List<String> languages = new ArrayList<>();
+
+        for (LanguageResponse language : list) {
+            languages.add(language.getName());
+        }
+
+        return languages;
     }
 }

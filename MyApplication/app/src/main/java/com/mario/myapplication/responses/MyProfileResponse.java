@@ -5,6 +5,20 @@ import java.util.List;
 import java.util.Objects;
 
 public class MyProfileResponse {
+    /*Necesito del lenguage el name y el id
+     * de friends los id
+     * de pois favs los id
+     * de pois visited los ids
+     * de badges los id y los points
+     *de category como likes el id y el name
+     *
+     * Pasos:
+     * cambiar modelo de my profile response
+     *
+     * Cambiar la peticionen el fragmento de my profile
+     * setear los campos siguiendo la NUEVA estructura de my profile response
+     *
+     * setear los campos siguiendo la NUEVA estructura de my profile response en edit fragment */
     private String id;
     private String name;
     private String role;
