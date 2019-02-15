@@ -4,6 +4,7 @@ public class Register {
 
     private String name;
     private String email;
+    private String language;
     private String password;
     private String picture;
     private String role;
@@ -19,9 +20,10 @@ public class Register {
         this.role = role;
     }
 
-    public Register( String email, String password) {
+    public Register( String email, String password, String language) {
         this.email = email;
         this.password = password;
+        this.language = language;
     }
 
 
@@ -40,6 +42,14 @@ public class Register {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getPassword() {
