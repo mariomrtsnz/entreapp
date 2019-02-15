@@ -36,17 +36,18 @@
             android:id="@+id/textViewPointsWritten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/points"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/textViewPoints"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPoints" />
+            app:layout_constraintEnd_toEndOf="@+id/textViewName"
+            app:layout_constraintStart_toStartOf="@+id/textViewName"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
         <Button
             android:id="@+id/btn_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/roundbtn"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -54,8 +55,9 @@
             android:textColor="@color/color_input_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewName"
-            tools:text="@string/edit_profile" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewPointsWritten"
+            tools:text="@string/edit_profile"
+            />
 
         <TextView
             android:id="@+id/textViewLanguage"
@@ -121,6 +123,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textViewLanguageWritten"
             app:layout_constraintTop_toBottomOf="@+id/textViewLanguageWritten" />
+
         <TextView
             android:id="@+id/textViewBadgesWritten"
             android:layout_width="wrap_content"
@@ -145,9 +148,9 @@
             android:id="@+id/textViewCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:text="@string/country"
+            android:text="@string/city"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -158,22 +161,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/country"
+            android:layout_marginEnd="8dp"
+            android:text="@string/city"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/textViewCountry"
             app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
 
         <TextView
-            android:id="@+id/textViewCategories"
+            android:id="@+id/textViewFriends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/categories"
+            android:text="@string/friends"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textViewPoisVisitedWritten"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisitedWritten"
-            tools:text="@string/categories" />
+            app:layout_constraintStart_toStartOf="@+id/textViewBadgesWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBadgesWritten"
+            tools:text="@string/friends" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -184,15 +188,13 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-            android:id="@+id/textViewPoints"
+            android:id="@+id/textViewFriendsWritten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textViewBadgesWritten"
-            app:layout_constraintTop_toBottomOf="@+id/textViewBadgesWritten" />
+            app:layout_constraintStart_toStartOf="@+id/textViewFriends"
+            app:layout_constraintTop_toBottomOf="@+id/textViewFriends" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

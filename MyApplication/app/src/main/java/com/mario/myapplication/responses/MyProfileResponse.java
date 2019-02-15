@@ -14,7 +14,6 @@ public class MyProfileResponse {
      *
      * Pasos:
      * cambiar modelo de my profile response
-     * crear category my profile con id y name
      *
      * Cambiar la peticionen el fragmento de my profile
      * setear los campos siguiendo la NUEVA estructura de my profile response
