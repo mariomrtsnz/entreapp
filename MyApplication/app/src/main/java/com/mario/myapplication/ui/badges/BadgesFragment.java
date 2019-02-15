@@ -89,24 +89,6 @@ public class BadgesFragment extends Fragment {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
-        jwt = UtilToken.getToken(getContext());
-        if (jwt == null) {
-
-        }
-        Call<UserResponse> call = userService.getUserResponse(UtilToken.getId(ctx));
-        call.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
-            }
-        });
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }

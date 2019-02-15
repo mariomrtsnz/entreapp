@@ -36,7 +36,7 @@ export const index = ({
     .catch(next)*/
 export const show = ({params}, res, next) =>
   User.findById(params.id)
-  .populate('badges language likes friends favs visited')
+  .populate('badges language likes')
   .then(notFound(res))
   .then((user) => user ? user.view("true") : null)
   .then(success(res))
