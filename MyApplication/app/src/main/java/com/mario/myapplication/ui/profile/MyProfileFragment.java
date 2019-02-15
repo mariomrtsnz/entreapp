@@ -212,7 +212,7 @@ public class MyProfileFragment extends Fragment {
         texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten);
         btn_edit = view.findViewById(R.id.btn_edit_profile);
         //btn_category=view.findViewById(R.id.buttonCategory);
-        layaoutLikes=view.findViewById(R.id.layoutLikes);
+        //layaoutLikes=view.findViewById(R.id.layoutLikes);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
