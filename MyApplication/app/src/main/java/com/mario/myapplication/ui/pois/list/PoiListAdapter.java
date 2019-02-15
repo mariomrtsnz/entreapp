@@ -52,7 +52,7 @@ public class PoiListAdapter extends RecyclerView.Adapter<PoiListAdapter.ViewHold
         String jwt = UtilToken.getToken(context);
         // private final PoiListListener mListener;
         UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-        Call<UserResponse> call = service.getMe();
+        Call<UserResponse> call = service.getUserResponse(UtilToken.getId(context));
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
