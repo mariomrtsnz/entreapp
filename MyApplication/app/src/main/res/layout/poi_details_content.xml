@@ -9,9 +9,7 @@
     tools:showIn="@layout/fragment_poi_details">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
-
+        android:id="@+id/textView_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </androidx.core.widget.NestedScrollView>

@@ -11,5 +11,5 @@
 
     <color name="color_input_hint">#FFF</color>
     <color name="color_text_highlight">#fafafa</color>
-    <color name="color_text">#FFF</color>
+    <color name="color_text">#FFFFFF</color>
 </resources>

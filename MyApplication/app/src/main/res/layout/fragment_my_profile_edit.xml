@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         tools:context=".ui.profile.MyProfileFragment">
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
+            android:id="@+id/profile_image_details"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="32dp"
@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
-            android:id="@+id/textViewPointsWritten"
+            android:id="@+id/textViewPointsWritten_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -30,7 +30,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_details" />
         <Button
             android:id="@+id/btn_edit_profile"
             android:layout_width="wrap_content"
@@ -43,12 +43,12 @@
             android:textColor="@color/color_input_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPointsWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPointsWritten_details"
             tools:text="@string/edit_profile"
             />
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/textViewName_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -70,11 +70,11 @@
             android:text="Name"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textViewName"
-            app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+            app:layout_constraintStart_toStartOf="@+id/textViewName_details"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName_details" />
 
         <TextView
-            android:id="@+id/textViewCountry"
+            android:id="@+id/textViewCountry_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -95,10 +95,10 @@
             android:inputType="textPersonName"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textViewCountry"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
+            app:layout_constraintStart_toStartOf="@+id/textViewCountry_details"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCountry_details" />
         <TextView
-            android:id="@+id/textViewLanguage"
+            android:id="@+id/textViewLanguage_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -114,10 +114,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="@+id/textViewLanguage"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLanguage" />
+            app:layout_constraintStart_toStartOf="@+id/textViewLanguage_details"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLanguage_details" />
         <TextView
-            android:id="@+id/textViewEmail"
+            android:id="@+id/textViewEmail_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -138,7 +138,7 @@
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textViewEmail"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
+            app:layout_constraintStart_toStartOf="@+id/textViewEmail_details"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEmail_details" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

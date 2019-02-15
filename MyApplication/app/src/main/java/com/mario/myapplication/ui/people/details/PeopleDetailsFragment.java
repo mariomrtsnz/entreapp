@@ -1,16 +1,32 @@
 package com.mario.myapplication.ui.people.details;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.MyProfileResponse;
+import com.mario.myapplication.retrofit.generator.AuthType;
+import com.mario.myapplication.retrofit.generator.ServiceGenerator;
+import com.mario.myapplication.retrofit.services.UserService;
+import com.mario.myapplication.util.UtilToken;
+
+import okhttp3.internal.Util;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,31 +41,42 @@ public class PeopleDetailsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    Uri uriSelected;
+    final String idChosen;
+    String jwt;
+    Context ctx;
+    String userId;
+    UserService service;
+    MyProfileResponse myProfileResponse;
+    ImageView profile_image;
+    TextView textViewName;
+    TextView textViewPointsWritten;
+    TextView textViewLanguageWritten;
+    TextView textViewBadgesWritten;
+    TextView textViewEmailWritten;
+    TextView textViewPoisWritten;
+    TextView texViewCountryWritten;
 
+    private PeopleViewModel mViewModel;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public PeopleDetailsFragment() {
-        // Required empty public constructor
+    public PeopleDetailsFragment(String id) {
+        this.idChosen = id;
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PeopleDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PeopleDetailsFragment newInstance(String param1, String param2) {
-        PeopleDetailsFragment fragment = new PeopleDetailsFragment();
+    public static PeopleDetailsFragment newInstance(String id) {
+        PeopleDetailsFragment fragment = new PeopleDetailsFragment(id);
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,9 +84,10 @@ public class PeopleDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        ctx = getContext();
+        jwt = UtilToken.getToken(ctx);
+        userId = UtilToken.getId(ctx);
+        if (jwt == null) {
         }
     }
 
@@ -67,7 +95,37 @@ public class PeopleDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_people_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_people_details, container, false);
+        ctx = getContext();
+        jwt = UtilToken.getToken(ctx);
+
+        loadItemsFragment(view);
+
+        service = ServiceGenerator.createService(UserService.class,
+                jwt, AuthType.JWT);
+        Call<MyProfileResponse> getOneUser = service.getUser(idChosen);
+        getOneUser.enqueue(new Callback<MyProfileResponse>() {
+            @Override
+            public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
+                //Resources res = getResources();
+                String points = "";
+                if (response.isSuccessful()) {
+                    Log.d("LOL", "user obtain successfully");
+                    setItemsFragment(response, view);
+                } else {
+                    Log.d("LOL3", "FALLITO BUENO");
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyProfileResponse> call, Throwable t) {
+                Log.d("LOL4", "FALLITO BUENO");
+                Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,6 +135,73 @@ public class PeopleDetailsFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ResourceType")
+    public void setItemsFragment(Response<MyProfileResponse> response, View v) {
+        String points = "";
+        myProfileResponse = response.body();
+        //textViewEmailWritten.setText(myProfileResponse.getEmail());
+        textViewEmailWritten.setText(myProfileResponse.getEmail());
+        textViewName.setText(myProfileResponse.getName());
+        if (myProfileResponse.getLanguage() != null) {
+            textViewLanguageWritten.setText(myProfileResponse.getLanguage().getName());
+        } else {
+            textViewLanguageWritten.setText(R.string.no_language);
+        }
+        if (myProfileResponse.getCountry() != null) {
+            texViewCountryWritten.setText(myProfileResponse.getCountry());
+        } else {
+            texViewCountryWritten.setText(R.string.no_country);
+        }
+        textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
+        textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
+        //points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
+        points = String.valueOf(countPoints(myProfileResponse));
+        textViewPointsWritten.setText(points);
+        mViewModel.selectUser(myProfileResponse);
+
+        //image
+        Glide.with(ctx)
+                .load(myProfileResponse.getPicture().toString())
+                .into(profile_image);
+        Log.d("LOL2", myProfileResponse.toString());
+    }
+
+    public void loadItemsFragment(View view) {
+        textViewBadgesWritten = view.findViewById(R.id.textViewBadgesWritten_details);
+        textViewEmailWritten = view.findViewById(R.id.textViewEmailWritten_details);
+        textViewLanguageWritten = view.findViewById(R.id.textViewLanguageWritten_details);
+        textViewPoisWritten = view.findViewById(R.id.textViewPoisVisitedWritten_details);
+        textViewName = view.findViewById(R.id.textViewName_details);
+        textViewPointsWritten = view.findViewById(R.id.textViewPointsWritten_details);
+        profile_image = view.findViewById(R.id.profile_image_details);
+        texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten_details);
+
+    }
+
+    public int countPoints(MyProfileResponse u) {
+        int points = 0;
+        if (u.getBadges().size() >= 1) {
+            for (int i = 0; i < u.getBadges().size(); i++) {
+                points = points + u.getBadges().get(i).getPoints();
+            }
+        }
+        return points;
+    }
+
+    public int countBadges(MyProfileResponse u) {
+        int badges = 0;
+        if (u.getBadges().size() >= 1) {
+            for (int i = 0; i < u.getBadges().size(); i++) {
+                badges++;
+            }
+        }
+        return badges;
+    }
+
+
+    public int countPoisVisited(MyProfileResponse u) {
+        return u.getVisited().size();
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

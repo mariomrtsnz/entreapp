@@ -7,9 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +27,7 @@ import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.ui.login.LoginActivity;
+import com.mario.myapplication.ui.people.details.PeopleDetailsFragment;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -37,8 +44,11 @@ public class PeopleFragment extends Fragment {
     List<UserResponse> users;
     UserService service;
     String jwt;
+    ImageButton action;
+    EditText name, id;
+    ImageView picture;
     MyPeopleRecyclerViewAdapter adapter;
-
+    FragmentManager f = getFragmentManager();
     private int mColumnCount = 1;
     private OnListFragmentUserInteractionListener mListener;
 
@@ -66,6 +76,7 @@ public class PeopleFragment extends Fragment {
             startActivity(i);
         }
 
+
         UserService service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
 
@@ -92,11 +103,18 @@ public class PeopleFragment extends Fragment {
         }
     }
 
+    public void loadItemsFragment (View view) {
+        name = view.findViewById(R.id.user_name);
+        action = view.findViewById(R.id.actionButton);
+        id = view.findViewById(R.id.idUser);
+        picture = view.findViewById(R.id.profilePic);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_people_list, container, false);
-
+        loadItemsFragment(view);
         // Set the adapter
         if (view instanceof RecyclerView) {
             ctx = view.getContext();
@@ -118,8 +136,10 @@ public class PeopleFragment extends Fragment {
                         Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
                     } else {
                         users = response.body().getRows();
-                        adapter = new MyPeopleRecyclerViewAdapter(ctx, users, mListener);
+                        adapter = new MyPeopleRecyclerViewAdapter( getFragmentManager(), ctx, users, mListener);
                         recyclerView.setAdapter(adapter);
+
+
                     }
                 }
 
@@ -131,6 +151,7 @@ public class PeopleFragment extends Fragment {
             });
 
         }
+
         return view;
     }
 
