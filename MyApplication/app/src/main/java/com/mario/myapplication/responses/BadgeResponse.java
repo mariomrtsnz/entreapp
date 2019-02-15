@@ -11,18 +11,20 @@ public class BadgeResponse {
     private String description;
     private String icon;
     private List<Object> pois = new ArrayList<>();
+    private boolean earned;
 
     public BadgeResponse() {
 
     }
 
-    public BadgeResponse(String id, String name, int points, String description, String icon, List<Object> pois) {
+    public BadgeResponse(String id, String name, int points, String description, String icon, List<Object> pois, boolean earned) {
         this.id = id;
         this.name = name;
         this.points = points;
         this.description = description;
         this.icon = icon;
         this.pois = pois;
+        this.earned = earned;
     }
 
     public String getId() {
@@ -71,6 +73,14 @@ public class BadgeResponse {
 
     public void setPois(List<Object> pois) {
         this.pois = pois;
+    }
+
+    public boolean isEarned() {
+        return earned;
+    }
+
+    public void setEarned(boolean earned) {
+        this.earned = earned;
     }
 
     @Override

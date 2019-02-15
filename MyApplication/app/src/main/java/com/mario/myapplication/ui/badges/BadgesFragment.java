@@ -18,9 +18,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
 import com.mario.myapplication.responses.ResponseContainer;
+import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.BadgeService;
+import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class BadgesFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     String jwt;
     BadgeService service;
+    UserService userService;
     List<BadgeResponse> items;
     BadgesAdapter adapter;
     SwipeRefreshLayout swipeLayout;
@@ -56,6 +59,29 @@ public class BadgesFragment extends Fragment {
         return fragment;
     }
 
+    public void listBadgesAndEarned(String userId) {
+        BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
+        Call<List<BadgeResponse>> call = service.listBadgesAndEarned(userId);
+        call.enqueue(new Callback<List<BadgeResponse>>() {
+            @Override
+            public void onResponse(Call<List<BadgeResponse>> call, Response<List<BadgeResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    items = response.body();
+                    adapter = new BadgesAdapter(ctx, items, mListener);
+                    recycler.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BadgeResponse>> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,19 +93,18 @@ public class BadgesFragment extends Fragment {
         if (jwt == null) {
 
         }
-        BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<BadgeResponse>> callList = service.listBadges();
-        callList.enqueue(new Callback<ResponseContainer<BadgeResponse>>() {
+        Call<UserResponse> call = userService.getUserResponse(UtilToken.getId(ctx));
+        call.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<ResponseContainer<BadgeResponse>> call, Response<ResponseContainer<BadgeResponse>> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseContainer<BadgeResponse>> call, Throwable t) {
-
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
             }
         });
         if (getArguments() != null) {
@@ -102,7 +127,7 @@ public class BadgesFragment extends Fragment {
                 recycler.setLayoutManager(new GridLayoutManager(ctx, mColumnCount));
             }
             items = new ArrayList<>();
-            getData();
+            listBadgesAndEarned(UtilToken.getId(ctx));
             adapter = new BadgesAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
 
@@ -111,7 +136,7 @@ public class BadgesFragment extends Fragment {
             swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    getData();
+                    listBadgesAndEarned(UtilToken.getId(ctx));
                     if (swipeLayout.isRefreshing()) {
                         swipeLayout.setRefreshing(false);
                     }
@@ -119,29 +144,6 @@ public class BadgesFragment extends Fragment {
             });
         }
         return layout;
-    }
-
-    public void getData() {
-        BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<BadgeResponse>> call = service.listBadges();
-        call.enqueue(new Callback<ResponseContainer<BadgeResponse>>() {
-            @Override
-            public void onResponse(Call<ResponseContainer<BadgeResponse>> call, Response<ResponseContainer<BadgeResponse>> response) {
-                if (response.code() != 200) {
-                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
-                } else {
-                    items = response.body().getRows();
-                    adapter = new BadgesAdapter(ctx, items, mListener);
-                    recycler.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseContainer<BadgeResponse>> call, Throwable t) {
-                Log.e("Network Failure", t.getMessage());
-                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
