@@ -135,5 +135,8 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="no_language">No language</string>
+    <string name="friends">Friends</string>
+    <string name="city">City</string>
+    <string name="action_logout">Visitoff</string>
 
 </resources>

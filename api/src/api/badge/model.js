@@ -17,8 +17,9 @@ const badgeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Poi',
     required: true
-  }]
+  }],
 }, {
+  strict: false,
   timestamps: true,
   toJSON: {
     virtuals: true,
@@ -37,7 +38,8 @@ badgeSchema.methods = {
       icon: this.icon,
       pois: this.pois,
       createdAt: this.createdAt,
-      updatedAt: this.updatedAt
+      updatedAt: this.updatedAt,
+      earned: null
     }
 
     return full ? {

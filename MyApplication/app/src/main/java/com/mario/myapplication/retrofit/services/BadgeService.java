@@ -3,6 +3,8 @@ package com.mario.myapplication.retrofit.services;
 import com.mario.myapplication.responses.BadgeResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -16,5 +18,8 @@ public interface BadgeService {
     Call<ResponseContainer<BadgeResponse>> listBadges();
 
     @GET(BASE_URL + "/{id}")
-    Call<BadgeResponse> getBadge(@Path("id") Long id);
+    Call<BadgeResponse> getBadge(@Path("id") String id);
+
+    @GET(BASE_URL + "/earned/{id}")
+    Call<List<BadgeResponse>> listBadgesAndEarned(@Path("id") String id);
 }

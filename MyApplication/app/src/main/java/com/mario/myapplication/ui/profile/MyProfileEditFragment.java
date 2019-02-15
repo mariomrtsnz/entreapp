@@ -10,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.model.Language;
+import com.mario.myapplication.responses.CategoryMyProfileResponse;
 import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.retrofit.generator.AuthType;
@@ -24,6 +27,7 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LanguageService;
 import com.mario.myapplication.util.UtilToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,13 +35,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MyProfileEditFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private UserViewModel mViewModel;
     private EditText editTextName,  editTextcountry, editTextemail;
     private Spinner spinnerLanguages;
@@ -47,6 +47,7 @@ public class MyProfileEditFragment extends Fragment {
     private Context ctx;
     private String jwt;
     private String userId;
+    private Button btn_save;
     List<LanguageResponse> languages;
 
     public MyProfileEditFragment() {
@@ -73,27 +74,41 @@ public class MyProfileEditFragment extends Fragment {
         setItemsFragment(updatedUser);
         return v;
     }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            //mListener.onFragmentInteraction(uri);
-        }
-    }
-    public void loadItemsFragment(View view) {
-        spinnerLanguages = view.findViewById(R.id.spinnerLanguage);
-        editTextcountry=view.findViewById(R.id.editTextCountry);
-        editTextemail=view.findViewById(R.id.editTextEmail);
-        editTextName=view.findViewById(R.id.editTextName);
-    }
-    public void setItemsFragment(MyProfileResponse user){
 
-        editTextName.setText(user.getName());
-        editTextemail.setText(user.getEmail());
-        if (user.getCountry()!=null){
-            editTextcountry.setText(user.getCountry());
-        }else{
-            editTextcountry.setText(R.string.no_country);
-        }
+
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        /*if (context instanceof MyProfileInteractionListener) {
+            mListener = (MyProfileInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }*/
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        // Create a ViewModel the first time the system calls an activity's onCreate() method.
+        // Re-created activities receive the same MyViewModel instance created by the first activity.
+
+        super.onCreate(savedInstanceState);
+
+        mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+        mViewModel.getSelectedUser().observe(getActivity(),
+                user -> {
+                updatedUser = user;
+
+                //setItemsFragment(user);
+                });
+    }
+    public void loadAllLanguages(){
         service = ServiceGenerator.createService(LanguageService.class,
                 jwt, AuthType.JWT);
         Call<ResponseContainer<LanguageResponse>> getAllLanguages = service.listLanguages();
@@ -121,49 +136,49 @@ public class MyProfileEditFragment extends Fragment {
                 Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
             }
         });
-        /*1º conseguir todos los idiomas
-        * 2ºcrear array adapter y pasarselo
-        * 3ºsetear spinner con adapter*/
-
-        /*ArrayAdapter<Contact> adapter =
-                new ArrayAdapter<Contact>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, contacts);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);*/
     }
-    //public List<String>extractNameListFromLanguage
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        /*if (context instanceof MyProfileInteractionListener) {
-            mListener = (MyProfileInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
+    //own methods
+    public void loadItemsFragment(View view) {
+        spinnerLanguages = view.findViewById(R.id.spinnerLanguage);
+        editTextcountry=view.findViewById(R.id.editTextCountry);
+        editTextemail=view.findViewById(R.id.editTextEmail);
+        editTextName=view.findViewById(R.id.editTextName);
+        btn_save =view.findViewById(R.id.btn_edit_profile);
     }
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void setItemsFragment(MyProfileResponse user){
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myProfileResponseToUserEditDto(user);
+
+            }
+        });
+        editTextName.setText(user.getName());
+        editTextemail.setText(user.getEmail());
+        if (user.getCountry()!=null){
+            editTextcountry.setText(user.getCountry());
+        }else{
+            editTextcountry.setText(R.string.no_country);
+        }
+        loadAllLanguages();
+
     }
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-    public void onCreate(Bundle savedInstanceState) {
-        // Create a ViewModel the first time the system calls an activity's onCreate() method.
-        // Re-created activities receive the same MyViewModel instance created by the first activity.
+    public UserEditDto myProfileResponseToUserEditDto(MyProfileResponse user){
+        UserEditDto userEditDto = new UserEditDto();
+        List<String> likes = new ArrayList<>();
+        userEditDto.setName(user.getName());
+        userEditDto.setLanguage(user.getLanguage().getId());
+        userEditDto.setEmail(user.getEmail());
+        userEditDto.setFavs(user.getFavs());
+        userEditDto.setFriends(user.getFriends());
+        //iterations
+        for (CategoryMyProfileResponse c:user.getLikes()){
+        likes.add(c.getId());
+        }
+        userEditDto.setLikes(likes);
 
-        super.onCreate(savedInstanceState);
 
-        mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
-        mViewModel.getSelectedUser().observe(getActivity(),
-                user -> {
-                updatedUser = user;
-
-                //setItemsFragment(user);
-                });
+        return userEditDto;
     }
 }
 
