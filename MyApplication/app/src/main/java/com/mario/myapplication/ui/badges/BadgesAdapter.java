@@ -63,9 +63,11 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                        if (user.getBadges().contains(data.get(i))) {
-                            viewHolder.icon.setImageResource(R.drawable.ic_earned_badge);
+                    for (BadgeResponse badgeResponse : user.getBadges()) {
+                        if (badgeResponse.getId().equals(data.get(i).getId())) {
+                            viewHolder.earned.setVisibility(View.VISIBLE);
                         }
+                    }
                 } else {
                     Toast.makeText(context, "You have to be logged in", Toast.LENGTH_SHORT).show();
                 }

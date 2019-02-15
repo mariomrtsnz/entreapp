@@ -54,11 +54,7 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_category, parent, false);
-        return new ViewHolder(view);
-    }
 
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
         jwt = UtilToken.getToken(ctx);
         idUser = UtilToken.getId(ctx);
 
@@ -71,81 +67,25 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                    // TODO cambiar el parent de CategoryResponse a String y setearlo con un getOne y el id
-                    try {
-                        holder.fav.setOnClickListener(v -> {
-                            if (user.getLikes().size() == 0) {
-                                holder.mItem.setFav(true);
-                                try {
-                                    if (holder.mItem.getParent().getId() == null) {
-                                        System.out.println("No tiene padre");
-                                    } else {
-                                        Call<CategoryResponse> callC = serviceC.getCategory(holder.mItem.getParent().getId());
-                                        CategoryResponse c = callC.execute().body();
-                                        user.getLikes().add(new UserLikesResponse(c.getId(), c.getName()));
-                                    }
 
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                holder.fav.setImageResource(R.drawable.ic_fav_24dp);
-                            } else {
-
-                                UserLikesResponse categoryU = new UserLikesResponse();
-                                for (UserLikesResponse category : user.getLikes()) {
-                                    if (holder.mItem.getId().equals(category.getId())) {
-                                        holder.mItem.setFav(false);
-                                        categoryU = category;
-                                        holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
-                                    } else {
-                                        holder.mItem.setFav(true);
-                                        categoryU = category;
-                                        holder.fav.setImageResource(R.drawable.ic_fav_24dp);
-                                    }
-
-
-                                }
-                                if (holder.mItem.isFav()) {
-                                    user.getLikes().add(categoryU);
-                                } else {
-                                    user.getLikes().remove(categoryU);
-                                }
-                            }
-                            System.out.println(user);
-                            UserEditDto edited = new UserEditDto(user.getEmail(), UserStringList.arrayFriends(user), UserStringList.arrayFavs(user), /*user.getLanguage().getId(),*/ UserStringList.arrayLikes(user), user.getName());
-                            Call<UserResponse> edit = service.editUser(UtilToken.getId(ctx), edited);
-                            edit.enqueue(new Callback<UserResponse>() {
-                                @Override
-                                public void onResponse(Call<UserResponse> call1, Response<UserResponse> response) {
-                                    System.out.println(response);
-                                    if (response.code() == 200) {
-                                        Log.d("User edited", "User edited");
-                                    } else {
-                                        Toast.makeText(ctx, "User could not be edited", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<UserResponse> call1, Throwable t) {
-                                    // Toast.makeText(ctx, "NetworkFailure", Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    //                  Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                //           Toast.makeText(ctx, "You have to be logged in", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+        return new ViewHolder(view);
+
+
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+
 
 
         holder.mItem = mValues.get(position);
@@ -165,6 +105,14 @@ class MyCategoryRecyclerViewAdapter extends RecyclerView.Adapter<MyCategoryRecyc
         } else {
             holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
         }
+
+        holder.fav.setOnClickListener(v -> {
+            if(holder.mItem.isFav()){
+                holder.fav.setImageResource(R.drawable.ic_nofav_24dp);
+            }else{
+                holder.fav.setImageResource(R.drawable.ic_fav_24dp);
+            }
+        });
 
         holder.mView.setOnClickListener(v -> {
             if (null != mListener) {
