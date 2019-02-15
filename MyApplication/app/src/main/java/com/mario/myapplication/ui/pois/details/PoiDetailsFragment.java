@@ -19,6 +19,12 @@ import java.util.Objects;
 
 public class PoiDetailsFragment extends Fragment {
 
+    private final String id;
+
+    public PoiDetailsFragment(String poiId) {
+        id = poiId;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
