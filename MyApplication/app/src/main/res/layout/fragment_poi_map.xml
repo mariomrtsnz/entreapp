@@ -18,34 +18,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/showMyLoc"
+        android:id="@+id/btn_show_myloc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_my_location_black_24dp"
         app:backgroundTint="@color/color_text"
         app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/btn_qrScan"
-        app:layout_constraintEnd_toEndOf="@+id/btn_qrScan"
-        app:layout_constraintStart_toStartOf="@+id/btn_qrScan"
+        app:layout_constraintBottom_toTopOf="@+id/btn_qr_scan"
+        app:layout_constraintEnd_toEndOf="@+id/btn_qr_scan"
+        app:layout_constraintStart_toStartOf="@+id/btn_qr_scan"
         app:rippleColor="#fff" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_qrScan"
+        android:id="@+id/btn_qr_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="#FFF"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_qr_button_icon"
-        app:fabSize="auto"
+        app:backgroundTint="@color/color_text"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="34dp"
-        app:rippleColor="#FFF"
-        android:focusable="true" />
+        app:maxImageSize="32dp"
+        app:rippleColor="#fff" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

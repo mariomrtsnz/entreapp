@@ -163,16 +163,6 @@
             app:layout_constraintStart_toStartOf="@+id/textViewCountry"
             app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
 
-        <Button
-            android:id="@+id/buttonCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/btn_shape_round"
-            android:text="Button"
-            app:layout_constraintStart_toStartOf="@+id/textViewCategories"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCategories" />
-
         <TextView
             android:id="@+id/textViewCategories"
             android:layout_width="wrap_content"

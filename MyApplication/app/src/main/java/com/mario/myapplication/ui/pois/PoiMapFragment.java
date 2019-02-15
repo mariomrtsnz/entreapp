@@ -81,7 +81,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
         View v = inflater.inflate(R.layout.fragment_poi_map, container, false);
 
-        v.findViewById(R.id.showMyLoc).setOnClickListener(view -> {
+        v.findViewById(R.id.btn_show_myloc).setOnClickListener(view -> {
             if (checkDeviceLocation()) getDeviceLocation();
             else enableDeviceLocation();
         });
