@@ -48,6 +48,13 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
                 mListener.onListFragmentUserInteraction(holder.mItem);
             }
         });
+
+        holder.action.setOnClickListener(v -> {
+            if(holder.action.getDrawable().equals(R.drawable.ic_person_add))
+                holder.action.setImageResource(R.drawable.ic_delete);
+            else
+                holder.action.setImageResource(R.drawable.ic_person_add);
+        });
     }
 
     @Override

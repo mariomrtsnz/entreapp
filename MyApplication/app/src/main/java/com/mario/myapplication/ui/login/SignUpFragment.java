@@ -8,8 +8,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,22 +23,28 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.LoginResponse;
 import com.mario.myapplication.responses.Register;
+import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
+import com.mario.myapplication.retrofit.services.LanguageService;
 import com.mario.myapplication.retrofit.services.LoginService;
 import com.mario.myapplication.ui.common.DashboardActivity;
+import com.mario.myapplication.util.UserStringList;
 import com.mario.myapplication.util.UtilToken;
 import com.transitionseverywhere.ChangeBounds;
 import com.transitionseverywhere.Transition;
 import com.transitionseverywhere.TransitionManager;
 import com.transitionseverywhere.TransitionSet;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import butterknife.BindViews;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 
@@ -44,7 +54,35 @@ public class SignUpFragment extends AuthFragment {
             R.id.confirm_password_edit})
     protected List<TextInputEditText> views;
     EditText email_input, password_input, confirm_password;
+    Spinner language;
     Context ctx = this.getContext();
+    List<LanguageResponse> languageList = new ArrayList<>();
+    List<String> languageNames = new ArrayList<>();
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        LanguageService service = ServiceGenerator.createService(LanguageService.class);
+
+        Call<ResponseContainer<LanguageResponse>> call = service.listLanguages();
+        call.enqueue(new retrofit2.Callback<ResponseContainer<LanguageResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<LanguageResponse>> call, Response<ResponseContainer<LanguageResponse>> response) {
+                if (response.code() != 200) {
+          //          Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
+                } else {
+                    languageList = response.body().getRows();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<LanguageResponse>> call, Throwable t) {
+
+            }
+        });
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     // Acciones al crear el fragmento
     @Override
@@ -54,6 +92,13 @@ public class SignUpFragment extends AuthFragment {
         email_input = getActivity().findViewById(R.id.email_input_edit_sign);
         password_input = getActivity().findViewById(R.id.password_input_edit_sign);
         confirm_password = getActivity().findViewById(R.id.confirm_password_edit);
+        language = getActivity().findViewById(R.id.language);
+
+        languageNames = UserStringList.arrayLanguages(languageList);
+        final ArrayAdapter<LanguageResponse> spinnerArrayAdapter = new ArrayAdapter<>(
+                getActivity(),R.layout.spinner_item,languageList);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        language.setAdapter(spinnerArrayAdapter);
 
         if (this.getContext() != null) {
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_sign_up));
@@ -162,7 +207,10 @@ public class SignUpFragment extends AuthFragment {
             } else if (!password.equals(confirm)) {
                 Toast.makeText(view.getContext(), "Passwords do not match!", Toast.LENGTH_SHORT).show();
             } else {
-                Register register = new Register(email, password);
+
+
+                LanguageResponse chosen = (LanguageResponse) language.getSelectedItem();
+                Register register = new Register(email, password, chosen.getId() );
                 LoginService service = ServiceGenerator.createService(LoginService.class);
                 Call<LoginResponse> loginReponseCall = service.doSignUp(register);
 
