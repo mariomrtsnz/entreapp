@@ -1,5 +1,6 @@
 package com.mario.myapplication.ui.profile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -11,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -48,7 +51,8 @@ public class MyProfileFragment extends Fragment {
     TextView textViewEmailWritten;
     TextView textViewPoisWritten;
     TextView texViewCountryWritten;
-    Button btn_edit;
+    Button btn_edit, btn_category;
+    LinearLayout layaoutLikes;
     private UserViewModel mViewModel;
 
     // TODO: Rename and change types of parameters
@@ -98,43 +102,7 @@ public class MyProfileFragment extends Fragment {
                 String points = "";
                 if (response.isSuccessful()) {
                     Log.d("LOL", "user obtain successfully");
-                    myProfileResponse = response.body();
-                    //textViewEmailWritten.setText(myProfileResponse.getEmail());
-                    textViewEmailWritten.setText("22222222222222222222222222222222222222222222222222222222222222222222");
-                    textViewName.setText(myProfileResponse.getName());
-                    if (myProfileResponse.getLanguage() != null) {
-                        textViewLanguageWritten.setText(myProfileResponse.getLanguage().getName());
-                    } else {
-                        textViewLanguageWritten.setText(R.string.no_language);
-                    }
-                    if (myProfileResponse.getCountry() != null) {
-                        texViewCountryWritten.setText(myProfileResponse.getCountry());
-                    } else {
-                        texViewCountryWritten.setText(R.string.no_country);
-                    }
-                    textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
-                    textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
-                    //points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
-                    points = String.valueOf(countPoints(myProfileResponse));
-                    textViewPointsWritten.setText(points);
-                    mViewModel.selectUser(myProfileResponse);
-
-                    //image
-                    Glide.with(ctx)
-                            .load(myProfileResponse.getPicture().toString())
-                            .into(profile_image);
-                    Log.d("LOL2", myProfileResponse.toString());
-                    btn_edit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(ctx, "EDITING USER!", Toast.LENGTH_LONG).show();
-
-                            getFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.contenedor, new MyProfileEditFragment())
-                                    .commit();
-                        }
-                    });
+                    setItemsFragment(response, view);
                 } else {
                     Log.d("LOL3", "FALLITO BUENO");
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
@@ -155,7 +123,53 @@ public class MyProfileFragment extends Fragment {
         });
         return view;
     }
+    @SuppressLint("ResourceType")
+    public void setItemsFragment(Response<MyProfileResponse> response, View v){
+        String points="";
+        myProfileResponse = response.body();
+        //textViewEmailWritten.setText(myProfileResponse.getEmail());
+        textViewEmailWritten.setText(myProfileResponse.getEmail());
+        textViewName.setText(myProfileResponse.getName());
+        if (myProfileResponse.getLanguage() != null) {
+            textViewLanguageWritten.setText(myProfileResponse.getLanguage().getName());
+        } else {
+            textViewLanguageWritten.setText(R.string.no_language);
+        }
+        if (myProfileResponse.getCountry() != null) {
+            texViewCountryWritten.setText(myProfileResponse.getCountry());
+        } else {
+            texViewCountryWritten.setText(R.string.no_country);
+        }
+        textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
+        textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
+        //points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
+        points = String.valueOf(countPoints(myProfileResponse));
+        textViewPointsWritten.setText(points);
+        mViewModel.selectUser(myProfileResponse);
 
+        //image
+        Glide.with(ctx)
+                .load(myProfileResponse.getPicture().toString())
+                .into(profile_image);
+        Log.d("LOL2", myProfileResponse.toString());
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ctx, "EDITING USER!", Toast.LENGTH_LONG).show();
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contenedor, new MyProfileEditFragment())
+                        .commit();
+            }
+        });
+        /*1º crear un boton de prueba
+        * 2º repetirlo por cada category con su nombre*/
+        System.out.println(myProfileResponse.getLikes());
+
+
+
+    }
     public void performFileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -197,6 +211,8 @@ public class MyProfileFragment extends Fragment {
         profile_image = view.findViewById(R.id.profile_image);
         texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten);
         btn_edit = view.findViewById(R.id.btn_edit_profile);
+        //btn_category=view.findViewById(R.id.buttonCategory);
+        //layaoutLikes=view.findViewById(R.id.layoutLikes);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
