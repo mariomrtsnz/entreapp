@@ -19,6 +19,7 @@ import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.people.PeopleFragment;
+import com.mario.myapplication.ui.pois.PoiMapFragment;
 import com.mario.myapplication.ui.pois.list.PoiListFragment;
 import com.mario.myapplication.ui.pois.list.PoiListListener;
 import com.mario.myapplication.ui.profile.MyProfileFragment;
@@ -75,7 +76,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         badges = new BadgesFragment();
-        pois = new PoiListFragment();
+        pois = new PoiMapFragment();
         people = new PeopleFragment();
         myProfile = new MyProfileFragment();
         // Para que por defecto cargue el fragmento de POIs (general)
