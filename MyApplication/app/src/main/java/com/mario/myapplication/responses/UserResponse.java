@@ -16,14 +16,14 @@ public class UserResponse {
     private LanguageResponse language;
     private List<PoiResponse> favs = new ArrayList<>();
     private List<PoiResponse> visited = new ArrayList<>();
-    private List<Object> badges = new ArrayList<>();
+    private List<BadgeResponse> badges = new ArrayList<>();
     private List<UserLikesResponse> likes  = new ArrayList<>();
     private List<UserResponse> friends = new ArrayList<>();
 
     public UserResponse() {
     }
 
-    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> favs, List<PoiResponse> visited, List<Object> badges, List<UserLikesResponse> likes, List<UserResponse> friends) {
+    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> favs, List<PoiResponse> visited, List<BadgeResponse> badges, List<UserLikesResponse> likes, List<UserResponse> friends) {
         this._id = _id;
         this.name = name;
         this.role = role;
@@ -112,14 +112,6 @@ public class UserResponse {
         this.country = country;
     }
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
     public LanguageResponse getLanguage() {
         return language;
     }
@@ -136,11 +128,11 @@ public class UserResponse {
         this.visited = visited;
     }
 
-    public List<Object> getBadges() {
+    public List<BadgeResponse> getBadges() {
         return badges;
     }
 
-    public void setBadges(List<Object> badges) {
+    public void setBadges(List<BadgeResponse> badges) {
         this.badges = badges;
     }
 
