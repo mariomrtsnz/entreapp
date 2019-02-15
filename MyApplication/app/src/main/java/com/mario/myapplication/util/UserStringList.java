@@ -1,6 +1,5 @@
 package com.mario.myapplication.util;
 
-import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.UserLikesResponse;
@@ -25,9 +24,9 @@ public class UserStringList {
     public static List<String> arrayFriends(UserResponse user) {
         List<String> friends = new ArrayList<>();
 
-        for (UserResponse friend : user.getFriends()) {
-            friends.add(friend.get_Id());
-        }
+//        for (UserResponse friend : user.getFriends()) {
+//            friends.add(friend.get_Id());
+//        }
 
         return friends;
     }
@@ -35,9 +34,9 @@ public class UserStringList {
     public static List<String> arrayVisited(UserResponse user) {
         List<String> visited = new ArrayList<>();
 
-        for (PoiResponse visit : user.getVisited()) {
-            visited.add(visit.getId());
-        }
+//        for (String visit : user.getVisited()) {
+//            visited.add(visit.getId());
+//        }
 
         return visited;
     }

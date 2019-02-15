@@ -56,18 +56,21 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         jwt = UtilToken.getToken(context);
-        for (BadgeResponse badgeResponse : data) {
-            if (badgeResponse.isEarned()) {
-                viewHolder.earned.setVisibility(View.VISIBLE);
-            }
-        }
-
         viewHolder.mItem = data.get(i);
+        Glide.with(context).load(data.get(i).getIcon()).into(viewHolder.icon);
         viewHolder.title.setText(data.get(i).getName());
         viewHolder.body.setText(data.get(i).getDescription());
         viewHolder.points.setText(String.valueOf(data.get(i).getPoints()));
-
-        Glide.with(context).load(data.get(i).getIcon()).into(viewHolder.icon);
+        for (BadgeResponse badgeResponse : data) {
+            System.out.println(badgeResponse.getName());
+//            System.out.println(badgeResponse.isEarned());
+            if (badgeResponse.isEarned()) {
+                System.out.println(badgeResponse.isEarned());
+                viewHolder.earned.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.earned.setVisibility(View.GONE);
+            }
+        }
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
