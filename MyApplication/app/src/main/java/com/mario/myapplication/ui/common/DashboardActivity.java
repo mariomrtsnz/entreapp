@@ -1,5 +1,6 @@
 package com.mario.myapplication.ui.common;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.people.PeopleFragment;
+import com.mario.myapplication.ui.people.details.PeopleDetailsFragment;
 import com.mario.myapplication.ui.pois.PoiMapFragment;
 import com.mario.myapplication.ui.pois.list.PoiListFragment;
 import com.mario.myapplication.ui.pois.list.PoiListListener;
@@ -26,7 +28,7 @@ import com.mario.myapplication.ui.profile.MyProfileFragment;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener, PeopleDetailsFragment.OnFragmentInteractionListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois, myProfile, people;
     private TextView mTextMessage;
@@ -114,6 +116,11 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
 
     @Override
     public void onListFragmentUserInteraction(UserResponse item) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
