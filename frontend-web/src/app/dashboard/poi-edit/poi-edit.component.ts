@@ -56,8 +56,8 @@ export class PoiEditComponent implements OnInit {
 
   createForm() {
     this.coordinatesForm = this.fb.group({
-      lat: [this.poi.coordinates.lat, Validators.compose([Validators.required])],
-      lng: [this.poi.coordinates.lng, Validators.compose([Validators.required])]
+      lat: [this.poi.loc.coordinates[0], Validators.compose([Validators.required])],
+      lng: [this.poi.loc.coordinates[1], Validators.compose([Validators.required])]
     });
 
     this.audioguidesForm = this.fb.group({
@@ -83,7 +83,7 @@ export class PoiEditComponent implements OnInit {
 
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
-    newPoi.coordinates = this.coordinatesForm.value;
+    newPoi.loc = {coordinates: [this.coordinatesForm.controls['lat'].value, this.coordinatesForm.controls['lng'].value]};
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
     newPoi.coverImage ? null : newPoi.coverImage = newPoi.images[0];
