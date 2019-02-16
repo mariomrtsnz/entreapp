@@ -3,6 +3,9 @@
     <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu" *ngIf="authService.isAdmin()">
       <mat-icon>more_horiz</mat-icon>
     </a>
+    <a mat-mini-fab class="card-floating-button" (click)="openDialogTranslatePoi(p)" *ngIf="authService.isContributor()">
+        <mat-icon>translate</mat-icon>
+      </a>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="openEditPoi(p)">
         <mat-icon>edit</mat-icon>
