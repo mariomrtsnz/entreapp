@@ -1,7 +1,6 @@
 <div fxLayout="row wrap">
-  <mat-card class="example-card" *ngFor="let p of POIs?.rows">
-    <img mat-card-image src="{{p.coverImage}}">
-    <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu">
+  <mat-card *ngFor="let p of POIs?.rows" class="poi-card">
+    <a mat-mini-fab class="card-floating-button" [matMenuTriggerFor]="menu" *ngIf="authService.isAdmin()">
       <mat-icon>more_horiz</mat-icon>
     </a>
     <mat-menu #menu="matMenu">
@@ -14,29 +13,18 @@
         <span>Delete</span>
       </button>
     </mat-menu>
-    <mat-card-header>
+    <mat-card-header [style.background-image]="'url(' + p.coverImage + ')'" (click)="goPoiDetails(p)">
       <mat-card-title>{{p.name}}</mat-card-title>
-      <!-- <mat-card-subtitle>{{p.category[0].name}}</mat-card-subtitle> -->
     </mat-card-header>
-      <mat-card-content [innerHtml]="p.description.originalDescription.substr(0, 140) + '...'">
-      </mat-card-content>
-      <mat-card-actions>
-        <mat-icon>star</mat-icon>
-        <mat-icon>star</mat-icon>
-        <mat-icon>star</mat-icon>
-        <div style="float:right;">
-          <button *ngIf="this.authService.isContributor()" mat-button  (click)="openDialogTranslatePoi(p)" >
-            Translate
-          </button>
-          <button mat-button  (click)="goPoiDetails(p)">Show more</button>
-        </div>
-        
-      </mat-card-actions>
-      <button mat-fab id="addFloatingButton" (click)="openNewPoi(p)">
-        <mat-icon>add</mat-icon>
-      </button>
+    <mat-card-content>
+
+      <mat-chip-list>
+        <mat-chip *ngFor="let cat of p.categories">{{cat.name}}</mat-chip>
+      </mat-chip-list>
+    </mat-card-content>
   </mat-card>
+
+  <button mat-fab id="addFloatingButton" (click)="openNewPoi()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
-
-
-
