@@ -8,10 +8,9 @@
         <div fxFlex="80">
           <div #myCoverImage id="coverImage" [style.background-image]="'url(' + coverImage + ')'"> </div>
         </div>
-        <!-- <img id="coverImage" width="1920" height="600" [src]="coverImage"> -->
       </div>
-      <agm-map [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng" [zoom]="16">
-        <agm-marker [latitude]="poi.coordinates.lat" [longitude]="poi.coordinates.lng"></agm-marker>
+      <agm-map [latitude]="poi.loc.coordinates[0]" [longitude]="poi.loc.coordinates[1]" [zoom]="16">
+        <agm-marker [latitude]="poi.loc.coordinates[0]" [longitude]="poi.loc.coordinates[1]"></agm-marker>
       </agm-map>
     </div>
     <div fxFlex.gt-md="50" fxFlex="100">

@@ -4,8 +4,9 @@ export interface OnePoiResponse {
     id: string;
     name: string;
     categories: Category[];
-    coordinates: { lat: number, lng: number };
-    comments: string[]; // CommentResponse[];
+    loc: {
+        coordinates: number[];
+    }
     stars: number;
     qrCode: string;
     audioguides: {
