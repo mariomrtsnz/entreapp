@@ -71,9 +71,11 @@ export class PoiCreateComponent implements OnInit {
 
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
-    newPoi.coordinates = this.coordinatesForm.value;
+    newPoi.loc = {coordinates: [this.coordinatesForm.controls['lat'].value, this.coordinatesForm.controls['lng'].value]};
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
+
+    console.log(newPoi);
 
 
     this.poiService.create(newPoi).subscribe(() => {

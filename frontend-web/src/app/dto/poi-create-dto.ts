@@ -12,10 +12,9 @@ export class PoiCreateDto {
         ]
     };
     categories?: string[];
-    coordinates: {
-        lat: number,
-        lng: number
-    };
+    loc: {
+        coordinates: number[];
+    }
     creator?: string;
     description: {
         language: {
