@@ -14,6 +14,7 @@ import { LanguageService } from 'src/app/services/language.service';
   templateUrl: './dialog-translate-poi.component.html',
   styleUrls: ['./dialog-translate-poi.component.scss']
 })
+
 export class DialogTranslatePoiComponent implements OnInit {
   audioguidesForm: FormGroup;
   descriptionForm: FormGroup;
@@ -33,9 +34,9 @@ export class DialogTranslatePoiComponent implements OnInit {
   getUserIsoCode() {
     const token = this.authService.getToken();
     const languageId = this.authService.getLanguageId();
-    this.languageService.getUserLanguage(languageId , token)
+    this.languageService.getUserLanguage(languageId, token)
       .subscribe(r => {
-        this.isoCode = r.isoCode
+        this.isoCode = r.isoCode;
         this.checkAndSetTranslations(this.isoCode);
       });
   }
@@ -64,36 +65,39 @@ export class DialogTranslatePoiComponent implements OnInit {
     /* comprobamos el id del usuario
     buscamos si existe traduccion con ese id  y la mostramos en el form control
     si el usuario es ingles mostramos el texto original */
-    if(this.checkEnglishUser(userIsoCode)){
+    if (this.checkEnglishUser(userIsoCode)) {
       console.log(this.poiObtenido.audioguides.originalFile);
       this.audioguidesForm.controls['translatedFile'].setValue(this.poiObtenido.audioguides.originalFile);
       this.descriptionForm.controls['translatedDescription'].setValue(this.poiObtenido.description.originalDescription);
-    }else{
-     
+    } else {
+
 
       posicionDescripcion = this.checkExistDescriptionTranslation(this.poiObtenido);
       posicionAudio = this.checkExistAudioTranslation(this.poiObtenido);
-      if(posicionDescripcion != -1)
+      if (posicionDescripcion !== -1) {
+// tslint:disable-next-line: max-line-length
         this.descriptionForm.controls['translatedDescription'].setValue(this.poiObtenido.description.translations[posicionDescripcion].translatedDescription);
-      if(posicionAudio != -1)
+      }
+      if (posicionAudio !== -1) {
         this.audioguidesForm.controls['translatedFile'].setValue(this.poiObtenido.audioguides.translations[posicionAudio].translatedFile);
+      }
 
       console.log(this.poiObtenido.description.translations[posicionDescripcion]);
     }
   }
-  checkEnglishUser(userIsoCode: string){
+  checkEnglishUser(userIsoCode: string) {
     const englishIsoCode = 'en';
     let result = false;
-    if(this.isoCode == null || this.isoCode == undefined){
-      result=true
-    }else{
-      result = this.isoCode.toLowerCase() == englishIsoCode.toLocaleLowerCase();
+    if (this.isoCode == null || this.isoCode === undefined) {
+      result = true;
+    } else {
+      result = this.isoCode.toLowerCase() === englishIsoCode.toLocaleLowerCase();
 
     }
     return result;
-      
+
   }
-  checkExistDescriptionTranslation(newPoi){
+  checkExistDescriptionTranslation(newPoi) {
     let posicionDescripcion = -1;
     for (let i = 0; i < newPoi.description.translations.length; i++) {
       if (newPoi.description.translations[i].id !== this.idLanguage) {
@@ -102,7 +106,7 @@ export class DialogTranslatePoiComponent implements OnInit {
     }
     return posicionDescripcion;
   }
-  checkExistAudioTranslation(newPoi){
+  checkExistAudioTranslation(newPoi) {
     let posicionDescripcion = -1;
     for (let i = 0; i < newPoi.audioguides.translations.length; i++) {
       if (newPoi.audioguides.translations[i].id !== this.idLanguage) {
@@ -116,7 +120,7 @@ export class DialogTranslatePoiComponent implements OnInit {
     const englishIsoCode = 'en';
     const newPoi: PoiCreateDto = {
       audioguides: this.poiObtenido.audioguides,
-      coordinates: this.poiObtenido.coordinates,
+      loc: this.poiObtenido.loc,
       categories: [],
       creator: this.poiObtenido.creator,
       name: this.poiObtenido.name,
@@ -141,7 +145,7 @@ export class DialogTranslatePoiComponent implements OnInit {
       posicionDescripcion = this.checkExistDescriptionTranslation(newPoi);
       // si existe la borro y añado nueva
       // tslint:disable-next-line:no-non-null-assertion
-      if (posicionDescripcion != -1) {
+      if (posicionDescripcion !== -1) {
         newPoi.description.translations.splice(posicionDescripcion);
       }
       // compruebo si esta el audio
