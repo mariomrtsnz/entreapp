@@ -27,13 +27,13 @@
         android:src="@drawable/ic_my_location_black_24dp"
         app:backgroundTint="@color/color_text"
         app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/btn_qr_scan"
-        app:layout_constraintEnd_toEndOf="@+id/btn_qr_scan"
-        app:layout_constraintStart_toStartOf="@+id/btn_qr_scan"
+        app:layout_constraintBottom_toTopOf="@+id/fab"
+        app:layout_constraintEnd_toEndOf="@+id/fab"
+        app:layout_constraintStart_toStartOf="@+id/fab"
         app:rippleColor="#fff" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_qr_scan"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"

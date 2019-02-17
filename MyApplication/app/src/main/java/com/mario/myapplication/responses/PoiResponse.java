@@ -14,7 +14,7 @@ public class PoiResponse {
     private float stars;
     private String qrCode;
     private Audioguide audioguides;
-    private Description descriptions;
+    private Description description;
     private String coverImage;
     private String[] images;
     private int year;
@@ -25,7 +25,7 @@ public class PoiResponse {
 
     public PoiResponse() {}
 
-    public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String status, String schedule) {
+    public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description description, String coverImage, String[] images, int year, String status, String schedule) {
         this._id = id;
         this.name = name;
         this.categories = categories;
@@ -34,7 +34,7 @@ public class PoiResponse {
         this.stars = stars;
         this.qrCode = qrCode;
         this.audioguides = audioguides;
-        this.descriptions = descriptions;
+        this.description = description;
         this.coverImage = coverImage;
         this.images = images;
         this.year = year;
@@ -42,7 +42,7 @@ public class PoiResponse {
         this.schedule = schedule;
     }
 
-    public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description descriptions, String coverImage, String[] images, int year, String creator, String status, String schedule, float price) {
+    public PoiResponse(String id, String name, Category[] categories, CoordinatesResponse loc, String[] comments, float stars, String qrCode, Audioguide audioguides, Description description, String coverImage, String[] images, int year, String creator, String status, String schedule, float price) {
         this._id = id;
         this.name = name;
         this.categories = categories;
@@ -51,7 +51,7 @@ public class PoiResponse {
         this.stars = stars;
         this.qrCode = qrCode;
         this.audioguides = audioguides;
-        this.descriptions = descriptions;
+        this.description = description;
         this.coverImage = coverImage;
         this.images = images;
         this.year = year;
@@ -125,12 +125,12 @@ public class PoiResponse {
         this.audioguides = audioguides;
     }
 
-    public Description getDescriptions() {
-        return descriptions;
+    public Description getDescription() {
+        return description;
     }
 
-    public void setDescriptions(Description descriptions) {
-        this.descriptions = descriptions;
+    public void setDescription(Description description) {
+        this.description = description;
     }
 
     public String getCoverImage() {
