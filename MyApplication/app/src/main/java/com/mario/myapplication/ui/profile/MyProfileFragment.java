@@ -51,7 +51,7 @@ public class MyProfileFragment extends Fragment {
     private TextView textViewBadgesWritten;
     private TextView textViewEmailWritten;
     private TextView textViewPoisWritten;
-    private TextView texViewCountryWritten;
+    private TextView texViewCityWritten;
     private TextView textViewFriendsWritten;
     private Button btn_edit;
     private UserViewModel mViewModel;
@@ -144,10 +144,10 @@ public class MyProfileFragment extends Fragment {
         } else {
             textViewLanguageWritten.setText(R.string.no_language);
         }
-        if (myProfileResponse.getCountry() != null) {
-            texViewCountryWritten.setText(myProfileResponse.getCountry());
+        if (myProfileResponse.getcity() != null) {
+            texViewCityWritten.setText(myProfileResponse.getcity());
         } else {
-            texViewCountryWritten.setText(R.string.no_country);
+            texViewCityWritten.setText(R.string.no_city);
         }
         textViewPoisWritten.setText(String.valueOf(countPoisVisited(myProfileResponse)));
         textViewBadgesWritten.setText(String.valueOf(countBadges(myProfileResponse)));
@@ -177,12 +177,12 @@ public class MyProfileFragment extends Fragment {
             }
         });
         //open my pictures
-        profile_image.setOnClickListener(new View.OnClickListener() {
+        /*profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 performFileSearch();
             }
-        });
+        });*/
         System.out.println(myProfileResponse.getLikes());
 
 
@@ -229,7 +229,7 @@ public class MyProfileFragment extends Fragment {
         textViewName = view.findViewById(R.id.textViewName);
         textViewPointsWritten = view.findViewById(R.id.textViewPointsWritten);
         profile_image = view.findViewById(R.id.profile_image);
-        texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten);
+        texViewCityWritten = view.findViewById(R.id.textViewCityWritten);
         btn_edit = view.findViewById(R.id.btn_edit_profile);
         //btn_category=view.findViewById(R.id.buttonCategory);
         //layaoutLikes=view.findViewById(R.id.layoutLikes);

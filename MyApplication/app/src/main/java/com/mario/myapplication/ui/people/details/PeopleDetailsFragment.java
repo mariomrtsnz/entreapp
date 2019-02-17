@@ -23,7 +23,6 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.util.UtilToken;
 
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -147,8 +146,8 @@ public class PeopleDetailsFragment extends Fragment {
         } else {
             textViewLanguageWritten.setText(R.string.no_language);
         }
-        if (myProfileResponse.getCountry() != null) {
-            texViewCountryWritten.setText(myProfileResponse.getCountry());
+        if (myProfileResponse.getcity() != null) {
+            texViewCountryWritten.setText(myProfileResponse.getcity());
         } else {
             texViewCountryWritten.setText(R.string.no_country);
         }
@@ -173,7 +172,7 @@ public class PeopleDetailsFragment extends Fragment {
         textViewPoisWritten = view.findViewById(R.id.textViewPoisVisitedWritten_details);
         textViewName = view.findViewById(R.id.textViewName_details);
         textViewPointsWritten = view.findViewById(R.id.textViewPointsWritten_details);
-        profile_image = view.findViewById(R.id.profile_image_details);
+        profile_image = view.findViewById(R.id.edit_profile_image);
         texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten_details);
 
     }
@@ -219,16 +218,7 @@ public class PeopleDetailsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

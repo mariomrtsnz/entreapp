@@ -1,6 +1,7 @@
 package com.mario.myapplication.retrofit.services;
 
 import com.mario.myapplication.responses.LanguageResponse;
+import com.mario.myapplication.responses.LenguageResponseMyProfile;
 import com.mario.myapplication.responses.ResponseContainer;
 
 import retrofit2.Call;
@@ -14,6 +15,8 @@ public interface LanguageService {
 
     @GET(BASE_URL)
     Call<ResponseContainer<LanguageResponse>> listLanguages();
+
+
 
     @GET(BASE_URL + "/{id}")
     Call<LanguageResponse> getLanguage(@Path("id") Long id);

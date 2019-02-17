@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         tools:context=".ui.profile.MyProfileFragment">
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image_details"
+            android:id="@+id/edit_profile_image"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="32dp"
@@ -30,7 +30,7 @@
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image_details" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_image" />
 
         <TextView
             android:id="@+id/textViewPointsWritten_details"
@@ -130,7 +130,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisited_details" />
 
         <TextView
-            android:id="@+id/textViewCountry_details"
+            android:id="@+id/textViewCity_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -148,8 +148,8 @@
             android:layout_marginTop="16dp"
             android:text="@string/country"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/textViewCountry_details"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCountry_details" />
+            app:layout_constraintStart_toStartOf="@+id/textViewCity_details"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCity_details" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"

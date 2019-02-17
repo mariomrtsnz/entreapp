@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         tools:context=".ui.profile.MyProfileFragment">
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image_details"
+            android:id="@+id/edit_profile_image"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="32dp"
@@ -30,7 +30,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image_details" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_image" />
         <Button
             android:id="@+id/btn_edit_profile"
             android:layout_width="wrap_content"
@@ -74,18 +74,18 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewName_details" />
 
         <TextView
-            android:id="@+id/textViewCountry_details"
+            android:id="@+id/textViewCity_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/country"
+            android:text="@string/city"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/editTextName"
             app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
         <EditText
-            android:id="@+id/editTextCountry"
+            android:id="@+id/editTextCity"
             android:layout_width="0dp"
             android:layout_height="42dp"
             android:layout_marginTop="16dp"
@@ -93,10 +93,11 @@
             android:ems="10"
             android:hint="@string/country"
             android:inputType="textPersonName"
+            android:text="@string/city"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textViewCountry_details"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCountry_details" />
+            app:layout_constraintStart_toStartOf="@+id/textViewCity_details"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCity_details" />
         <TextView
             android:id="@+id/textViewLanguage_details"
             android:layout_width="wrap_content"
@@ -106,8 +107,8 @@
             android:text="@string/Language"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/editTextCountry"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCountry" />
+            app:layout_constraintStart_toStartOf="@+id/editTextCity"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCity" />
         <Spinner
             android:id="@+id/spinnerLanguage"
             android:layout_width="wrap_content"
