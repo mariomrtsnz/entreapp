@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,7 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.mario.myapplication.R;
@@ -67,9 +66,9 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLocationPermissions();
 
         jwt = UtilToken.getToken(Objects.requireNonNull(getContext()));
+        getLocationPermissions();
     }
 
     @Nullable
@@ -91,21 +90,15 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         return v;
     }
 
+    /** Actions done when the map is loaded **/
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mMap.getUiSettings().setMapToolbarEnabled(false);
         getDeviceLocation();
-        mMap.setOnMarkerClickListener(marker -> {
-            System.out.println(marker.getTag());
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.contenedor, new PoiDetailsFragment(marker.getTag().toString()))
-                    .commit();
-            return false;
-        });
+        mapUIConfig();
     }
 
+    /** Check if location permissions are granted. If not, ask for it. **/
     private void getLocationPermissions() {
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -119,12 +112,14 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    /** Check if GPS is enabled **/
     private boolean checkDeviceLocation() {
         LocationManager service;
         service = (LocationManager) Objects.requireNonNull(getContext()).getSystemService(LOCATION_SERVICE);
         return service.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
+    /** Ask the user to activate GPS **/
     private void enableDeviceLocation() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         alertDialogBuilder.setTitle(R.string.need_gps_title)
@@ -134,6 +129,11 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                 .show();
     }
 
+    /** Try to get your mobile location.
+     * If is enabled, show yours.
+     * If not:
+     *      * Show your last location
+     *      * Show the default one.**/
     private void getDeviceLocation() {
         try {
             if (mLocationPermissionGranted) {
@@ -176,6 +176,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    /** Show nearby locations to yours **/
     private void showNearbyLocations(double latitude, double longitude) {
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
 
@@ -204,6 +205,21 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    /** Set the config of map Interface **/
+    private void mapUIConfig() {
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.poi_map_style));
+
+        mMap.setOnMarkerClickListener(marker -> {
+            System.out.println(marker.getTag());
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.contenedor, new PoiDetailsFragment(marker.getTag().toString()))
+                    .commit();
+            return false;
         });
     }
 }
