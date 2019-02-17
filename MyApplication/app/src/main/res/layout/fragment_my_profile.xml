@@ -89,8 +89,8 @@
             android:text="@string/Email"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textViewCountryWritten"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCountryWritten" />
+            app:layout_constraintStart_toStartOf="@+id/textViewCityWritten"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCityWritten" />
 
         <TextView
             android:id="@+id/textViewEmailWritten"
@@ -145,7 +145,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewPoisVisited" />
 
         <TextView
-            android:id="@+id/textViewCountry"
+            android:id="@+id/textViewCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -157,15 +157,15 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_edit_profile" />
 
         <TextView
-            android:id="@+id/textViewCountryWritten"
+            android:id="@+id/textViewCityWritten"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="@string/city"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/textViewCountry"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCountry" />
+            app:layout_constraintStart_toStartOf="@+id/textViewCity"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
 
         <TextView
             android:id="@+id/textViewFriends"

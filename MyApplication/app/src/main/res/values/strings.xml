@@ -138,5 +138,6 @@
     <string name="friends">Friends</string>
     <string name="city">City</string>
     <string name="action_logout">Visitoff</string>
+    <string name="no_city">No city</string>
 
 </resources>
