@@ -102,6 +102,7 @@ const poiSchema = new Schema({
     type: Number
   }
 }, {
+    strict: false,
     timestamps: true,
     toJSON: {
       virtuals: true,

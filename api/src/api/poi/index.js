@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, showTranslated, nearIndex } from './controller'
+import { create, index, show, update, destroy, showTranslated, nearIndex, allPOIsAndFavAndVisited } from './controller'
 import { schema } from './model'
 export Poi, { schema } from './model'
 
@@ -101,6 +101,10 @@ router.get('/:id',
 router.get('/:id/:idUserLanguage',
   token({ required: true }),
   showTranslated)
+
+router.get('/favsAndVisited/:id',
+  token({required: true}),
+  allPOIsAndFavAndVisited)
 
 /**
  * @api {put} /pois/:id Update poi

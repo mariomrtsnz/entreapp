@@ -52,7 +52,7 @@ export const allUsersAndFriended = ({ params }, res, next) => {
         users.map((user) => {
           if (userLogged.friends.length != 0) {
             userLogged.friends.forEach(userFriend => {
-              if (_.isEqual(userBadge.toString(), user.id))
+              if (_.isEqual(userFriend.toString(), user.id))
                 user.set('friended', true)
               else
                 user.set('friended', false)  

@@ -67,6 +67,7 @@ const userSchema = new Schema({
     ref: 'User'
   }]
 }, {
+  strict: false,
   timestamps: true
 })
 
