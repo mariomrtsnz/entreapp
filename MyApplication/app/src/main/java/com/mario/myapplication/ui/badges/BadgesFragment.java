@@ -4,10 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,12 +22,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
-import com.mario.myapplication.responses.ResponseContainer;
-import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.BadgeService;
 import com.mario.myapplication.retrofit.services.UserService;
+import com.mario.myapplication.ui.badges.detail.BadgeDetailFragment;
+import com.mario.myapplication.util.BaseFragment;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -45,6 +50,48 @@ public class BadgesFragment extends Fragment {
     private BadgeListener mListener;
     private Context ctx;
     private int mColumnCount = 1;
+
+//    @Override
+//    protected FragmentToolbar builder() {
+//        return new Builder()
+//                .withId(R.id.badges_toolbar)
+//                .withTitle(R.string.badges_toolbar_title)
+//                .withSearchAndFilters(new SearchView.OnQueryTextListener() {
+//                    @Override
+//                    public boolean onQueryTextSubmit(final String query) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onQueryTextChange(final String newText) {
+//                        doActionWithQuery(newText);
+//                        return false;
+//                    }
+//                }, filterClick -> {
+//                    openDrawer();
+//                    return false;
+//                })
+//                .withSearchHint(R.string.search_view_hint)
+//                .onHomePressedDefaultAction()
+//                .build();
+//    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.badges_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     public BadgesFragment() {
         // Required empty public constructor

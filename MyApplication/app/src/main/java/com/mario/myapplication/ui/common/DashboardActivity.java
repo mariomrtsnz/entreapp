@@ -18,6 +18,7 @@ import com.mario.myapplication.responses.CategoryResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
+import com.mario.myapplication.ui.badges.detail.BadgeDetailFragment;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.people.PeopleFragment;
 import com.mario.myapplication.ui.people.details.PeopleDetailsFragment;
@@ -94,6 +95,9 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
 
     @Override
     public void onBadgeClick(View v, BadgeResponse b) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contenedor, new BadgeDetailFragment(b.getId()))
+                .commit();
     }
 
     /*public void clickOnCamera() {

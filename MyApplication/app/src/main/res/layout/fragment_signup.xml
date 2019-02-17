@@ -87,7 +87,7 @@
         android:gravity="center"
         android:text="@string/sign_up_label"
         android:textAllCaps="true"
-        android:textColor="@color/color_label"
+        android:textColor="#FFFFFF"
         android:textSize="@dimen/unfolded_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

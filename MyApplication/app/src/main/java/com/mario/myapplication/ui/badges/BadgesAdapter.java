@@ -20,6 +20,7 @@ import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
+import com.mario.myapplication.ui.badges.detail.BadgeDetailFragment;
 import com.mario.myapplication.util.SvgSoftwareLayerSetter;
 import com.mario.myapplication.util.UtilToken;
 
