@@ -106,7 +106,10 @@ userSchema.methods = {
       email: this.email,
       city: this.city,
       likes: this.likes,
+      favs: this.favs,
+      visited: this.visited,
       language: this.language,
+      friends: this.friends,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
