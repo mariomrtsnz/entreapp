@@ -11,7 +11,6 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="@drawable/login_bg"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -40,10 +39,14 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@color/colorPrimary"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_audioguides_headphones" />
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_audioguides_headphones"
+        app:backgroundTint="@color/color_text"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/app_bar"
+        app:layout_anchorGravity="end|bottom"
+        app:rippleColor="#fff" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
