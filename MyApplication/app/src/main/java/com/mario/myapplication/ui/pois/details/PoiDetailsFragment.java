@@ -7,14 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomViewTarget;
@@ -30,6 +30,7 @@ import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.PoiService;
+import com.mario.myapplication.ui.people.MyPeopleRecyclerViewAdapter;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.Objects;
@@ -43,7 +44,6 @@ public class PoiDetailsFragment extends Fragment {
 
     private final String id;
     private PoiResponse poi;
-    private Toolbar toolbar;
 
     public PoiDetailsFragment(String poiId) {
         id = poiId;
@@ -59,13 +59,9 @@ public class PoiDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_poi_details, container, false);
 
-        toolbar = v.findViewById(R.id.toolbar);
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
-        toolbar.setTitle("");
-
-        FloatingActionButton fab = v.findViewById(R.id.fab);
+       /* FloatingActionButton fab = v.findViewById(R.id.btn_poi_audioguide);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+                .setAction("Action", null).show());*/
 
         return v;
     }
@@ -96,24 +92,9 @@ public class PoiDetailsFragment extends Fragment {
 
     private void setDataOnView() {
         View v = getView();
-        toolbar.setTitle(poi.getName());
+        ((TextView) Objects.requireNonNull(v).findViewById(R.id.tv_poi_name)).setText(Html.fromHtml(poi.getName()));
         ((TextView) Objects.requireNonNull(v).findViewById(R.id.tv_poi_description)).setText(Html.fromHtml(poi.getDescription().getOriginalDescription()));
-        Glide.with(this).load(poi.getCoverImage()).into(new CustomViewTarget<View, Drawable>(Objects.requireNonNull(getView())) {
-            @Override
-            protected void onResourceCleared(@Nullable Drawable placeholder) {
-
-            }
-
-            @Override
-            public void onLoadFailed(@Nullable Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                Objects.requireNonNull(v).findViewById(R.id.app_bar).setBackground(resource);
-            }
-        });
+        Glide.with(this).load(poi.getCoverImage()).into((ImageView) v.findViewById(R.id.iv_poi_image));
 
         ChipGroup cg = Objects.requireNonNull(v).findViewById(R.id.cg_categories);
         for (Category c: poi.getCategories()) {
