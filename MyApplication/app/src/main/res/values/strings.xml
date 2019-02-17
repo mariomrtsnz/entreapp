@@ -139,5 +139,6 @@
     <string name="city">City</string>
     <string name="action_logout">Visitoff</string>
     <string name="no_city">No city</string>
+    <string name="upload">Upload</string>
 
 </resources>

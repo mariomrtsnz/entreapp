@@ -1,7 +1,11 @@
 package com.mario.myapplication.ui.profile;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -21,6 +25,7 @@ import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.CategoryMyProfileResponse;
 import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.LenguageResponseMyProfile;
+import com.mario.myapplication.responses.LoginResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserEditResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
@@ -28,12 +33,21 @@ import com.mario.myapplication.R;
 import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LanguageService;
+import com.mario.myapplication.retrofit.services.LoginService;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.util.UtilToken;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +57,7 @@ public class MyProfileEditFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int READ_REQUEST_CODE = 42;
-
+    Uri uriSelected;
     private UserViewModel mViewModel;
     private EditText editTextName,  editTextCity, editTextemail;
     private Spinner spinnerLanguages;
@@ -107,7 +121,7 @@ public class MyProfileEditFragment extends Fragment {
         // Re-created activities receive the same MyViewModel instance created by the first activity.
 
         super.onCreate(savedInstanceState);
-
+        uriSelected=null;
         mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
         mViewModel.getSelectedUser().observe(getActivity(),
                 user -> {
@@ -135,7 +149,7 @@ public class MyProfileEditFragment extends Fragment {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerLanguages.setAdapter(adapter);
 
-                    //AKIIIIIIII
+
 
                     spinnerPosition = languages.indexOf(updatedUser.getLanguage());
 
@@ -248,12 +262,93 @@ public class MyProfileEditFragment extends Fragment {
         return userEditDto;
     }
 
-    //UPDLOAD PROFILE IMAGE
+    //UPDLOAD PROFILE IMAGE METHODS
     public void performFileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(intent, READ_REQUEST_CODE);
+    }
+    /*public void updateProfileImage () {
+        if (uriSelected != null) {
+
+            LoginService service = ServiceGenerator.createService(LoginService.class);
+
+            try {
+
+                InputStream inputStream = ctx.getContentResolver().openInputStream(uriSelected);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                int cantBytes;
+                byte[] buffer = new byte[1024*4];
+
+                while ((cantBytes = bufferedInputStream.read(buffer,0,1024*4)) != -1) {
+                    baos.write(buffer,0,cantBytes);
+                }
+
+
+                RequestBody requestFile =
+                        RequestBody.create(
+                                MediaType.parse(ctx.getContentResolver().getType(uriSelected)), baos.toByteArray());
+
+
+                MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("avatar", "avatar", requestFile);
+
+
+                RequestBody email = RequestBody.create(MultipartBody.FORM, "luismi.lopez@salesianos.es");
+                RequestBody password = RequestBody.create(MultipartBody.FORM, "12345678");
+
+                Call<LoginResponse> callRegister = service.updateProfilePicture(body, email, password);
+
+                callRegister.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("Uploaded", "Éxito");
+                            Log.d("Uploaded", response.body().toString());
+                        } else {
+                            Log.e("Upload error", response.errorBody().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Log.e("Upload error", t.getMessage());
+                    }
+                });
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }*/
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent resultData) {
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            Uri uri = null;
+            if (resultData != null) {
+                uri = resultData.getData();
+                Log.i("Filechooser URI", "Uri: " + uri.toString());
+                //showImage(uri);
+                Glide
+                        .with(this)
+                        .load(uri)
+                        .into(profile_image);
+                uriSelected = uri;
+                //SUBIR IMAGEN
+
+                // updateProfileImage();
+
+            }
+        }
     }
 }
 

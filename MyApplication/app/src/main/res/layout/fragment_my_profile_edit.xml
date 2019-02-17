@@ -31,11 +31,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_profile_image" />
+
         <Button
             android:id="@+id/btn_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/roundbtn"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -44,8 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPointsWritten_details"
-            tools:text="@string/edit_profile"
-            />
+            tools:text="@string/save" />
 
         <TextView
             android:id="@+id/textViewName_details"
@@ -141,5 +142,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewEmail_details"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmail_details" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
