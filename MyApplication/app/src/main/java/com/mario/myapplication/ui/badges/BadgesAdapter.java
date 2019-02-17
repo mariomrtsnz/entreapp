@@ -61,15 +61,8 @@ class BadgesAdapter extends RecyclerView.Adapter<BadgesAdapter.ViewHolder> {
         viewHolder.title.setText(data.get(i).getName());
         viewHolder.body.setText(data.get(i).getDescription());
         viewHolder.points.setText(String.valueOf(data.get(i).getPoints()));
-        for (BadgeResponse badgeResponse : data) {
-            System.out.println(badgeResponse.getName());
-//            System.out.println(badgeResponse.isEarned());
-            if (badgeResponse.isEarned()) {
-                System.out.println(badgeResponse.isEarned());
-                viewHolder.earned.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.earned.setVisibility(View.GONE);
-            }
+        if (data.get(i).isEarned()) {
+            viewHolder.earned.setVisibility(View.VISIBLE);
         }
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {

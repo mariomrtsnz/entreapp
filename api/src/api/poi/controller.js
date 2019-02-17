@@ -1,7 +1,9 @@
 import { success, notFound } from '../../services/response/'
 import { Poi } from '.'
+import { User } from '../user'
 import mongoose from '../../services/mongoose'
 import QRCode from 'qrcode'
+import _ from 'lodash';
 
 export const create = ({ bodymen: { body } }, res, next) => {
   body.coverImage = body.images[0];
@@ -52,6 +54,40 @@ export const show = ({ params }, res, next) =>
     .then((poi) => poi ? poi.view(1) : null)
     .then(success(res))
     .catch(next)
+
+export const allPOIsAndFavAndVisited = ({ params }, res, next) => {
+  let userLogged = null;
+  User.findById(params.id).then(user => userLogged = user)
+  .then( user => {
+    Poi.find().populate('categories', 'id name').then(pois => {
+      return new Promise(function(res, rej) {
+        pois.map((poi) => {
+          if (userLogged.favs.length != 0) {
+            userLogged.favs.forEach(userFav => {
+              if (_.isEqual(userFav.toString(), poi.id))
+                poi.set('fav', true)
+              else
+                poi.set('fav', false)
+            });
+          } else {
+            poi.set('fav', false)
+          }
+          if (userLogged.visited.length != 0) {
+            userLogged.visited.forEach(userVisited => {
+              if (_.isEqual(userVisited.toString(), poi.id))
+                poi.set('visited', true)
+              else
+                poi.set('visited', false)
+            });
+          } else {
+            poi.set('visited', false)
+          }
+        });
+        res(pois);
+      });
+    }).then(success(res)).catch(next);
+  })
+}
 
 export const update = ({ bodymen: { body }, params }, res, next) =>
   Poi.findById(params.id)

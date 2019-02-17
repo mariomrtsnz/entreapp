@@ -10,6 +10,7 @@ import {
 } from '../../services/jwt'
 import {roles} from './model'
 import {Language} from '../language'
+import _ from 'lodash';
 
 export const index = ({
     querymen: {
@@ -41,6 +42,30 @@ export const show = ({params}, res, next) =>
   .then((user) => user ? user.view("true") : null)
   .then(success(res))
   .catch(next)
+
+export const allUsersAndFriended = ({ params }, res, next) => {
+  let userLogged = null;
+  User.findById(params.id).then(user => userLogged = user)
+  .then( user => {
+    User.find().populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
+      return new Promise(function(res, rej) {
+        users.map((user) => {
+          if (userLogged.friends.length != 0) {
+            userLogged.friends.forEach(userFriend => {
+              if (_.isEqual(userBadge.toString(), user.id))
+                user.set('friended', true)
+              else
+                user.set('friended', false)  
+            });
+          } else {
+            badge.set('friended', false)
+          }
+        });
+        res(users);
+      });
+    }).then(success(res)).catch(next);
+  })
+}
 
 export const showMe = ({
     user

@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, updateRole, destroy, obtainRoles } from './controller'
+import { index, showMe, show, create, update, updatePassword, updateRole, destroy, obtainRoles, allUsersAndFriended } from './controller'
 import { schema } from './model'
 export User, { schema } from './model'
 
@@ -24,6 +24,10 @@ router.get('/',
   token({ required: true }),
   query(),
   index)
+
+router.get('/friended/:id',
+  token({required: true}),
+  allUsersAndFriended)
 
 router.get('/roles',
   token({ required: true, roles: ['admin'] }),
