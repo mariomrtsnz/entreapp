@@ -28,7 +28,7 @@ public class MyProfileResponse {
 
     private String createAt;
     private String city;
-    private LenguageResponseMyProfile language;
+    private LanguageResponse language;
     private List<String> favs = new ArrayList<>();
     private List<String> friends = new ArrayList<>();
     private List<String> visited = new ArrayList<>();
@@ -38,7 +38,7 @@ public class MyProfileResponse {
     public MyProfileResponse() {
     }
 
-    public MyProfileResponse(String id, String name, String role, String picture, String password, String email, String createAt, String city, LenguageResponseMyProfile language, List<String> favs, List<String> friends, List<String> visited, List<BadgesMyProfileResponse> badges, List<CategoryMyProfileResponse> likes) {
+    public MyProfileResponse(String id, String name, String role, String picture, String password, String email, String createAt, String city, LanguageResponse language, List<String> favs, List<String> friends, List<String> visited, List<BadgesMyProfileResponse> badges, List<CategoryMyProfileResponse> likes) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -119,11 +119,11 @@ public class MyProfileResponse {
         this.city = city;
     }
 
-    public LenguageResponseMyProfile getLanguage() {
+    public LanguageResponse getLanguage() {
         return language;
     }
 
-    public void setLanguage(LenguageResponseMyProfile language) {
+    public void setLanguage(LanguageResponse language) {
         this.language = language;
     }
 

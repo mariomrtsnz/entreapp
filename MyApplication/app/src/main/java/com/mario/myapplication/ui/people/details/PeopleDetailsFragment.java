@@ -23,7 +23,6 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
 import com.mario.myapplication.util.UtilToken;
 
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -173,7 +172,7 @@ public class PeopleDetailsFragment extends Fragment {
         textViewPoisWritten = view.findViewById(R.id.textViewPoisVisitedWritten_details);
         textViewName = view.findViewById(R.id.textViewName_details);
         textViewPointsWritten = view.findViewById(R.id.textViewPointsWritten_details);
-        profile_image = view.findViewById(R.id.profile_image_details);
+        profile_image = view.findViewById(R.id.edit_profile_image);
         texViewCountryWritten = view.findViewById(R.id.textViewCountryWritten_details);
 
     }

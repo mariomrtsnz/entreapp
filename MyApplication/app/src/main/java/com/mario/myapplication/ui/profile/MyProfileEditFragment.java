@@ -1,5 +1,6 @@
 package com.mario.myapplication.ui.profile;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -11,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.CategoryMyProfileResponse;
 import com.mario.myapplication.responses.LanguageResponse;
+import com.mario.myapplication.responses.LenguageResponseMyProfile;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserEditResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
@@ -38,9 +42,12 @@ public class MyProfileEditFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int READ_REQUEST_CODE = 42;
+
     private UserViewModel mViewModel;
     private EditText editTextName,  editTextCity, editTextemail;
     private Spinner spinnerLanguages;
+    private ImageView profile_image;
     private MyProfileResponse updatedUser;
     private MyProfileInteractionListener mListener;
     LanguageService service;
@@ -109,6 +116,7 @@ public class MyProfileEditFragment extends Fragment {
                 //setItemsFragment(user);
                 });
     }
+
     public void loadAllLanguages(){
         service = ServiceGenerator.createService(LanguageService.class,
                 jwt, AuthType.JWT);
@@ -117,6 +125,7 @@ public class MyProfileEditFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseContainer<LanguageResponse>> call, Response<ResponseContainer<LanguageResponse>> response) {
                 if (response.isSuccessful()) {
+                    int spinnerPosition=1;
                     Log.d("successLanguage", "languageObtained");
                     languages = response.body().getRows();
                     System.out.println(languages);
@@ -125,6 +134,14 @@ public class MyProfileEditFragment extends Fragment {
                             new ArrayAdapter<LanguageResponse>(ctx, android.R.layout.simple_spinner_dropdown_item, languages);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerLanguages.setAdapter(adapter);
+
+                    //AKIIIIIIII
+
+                    spinnerPosition = languages.indexOf(updatedUser.getLanguage());
+
+
+
+                    spinnerLanguages.setSelection(spinnerPosition);
 
                 } else {
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
@@ -138,6 +155,7 @@ public class MyProfileEditFragment extends Fragment {
             }
         });
     }
+
     //own methods
     public void loadItemsFragment(View view) {
         spinnerLanguages = view.findViewById(R.id.spinnerLanguage);
@@ -145,38 +163,61 @@ public class MyProfileEditFragment extends Fragment {
         editTextemail=view.findViewById(R.id.editTextEmail);
         editTextName=view.findViewById(R.id.editTextName);
         btn_save =view.findViewById(R.id.btn_edit_profile);
+        profile_image = view.findViewById(R.id.edit_profile_image);
     }
+    public void updateUserCall(UserEditDto userEditDto) {
+        userService = ServiceGenerator.createService(UserService.class,
+                jwt, AuthType.JWT);
+        Call<UserEditResponse> editUser = userService.editUser(updatedUser.getId(), userEditDto);
+        editUser.enqueue(new Callback<UserEditResponse>() {
+            @Override
+            public void onResponse(Call<UserEditResponse> call, Response<UserEditResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d("success editing user", "userUpdated");
+
+                    //move to my profile fragment
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contenedor, new MyProfileFragment())
+                            .commit();
+
+                } else {
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserEditResponse> call, Throwable t) {
+                Log.d("onFailure", "Fail in the request");
+                Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
     public void setItemsFragment(MyProfileResponse user){
+        //upload profile image
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performFileSearch();
+
+            }
+        });
+
+        //edit user
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                UserEditDto userEditDto = myProfileResponseToUserEditDto(user);
-                userService = ServiceGenerator.createService(UserService.class,
-                        jwt, AuthType.JWT);
-                Call<UserEditResponse> editUser = userService.editUser(updatedUser.getId(), userEditDto);
-                editUser.enqueue(new Callback<UserEditResponse>() {
-                    @Override
-                    public void onResponse(Call<UserEditResponse> call, Response<UserEditResponse> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("success editing user", "userUpdated");
-
-                            System.out.println(response);
-
-                        } else {
-                            Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserEditResponse> call, Throwable t) {
-                        Log.d("onFailure", "Fail in the request");
-                        Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
-                    }
-                });
+                updateUserCall(myProfileResponseToUserEditDto(user));
 
             }
         });
+        //image
+        Glide.with(ctx)
+                .load(user.getPicture().toString())
+                .into(profile_image);
         editTextName.setText(user.getName());
         editTextemail.setText(user.getEmail());
         if (user.getcity()!=null){
@@ -205,6 +246,14 @@ public class MyProfileEditFragment extends Fragment {
 
 
         return userEditDto;
+    }
+
+    //UPDLOAD PROFILE IMAGE
+    public void performFileSearch() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent, READ_REQUEST_CODE);
     }
 }
 

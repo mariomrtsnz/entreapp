@@ -177,12 +177,12 @@ public class MyProfileFragment extends Fragment {
             }
         });
         //open my pictures
-        profile_image.setOnClickListener(new View.OnClickListener() {
+        /*profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 performFileSearch();
             }
-        });
+        });*/
         System.out.println(myProfileResponse.getLikes());
 
 
