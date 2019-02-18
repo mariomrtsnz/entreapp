@@ -91,6 +91,7 @@ public class PeopleDetailsFragment extends Fragment {
         if (jwt == null) {
             Intent i = new Intent(getActivity(), LoginActivity.class);
             startActivity(i);
+
         }
     }
 
