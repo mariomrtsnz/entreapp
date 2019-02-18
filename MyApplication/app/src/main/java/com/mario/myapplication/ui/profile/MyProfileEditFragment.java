@@ -269,7 +269,7 @@ public class MyProfileEditFragment extends Fragment {
         intent.setType("image/*");
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
-    /*public void updateProfileImage () {
+    public void updateProfileImage () {
         if (uriSelected != null) {
 
             LoginService service = ServiceGenerator.createService(LoginService.class);
@@ -296,14 +296,14 @@ public class MyProfileEditFragment extends Fragment {
                         MultipartBody.Part.createFormData("avatar", "avatar", requestFile);
 
 
-                RequestBody email = RequestBody.create(MultipartBody.FORM, "luismi.lopez@salesianos.es");
+                RequestBody id = RequestBody.create(MultipartBody.FORM, updatedUser.getId());
                 RequestBody password = RequestBody.create(MultipartBody.FORM, "12345678");
 
-                Call<LoginResponse> callRegister = service.updateProfilePicture(body, email, password);
+                Call<MyProfileResponse> callRegister = userService.uploadPictureProfile(body, id);
 
-                callRegister.enqueue(new Callback<LoginResponse>() {
+                callRegister.enqueue(new Callback<MyProfileResponse>() {
                     @Override
-                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
                         if (response.isSuccessful()) {
                             Log.d("Uploaded", "Éxito");
                             Log.d("Uploaded", response.body().toString());
@@ -313,7 +313,7 @@ public class MyProfileEditFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    public void onFailure(Call<MyProfileResponse> call, Throwable t) {
                         Log.e("Upload error", t.getMessage());
                     }
                 });
@@ -327,7 +327,7 @@ public class MyProfileEditFragment extends Fragment {
 
 
         }
-    }*/
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
