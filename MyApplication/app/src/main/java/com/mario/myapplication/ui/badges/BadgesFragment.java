@@ -79,11 +79,11 @@ public class BadgesFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.ascending:
                 if (asc) {
-                    this.asc = true;
                     listBadgesAndEarnedSort(UtilToken.getId(ctx));
+                    this.asc = !this.asc;
                 } else {
-                    this.asc = false;
                     listBadgesAndEarnedSort(UtilToken.getId(ctx));
+                    this.asc = !this.asc;
                 }
         }
         return super.onOptionsItemSelected(item);
@@ -129,9 +129,9 @@ public class BadgesFragment extends Fragment {
         BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
         Call<List<BadgeResponse>> call = null;
         if (asc) {
-            call = service.listBadgesAndEarned(userId, "-points");
+            call = service.listBadgesAndEarned("-points");
         } else {
-            call = service.listBadgesAndEarned(userId, "points");
+            call = service.listBadgesAndEarned("points");
         }
         call.enqueue(new Callback<List<BadgeResponse>>() {
             @Override
