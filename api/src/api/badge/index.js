@@ -47,8 +47,9 @@ router.get('/',
   query(),
   index)
 
-router.get('/earned/:id',
+router.get('/earned',
   token({required: true}),
+  query(),
   allBadgesAndEarned)
 
 /**

@@ -8,6 +8,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface BadgeService {
@@ -20,6 +21,9 @@ public interface BadgeService {
     @GET(BASE_URL + "/{id}")
     Call<BadgeResponse> getBadge(@Path("id") String id);
 
-    @GET(BASE_URL + "/earned/{id}")
-    Call<List<BadgeResponse>> listBadgesAndEarned(@Path("id") String id);
+    @GET(BASE_URL + "/earned")
+    Call<List<BadgeResponse>> listBadgesAndEarned();
+
+    @GET(BASE_URL + "/earned")
+    Call<List<BadgeResponse>> listBadgesAndEarned(@Query("sort") String points);
 }

@@ -9,13 +9,6 @@
         android:title="Ascending"/>
 
     <item
-        android:id="@+id/descending"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_baseline_sort_down_24px"
-        android:title="Descending"/>
-
-    <item
         android:id="@+id/badges_search"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"

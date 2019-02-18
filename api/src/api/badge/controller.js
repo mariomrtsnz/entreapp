@@ -21,22 +21,20 @@ export const create = ({ bodymen: { body } }, res, next) => {
     .catch(next)
 }
 
-  export const index = ({ querymen: { query, select, cursor } }, res, next) =>
-  Badge.count(query)
-    .then(count => Badge.find(query, select, cursor).populate('pois', 'id name')
-      .then((badges) => ({
-        count,
-        rows: badges.map((badge) => badge.view())
-      }))
-    )
-    .then(success(res))
-    .catch(next)
+export const index = ({ querymen: { query, select, cursor } }, res, next) =>
+Badge.count(query)
+  .then(count => Badge.find(query, select, cursor).populate('pois', 'id name')
+    .then((badges) => ({
+      count,
+      rows: badges.map((badge) => badge.view())
+    }))
+  )
+  .then(success(res))
+  .catch(next)
   
-export const allBadgesAndEarned = ({ params }, res, next) => {
-  let userLogged = null;
-  User.findById(params.id).then(user => userLogged = user)
-  .then( user => {
-    Badge.find().populate('pois', 'id name').then(badges => {
+export const allBadgesAndEarned = ({ querymen: { query, select, cursor } }, res, next) => {
+  const userLogged = res.req.user;
+    Badge.find(query, select, cursor).populate('pois', 'id name').then(badges => {
       return new Promise(function(res, rej) {
         badges.map((badge) => {
           if (userLogged.badges.length != 0) {
@@ -53,7 +51,6 @@ export const allBadgesAndEarned = ({ params }, res, next) => {
         res(badges);
       });
     }).then(success(res)).catch(next);
-  })
 }
 
 export const show = ({ params }, res, next) =>
