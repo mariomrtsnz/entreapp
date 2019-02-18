@@ -2,6 +2,7 @@ package com.mario.myapplication.ui.profile;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.CategoryMyProfileResponse;
 import com.mario.myapplication.responses.LanguageResponse;
@@ -56,8 +61,9 @@ public class MyProfileEditFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final int READ_REQUEST_CODE = 42;
-    Uri uriSelected;
+    private static final int RESULT_OK = 73;
+    private Uri filePath;
+    private final int PICK_IMAGE_REQUEST = 71;
     private UserViewModel mViewModel;
     private EditText editTextName,  editTextCity, editTextemail;
     private Spinner spinnerLanguages;
@@ -70,6 +76,8 @@ public class MyProfileEditFragment extends Fragment {
     private String jwt;
     private String userId;
     private Button btn_save;
+    private StorageReference mStorage;
+    private DatabaseReference mDataBaseRef;
     List<LanguageResponse> languages;
 
     public MyProfileEditFragment() {
@@ -121,7 +129,8 @@ public class MyProfileEditFragment extends Fragment {
         // Re-created activities receive the same MyViewModel instance created by the first activity.
 
         super.onCreate(savedInstanceState);
-        uriSelected=null;
+        mStorage=FirebaseStorage.getInstance().getReference("uploads");
+        filePath=null;
         mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
         mViewModel.getSelectedUser().observe(getActivity(),
                 user -> {
@@ -264,91 +273,39 @@ public class MyProfileEditFragment extends Fragment {
 
     //UPDLOAD PROFILE IMAGE METHODS
     public void performFileSearch() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        Intent intent = new Intent();
         intent.setType("image/*");
-        startActivityForResult(intent, READ_REQUEST_CODE);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
-    public void updateProfileImage () {
-        if (uriSelected != null) {
 
-            LoginService service = ServiceGenerator.createService(LoginService.class);
-
-            try {
-
-                InputStream inputStream = ctx.getContentResolver().openInputStream(uriSelected);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-                int cantBytes;
-                byte[] buffer = new byte[1024*4];
-
-                while ((cantBytes = bufferedInputStream.read(buffer,0,1024*4)) != -1) {
-                    baos.write(buffer,0,cantBytes);
-                }
-
-
-                RequestBody requestFile =
-                        RequestBody.create(
-                                MediaType.parse(ctx.getContentResolver().getType(uriSelected)), baos.toByteArray());
-
-
-                MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("avatar", "avatar", requestFile);
-
-
-                RequestBody id = RequestBody.create(MultipartBody.FORM, updatedUser.getId());
-                RequestBody password = RequestBody.create(MultipartBody.FORM, "12345678");
-
-                Call<MyProfileResponse> callRegister = userService.uploadPictureProfile(body, id);
-
-                callRegister.enqueue(new Callback<MyProfileResponse>() {
-                    @Override
-                    public void onResponse(Call<MyProfileResponse> call, Response<MyProfileResponse> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("Uploaded", "Éxito");
-                            Log.d("Uploaded", response.body().toString());
-                        } else {
-                            Log.e("Upload error", response.errorBody().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<MyProfileResponse> call, Throwable t) {
-                        Log.e("Upload error", t.getMessage());
-                    }
-                });
-
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 
+        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
+        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
+        // response to some other intent, and the code below shouldn't run at all.
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            // The document selected by the user won't be returned in the intent.
+            // Instead, a URI to that document will be contained in the return intent
+            // provided to this method as a parameter.
+            // Pull that URI using resultData.getData().
             Uri uri = null;
             if (resultData != null) {
-                uri = resultData.getData();
-                Log.i("Filechooser URI", "Uri: " + uri.toString());
+                filePath =resultData.getData();
+                Log.i("Filechooser URI", "Uri: " + filePath.toString());
                 //showImage(uri);
                 Glide
                         .with(this)
-                        .load(uri)
+                        .load(filePath)
                         .into(profile_image);
-                uriSelected = uri;
-                //SUBIR IMAGEN
-
-                // updateProfileImage();
 
             }
         }
     }
+
+
 }
 
