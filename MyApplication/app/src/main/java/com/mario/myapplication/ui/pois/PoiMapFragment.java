@@ -8,6 +8,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -37,6 +40,7 @@ import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.PoiService;
 import com.mario.myapplication.ui.pois.details.PoiDetailsFragment;
+import com.mario.myapplication.ui.pois.list.PoiListFragment;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.Objects;
@@ -62,6 +66,25 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     // POIs
     private String jwt;
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_poi_map, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_poi_map_goList) {
+            getFragmentManager().beginTransaction().replace(R.id.contenedor, new PoiListFragment()).commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -180,7 +203,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     private void showNearbyLocations(double latitude, double longitude) {
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
 
-        String coords = latitude + "," + longitude;
+        String coords = longitude + "," + latitude;
         Call<ResponseContainer<PoiResponse>> call = service.listPois(coords, 5000);
 
         call.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
@@ -192,7 +215,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
                     mMap.clear();
                     for (PoiResponse i : Objects.requireNonNull(response.body()).getRows()) {
                         mMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(i.getloc().getCoordinates()[0], i.getloc().getCoordinates()[1]))
+                                .position(new LatLng(i.getLoc().getCoordinates()[0], i.getLoc().getCoordinates()[1]))
                                 .title(i.getName())
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_icon))
                         ).setTag(i.getId());
@@ -215,7 +238,6 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(Objects.requireNonNull(getContext()), R.raw.poi_map_style));
 
         mMap.setOnMarkerClickListener(marker -> {
-            System.out.println(marker.getTag());
             Objects.requireNonNull(getFragmentManager()).beginTransaction()
                     .replace(R.id.contenedor, new PoiDetailsFragment(Objects.requireNonNull(marker.getTag()).toString()))
                     .commit();
