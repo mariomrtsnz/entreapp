@@ -85,8 +85,10 @@ public class MyProfileEditFragment extends Fragment {
     private String userId;
     private Button btn_save;
     FirebaseStorage storage;
+    String fireBaSeUrl;
     StorageReference storageReference;
     List<LanguageResponse> languages;
+    private String urlUploadedPicture=null;
 
     public MyProfileEditFragment() {
     }
@@ -138,6 +140,7 @@ public class MyProfileEditFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         filePath=null;
+        fireBaSeUrl="https://firebasestorage.googleapis.com/v0/b/";
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
@@ -329,9 +332,14 @@ public class MyProfileEditFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            System.out.println("AQUIIIIIIII");
-                            System.out.println(ref);
-                            //System.out.println(ref.toString().substring(3));
+                            //obtain url
+
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    urlUploadedPicture=uri.toString();
+                                }
+                            });
 
                             progressDialog.dismiss();
                             Toast.makeText(ctx, "Uploaded", Toast.LENGTH_SHORT).show();
