@@ -27,6 +27,7 @@ import com.mario.myapplication.responses.LanguageResponse;
 import com.mario.myapplication.responses.LoginResponse;
 import com.mario.myapplication.responses.Register;
 import com.mario.myapplication.responses.ResponseContainer;
+import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.LanguageService;
 import com.mario.myapplication.retrofit.services.LoginService;
@@ -57,30 +58,13 @@ public class SignUpFragment extends AuthFragment {
     Spinner language;
     Context ctx = this.getContext();
     List<LanguageResponse> languageList = new ArrayList<>();
-    List<String> languageNames = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        loadAllLanguages();
 
-        LanguageService service = ServiceGenerator.createService(LanguageService.class);
-
-        Call<ResponseContainer<LanguageResponse>> call = service.listLanguages();
-        call.enqueue(new retrofit2.Callback<ResponseContainer<LanguageResponse>>() {
-            @Override
-            public void onResponse(Call<ResponseContainer<LanguageResponse>> call, Response<ResponseContainer<LanguageResponse>> response) {
-                if (response.code() != 200) {
-          //          Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
-                } else {
-                    languageList = response.body().getRows();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseContainer<LanguageResponse>> call, Throwable t) {
-
-            }
-        });
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -93,12 +77,7 @@ public class SignUpFragment extends AuthFragment {
         password_input = getActivity().findViewById(R.id.password_input_edit_sign);
         confirm_password = getActivity().findViewById(R.id.confirm_password_edit);
         language = getActivity().findViewById(R.id.language);
-
-        languageNames = UserStringList.arrayLanguages(languageList);
-        final ArrayAdapter<LanguageResponse> spinnerArrayAdapter = new ArrayAdapter<>(
-                getActivity(),R.layout.spinner_item,languageList);
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        language.setAdapter(spinnerArrayAdapter);
+        loadAllLanguages();
 
         if (this.getContext() != null) {
             view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_sign_up));
@@ -133,6 +112,38 @@ public class SignUpFragment extends AuthFragment {
     @Override
     public int authLayout() {
         return R.layout.fragment_signup;
+    }
+
+    public void loadAllLanguages(){
+        LanguageService service = ServiceGenerator.createService(LanguageService.class);
+        Call<ResponseContainer<LanguageResponse>> getAllLanguages = service.listLanguages();
+        getAllLanguages.enqueue(new retrofit2.Callback<ResponseContainer<LanguageResponse>>() {
+            @Override
+            public void onResponse(Call<ResponseContainer<LanguageResponse>> call, Response<ResponseContainer<LanguageResponse>> response) {
+                if (response.isSuccessful()) {
+                    int spinnerPosition=1;
+                    Log.d("successLanguage", "languageObtained");
+                    languageList = response.body().getRows();
+                    System.out.println(languageList);
+
+                    ArrayAdapter<LanguageResponse> adapter =
+                            new ArrayAdapter<LanguageResponse>(ctx, android.R.layout.simple_spinner_dropdown_item, languageList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    language.setAdapter(adapter);
+
+                    language.setSelection(languageList.size()-1);
+
+                } else {
+                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContainer<LanguageResponse>> call, Throwable t) {
+                Log.d("onFailure", "Fail in the request");
+                Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

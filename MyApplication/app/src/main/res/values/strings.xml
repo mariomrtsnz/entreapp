@@ -12,7 +12,7 @@
     <string name="sharedpreferences_filename">login</string>
     <string name="jwt_key">JWT_KEY</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_activity_dashboard">VisitOn</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -140,5 +140,7 @@
     <string name="action_logout">Visitoff</string>
     <string name="no_city">No city</string>
     <string name="upload">Upload</string>
+    <string name="search_view_hint">Search by name</string>
+    <string name="badges_toolbar_title">Badges</string>
 
 </resources>

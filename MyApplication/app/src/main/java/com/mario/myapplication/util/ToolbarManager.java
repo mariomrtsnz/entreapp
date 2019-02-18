@@ -37,4 +37,9 @@ public class ToolbarManager {
             }
         }
     }
+
+//    public void withSearchAndFilter(Toolbar onQueryTextListener) {
+//        onSearchQueryChange = new onQueryTextListener();
+//        onFilterClickListener = new filterClickListener();
+//    }
 }

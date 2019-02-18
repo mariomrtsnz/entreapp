@@ -26,8 +26,8 @@ import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.BadgeService;
 import com.mario.myapplication.retrofit.services.UserService;
-import com.mario.myapplication.ui.badges.detail.BadgeDetailFragment;
 import com.mario.myapplication.util.BaseFragment;
+import com.mario.myapplication.util.FragmentToolbar;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
@@ -54,25 +54,8 @@ public class BadgesFragment extends Fragment {
 //    @Override
 //    protected FragmentToolbar builder() {
 //        return new Builder()
-//                .withId(R.id.badges_toolbar)
+//                .withMenu(R.menu.badges_menu)
 //                .withTitle(R.string.badges_toolbar_title)
-//                .withSearchAndFilters(new SearchView.OnQueryTextListener() {
-//                    @Override
-//                    public boolean onQueryTextSubmit(final String query) {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean onQueryTextChange(final String newText) {
-//                        doActionWithQuery(newText);
-//                        return false;
-//                    }
-//                }, filterClick -> {
-//                    openDrawer();
-//                    return false;
-//                })
-//                .withSearchHint(R.string.search_view_hint)
-//                .onHomePressedDefaultAction()
 //                .build();
 //    }
 
