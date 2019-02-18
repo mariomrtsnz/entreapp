@@ -44,9 +44,7 @@ export const show = ({params}, res, next) =>
   .catch(next)
 
 export const allUsersAndFriended = ({ params }, res, next) => {
-  let userLogged = null;
-  User.findById(params.id).then(user => userLogged = user)
-  .then( user => {
+  const userLogged = res.req.user;
     User.find().populate('badges', 'id points').populate('likes', 'id name').populate('language').then(users => {
       return new Promise(function(res, rej) {
         users.map((user) => {
@@ -64,7 +62,6 @@ export const allUsersAndFriended = ({ params }, res, next) => {
         res(users);
       });
     }).then(success(res)).catch(next);
-  })
 }
 
 export const showMe = ({

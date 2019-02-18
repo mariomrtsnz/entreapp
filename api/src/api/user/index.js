@@ -25,7 +25,7 @@ router.get('/',
   query(),
   index)
 
-router.get('/friended/:id',
+router.get('/friended',
   token({required: true}),
   allUsersAndFriended)
 
