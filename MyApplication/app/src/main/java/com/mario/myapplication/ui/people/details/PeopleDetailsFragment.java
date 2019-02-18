@@ -2,6 +2,7 @@ package com.mario.myapplication.ui.people.details;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import com.mario.myapplication.responses.MyProfileResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
+import com.mario.myapplication.ui.login.LoginActivity;
 import com.mario.myapplication.util.UtilToken;
 
 import retrofit2.Call;
@@ -87,6 +89,8 @@ public class PeopleDetailsFragment extends Fragment {
         jwt = UtilToken.getToken(ctx);
         userId = UtilToken.getId(ctx);
         if (jwt == null) {
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            startActivity(i);
         }
     }
 
