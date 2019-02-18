@@ -128,15 +128,15 @@ public class PeopleFragment extends Fragment {
 
             users = new ArrayList<>();
             UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-            Call<ResponseContainer<PeopleResponse>> callList = service.listUsersAndFriended(idUser);
+            Call<List<PeopleResponse>> callList = service.listUsersAndFriended(idUser);
 
-            callList.enqueue(new Callback<ResponseContainer<PeopleResponse>>() {
+            callList.enqueue(new Callback<List<PeopleResponse>>() {
                 @Override
-                public void onResponse(Call<ResponseContainer<PeopleResponse>> call, Response<ResponseContainer<PeopleResponse>> response) {
+                public void onResponse(Call<List<PeopleResponse>> call, Response<List<PeopleResponse>> response) {
                     if (response.code() != 200) {
                         Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
                     } else {
-                        users = response.body().getRows();
+                        users = response.body();
                         adapter = new MyPeopleRecyclerViewAdapter( getFragmentManager(), ctx, users, mListener);
                         recyclerView.setAdapter(adapter);
 
@@ -145,7 +145,7 @@ public class PeopleFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseContainer<PeopleResponse>> call, Throwable t) {
+                public void onFailure(Call<List<PeopleResponse>> call, Throwable t) {
                     Log.e("NetworkFailure", t.getMessage());
                     Toast.makeText(getActivity(), "Network Failure", Toast.LENGTH_SHORT).show();
                 }

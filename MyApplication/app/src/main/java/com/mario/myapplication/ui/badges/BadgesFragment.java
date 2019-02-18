@@ -104,7 +104,7 @@ public class BadgesFragment extends Fragment {
 
     public void listBadgesAndEarned(String userId) {
         BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
-        Call<List<BadgeResponse>> call = service.listBadgesAndEarned(userId);
+        Call<List<BadgeResponse>> call = service.listBadgesAndEarned();
         call.enqueue(new Callback<List<BadgeResponse>>() {
             @Override
             public void onResponse(Call<List<BadgeResponse>> call, Response<List<BadgeResponse>> response) {
