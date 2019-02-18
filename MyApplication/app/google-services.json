@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "223687602124",
+    "firebase_url": "https://entreapp-erasmus.firebaseio.com",
+    "project_id": "entreapp-erasmus",
+    "storage_bucket": "entreapp-erasmus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223687602124:android:74388b9bf41645c7",
+        "android_client_info": {
+          "package_name": "com.mario.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223687602124-s8sgthd21eedof4uhf5viot0amk1td99.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuz69t8tUnMgQ58mnIVWTlhMakvfGBV2s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
