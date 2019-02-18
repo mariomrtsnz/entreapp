@@ -331,7 +331,7 @@ public class MyProfileEditFragment extends Fragment {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             System.out.println("AQUIIIIIIII");
                             System.out.println(ref);
-                            System.out.println(ref.toString().substring(3));
+                            //System.out.println(ref.toString().substring(3));
 
                             progressDialog.dismiss();
                             Toast.makeText(ctx, "Uploaded", Toast.LENGTH_SHORT).show();
