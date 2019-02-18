@@ -58,7 +58,7 @@ export const allUsersAndFriended = ({ params }, res, next) => {
                 user.set('friended', false)  
             });
           } else {
-            badge.set('friended', false)
+            user.set('friended', false)
           }
         });
         res(users);

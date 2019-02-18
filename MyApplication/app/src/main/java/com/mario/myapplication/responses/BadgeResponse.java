@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BadgeResponse {
+public class BadgeResponse{
     private String id;
     private String name;
     private int points;

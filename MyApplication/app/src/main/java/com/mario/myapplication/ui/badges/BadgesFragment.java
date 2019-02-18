@@ -31,6 +31,8 @@ import com.mario.myapplication.util.FragmentToolbar;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,6 +52,7 @@ public class BadgesFragment extends Fragment {
     private BadgeListener mListener;
     private Context ctx;
     private int mColumnCount = 1;
+    private boolean asc;
 
 //    @Override
 //    protected FragmentToolbar builder() {
@@ -73,6 +76,16 @@ public class BadgesFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ascending:
+                if (asc) {
+                    listBadgesAndEarnedSort(UtilToken.getId(ctx));
+                    this.asc = !this.asc;
+                } else {
+                    listBadgesAndEarnedSort(UtilToken.getId(ctx));
+                    this.asc = !this.asc;
+                }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -92,6 +105,34 @@ public class BadgesFragment extends Fragment {
     public void listBadgesAndEarned(String userId) {
         BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
         Call<List<BadgeResponse>> call = service.listBadgesAndEarned(userId);
+        call.enqueue(new Callback<List<BadgeResponse>>() {
+            @Override
+            public void onResponse(Call<List<BadgeResponse>> call, Response<List<BadgeResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    items = response.body();
+                    adapter = new BadgesAdapter(ctx, items, mListener);
+                    recycler.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BadgeResponse>> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void listBadgesAndEarnedSort(String userId) {
+        BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
+        Call<List<BadgeResponse>> call = null;
+        if (asc) {
+            call = service.listBadgesAndEarned("-points");
+        } else {
+            call = service.listBadgesAndEarned("points");
+        }
         call.enqueue(new Callback<List<BadgeResponse>>() {
             @Override
             public void onResponse(Call<List<BadgeResponse>> call, Response<List<BadgeResponse>> response) {
