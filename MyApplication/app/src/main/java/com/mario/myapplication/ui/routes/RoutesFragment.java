@@ -32,14 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RoutesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RoutesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class RoutesFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -145,7 +138,7 @@ public class RoutesFragment extends Fragment {
             mListener = (RouteListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement RouteListener");
         }
     }
 

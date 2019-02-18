@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         final ImageView background = findViewById(R.id.scrolling_background);
         int[] screenSize = screenSize();
 
+        getSupportActionBar().hide();
+
 /*    for (ImageView element : sharedElements) {
       @ColorRes int color = element.getId() != R.id.logo ? R.color.white_transparent : R.color.color_logo_log_in;
       DrawableCompat.setTint(element.getDrawable(), ContextCompat.getColor(this, color));
