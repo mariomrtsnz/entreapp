@@ -7,6 +7,8 @@ import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserEditResponse;
 import com.mario.myapplication.responses.UserResponse;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -34,7 +36,7 @@ public interface UserService {
      */
 
     @GET(BASE_URL + "/friended/{id}")
-    Call<ResponseContainer<PeopleResponse>> listUsersAndFriended(@Path("id") String id);
+    Call<List<PeopleResponse>> listUsersAndFriended(@Path("id") String id);
 
     @GET(BASE_URL + "/{id}")
     Call<MyProfileResponse> getUser(@Path("id") String id);
