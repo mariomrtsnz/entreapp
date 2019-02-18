@@ -1,11 +1,13 @@
 package com.mario.myapplication.ui.profile;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -23,9 +25,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.CategoryMyProfileResponse;
 import com.mario.myapplication.responses.LanguageResponse;
@@ -49,6 +56,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -76,8 +84,8 @@ public class MyProfileEditFragment extends Fragment {
     private String jwt;
     private String userId;
     private Button btn_save;
-    private StorageReference mStorage;
-    private DatabaseReference mDataBaseRef;
+    FirebaseStorage storage;
+    StorageReference storageReference;
     List<LanguageResponse> languages;
 
     public MyProfileEditFragment() {
@@ -129,8 +137,9 @@ public class MyProfileEditFragment extends Fragment {
         // Re-created activities receive the same MyViewModel instance created by the first activity.
 
         super.onCreate(savedInstanceState);
-        mStorage=FirebaseStorage.getInstance().getReference("uploads");
         filePath=null;
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
         mViewModel.getSelectedUser().observe(getActivity(),
                 user -> {
@@ -301,8 +310,48 @@ public class MyProfileEditFragment extends Fragment {
                         .with(this)
                         .load(filePath)
                         .into(profile_image);
-
+                uploadImage();
             }
+        }
+    }
+    private void uploadImage() {
+
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(ctx);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("image/"+ UUID.randomUUID().toString());
+
+
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            System.out.println("AQUIIIIIIII");
+                            System.out.println(ref);
+                            System.out.println(ref.toString().substring(3));
+
+                            progressDialog.dismiss();
+                            Toast.makeText(ctx, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(ctx, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
         }
     }
 
