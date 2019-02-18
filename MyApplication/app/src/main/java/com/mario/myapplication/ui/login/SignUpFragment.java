@@ -63,7 +63,7 @@ public class SignUpFragment extends AuthFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        loadAllLanguages();
+
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -116,7 +116,7 @@ public class SignUpFragment extends AuthFragment {
 
     public void loadAllLanguages(){
         LanguageService service = ServiceGenerator.createService(LanguageService.class);
-        Call<ResponseContainer<LanguageResponse>> getAllLanguages = service.listLanguages();
+        Call<ResponseContainer<LanguageResponse>> getAllLanguages = service.listLanguagesSignUp();
         getAllLanguages.enqueue(new retrofit2.Callback<ResponseContainer<LanguageResponse>>() {
             @Override
             public void onResponse(Call<ResponseContainer<LanguageResponse>> call, Response<ResponseContainer<LanguageResponse>> response) {

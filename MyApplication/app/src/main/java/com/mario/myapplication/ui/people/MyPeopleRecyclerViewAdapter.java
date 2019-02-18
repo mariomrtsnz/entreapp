@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.PeopleResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.ui.people.PeopleFragment.OnListFragmentUserInteractionListener;
 import com.mario.myapplication.ui.people.details.PeopleDetailsFragment;
@@ -22,12 +23,12 @@ import java.util.List;
 
 public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRecyclerViewAdapter.ViewHolder> {
 
-    private final List<UserResponse> mValues;
+    private final List<PeopleResponse> mValues;
     private final PeopleFragment.OnListFragmentUserInteractionListener mListener;
     Context ctx;
     FragmentManager fragmentManager;
 
-    public MyPeopleRecyclerViewAdapter(FragmentManager f, Context ctx, List<UserResponse> items, OnListFragmentUserInteractionListener listener) {
+    public MyPeopleRecyclerViewAdapter(FragmentManager f, Context ctx, List<PeopleResponse> items, OnListFragmentUserInteractionListener listener) {
         mValues = items;
         mListener = listener;
         this.ctx = ctx;
@@ -44,10 +45,10 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        String id =mValues.get(position).get_Id();
-        holder.idUser.setText(mValues.get(position).get_Id());
+        String id =mValues.get(position).get_id();
+        holder.idUser.setText(mValues.get(position).get_id());
         holder.name.setText(mValues.get(position).getName());
-        holder.country.setText(mValues.get(position).getCountry());
+        holder.country.setText(mValues.get(position).getCity());
         Glide.with(holder.mView).load(mValues.get(position).getPicture()).into(holder.picture);
         holder.mView.setOnClickListener(v -> {
             if (null != mListener) {
@@ -63,7 +64,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
         });
 
         holder.picture.setOnClickListener(v -> {
-            PeopleDetailsFragment f = new PeopleDetailsFragment(holder.mItem.get_Id());
+            PeopleDetailsFragment f = new PeopleDetailsFragment(holder.mItem.get_id());
             fragmentManager.beginTransaction().replace(R.id.contenedor, f).commit();
         });
     }
@@ -80,7 +81,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
         public final TextView idUser;
         public final ImageView picture;
         public final ImageButton action;
-        public UserResponse mItem;
+        public PeopleResponse mItem;
 
         public ViewHolder(View view) {
             super(view);

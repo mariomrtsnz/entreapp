@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.PeopleResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
@@ -41,7 +42,7 @@ public class PeopleFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     Context ctx;
-    List<UserResponse> users;
+    List<PeopleResponse> users;
     UserService service;
     String jwt, idUser;
     ImageButton action;
@@ -80,7 +81,7 @@ public class PeopleFragment extends Fragment {
         UserService service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
 
-        Call<ResponseContainer<UserResponse>> callList = service.listUsersAndFriended(idUser);
+  /*      Call<ResponseContainer<UserResponse>> callList = service.listUsersAndFriended(idUser);
 
         callList.enqueue(new Callback<ResponseContainer<UserResponse>>() {
             @Override
@@ -100,7 +101,7 @@ public class PeopleFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        }*/
     }
 
     public void loadItemsFragment (View view) {
@@ -127,11 +128,11 @@ public class PeopleFragment extends Fragment {
 
             users = new ArrayList<>();
             UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-            Call<ResponseContainer<UserResponse>> callList = service.listUsers();
+            Call<ResponseContainer<PeopleResponse>> callList = service.listUsersAndFriended(idUser);
 
-            callList.enqueue(new Callback<ResponseContainer<UserResponse>>() {
+            callList.enqueue(new Callback<ResponseContainer<PeopleResponse>>() {
                 @Override
-                public void onResponse(Call<ResponseContainer<UserResponse>> call, Response<ResponseContainer<UserResponse>> response) {
+                public void onResponse(Call<ResponseContainer<PeopleResponse>> call, Response<ResponseContainer<PeopleResponse>> response) {
                     if (response.code() != 200) {
                         Toast.makeText(getActivity(), "Error in request", Toast.LENGTH_SHORT).show();
                     } else {
@@ -144,7 +145,7 @@ public class PeopleFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseContainer<UserResponse>> call, Throwable t) {
+                public void onFailure(Call<ResponseContainer<PeopleResponse>> call, Throwable t) {
                     Log.e("NetworkFailure", t.getMessage());
                     Toast.makeText(getActivity(), "Network Failure", Toast.LENGTH_SHORT).show();
                 }
@@ -174,6 +175,6 @@ public class PeopleFragment extends Fragment {
     }
 
     public interface OnListFragmentUserInteractionListener {
-        void onListFragmentUserInteraction(UserResponse item);
+        void onListFragmentUserInteraction(PeopleResponse item);
     }
 }

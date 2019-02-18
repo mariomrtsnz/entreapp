@@ -23,7 +23,7 @@ public class UserResponse {
     public UserResponse() {
     }
 
-    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<String> favs, List<String> visited, List<BadgeResponse> badges, List<UserLikesResponse> likes, List<String> friends) {        this._id = _id;
+    public UserResponse(String _id, String name, String role, boolean friended, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<String> favs, List<String> visited, List<BadgeResponse> badges, List<UserLikesResponse> likes, List<String> friends) {        this._id = _id;
         this.name = name;
         this.role = role;
         this.picture = picture;

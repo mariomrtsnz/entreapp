@@ -16,7 +16,8 @@ public interface LanguageService {
     @GET(BASE_URL)
     Call<ResponseContainer<LanguageResponse>> listLanguages();
 
-
+    @GET(BASE_URL + "/public")
+    Call<ResponseContainer<LanguageResponse>> listLanguagesSignUp();
 
     @GET(BASE_URL + "/{id}")
     Call<LanguageResponse> getLanguage(@Path("id") Long id);

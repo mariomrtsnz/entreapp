@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
 import com.mario.myapplication.responses.CategoryResponse;
+import com.mario.myapplication.responses.PeopleResponse;
 import com.mario.myapplication.responses.RouteResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.ui.badges.BadgeListener;
@@ -130,7 +131,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     }*/
 
     @Override
-    public void onListFragmentUserInteraction(UserResponse item) {
+    public void onListFragmentUserInteraction(PeopleResponse item) {
 
     }
 

@@ -2,6 +2,7 @@ package com.mario.myapplication.retrofit.services;
 
 import com.mario.myapplication.dto.UserEditDto;
 import com.mario.myapplication.responses.MyProfileResponse;
+import com.mario.myapplication.responses.PeopleResponse;
 import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.responses.UserEditResponse;
 import com.mario.myapplication.responses.UserResponse;
@@ -33,7 +34,7 @@ public interface UserService {
      */
 
     @GET(BASE_URL + "/friended/{id}")
-    Call<ResponseContainer<UserResponse>> listUsersAndFriended(@Path("id") String id);
+    Call<ResponseContainer<PeopleResponse>> listUsersAndFriended(@Path("id") String id);
 
     @GET(BASE_URL + "/{id}")
     Call<MyProfileResponse> getUser(@Path("id") String id);

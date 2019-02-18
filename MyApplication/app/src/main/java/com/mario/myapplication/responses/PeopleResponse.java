@@ -5,14 +5,15 @@ import java.util.List;
 
 public class PeopleResponse {
 
-    private String id;
+    private String _id;
     private String name;
     private String role;
     private String picture;
     private String password;
     private String email;
     private String createAt;
-    private String country;
+    private String city;
+    private boolean friended;
     private LanguageResponse language;
     private List<String> favs = new ArrayList<>();
     private List<String> visited = new ArrayList<>();
@@ -25,14 +26,14 @@ public class PeopleResponse {
     }
 
     public PeopleResponse(String id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<String> favs, List<String> visited, List<BadgeResponse> badges, List<UserLikesResponse> likes, List<String> friends) {
-        this.id = id;
+        this._id = id;
         this.name = name;
         this.role = role;
         this.picture = picture;
         this.password = password;
         this.email = email;
         this.createAt = createAt;
-        this.country = country;
+        this.city = country;
         this.language = language;
         this.favs = favs;
         this.visited = visited;
@@ -41,13 +42,22 @@ public class PeopleResponse {
         this.friends = friends;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
+
+    public boolean isFriended() {
+        return friended;
+    }
+
+    public void setFriended(boolean friended) {
+        this.friended = friended;
+    }
+
 
     public String getName() {
         return name;
@@ -97,12 +107,12 @@ public class PeopleResponse {
         this.createAt = createAt;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCity() {
+        return city;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public LanguageResponse getLanguage() {
@@ -156,14 +166,14 @@ public class PeopleResponse {
     @Override
     public String toString() {
         return "PeopleResponse{" +
-                "id='" + id + '\'' +
+                "id='" + _id + '\'' +
                 ", name='" + name + '\'' +
                 ", role='" + role + '\'' +
                 ", picture='" + picture + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", createAt='" + createAt + '\'' +
-                ", country='" + country + '\'' +
+                ", country='" + city + '\'' +
                 ", language=" + language +
                 ", favs=" + favs +
                 ", visited=" + visited +
