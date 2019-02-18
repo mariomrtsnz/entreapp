@@ -59,7 +59,6 @@ public class PeopleResponse {
         this.friended = friended;
     }
 
-
     public String getName() {
         return name;
     }

@@ -53,6 +53,7 @@ public class BadgesFragment extends Fragment {
     private Context ctx;
     private int mColumnCount = 1;
     private boolean asc;
+    MenuItem menuItemSort;
 
 //    @Override
 //    protected FragmentToolbar builder() {
@@ -71,6 +72,7 @@ public class BadgesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.badges_menu, menu);
+        menuItemSort = menu.findItem(R.id.ascending);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -81,8 +83,10 @@ public class BadgesFragment extends Fragment {
                 if (asc) {
                     listBadgesAndEarnedSort(UtilToken.getId(ctx));
                     this.asc = !this.asc;
+                    menuItemSort.setIcon(R.drawable.ic_baseline_sort_down_24px);
                 } else {
                     listBadgesAndEarnedSort(UtilToken.getId(ctx));
+                    menuItemSort.setIcon(R.drawable.ic_baseline_sort_up_24px);
                     this.asc = !this.asc;
                 }
         }
