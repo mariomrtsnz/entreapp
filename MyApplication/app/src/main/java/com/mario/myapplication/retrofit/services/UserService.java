@@ -20,6 +20,16 @@ public interface UserService {
     @GET(BASE_URL)
     Call<ResponseContainer<UserResponse>> listUsers();
 
+    /**
+     * Call that invokes the whole list of users, but with an additional field which contains
+     * a boolean attribute about if every single user is a friend of us or not
+     * @param id The logged user's id
+     * @return The list of users
+     */
+
+    @GET(BASE_URL + "/friended/{id}")
+    Call<ResponseContainer<UserResponse>> listUsersAndFriended(@Path("id") String id);
+
     @GET(BASE_URL + "/{id}")
     Call<MyProfileResponse> getUser(@Path("id") String id);
 

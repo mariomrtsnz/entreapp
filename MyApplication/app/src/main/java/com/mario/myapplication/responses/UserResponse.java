@@ -14,7 +14,7 @@ public class UserResponse {
     private String createAt;
     private String country;
     private LanguageResponse language;
-    private List<PoiResponse> favs = new ArrayList<>();
+    private List<String> favs = new ArrayList<>();
     private List<String> visited = new ArrayList<>();
     private List<BadgeResponse> badges = new ArrayList<>();
     private List<UserLikesResponse> likes  = new ArrayList<>();
@@ -23,8 +23,7 @@ public class UserResponse {
     public UserResponse() {
     }
 
-    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<PoiResponse> favs, List<String> visited, List<BadgeResponse> badges, List<UserLikesResponse> likes, List<String> friends) {
-        this._id = _id;
+    public UserResponse(String _id, String name, String role, String picture, String password, String email, String createAt, String country, LanguageResponse language, List<String> favs, List<String> visited, List<BadgeResponse> badges, List<UserLikesResponse> likes, List<String> friends) {        this._id = _id;
         this.name = name;
         this.role = role;
         this.picture = picture;
@@ -40,11 +39,19 @@ public class UserResponse {
         this.friends = friends;
     }
 
-    public List<PoiResponse> getFavs() {
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public List<String> getFavs() {
         return favs;
     }
 
-    public void setFavs(List<PoiResponse> favs) {
+    public void setFavs(List<String> favs) {
         this.favs = favs;
     }
 
