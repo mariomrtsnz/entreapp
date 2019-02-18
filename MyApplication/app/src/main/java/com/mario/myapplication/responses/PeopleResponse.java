@@ -21,6 +21,7 @@ public class PeopleResponse {
     private List<UserLikesResponse> likes  = new ArrayList<>();
     private List<String> friends = new ArrayList<>();
 
+
     public PeopleResponse() {
 
     }
