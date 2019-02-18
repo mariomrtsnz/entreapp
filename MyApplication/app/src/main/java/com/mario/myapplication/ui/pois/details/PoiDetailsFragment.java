@@ -1,6 +1,5 @@
 package com.mario.myapplication.ui.pois.details;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -12,25 +11,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomViewTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.mario.myapplication.R;
 import com.mario.myapplication.model.Category;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.PoiService;
-import com.mario.myapplication.ui.people.MyPeopleRecyclerViewAdapter;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.Objects;
