@@ -77,9 +77,11 @@
         android:id="@+id/idUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:visibility="invisible"
-        tools:layout_editor_absoluteX="328dp"
-        tools:layout_editor_absoluteY="102dp" />
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

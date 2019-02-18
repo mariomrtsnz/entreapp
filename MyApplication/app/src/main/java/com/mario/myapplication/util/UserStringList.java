@@ -11,7 +11,7 @@ import java.util.List;
 public class UserStringList {
 
 
-    public static List<String> arrayFavs(UserResponse user) {
+/*    public static List<String> arrayFavs(UserResponse user) {
         List<String> favs = new ArrayList<>();
 
         for (PoiResponse fav : user.getFavs()) {
@@ -19,7 +19,7 @@ public class UserStringList {
         }
 
         return favs;
-    }
+    }*/
 
     public static List<String> arrayFriends(UserResponse user) {
         List<String> friends = new ArrayList<>();

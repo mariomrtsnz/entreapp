@@ -43,7 +43,7 @@ public class PeopleFragment extends Fragment {
     Context ctx;
     List<UserResponse> users;
     UserService service;
-    String jwt;
+    String jwt, idUser;
     ImageButton action;
     EditText name, id;
     ImageView picture;
@@ -69,7 +69,7 @@ public class PeopleFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         jwt = UtilToken.getToken(getContext());
-
+        idUser = UtilToken.getId(getContext());
         if (jwt == null) {
 
             Intent i = new Intent(getActivity(), LoginActivity.class);
@@ -80,7 +80,7 @@ public class PeopleFragment extends Fragment {
         UserService service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
 
-        Call<ResponseContainer<UserResponse>> callList = service.listUsers();
+        Call<ResponseContainer<UserResponse>> callList = service.listUsersAndFriended(idUser);
 
         callList.enqueue(new Callback<ResponseContainer<UserResponse>>() {
             @Override
