@@ -35,8 +35,8 @@ public interface UserService {
      * @return The list of users
      */
 
-    @GET(BASE_URL + "/friended/{id}")
-    Call<List<PeopleResponse>> listUsersAndFriended(@Path("id") String id);
+    @GET(BASE_URL + "/friended")
+    Call<List<PeopleResponse>> listUsersAndFriended();
 
     @GET(BASE_URL + "/{id}")
     Call<MyProfileResponse> getUser(@Path("id") String id);

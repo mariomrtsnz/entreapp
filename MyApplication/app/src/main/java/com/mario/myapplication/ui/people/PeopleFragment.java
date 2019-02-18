@@ -81,7 +81,7 @@ public class PeopleFragment extends Fragment {
         UserService service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
 
-  /*      Call<ResponseContainer<UserResponse>> callList = service.listUsersAndFriended(idUser);
+  /*      Call<ResponseContainer<UserResponse>> callList = service.listUsersAndFriended();
 
         callList.enqueue(new Callback<ResponseContainer<UserResponse>>() {
             @Override
@@ -128,7 +128,7 @@ public class PeopleFragment extends Fragment {
 
             users = new ArrayList<>();
             UserService service = ServiceGenerator.createService(UserService.class, jwt, AuthType.JWT);
-            Call<List<PeopleResponse>> callList = service.listUsersAndFriended(idUser);
+            Call<List<PeopleResponse>> callList = service.listUsersAndFriended();
 
             callList.enqueue(new Callback<List<PeopleResponse>>() {
                 @Override
