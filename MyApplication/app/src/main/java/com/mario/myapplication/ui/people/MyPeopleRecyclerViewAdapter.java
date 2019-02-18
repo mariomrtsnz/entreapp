@@ -44,6 +44,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+        String id =mValues.get(position).get_Id();
         holder.idUser.setText(mValues.get(position).get_Id());
         holder.name.setText(mValues.get(position).getName());
         holder.country.setText(mValues.get(position).getCountry());
@@ -62,7 +63,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
         });
 
         holder.picture.setOnClickListener(v -> {
-            PeopleDetailsFragment f = new PeopleDetailsFragment(mValues.get(position).get_Id());
+            PeopleDetailsFragment f = new PeopleDetailsFragment(holder.mItem.get_Id());
             fragmentManager.beginTransaction().replace(R.id.contenedor, f).commit();
         });
     }

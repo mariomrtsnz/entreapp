@@ -97,7 +97,7 @@ public class PeopleDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_people_details, container, false);
         ctx = getContext();
         jwt = UtilToken.getToken(ctx);
-
+        System.out.println(idChosen);
         loadItemsFragment(view);
 
         service = ServiceGenerator.createService(UserService.class,
