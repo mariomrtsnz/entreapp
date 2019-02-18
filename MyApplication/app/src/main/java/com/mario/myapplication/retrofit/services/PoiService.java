@@ -18,8 +18,8 @@ public interface PoiService {
     @GET(BASE_URL)
     Call<ResponseContainer<PoiResponse>> listPois();
 
-    @GET(BASE_URL + "/nearest")
-    Call<ArrayList<PoiResponse>> getNearestPois(@Query("near") String latlng, @Query("maxDistance") int maxDistance);
+    @GET(BASE_URL)
+    Call<ResponseContainer<PoiResponse>> listPois(@Query("near") String latlng, @Query("maxDistance") int maxDistance);
 
     @GET(BASE_URL + "/{id}")
     Call<PoiResponse> getPoi(@Path("id") String id);

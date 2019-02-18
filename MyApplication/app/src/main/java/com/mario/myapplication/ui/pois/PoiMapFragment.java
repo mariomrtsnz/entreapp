@@ -32,13 +32,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.PoiResponse;
+import com.mario.myapplication.responses.ResponseContainer;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.PoiService;
 import com.mario.myapplication.ui.pois.details.PoiDetailsFragment;
 import com.mario.myapplication.util.UtilToken;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -181,16 +181,16 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
 
         String coords = latitude + "," + longitude;
-        Call<ArrayList<PoiResponse>> call = service.getNearestPois(coords, 5000);
+        Call<ResponseContainer<PoiResponse>> call = service.listPois(coords, 5000);
 
-        call.enqueue(new Callback<ArrayList<PoiResponse>>() {
+        call.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Response<ArrayList<PoiResponse>> response) {
+            public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     mMap.clear();
-                    for (PoiResponse i : Objects.requireNonNull(response.body())) {
+                    for (PoiResponse i : Objects.requireNonNull(response.body()).getRows()) {
                         mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(i.getloc().getCoordinates()[0], i.getloc().getCoordinates()[1]))
                                 .title(i.getName())
@@ -201,7 +201,7 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<PoiResponse>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
                 Log.e("Network Failure", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
@@ -212,12 +212,12 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
     private void mapUIConfig() {
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
-        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.poi_map_style));
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(Objects.requireNonNull(getContext()), R.raw.poi_map_style));
 
         mMap.setOnMarkerClickListener(marker -> {
             System.out.println(marker.getTag());
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.contenedor, new PoiDetailsFragment(marker.getTag().toString()))
+            Objects.requireNonNull(getFragmentManager()).beginTransaction()
+                    .replace(R.id.contenedor, new PoiDetailsFragment(Objects.requireNonNull(marker.getTag()).toString()))
                     .commit();
             return false;
         });
