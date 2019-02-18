@@ -1,4 +1,6 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, {
+  Schema
+} from 'mongoose'
 
 const poiSchema = new Schema({
   name: {
@@ -19,8 +21,14 @@ const poiSchema = new Schema({
   //   }
   // },
   loc: {
-    type: { type: String, default: 'Point' },
-    coordinates: { type: [Number], index: '2dsphere' }
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      index: '2dsphere'
+    }
   },
   qrCode: {
     type: String
@@ -40,21 +48,19 @@ const poiSchema = new Schema({
       type: String
     },
     // Array de traducciones con la misma estructura que la de arriba.
-    translations: [
-      {
+    translations: [{
+      language: {
+        // ejemplo: "es"
         language: {
-          // ejemplo: "es"
-          language: {
-            type: Schema.Types.ObjectId,
-            ref: 'Language'
-          }
-        },
-        translatedFile: {
-          // ejemplo: "es-giralda.mp3"
-          type: String
+          type: Schema.Types.ObjectId,
+          ref: 'Language'
         }
+      },
+      translatedFile: {
+        // ejemplo: "es-giralda.mp3"
+        type: String
       }
-    ]
+    }]
   },
   description: {
     language: {
@@ -66,19 +72,17 @@ const poiSchema = new Schema({
     originalDescription: {
       type: String
     },
-    translations: [
-      {
+    translations: [{
+      language: {
         language: {
-          language: {
-            type: Schema.Types.ObjectId,
-            ref: 'Language'
-          }
-        },
-        translatedDescription: {
-          type: String
+          type: Schema.Types.ObjectId,
+          ref: 'Language'
         }
+      },
+      translatedDescription: {
+        type: String
       }
-    ]
+    }]
   },
   coverImage: {
     type: String
@@ -102,13 +106,15 @@ const poiSchema = new Schema({
     type: Number
   }
 }, {
-    strict: false,
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      transform: (obj, ret) => { delete ret._id }
+  strict: false,
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    transform: (obj, ret) => {
+      delete ret._id
     }
-  })
+  }
+})
 
 poiSchema.methods = {
   view(full) {

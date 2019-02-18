@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, showTranslated, nearIndex, allPOIsAndFavAndVisited } from './controller'
+import { create, index, show, update, destroy, showTranslated } from './controller'
 import { schema } from './model'
 export Poi, { schema } from './model'
 
@@ -52,7 +52,11 @@ router.post('/',
  */
 router.get('/',
   token({ required: true }),
-  query(),
+  query({
+    near: { paths: 'loc.coordinates' }
+  }, {
+    near: true, distanceField: 'loc.distance'
+  }),
   index)
 
 /**
@@ -67,10 +71,10 @@ router.get('/',
 * @apiError {Object} 400 Some parameters may contain invalid values.
 * @apiError 401 user access only.
 */
-router.get('/nearest',
+/* router.get('/nearest',
   token({ required: true }),
   query(),
-  nearIndex)
+  nearIndex) */
 
 /**
  * @api {get} /pois/:id Retrieve poi
@@ -102,9 +106,9 @@ router.get('/:id/:idUserLanguage',
   token({ required: true }),
   showTranslated)
 
-router.get('/favsAndVisited/:id',
+/* router.get('/favsAndVisited/:id',
   token({required: true}),
-  allPOIsAndFavAndVisited)
+  allPOIsAndFavAndVisited) */
 
 /**
  * @api {put} /pois/:id Update poi
