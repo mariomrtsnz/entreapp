@@ -140,5 +140,7 @@
     <string name="action_logout">Visitoff</string>
     <string name="no_city">No city</string>
     <string name="upload">Upload</string>
+    <string name="search_view_hint">Search by name</string>
+    <string name="badges_toolbar_title">Badges</string>
 
 </resources>

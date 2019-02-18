@@ -5,6 +5,7 @@ import { token } from '../../services/passport'
 import { create, index, show, update, destroy } from './controller'
 import { schema } from './model'
 export Language, { schema } from './model'
+import { master } from '../../services/passport'
 
 const router = new Router()
 const { name, isoCode } = schema.tree
@@ -41,6 +42,11 @@ router.post('/',
  */
 router.get('/',
   token({ required: true }),
+  query(),
+  index)
+
+router.get('/public',
+  master(),
   query(),
   index)
 
