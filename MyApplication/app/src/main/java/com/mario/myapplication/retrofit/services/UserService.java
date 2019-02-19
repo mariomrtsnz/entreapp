@@ -57,9 +57,10 @@ public interface UserService {
 //    @DELETE("/users/{id}")
 //    Call<User> deleteUser(@Path("id") Long id);
     @Multipart
-    @POST("/users/uploadProfilePicture")
+    @POST(BASE_URL + "/uploadProfilePicture")
     Call<MyProfileResponse> uploadPictureProfile(@Part MultipartBody.Part avatar,
                                    @Part("id") RequestBody id);
 
-
+    @PUT(BASE_URL + "/addPoiLike/{id}")
+    Call<UserResponse> ChangePoiFav(@Path("id") String id);
 }

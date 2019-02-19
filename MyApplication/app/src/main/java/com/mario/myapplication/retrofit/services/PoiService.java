@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -23,4 +24,7 @@ public interface PoiService {
 
     @GET(BASE_URL + "/{id}")
     Call<PoiResponse> getPoi(@Path("id") String id);
+
+    @PUT(BASE_URL + "visited/{id}")
+    Call<PoiResponse> visitPoi(@Path("id") String id);
 }

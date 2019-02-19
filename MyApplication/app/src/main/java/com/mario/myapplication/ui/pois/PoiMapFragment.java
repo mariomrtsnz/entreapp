@@ -107,6 +107,10 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
             else enableDeviceLocation();
         });
 
+//        v.findViewById(R.id.btn_scan_qr).setOnClickListener(view -> {
+//
+//        });
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
         ((SupportMapFragment) Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.map))).getMapAsync(this);
 
