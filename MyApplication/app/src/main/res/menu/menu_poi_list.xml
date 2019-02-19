@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_poi_list_filter"
+        android:icon="@drawable/ic_filter_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/filter"
+        app:showAsAction="always">
+        <menu>
+            <item android:title="@string/visited" />
+            <item android:title="@string/favorites" />
+            <item android:title="@string/noFilter" />
+        </menu>
+    </item>
+
+</menu>
