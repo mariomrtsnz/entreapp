@@ -3,7 +3,9 @@ package com.mario.myapplication.ui.pois.details;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -36,6 +38,7 @@ public class PoiDetailsFragment extends Fragment {
 
     private final String id;
     private PoiResponse poi;
+    private GestureDetector gestureDetector;
 
     public PoiDetailsFragment(String poiId) {
         id = poiId;
@@ -45,6 +48,7 @@ public class PoiDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPoiDetails();
+        gestureDetector = new GestureDetector(getContext(), new GestureListener());
     }
 
     @Override
@@ -93,10 +97,16 @@ public class PoiDetailsFragment extends Fragment {
             Chip cc = new Chip(Objects.requireNonNull(getContext()));
             cc.setChipDrawable(ChipDrawable.createFromResource(Objects.requireNonNull(getContext()), R.xml.chip_categories));
             cc.setText(c.getName());
-
             cg.addView(cc);
 
         }
     }
 
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            
+            return true;
+        }
+    }
 }

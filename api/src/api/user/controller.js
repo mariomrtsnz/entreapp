@@ -1,16 +1,11 @@
-import {
-  success,
-  notFound
-} from '../../services/response/'
-import {
-  User
-} from '.'
-import {
-  sign
-} from '../../services/jwt'
-import {roles} from './model'
-import {Language} from '../language'
 import _ from 'lodash';
+
+import { User } from '.';
+import { sign } from '../../services/jwt';
+import { notFound, success } from '../../services/response/';
+import { Language } from '../language';
+import { roles } from './model';
+import { Badge } from '../badge'
 
 export const index = ({
     querymen: {
@@ -223,3 +218,32 @@ export const destroy = ({
   .then((user) => user ? user.remove() : null)
   .then(success(res, 204))
   .catch(next)
+
+export const EditPoiFavs = ({ params, user }, res, next) => {
+  const found = user.favs.indexOf(params.id);
+  if (found != -1)
+    user.favs.splice(found, 1);
+  else
+    user.favs.push(params.id);
+  user.save()
+    .then(success(res))
+    .catch(next);
+}
+
+export const VisitPoi = ({ params, user }, res, next) => {
+  const found = user.visited.indexOf(params.id);
+
+  if (found == -1) {
+    user.visited.push(params.id);
+    Badge.find().then(b => console.log(b))
+  } else {
+    Badge.find().then(badges => {
+      badges.map(badge => {
+        badge.pois.forEach(badgePois => {
+          console.log(_.includes(user.visited, badgePois))
+        })
+      })
+    })
+  }
+
+}
