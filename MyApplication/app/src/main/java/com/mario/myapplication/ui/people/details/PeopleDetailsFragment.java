@@ -57,7 +57,6 @@ public class PeopleDetailsFragment extends Fragment {
     TextView textViewEmailWritten;
     TextView textViewPoisWritten;
     TextView texViewCountryWritten;
-
     private PeopleViewModel mViewModel;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -115,6 +114,7 @@ public class PeopleDetailsFragment extends Fragment {
                 String points = "";
                 if (response.isSuccessful()) {
                     Log.d("LOL", "user obtain successfully");
+                    System.out.println(response.body());
                     setItemsFragment(response, view);
                 } else {
                     Log.d("LOL3", "FALLITO BUENO");
@@ -161,7 +161,7 @@ public class PeopleDetailsFragment extends Fragment {
         //points = res.getString(R.string.points) + " " + countPoints(myProfileResponse);
         points = String.valueOf(countPoints(myProfileResponse));
         textViewPointsWritten.setText(points);
-        mViewModel.selectUser(myProfileResponse);
+        // mViewModel.selectUser(myProfileResponse);
 
         //image
         Glide.with(ctx)
