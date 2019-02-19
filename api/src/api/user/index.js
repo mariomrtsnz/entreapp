@@ -92,7 +92,7 @@ router.post('/',
  */
 router.put('/:id',
   token({ required: true }),
-  body({email, name, city, language, likes, favs, friends}),
+  body({email, name, city, language, picture, likes, favs, friends}),
   update)
 
 router.put('/editRole/:id',

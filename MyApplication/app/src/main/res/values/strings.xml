@@ -143,5 +143,6 @@
     <string name="search_view_hint">Search by name</string>
     <string name="badges_toolbar_title">Badges</string>
     <string name="badges_filter_checkbox">Earned</string>
+    <string name="badge_detail_point_title">Points:</string>
 
 </resources>
