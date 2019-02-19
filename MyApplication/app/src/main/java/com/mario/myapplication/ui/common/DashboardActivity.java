@@ -21,6 +21,7 @@ import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.ui.badges.BadgeListener;
 import com.mario.myapplication.ui.badges.BadgesFragment;
 import com.mario.myapplication.ui.badges.detail.BadgeDetailFragment;
+import com.mario.myapplication.ui.badges.detail.BadgeDetailListener;
 import com.mario.myapplication.ui.categories.CategoryFragment;
 import com.mario.myapplication.ui.people.PeopleFragment;
 import com.mario.myapplication.ui.people.details.PeopleDetailsFragment;
@@ -33,7 +34,7 @@ import com.mario.myapplication.ui.routes.RoutesFragment;
 
 //import com.mario.myapplication.PoiFragment;
 
-public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener, RouteListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener, PeopleDetailsFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener, BadgeDetailListener, RouteListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener, PeopleDetailsFragment.OnFragmentInteractionListener {
     FragmentTransaction fragmentChanger;
     private Fragment badges, pois, myProfile, people, routes;
     private TextView mTextMessage;
