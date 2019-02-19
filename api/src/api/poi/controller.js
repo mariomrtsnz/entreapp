@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import { Poi } from '.';
 import mongoose from '../../services/mongoose';
 import { notFound, success } from '../../services/response/';
+import { Badge } from '../badge';
 
 export const create = ({ bodymen: { body } }, res, next) => {
   body.coverImage = body.images[0];
@@ -17,7 +18,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
         },
         type: 'svg'
       }
-      QRCode.toString(`https://entreapp.herokuapp.com/pois/${poi.id}`, opts).then(string => {
+      QRCode.toString(`https://entreapp.herokuapp.com/pois/visit/${poi.id}`, opts).then(string => {
         Poi.findByIdAndUpdate({ _id: poi.id }, { $set: { qrCode: string.split('\n')[0] } }, { new: true }).then(success(res, 200)).catch(next);
       }).then(success(res, 200)).catch(next);
     })
@@ -49,7 +50,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
               else
                 poi.set('fav', false)
             });
-          } else 
+          } else
             poi.set('fav', false)
           if (userLogged.visited.length != 0) {
             userLogged.visited.forEach(userVisited => {
@@ -58,7 +59,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
               else
                 poi.set('visited', false)
             });
-          } else 
+          } else
             poi.set('visited', false)
           return poi;
         })
@@ -66,7 +67,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
     )
     .then(success(res))
     .catch(next)
-    }
+}
 
 export const showTranslated = ({ params }, res, next) => {
   let query = {
@@ -102,46 +103,41 @@ export const destroy = ({ params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-/* export const allPOIsAndFavAndVisited = ({ params }, res, next) => {
-  let userLogged = null;
-  User.findById(params.id).then(user => userLogged = user)
-  .then( user => {
-    Poi.find().populate('categories', 'id name').then(pois => {
-      return new Promise(function(res, rej) {
-        pois.map((poi) => {
-          if (userLogged.favs.length != 0) {
-            userLogged.favs.forEach(userFav => {
-              if (_.isEqual(userFav.toString(), poi.id))
-                poi.set('fav', true)
-              else
-                poi.set('fav', false)
-            });
-          } else {
-            poi.set('fav', false)
-          }
-          if (userLogged.visited.length != 0) {
-            userLogged.visited.forEach(userVisited => {
-              if (_.isEqual(userVisited.toString(), poi.id))
-                poi.set('visited', true)
-              else
-                poi.set('visited', false)
-            });
-          } else {
-            poi.set('visited', false)
-          }
-        });
-        res(pois);
-      });
-    }).then(success(res)).catch(next);
-  })
-} */
+function distance(lat1, lon1, lat2, lon2) {
+  var p = Math.PI / 180;
+  var c = Math.cos;
+  var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+    c(lat1 * p) * c(lat2 * p) *
+    (1 - c((lon2 - lon1) * p)) / 2;
 
-  function distance(lat1, lon1, lat2, lon2) {
-    var p = Math.PI / 180;
-    var c = Math.cos;
-    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
-      c(lat1 * p) * c(lat2 * p) *
-      (1 - c((lon2 - lon1) * p)) / 2;
-  
-    return 12742 * Math.asin(Math.sqrt(a)) * Math.PI * 360; // 2 * R; R = 6371 km
-  }
+  return 12742 * Math.asin(Math.sqrt(a)) * Math.PI * 360; // 2 * R; R = 6371 km
+}
+
+export const VisitPoi = ({ params, user }, res, next) => 
+  Poi.findById(params.id).populate('categories', 'id name')
+    .then(notFound(res))
+    .then((poi) => poi ? poi.view(1) : null)
+    .then((poi) => {
+      if (user.visited.indexOf(params.id) == -1) {
+        user.visited.push(params.id);
+        Badge.find()
+          .then(badges => {
+            badges.map(badge => {
+              if (arrayContainsArray(user.visited, badge.pois))
+                user.badges.push(badge.id);
+            })
+            user.save()
+            return badges;
+          });
+          poi.firstVisited = true;        
+      }
+      return poi;
+    })
+    .then(success(res))
+    .catch(next)
+
+function arrayContainsArray(superset, subset) {
+  if (0 !== subset.length && superset.length !== 0)
+    return subset.every((value) => (superset.indexOf(value) >= 0));
+  return false;
+}

@@ -137,8 +137,4 @@ router.put('/addPoiLike/:id',
   token({ required: true }),
   EditPoiFavs)
 
-router.put('/visitPoi/:id',
-  token({ required: true }),
-  VisitPoi)
-
 export default router

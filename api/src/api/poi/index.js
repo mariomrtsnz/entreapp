@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, showTranslated } from './controller'
+import { create, index, show, update, destroy, showTranslated, VisitPoi } from './controller'
 import { schema } from './model'
 export Poi, { schema } from './model'
 
@@ -152,6 +152,10 @@ router.put('/:id',
 router.delete('/:id',
   token({ required: true, roles: ['admin'] }),
   destroy)
+
+router.put('/visit/:id',
+  token({ required: true}),
+  VisitPoi)
 
 export default router
 
