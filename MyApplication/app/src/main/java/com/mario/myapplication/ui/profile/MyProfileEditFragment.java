@@ -57,6 +57,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -228,7 +229,29 @@ public class MyProfileEditFragment extends Fragment {
             }
         });
     }
+    public boolean validate(){
+        ValidatorUserEdit.clearError(editTextCity);
+        ValidatorUserEdit.clearError(editTextName);
+        String incorrectName, incorrectCity;
+        incorrectName = getString(R.string.incorrect_name);
+        incorrectCity = getString(R.string.incorrect_city);
+        boolean isValid=true;
+        if (!ValidatorUserEdit.onlyLetters(editTextCity) || !ValidatorUserEdit.isNotEmpty(editTextCity)){
+            isValid=false;
+            ValidatorUserEdit.setError(editTextCity, incorrectCity);
+        }
+        if (!ValidatorUserEdit.onlyLetters(editTextName) || !ValidatorUserEdit.isNotEmpty(editTextName)){
+            isValid=false;
 
+
+            ValidatorUserEdit.setError(editTextName, incorrectName);
+        }
+
+
+
+        return isValid;
+
+    }
 
     public void setItemsFragment(MyProfileResponse user){
         //upload profile image
@@ -244,8 +267,9 @@ public class MyProfileEditFragment extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            if(validate()){
                 updateUserCall(myProfileResponseToUserEditDto(user));
+            }
 
             }
         });

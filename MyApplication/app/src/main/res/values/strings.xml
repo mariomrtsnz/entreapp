@@ -59,5 +59,7 @@
     <string name="visited">Visited</string>
     <string name="noFilter">No filter</string>
     <string name="badge_detail_point_title">Points:</string>
+    <string name="incorrect_name">Incorrect name</string>
+    <string name="incorrect_city">Incorrect city</string>
 
 </resources>
