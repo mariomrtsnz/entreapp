@@ -265,6 +265,7 @@ public class MyProfileEditFragment extends Fragment {
     }
     public UserEditDto myProfileResponseToUserEditDto(MyProfileResponse user){
         UserEditDto userEditDto = new UserEditDto();
+        userEditDto.setPicture(user.getPicture());
         userEditDto.setCity(editTextCity.getText().toString());
         List<String> likes = new ArrayList<>();
         userEditDto.setName(editTextName.getText().toString());
@@ -298,6 +299,8 @@ public class MyProfileEditFragment extends Fragment {
         }
         userEditDto.setLikes(likes);
         userEditDto.setPicture(profilePicture);
+        updatedUser.setPicture(profilePicture);
+        mViewModel.selectUser(updatedUser);
 
 
         return userEditDto;
@@ -315,15 +318,8 @@ public class MyProfileEditFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
 
-        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-        // response to some other intent, and the code below shouldn't run at all.
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
+
             Uri uri = null;
             if (resultData != null) {
                 filePath =resultData.getData();
@@ -343,6 +339,9 @@ public class MyProfileEditFragment extends Fragment {
             @Override
             public void onSuccess(Uri uri) {
                 urlUploadedPicture=uri.toString();
+                UserEditDto u=myProfileResponseToUserEditDto(updatedUser, urlUploadedPicture);
+                updateUserCall(u);
+
             }
 
         });
@@ -353,6 +352,7 @@ public class MyProfileEditFragment extends Fragment {
                 urlUploadedPicture=null;
             }
         });
+
     }
     private void uploadImage() {
 
@@ -370,23 +370,7 @@ public class MyProfileEditFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             //obtain url
-                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    urlUploadedPicture=uri.toString();
-                                    UserEditDto u=myProfileResponseToUserEditDto(updatedUser, urlUploadedPicture);
-                                    updateUserCall(u);
-                                }
-
-                            });
-                            ref.getDownloadUrl().addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(ctx, "Error, not uploaded", Toast.LENGTH_SHORT).show();
-                                    urlUploadedPicture=null;
-                                }
-                            });
-
+                            obtainDownloadUrl(ref);
 
 
                             progressDialog.dismiss();

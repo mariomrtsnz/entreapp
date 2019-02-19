@@ -159,7 +159,7 @@ public class MyProfileFragment extends Fragment {
 
         //image
         Glide.with(ctx)
-                .load(myProfileResponse.getPicture().toString())
+                .load(myProfileResponse.getPicture())
                 .into(profile_image);
         Log.d("LOL2", myProfileResponse.toString());
 
@@ -176,13 +176,7 @@ public class MyProfileFragment extends Fragment {
                         .commit();
             }
         });
-        //open my pictures
-        /*profile_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                performFileSearch();
-            }
-        });*/
+
         System.out.println(myProfileResponse.getLikes());
 
 
