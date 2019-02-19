@@ -353,6 +353,19 @@ public class MyProfileEditFragment extends Fragment {
                             obtainDownloadUrl(ref);
 
                             if (urlUploadedPicture!=null){
+                                /*updatedUser.setPicture(urlUploadedPicture.toString());
+                                UserEditDto userEditDto = myProfileResponseToUserEditDto(updatedUser);
+                                userService.editUser(updatedUser.getId(), userEditDto).enqueue(new Callback<UserEditResponse>() {
+                                    @Override
+                                    public void onResponse(Call<UserEditResponse> call, Response<UserEditResponse> response) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<UserEditResponse> call, Throwable t) {
+
+                                    }
+                                });*/
 
                             }
 
