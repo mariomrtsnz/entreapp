@@ -46,7 +46,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         String id =mValues.get(position).get_id();
-        holder.idUser.setText(mValues.get(position).get_id());
+  //      holder.idUser.setText(mValues.get(position).get_id());
         holder.name.setText(mValues.get(position).getName());
         holder.country.setText(mValues.get(position).getCity());
         Glide.with(holder.mView).load(mValues.get(position).getPicture()).into(holder.picture);
@@ -78,7 +78,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
         public final View mView;
         public final TextView name;
         public final TextView country;
-        public final TextView idUser;
+    //    public final TextView idUser;
         public final ImageView picture;
         public final ImageButton action;
         public PeopleResponse mItem;
@@ -87,7 +87,7 @@ public class MyPeopleRecyclerViewAdapter extends RecyclerView.Adapter<MyPeopleRe
             super(view);
             mView = view;
             name = view.findViewById(R.id.user_name);
-            idUser = view.findViewById(R.id.idUser);
+       //     idUser = view.findViewById(R.id.idUser);
             country = view.findViewById(R.id.country);
             picture = view.findViewById(R.id.profilePic);
             action = view.findViewById(R.id.actionButton);

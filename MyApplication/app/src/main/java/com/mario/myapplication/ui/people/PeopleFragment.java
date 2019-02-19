@@ -107,7 +107,7 @@ public class PeopleFragment extends Fragment {
     public void loadItemsFragment (View view) {
         name = view.findViewById(R.id.user_name);
         action = view.findViewById(R.id.actionButton);
-        id = view.findViewById(R.id.idUser);
+      //  id = view.findViewById(R.id.idUser);
         picture = view.findViewById(R.id.profilePic);
     }
 
