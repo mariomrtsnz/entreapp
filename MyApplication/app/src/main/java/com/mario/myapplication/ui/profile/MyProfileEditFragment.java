@@ -58,7 +58,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -76,6 +78,7 @@ public class MyProfileEditFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final int RESULT_OK = 73;
     private Uri filePath;
+    private String mCurrentPhotoPath;
     private final int PICK_IMAGE_REQUEST = 71;
     private final int PICK_FROM_CAMERA = 72;
     private UserViewModel mViewModel;
@@ -96,6 +99,13 @@ public class MyProfileEditFragment extends Fragment {
     List<LanguageResponse> languages;
     private String urlUploadedPicture=null;
 
+
+    //variables foto camara
+
+    private static final String CARPETA_PRINCIPAL = "misImagenesApp/";
+    private static final String CARPETA_IMAGEN = "imagenes";
+    private static final String DIRECTORIO_IMAGEN= CARPETA_PRINCIPAL+CARPETA_IMAGEN;
+    //variables foto camara
     public MyProfileEditFragment() {
     }
 
@@ -388,6 +398,22 @@ public class MyProfileEditFragment extends Fragment {
             }
         }
     }
+    public File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  // prefix
+                ".jpg",         // suffix
+                storageDir      // directory
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
     public void obtainDownloadUrl(StorageReference ref) {
 
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -450,8 +476,9 @@ public class MyProfileEditFragment extends Fragment {
         }
     }
     public void openCamera() {
+        //File myFile = new File(Environment.getExternalStorageDirectory())
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
+
     }
 
 
