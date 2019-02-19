@@ -8,6 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +24,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.BadgeResponse;
+import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.BadgeService;
 import com.mario.myapplication.ui.badges.BadgeListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,11 +48,14 @@ import retrofit2.Response;
 public class BadgeDetailFragment extends Fragment {
     private String badgeId, jwt;
     private BadgeResponse badge;
+    private List<PoiResponse> pois;
     private TextView name, description, points;
     private ImageView earned, icon;
     private BadgeDetailListener mListener;
     private Context ctx;
     private boolean isEarned;
+    PoisAdapter adapter;
+    RecyclerView recycler;
     private RequestBuilder<PictureDrawable> requestBuilder;
 
     public BadgeDetailFragment() {
@@ -66,6 +76,7 @@ public class BadgeDetailFragment extends Fragment {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
                     badge = response.body();
+                    response.headers();
                     setData(layout);
                 }
             }
@@ -106,6 +117,11 @@ public class BadgeDetailFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_badge_detail, container, false);
         ctx = layout.getContext();
         getBadgeDetails(badgeId, layout);
+        recycler = layout.findViewById(R.id.badge_detail_pois_recycler);
+        recycler.setLayoutManager(new LinearLayoutManager(ctx));
+//        pois = badge.getPois();
+        adapter = new PoisAdapter(ctx, pois, mListener);
+        recycler.setAdapter(adapter);
         return layout;
     }
 
