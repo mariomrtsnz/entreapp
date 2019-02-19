@@ -64,5 +64,6 @@
     <string name="from_gallery">From gallery</string>
     <string name="from_camera">From camera</string>
     <string name="choose_option">Choose one option.</string>
+    <string name="badge_detail_pois_title">Points of Interests needed to earn this badge:</string>
 
 </resources>

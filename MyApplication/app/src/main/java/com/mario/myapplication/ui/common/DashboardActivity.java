@@ -103,7 +103,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
     @Override
     public void onBadgeClick(View v, BadgeResponse b) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.contenedor, new BadgeDetailFragment(b.getId()))
+                .replace(R.id.contenedor, new BadgeDetailFragment(b.getId(), b.isEarned()))
                 .commit();
     }
 
