@@ -9,18 +9,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.dynamic.SupportFragmentWrapper;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
+import com.mario.myapplication.ui.pois.details.PoiDetailsFragment;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,15 +34,16 @@ import retrofit2.Response;
 
 public class PoiListAdapter extends RecyclerView.Adapter<PoiListAdapter.ViewHolder> {
 
+    private final PoiListListener mListener;
     private List<PoiResponse> data;
     private Context context;
     // private RequestBuilder<PictureDrawable> requestBuilder;
 
 
-    PoiListAdapter(Context ctx, List<PoiResponse> data) {
+    PoiListAdapter(Context ctx, List<PoiResponse> data, PoiListListener mListener) {
         this.data = data;
         this.context = ctx;
-        // this.mListener = mListener;
+        this.mListener = mListener;
     }
 
     @NonNull
@@ -72,9 +79,7 @@ public class PoiListAdapter extends RecyclerView.Adapter<PoiListAdapter.ViewHold
         viewHolder.distance.setText(viewHolder.mItem.getStatus());
 
         Glide.with(context).load(viewHolder.mItem.getCoverImage()).into(viewHolder.bgImage);
-
-        // requestBuilder.load(viewHolder.mItem.getCoverImage()).into(viewHolder.icon);
-
+        viewHolder.bgImage.setOnClickListener(v -> mListener.goPoiDetails(v, viewHolder.mItem.getId()));
     }
 
     @Override

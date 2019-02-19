@@ -4,11 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,15 +47,22 @@ public class PoiListFragment extends Fragment {
     public PoiListFragment() {
     }
 
-    /*
-    public static PoiListFragment newInstance(int columnCount) {
-        PoiListFragment fragment = new PoiListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
     }
-    */
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_poi_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +111,7 @@ public class PoiListFragment extends Fragment {
                         Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                     } else {
                         items = Objects.requireNonNull(response.body()).getRows();
-                        adapter = new PoiListAdapter(ctx, items);
+                        adapter = new PoiListAdapter(ctx, items, mListener);
                         recycler.setAdapter(adapter);
                     }
                 }
