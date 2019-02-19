@@ -1,7 +1,9 @@
 package com.mario.myapplication.ui.profile;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +54,7 @@ import com.mario.myapplication.util.UtilToken;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,6 +77,7 @@ public class MyProfileEditFragment extends Fragment {
     private static final int RESULT_OK = 73;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
+    private final int PICK_FROM_CAMERA = 72;
     private UserViewModel mViewModel;
     private EditText editTextName,  editTextCity, editTextemail;
     private Spinner spinnerLanguages;
@@ -258,7 +263,24 @@ public class MyProfileEditFragment extends Fragment {
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performFileSearch();
+                final CharSequence[] options = {getString(R.string.from_gallery), getString(R.string.from_camera), getString(R.string.cancel)};
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+                builder.setTitle(getString(R.string.choose_option));
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selectedOption) {
+                        if (options[selectedOption]==getString(R.string.from_camera)){
+                            openCamera();
+
+                        }else if (options[selectedOption]==getString(R.string.from_gallery)){
+                            performFileSearch();
+                        }else if (options[selectedOption] == getString(R.string.cancel)){
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+
 
             }
         });
@@ -348,7 +370,16 @@ public class MyProfileEditFragment extends Fragment {
             if (resultData != null) {
                 filePath =resultData.getData();
                 Log.i("Filechooser URI", "Uri: " + filePath.toString());
-                //showImage(uri);
+                Glide
+                        .with(this)
+                        .load(filePath)
+                        .into(profile_image);
+                uploadImage();
+            }
+        }else if (requestCode==PICK_FROM_CAMERA && resultCode == Activity.RESULT_OK){
+            if (resultData != null) {
+                filePath =resultData.getData();
+                Log.i("Filechooser URI", "Uri: " + filePath.toString());
                 Glide
                         .with(this)
                         .load(filePath)
@@ -417,6 +448,10 @@ public class MyProfileEditFragment extends Fragment {
                         }
                     });
         }
+    }
+    public void openCamera() {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
     }
 
 

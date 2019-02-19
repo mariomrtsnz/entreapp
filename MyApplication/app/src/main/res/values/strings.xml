@@ -61,5 +61,8 @@
     <string name="badge_detail_point_title">Points:</string>
     <string name="incorrect_name">Incorrect name</string>
     <string name="incorrect_city">Incorrect city</string>
+    <string name="from_gallery">From gallery</string>
+    <string name="from_camera">From camera</string>
+    <string name="choose_option">Choose one option.</string>
 
 </resources>
