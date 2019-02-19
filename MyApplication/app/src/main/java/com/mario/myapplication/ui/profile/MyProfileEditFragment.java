@@ -317,6 +317,23 @@ public class MyProfileEditFragment extends Fragment {
             }
         }
     }
+    public void obtainDownloadUrl(StorageReference ref) {
+
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                urlUploadedPicture=uri.toString();
+            }
+
+        });
+        ref.getDownloadUrl().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ctx, "Error, not uploaded", Toast.LENGTH_SHORT).show();
+                urlUploadedPicture=null;
+            }
+        });
+    }
     private void uploadImage() {
 
         if(filePath != null)
@@ -333,13 +350,11 @@ public class MyProfileEditFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             //obtain url
+                            obtainDownloadUrl(ref);
 
-                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    urlUploadedPicture=uri.toString();
-                                }
-                            });
+                            if (urlUploadedPicture!=null){
+
+                            }
 
                             progressDialog.dismiss();
                             Toast.makeText(ctx, "Uploaded", Toast.LENGTH_SHORT).show();
