@@ -58,5 +58,6 @@
     <string name="favorites">Favorites</string>
     <string name="visited">Visited</string>
     <string name="noFilter">No filter</string>
+    <string name="badge_detail_point_title">Points:</string>
 
 </resources>
