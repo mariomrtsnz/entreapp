@@ -23,21 +23,25 @@
 
         <TextView
             android:id="@+id/badge_detail_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:text="@string/hello_blank_fragment"
+            android:layout_marginEnd="32dp"
+            android:inputType="textMultiLine"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/badge_detail_icon"
             app:layout_constraintTop_toTopOf="@+id/badge_detail_icon" />
 
         <TextView
             android:id="@+id/badge_detail_description"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:singleLine="false"
-            android:text="TextView"
+            android:inputType="textMultiLine"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/badge_detail_name"
@@ -49,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/badge_detail_point_title"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/badge_detail_icon"
             app:layout_constraintTop_toBottomOf="@+id/badge_detail_icon" />
 
@@ -57,7 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="TextView"
             app:layout_constraintStart_toStartOf="@+id/badge_detail_points_title"
             app:layout_constraintTop_toBottomOf="@+id/badge_detail_points_title" />
 
@@ -65,9 +69,58 @@
             android:id="@+id/badge_detail_earned"
             android:layout_width="54dp"
             android:layout_height="49dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_earned_badge"
-            app:layout_constraintStart_toStartOf="@+id/badge_detail_icon"
-            app:layout_constraintTop_toTopOf="@+id/badge_detail_icon" />
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/badge_detail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/badge_detail_icon" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="395dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="50dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/badge_detail_points" />
+
+        <TextView
+            android:id="@+id/badge_detail_pois_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/badge_detail_pois_title"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fillViewport="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/badge_detail_pois_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/badge_detail_pois_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginBottom="5dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

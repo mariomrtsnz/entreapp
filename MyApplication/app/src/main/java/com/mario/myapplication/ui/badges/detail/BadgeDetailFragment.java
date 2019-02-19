@@ -45,14 +45,15 @@ public class BadgeDetailFragment extends Fragment {
     private ImageView earned, icon;
     private BadgeDetailListener mListener;
     private Context ctx;
+    private boolean isEarned;
     private RequestBuilder<PictureDrawable> requestBuilder;
 
     public BadgeDetailFragment() {
         // Required empty public constructor
     }
 
-    public BadgeDetailFragment(String badgeId) {
-        this.badgeId = badgeId;
+    public BadgeDetailFragment(String badgeId, boolean isEarned) {
+        this.badgeId = badgeId; this.isEarned = isEarned;
     }
 
     private void getBadgeDetails(String badgeId, View layout) {
@@ -64,7 +65,6 @@ public class BadgeDetailFragment extends Fragment {
                 if (response.code() != 200) {
                     Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println(response.body());
                     badge = response.body();
                     setData(layout);
                 }
@@ -118,6 +118,9 @@ public class BadgeDetailFragment extends Fragment {
         name.setText(badge.getName());
         description.setText(badge.getDescription());
         points.setText(String.valueOf(badge.getPoints()));
+        if (isEarned) {
+            earned.setVisibility(View.VISIBLE);
+        }
         Glide.with(ctx).load(badge.getIcon()).into(icon);
     }
 

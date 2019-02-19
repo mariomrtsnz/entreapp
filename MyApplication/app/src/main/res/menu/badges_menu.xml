@@ -16,10 +16,20 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/badges_earned_filter"
-        android:checkable="true"
-        android:checked="false"
-        android:orderInCategory="4"
-        android:title="@string/badges_filter_checkbox"
-        app:showAsAction="never" />
+        android:id="@+id/menu_poi_list_filter"
+        android:icon="@drawable/ic_filter_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/filter"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/badges_earned_filter"
+                android:checkable="true"
+                android:checked="false"
+                android:orderInCategory="4"
+                android:background="@color/colorAccent"
+                android:title="@string/badges_filter_checkbox"
+                app:showAsAction="always" />
+        </menu>
+    </item>
 </menu>
