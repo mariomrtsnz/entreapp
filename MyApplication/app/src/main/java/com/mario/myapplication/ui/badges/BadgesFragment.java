@@ -54,6 +54,7 @@ public class BadgesFragment extends Fragment {
     private int mColumnCount = 1;
     private boolean asc;
     MenuItem menuItemSort;
+    private boolean earnedFilter = false;
 
 //    @Override
 //    protected FragmentToolbar builder() {
@@ -89,8 +90,44 @@ public class BadgesFragment extends Fragment {
                     menuItemSort.setIcon(R.drawable.ic_baseline_sort_up_24px);
                     this.asc = !this.asc;
                 }
+                return true;
+            case R.id.badges_earned_filter:
+                if(item.isChecked()){
+                    earnedFilter = !earnedFilter;
+                    item.setChecked(earnedFilter);
+                    listBadgesAndEarned();
+                } else {
+                    earnedFilter = !earnedFilter;
+                    item.setChecked(earnedFilter);
+                    listBadgesAndEarnedFiltered();
+                }
+//                updateTextView();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void listBadgesAndEarnedFiltered() {
+        BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
+        Call<List<BadgeResponse>> call = service.listBadgesAndEarnedFiltered();
+        call.enqueue(new Callback<List<BadgeResponse>>() {
+            @Override
+            public void onResponse(Call<List<BadgeResponse>> call, Response<List<BadgeResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    items = response.body();
+                    adapter = new BadgesAdapter(ctx, items, mListener);
+                    recycler.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BadgeResponse>> call, Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public BadgesFragment() {
@@ -106,7 +143,7 @@ public class BadgesFragment extends Fragment {
         return fragment;
     }
 
-    public void listBadgesAndEarned(String userId) {
+    public void listBadgesAndEarned() {
         BadgeService service = ServiceGenerator.createService(BadgeService.class, jwt, AuthType.JWT);
         Call<List<BadgeResponse>> call = service.listBadgesAndEarned();
         call.enqueue(new Callback<List<BadgeResponse>>() {
@@ -184,7 +221,7 @@ public class BadgesFragment extends Fragment {
                 recycler.setLayoutManager(new GridLayoutManager(ctx, mColumnCount));
             }
             items = new ArrayList<>();
-            listBadgesAndEarned(UtilToken.getId(ctx));
+            listBadgesAndEarned();
             adapter = new BadgesAdapter(ctx, items, mListener);
             recycler.setAdapter(adapter);
 
@@ -193,7 +230,7 @@ public class BadgesFragment extends Fragment {
             swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    listBadgesAndEarned(UtilToken.getId(ctx));
+                    listBadgesAndEarned();
                     if (swipeLayout.isRefreshing()) {
                         swipeLayout.setRefreshing(false);
                     }

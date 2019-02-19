@@ -53,6 +53,16 @@ export const allBadgesAndEarned = ({ querymen: { query, select, cursor } }, res,
     }).then(success(res)).catch(next);
 }
 
+export const earnedBadgesFiltered = ({ querymen: { query, select, cursor } }, res, next) => {
+  const userLogged = res.req.user;
+  User.findById(res.req.user.id).select('badges -_id').populate('badges').then(badgesResponse => {
+    badgesResponse.badges.map(badge => {
+      badge.set('earned', true)
+    })
+    return badgesResponse.badges
+  }).then(success(res)).catch(next);
+}
+
 export const show = ({ params }, res, next) =>
   Badge.findById(params.id)
     .then(notFound(res))

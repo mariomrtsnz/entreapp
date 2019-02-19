@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { token } from '../../services/passport'
-import { create, index, show, update, destroy, allBadgesAndEarned } from './controller'
+import { create, index, show, update, destroy, allBadgesAndEarned, earnedBadgesFiltered } from './controller'
 import { schema } from './model'
 export Badge, { schema } from './model'
 
@@ -51,6 +51,11 @@ router.get('/earned',
   token({required: true}),
   query(),
   allBadgesAndEarned)
+
+  router.get('/earned/filtered',
+  token({required: true}),
+  query(),
+  earnedBadgesFiltered)
 
 /**
  * @api {get} /badges/:id Retrieve badge

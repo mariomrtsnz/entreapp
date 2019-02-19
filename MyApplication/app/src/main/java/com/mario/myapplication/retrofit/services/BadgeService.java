@@ -26,4 +26,7 @@ public interface BadgeService {
 
     @GET(BASE_URL + "/earned")
     Call<List<BadgeResponse>> listBadgesAndEarned(@Query("sort") String points);
+
+    @GET(BASE_URL + "/earned/filtered")
+    Call<List<BadgeResponse>> listBadgesAndEarnedFiltered();
 }

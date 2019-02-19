@@ -14,4 +14,12 @@
         android:title="Search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/badges_earned_filter"
+        android:checkable="true"
+        android:checked="false"
+        android:orderInCategory="4"
+        android:title="@string/badges_filter_checkbox"
+        app:showAsAction="never" />
 </menu>
