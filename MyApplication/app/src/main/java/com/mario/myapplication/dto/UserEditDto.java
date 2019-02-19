@@ -10,6 +10,7 @@ public class UserEditDto {
     private String name;
     private String city;
     private String language;
+    private String picture;
     private List<String> likes = new ArrayList<>();
     private List<String> favs = new ArrayList<>();
     private List<String> friends = new ArrayList<>();
@@ -21,11 +22,13 @@ public class UserEditDto {
 
     ;
 
-    public UserEditDto(String email, String name, String city, String language, List<String> likes, List<String> favs, List<String> friends) {
+
+    public UserEditDto(String email, String name, String city, String language, String picture, List<String> likes, List<String> favs, List<String> friends) {
         this.email = email;
         this.name = name;
         this.city = city;
         this.language = language;
+        this.picture = picture;
         this.likes = likes;
         this.favs = favs;
         this.friends = friends;
@@ -63,6 +66,14 @@ public class UserEditDto {
         this.language = language;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     public List<String> getLikes() {
         return likes;
     }
@@ -96,6 +107,7 @@ public class UserEditDto {
                 Objects.equals(name, that.name) &&
                 Objects.equals(city, that.city) &&
                 Objects.equals(language, that.language) &&
+                Objects.equals(picture, that.picture) &&
                 Objects.equals(likes, that.likes) &&
                 Objects.equals(favs, that.favs) &&
                 Objects.equals(friends, that.friends);
@@ -103,7 +115,7 @@ public class UserEditDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, name, city, language, likes, favs, friends);
+        return Objects.hash(email, name, city, language, picture, likes, favs, friends);
     }
 
     @Override
@@ -113,6 +125,7 @@ public class UserEditDto {
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", language='" + language + '\'' +
+                ", picture='" + picture + '\'' +
                 ", likes=" + likes +
                 ", favs=" + favs +
                 ", friends=" + friends +

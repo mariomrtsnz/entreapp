@@ -282,6 +282,26 @@ public class MyProfileEditFragment extends Fragment {
 
         return userEditDto;
     }
+    public UserEditDto myProfileResponseToUserEditDto(MyProfileResponse user, String profilePicture){
+        UserEditDto userEditDto = new UserEditDto();
+        userEditDto.setCity(editTextCity.getText().toString());
+        List<String> likes = new ArrayList<>();
+        userEditDto.setName(editTextName.getText().toString());
+        LanguageResponse r = (LanguageResponse) spinnerLanguages.getSelectedItem();
+        userEditDto.setLanguage(r.getId());
+        userEditDto.setEmail(editTextemail.getText().toString());
+        userEditDto.setFavs(user.getFavs());
+        userEditDto.setFriends(user.getFriends());
+        //iterations
+        for (CategoryMyProfileResponse c:user.getLikes()){
+            likes.add(c.getId());
+        }
+        userEditDto.setLikes(likes);
+        userEditDto.setPicture(profilePicture);
+
+
+        return userEditDto;
+    }
 
     //UPDLOAD PROFILE IMAGE METHODS
     public void performFileSearch() {
@@ -350,24 +370,24 @@ public class MyProfileEditFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             //obtain url
-                            obtainDownloadUrl(ref);
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    urlUploadedPicture=uri.toString();
+                                    UserEditDto u=myProfileResponseToUserEditDto(updatedUser, urlUploadedPicture);
+                                    updateUserCall(u);
+                                }
 
-                            if (urlUploadedPicture!=null){
-                                /*updatedUser.setPicture(urlUploadedPicture.toString());
-                                UserEditDto userEditDto = myProfileResponseToUserEditDto(updatedUser);
-                                userService.editUser(updatedUser.getId(), userEditDto).enqueue(new Callback<UserEditResponse>() {
-                                    @Override
-                                    public void onResponse(Call<UserEditResponse> call, Response<UserEditResponse> response) {
+                            });
+                            ref.getDownloadUrl().addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ctx, "Error, not uploaded", Toast.LENGTH_SHORT).show();
+                                    urlUploadedPicture=null;
+                                }
+                            });
 
-                                    }
 
-                                    @Override
-                                    public void onFailure(Call<UserEditResponse> call, Throwable t) {
-
-                                    }
-                                });*/
-
-                            }
 
                             progressDialog.dismiss();
                             Toast.makeText(ctx, "Uploaded", Toast.LENGTH_SHORT).show();
