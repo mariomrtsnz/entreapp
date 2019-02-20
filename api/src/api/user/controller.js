@@ -184,7 +184,7 @@ export const destroy = ({ params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-export const EditPoiFavs = ({ params, user }, res, next) => {
+export const editPoiFavs = ({ params, user }, res, next) => {
   const found = user.favs.indexOf(params.id);
   if (found != -1)
     user.favs.splice(found, 1);
@@ -192,5 +192,16 @@ export const EditPoiFavs = ({ params, user }, res, next) => {
     user.favs.push(params.id);
   user.save()
     .then(success(res, 204))
+    .catch(next);
+}
+
+export const editUserFriends = ({ params, user }, res, next) => {
+  const found = user.friends.indexOf(params.id);
+  if (found != -1)
+    user.friends.splice(found, 1);
+  else
+    user.friends.push(params.id);
+  user.save()
+    .then(success(res))
     .catch(next);
 }

@@ -188,7 +188,7 @@ public class BadgesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<BadgeResponse>> call, Throwable t) {
-                Log.e("Network Failure", t.getMessage());
+                Log.e("Network Error", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });

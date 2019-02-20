@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -78,9 +79,13 @@ public class MyProfileEditFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final int RESULT_OK = 73;
     private Uri filePath;
+    private File fileImage;
+    private String path;
     private String mCurrentPhotoPath;
     private final int PICK_IMAGE_REQUEST = 71;
     private final int PICK_FROM_CAMERA = 72;
+    private final int COD_FOTO=20;
+    private final int COD_SELECCIONADA=10;
     private UserViewModel mViewModel;
     private EditText editTextName,  editTextCity, editTextemail;
     private Spinner spinnerLanguages;
@@ -387,7 +392,19 @@ public class MyProfileEditFragment extends Fragment {
                 uploadImage();
             }
         }else if (requestCode==PICK_FROM_CAMERA && resultCode == Activity.RESULT_OK){
-            if (resultData != null) {
+            MediaScannerConnection.scanFile(getContext(), new String[]{path},
+                    null, new MediaScannerConnection.OnScanCompletedListener() {
+                        @Override
+                        public void onScanCompleted(String path, Uri uri) {
+                            Log.i("Path", ""+path);
+                            Glide
+                                    .with(ctx)
+                                    .load(filePath)
+                                    .into(profile_image);
+                        }
+                    });
+
+            /*if (resultData != null) {
                 filePath =resultData.getData();
                 Log.i("Filechooser URI", "Uri: " + filePath.toString());
                 Glide
@@ -395,25 +412,10 @@ public class MyProfileEditFragment extends Fragment {
                         .load(filePath)
                         .into(profile_image);
                 uploadImage();
-            }
+            }*/
         }
     }
-    public File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  // prefix
-                ".jpg",         // suffix
-                storageDir      // directory
-        );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        return image;
-    }
     public void obtainDownloadUrl(StorageReference ref) {
 
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -476,8 +478,29 @@ public class MyProfileEditFragment extends Fragment {
         }
     }
     public void openCamera() {
-        //File myFile = new File(Environment.getExternalStorageDirectory())
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        File myFile = new File(Environment.getExternalStorageDirectory(), DIRECTORIO_IMAGEN);
+        boolean isCreated=myFile.exists();
+
+        if (isCreated==false){
+            myFile.mkdirs();
+            if (myFile.exists()==true){
+                isCreated=true;
+            }
+
+        }
+        if (isCreated==true){
+            Long consecutive = System.currentTimeMillis()/1000;
+            String nombre = consecutive.toString()+".jpg";
+            //set storage route
+            path =Environment.getExternalStorageState()+File.separator+DIRECTORIO_IMAGEN
+                    +File.separator+nombre;
+            fileImage=new File(path);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, PICK_FROM_CAMERA);
+        }
+
+
 
     }
 
