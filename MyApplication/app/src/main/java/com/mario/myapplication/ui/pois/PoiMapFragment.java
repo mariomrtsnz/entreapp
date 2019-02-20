@@ -41,6 +41,7 @@ import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.PoiService;
 import com.mario.myapplication.ui.pois.details.PoiDetailsFragment;
 import com.mario.myapplication.ui.pois.list.PoiListFragment;
+import com.mario.myapplication.ui.pois.qrScanner.QrScannerFragment;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.Objects;
@@ -107,9 +108,11 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
             else enableDeviceLocation();
         });
 
-//        v.findViewById(R.id.btn_scan_qr).setOnClickListener(view -> {
-//
-//        });
+        v.findViewById(R.id.btn_scan_qr).setOnClickListener(view -> {
+            Objects.requireNonNull(getFragmentManager()).beginTransaction()
+                    .replace(R.id.contenedor, new QrScannerFragment())
+                    .commit();
+        });
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
         ((SupportMapFragment) Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.map))).getMapAsync(this);
