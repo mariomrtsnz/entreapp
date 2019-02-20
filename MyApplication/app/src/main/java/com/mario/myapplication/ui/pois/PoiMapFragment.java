@@ -107,10 +107,19 @@ public class PoiMapFragment extends Fragment implements OnMapReadyCallback {
         checkDeviceLocation();
 
         View v = inflater.inflate(R.layout.fragment_poi_map, container, false);
+        v.findViewById(R.id.btn_show_myloc).setOnClickListener(view -> {
+            if (checkDeviceLocation()) getDeviceLocation();
+            else enableDeviceLocation();
+        });
 
+        v.findViewById(R.id.btn_scan_qr).setOnClickListener(view -> {
+            Objects.requireNonNull(getFragmentManager()).beginTransaction()
+                    .replace(R.id.contenedor, new QrScannerFragment())
+                    .commit();
+        });
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
         ((SupportMapFragment) Objects.requireNonNull(getChildFragmentManager().findFragmentById(R.id.map))).getMapAsync(this);
-        btnGetLocation();
+//        btnGetLocation();
         btnQRClick();
 
         return v;
