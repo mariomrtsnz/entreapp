@@ -69,21 +69,6 @@ public class PoiListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         jwt = UtilToken.getToken(Objects.requireNonNull(getContext()));
 
-        PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
-        Call<ResponseContainer<PoiResponse>> callList = service.listPois();
-        callList.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
-
-            }
-        });
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -101,27 +86,7 @@ public class PoiListFragment extends Fragment {
             } else {
                 recycler.setLayoutManager(new GridLayoutManager(ctx, mColumnCount));
             }
-            items = new ArrayList<>();
-            PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
-            Call<ResponseContainer<PoiResponse>> call = service.listPois();
-            call.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
-                    if (response.code() != 200) {
-                        Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
-                    } else {
-                        items = Objects.requireNonNull(response.body()).getRows();
-                        adapter = new PoiListAdapter(ctx, items, mListener);
-                        recycler.setAdapter(adapter);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
-                    Log.e("Network Failure", t.getMessage());
-                    Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
-                }
-            });
+            getAllPois(recycler);
         }
         return layout;
     }
@@ -141,5 +106,30 @@ public class PoiListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    /** API Call to get All Pois **/
+    private void getAllPois(RecyclerView recycler) {
+        items = new ArrayList<>();
+        PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
+        Call<ResponseContainer<PoiResponse>> call = service.listPois();
+        call.enqueue(new Callback<ResponseContainer<PoiResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Response<ResponseContainer<PoiResponse>> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity(), "Request Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    items = Objects.requireNonNull(response.body()).getRows();
+                    adapter = new PoiListAdapter(ctx, items, mListener);
+                    recycler.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseContainer<PoiResponse>> call, @NonNull Throwable t) {
+                Log.e("Network Failure", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -9,24 +9,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.dynamic.SupportFragmentWrapper;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.mario.myapplication.R;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.responses.UserResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
 import com.mario.myapplication.retrofit.generator.ServiceGenerator;
 import com.mario.myapplication.retrofit.services.UserService;
-import com.mario.myapplication.ui.pois.details.PoiDetailsFragment;
 import com.mario.myapplication.util.UtilToken;
 
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;

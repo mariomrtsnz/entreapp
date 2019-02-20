@@ -3,9 +3,7 @@ package com.mario.myapplication.ui.pois.details;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -36,10 +34,11 @@ import retrofit2.Response;
 
 public class PoiDetailsFragment extends Fragment {
 
-    private final String id;
+    private static String id;
     private PoiResponse poi;
-    private GestureDetector gestureDetector;
+    // private GestureDetector gestureDetector;
 
+    public PoiDetailsFragment() { }
     public PoiDetailsFragment(String poiId) {
         id = poiId;
     }
@@ -48,20 +47,19 @@ public class PoiDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPoiDetails();
-        gestureDetector = new GestureDetector(getContext(), new GestureListener());
+        // gestureDetector = new GestureDetector(getContext(), new GestureListener());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_poi_details, container, false);
+        return inflater.inflate(R.layout.fragment_poi_details, container, false);
 
        /* FloatingActionButton fab = v.findViewById(R.id.btn_poi_audioguide);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());*/
-
-        return v;
     }
 
+    /** Api call to get details of one POI **/
     private void getPoiDetails() {
         String jwt = UtilToken.getToken(Objects.requireNonNull(getContext()));
         PoiService service = ServiceGenerator.createService(PoiService.class, jwt, AuthType.JWT);
@@ -86,6 +84,7 @@ public class PoiDetailsFragment extends Fragment {
         });
     }
 
+    /** Set received data of POI on Layout **/
     private void setDataOnView() {
         View v = getView();
         ((TextView) Objects.requireNonNull(v).findViewById(R.id.tv_poi_name)).setText(Html.fromHtml(poi.getName()));
@@ -102,6 +101,7 @@ public class PoiDetailsFragment extends Fragment {
         }
     }
 
+    /*
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
@@ -109,4 +109,5 @@ public class PoiDetailsFragment extends Fragment {
             return true;
         }
     }
+    */
 }
