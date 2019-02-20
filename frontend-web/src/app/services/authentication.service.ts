@@ -47,9 +47,9 @@ export class AuthenticationService {
     localStorage.setItem('role', loginResponse.user.role);
     localStorage.setItem('picture', loginResponse.user.picture);
     this.languageService.getUserLanguage(loginResponse.user.language, loginResponse.token).subscribe(res => {
-      localStorage.setItem('language', res.name);
-      localStorage.setItem('languageId', res.id);
-      localStorage.setItem('isoCode', res.isoCode);
+    localStorage.setItem('language', res.name);
+    localStorage.setItem('languageId', res.id);
+    localStorage.setItem('isoCode', res.isoCode);
 
     }, error => {
       console.log(error);
@@ -107,6 +107,7 @@ export class AuthenticationService {
     return localStorage.getItem('role') === 'contributor';
   }
 
+  /** Method to get Google Login from Firebase */
   googleLogin(): Promise<Observable<LoginResponse>> {
     let googleToken: GoogleSignResponse;
     return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
@@ -116,6 +117,7 @@ export class AuthenticationService {
       });
   }
 
+  /** Method to get Facebook Login from Firebase */
   facebookLogin(): Promise<Observable<LoginResponse>> {
     let facebookToken: GoogleSignResponse;
     return this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())

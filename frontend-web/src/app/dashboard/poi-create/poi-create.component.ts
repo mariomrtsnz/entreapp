@@ -39,11 +39,13 @@ export class PoiCreateComponent implements OnInit {
     this.titleService.setTitle('Create - POI');
   }
 
+  /** Get all categories to show them */
   getCategories() {
     this.categoryService.getAllCategories()
       .subscribe(r => this.allCategories = r);
   }
 
+  /** Create an empty form */
   createForm() {
     this.coordinatesForm = this.fb.group({
       lat: [null, Validators.compose([Validators.required])],
@@ -69,9 +71,10 @@ export class PoiCreateComponent implements OnInit {
     });
   }
 
+  /** Send all the data to the api */
   onSubmit() {
     const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
-    newPoi.loc = {coordinates: [this.coordinatesForm.controls['lat'].value, this.coordinatesForm.controls['lng'].value]};
+    newPoi.loc = { coordinates: [this.coordinatesForm.controls['lat'].value, this.coordinatesForm.controls['lng'].value] };
     newPoi.audioguides = this.audioguidesForm.value;
     newPoi.description = this.descriptionForm.value;
 
@@ -85,6 +88,7 @@ export class PoiCreateComponent implements OnInit {
     });
   }
 
+  /** Function to upload multiple images to Firebase-Firestorage */
   ImgUpload(e) {
     for (let i = 0; i < e.target.files.length; i++) {
       const id = Math.random().toString(36).substring(2);
@@ -103,6 +107,7 @@ export class PoiCreateComponent implements OnInit {
     }
   }
 
+  /** Function to upload only one audioguide to Firebase-Firestorage */
   audioUpload(e) {
     const id = Math.random().toString(36).substring(2);
     const file = e.target.files[0];
@@ -114,6 +119,7 @@ export class PoiCreateComponent implements OnInit {
       finalize(() => ref.getDownloadURL().subscribe(r => this.audioguidesForm.controls['originalFile'].setValue(r)))).subscribe();
   }
 
+  /** Function to remove an image added */
   removeImage(i) {
     this.urlImage.splice(this.urlImage.indexOf(i), 1);
   }

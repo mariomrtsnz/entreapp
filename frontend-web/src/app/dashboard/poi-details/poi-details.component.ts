@@ -28,6 +28,7 @@ export class PoiDetailsComponent implements OnInit {
     }
     this.titleService.setTitle('Details - POI');
   }
+  
   checkEnglishUser() {
     const englishIsoCode = 'en';
     const userIsoCode = this.authService.getIsoCode();
@@ -41,6 +42,7 @@ export class PoiDetailsComponent implements OnInit {
     return result;
 
   }
+
   checkExistDescriptionTranslation(newPoi) {
     let posicionDescripcion = -1;
 
@@ -51,6 +53,7 @@ export class PoiDetailsComponent implements OnInit {
     }
     return posicionDescripcion;
   }
+
   checkExistAudioTranslation(newPoi) {
     let posicionDescripcion = -1;
     for (let i = 0; i < newPoi.audioguides.translations.length; i++) {
@@ -60,6 +63,8 @@ export class PoiDetailsComponent implements OnInit {
     }
     return posicionDescripcion;
   }
+
+  /** Api call to get all the data */
   getData() {
     this.poiService.getOne(this.poiService.selectedPoi.id).subscribe(p => {
       this.poi = p;
@@ -89,17 +94,20 @@ export class PoiDetailsComponent implements OnInit {
 
   }
 
+  /** Open the view to edit a POI */
   openEditPoi() {
     this.poiService.selectedPoi = this.poi;
     this.router.navigate(['home/edit']);
   }
 
+  /** Open the dialog to delete this POI */
   openDialogDeletePoi() {
     const dialogDeletePoi = this.dialog.open(DialogPoiDeleteComponent, { data: { poi: this.poi } });
     dialogDeletePoi.afterClosed().subscribe(res => res === 'confirm' ? this.router.navigate['/home'] : null,
       err => this.snackBar.open('There was an error when we were deleting this POI.', 'Close', { duration: 3000 }));
   }
 
+  /** Set the image hovered as Cover (Like a carousel) */
   setAsCover(image: string) {
     this.coverImage = image;
   }

@@ -40,6 +40,7 @@ export class SigninComponent implements OnInit {
     );
   }
 
+  /** Social Google Login */
   doGoogleLogin() {
     this.authService.googleLogin().then(r => r.subscribe(res => {
       this.authService.setLoginData(res);
@@ -47,6 +48,7 @@ export class SigninComponent implements OnInit {
     }));
   }
 
+  /** Social Facebook Login */
   doFacebookLogin() {
     this.authService.facebookLogin().then(r => r.subscribe(res => {
       this.authService.setLoginData(res);
