@@ -41,7 +41,7 @@ public class PoisAdapter extends RecyclerView.Adapter<PoisAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
 //        return items.size();
-        return items.size();
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
