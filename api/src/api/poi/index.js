@@ -60,23 +60,6 @@ router.get('/',
   index)
 
 /**
-* @api {get} /pois/nearest Retrieve nearests Pois
-* @apiName RetrieveNearestPois
-* @apiGroup Poi
-* @apiPermission user
-* @apiParam {String} access_token user access token.
-* @apiUse listParams
-* @apiSuccess {Number} count Total amount of pois near you.
-* @apiSuccess {Object[]} rows List of pois near you.
-* @apiError {Object} 400 Some parameters may contain invalid values.
-* @apiError 401 user access only.
-*/
-/* router.get('/nearest',
-  token({ required: true }),
-  query(),
-  nearIndex) */
-
-/**
  * @api {get} /pois/:id Retrieve poi
  * @apiName RetrievePoi
  * @apiGroup Poi
@@ -105,10 +88,6 @@ router.get('/:id',
 router.get('/:id/:idUserLanguage',
   token({ required: true }),
   showTranslated)
-
-/* router.get('/favsAndVisited/:id',
-  token({required: true}),
-  allPOIsAndFavAndVisited) */
 
 /**
  * @api {put} /pois/:id Update poi
@@ -153,8 +132,19 @@ router.delete('/:id',
   token({ required: true, roles: ['admin'] }),
   destroy)
 
+/**
+ * @api {put} /pois/visit/:id Update userVisited, userBadges and retrieve Poi
+ * @apiName RetrievePoi
+ * @apiGroup Poi
+ * @apiPermission user
+ * @apiParam {String} access_token user access token.
+ * @apiSuccess {Object} poi Poi's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Poi not found.
+ * @apiError 401 user access only.
+ */
 router.put('/visit/:id',
-  token({ required: true}),
+  token({ required: true }),
   VisitPoi)
 
 export default router

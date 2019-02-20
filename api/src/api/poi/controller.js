@@ -6,6 +6,7 @@ import mongoose from '../../services/mongoose';
 import { notFound, success } from '../../services/response/';
 import { Badge } from '../badge';
 
+/** Create a new POI */
 export const create = ({ bodymen: { body } }, res, next) => {
   body.coverImage = body.images[0];
   Poi.create(body)
@@ -26,6 +27,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
     .catch(next)
 }
 
+/** Show list of all pois */
 export const index = ({ querymen: { query, select, cursor } }, res, next) => {
   const userLogged = res.req.user;
   let lat;
@@ -69,6 +71,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) => {
     .catch(next)
 }
 
+/** Show one poi translated to user language */
 export const showTranslated = ({ params }, res, next) => {
   let query = {
     id: (mongoose.Types.ObjectId(params.id)),
@@ -81,6 +84,7 @@ export const showTranslated = ({ params }, res, next) => {
     .catch(next)
 }
 
+/**  Show one POI info. Without visit it */
 export const show = ({ params }, res, next) =>
   Poi.findById(params.id).populate('categories', 'id name')
     .then(notFound(res))
@@ -88,6 +92,7 @@ export const show = ({ params }, res, next) =>
     .then(success(res))
     .catch(next)
 
+/** Used to update a POI */
 export const update = ({ bodymen: { body }, params }, res, next) =>
   Poi.findById(params.id)
     .then(notFound(res))
@@ -96,6 +101,7 @@ export const update = ({ bodymen: { body }, params }, res, next) =>
     .then(success(res))
     .catch(next)
 
+/** Action done when admin deletes a POI */
 export const destroy = ({ params }, res, next) =>
   Poi.findById(params.id)
     .then(notFound(res))
@@ -103,16 +109,10 @@ export const destroy = ({ params }, res, next) =>
     .then(success(res, 204))
     .catch(next)
 
-function distance(lat1, lon1, lat2, lon2) {
-  var p = Math.PI / 180;
-  var c = Math.cos;
-  var a = 0.5 - c((lat2 - lat1) * p) / 2 +
-    c(lat1 * p) * c(lat2 * p) *
-    (1 - c((lon2 - lon1) * p)) / 2;
-
-  return 12742 * Math.asin(Math.sqrt(a)) * Math.PI * 360; // 2 * R; R = 6371 km
-}
-
+/** Actions when user ScanQR. 
+ *    If user didn't visit the POI, add to UserVisited
+ *    If user visited all POIs of a Medal, add to him.
+ *    Retrieve the POI. **/
 export const VisitPoi = ({ params, user }, res, next) => 
   Poi.findById(params.id).populate('categories', 'id name')
     .then(notFound(res))
@@ -136,8 +136,18 @@ export const VisitPoi = ({ params, user }, res, next) =>
     .then(success(res))
     .catch(next)
 
-function arrayContainsArray(superset, subset) {
-  if (0 !== subset.length && superset.length !== 0)
-    return subset.every((value) => (superset.indexOf(value) >= 0));
+/** Function used to calculate the distance between 2 POIs */
+function distance(lat1, lon1, lat2, lon2) {
+  var p = Math.PI / 180;
+  var c = Math.cos;
+  var a = 0.5 - c((lat2 - lat1) * p) / 2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+
+  return 12742 * Math.asin(Math.sqrt(a)) * Math.PI * 360; // 2 * R; R = 6371 km
+}
+
+/** Function used to compare if one array contains another */
+function arrayContainsArray(container, contained) {
+  if (0 !== contained.length && container.length !== 0)
+    return contained.every((value) => (container.indexOf(value) >= 0));
   return false;
 }
