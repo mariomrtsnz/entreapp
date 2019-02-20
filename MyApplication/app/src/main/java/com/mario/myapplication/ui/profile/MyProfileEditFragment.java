@@ -483,9 +483,13 @@ public class MyProfileEditFragment extends Fragment {
         boolean isCreated=myFile.exists();
 
         if (isCreated==false){
-            isCreated=myFile.mkdirs();
+            myFile.mkdirs();
+            if (myFile.exists()==true){
+                isCreated=true;
+            }
+
         }
-        if (isCreated){
+        if (isCreated==true){
             Long consecutive = System.currentTimeMillis()/1000;
             String nombre = consecutive.toString()+".jpg";
             //set storage route
