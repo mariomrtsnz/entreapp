@@ -35,6 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MyProfileFragment extends Fragment {
+    //variables
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int READ_REQUEST_CODE = 42;
@@ -60,9 +61,10 @@ public class MyProfileFragment extends Fragment {
     private MyProfileInteractionListener mListener;
 
     public MyProfileFragment() {
+        //empty constructor
     }
 
-    public static MyProfileFragment newInstance(String param1, String param2) {
+    public static MyProfileFragment newInstance(String param1, String param2) {//full constructor
         MyProfileFragment fragment = new MyProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -74,11 +76,11 @@ public class MyProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ctx = getContext();
+        ctx = getContext();//get main activity, token and user id
         jwt = UtilToken.getToken(ctx);
         userId = UtilToken.getId(ctx).toString();
         if (jwt == null) {
-            //se manda al usuario al login
+            //redirect to login
         }
     }
 
@@ -92,7 +94,7 @@ public class MyProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
         // every element is looked for
         loadItemsFragment(view);
-        //callbacks
+        //obtain user from api
         getUser(view);
 
         return view;
@@ -116,7 +118,7 @@ public class MyProfileFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        mListener = null;//interfaz on null
     }
 
 
@@ -131,12 +133,14 @@ public class MyProfileFragment extends Fragment {
     }
 
     //own methods
+
+    //it takes every element share in user view model to show on edit texts
     @SuppressLint("ResourceType")
     public void setItemsFragment(Response<MyProfileResponse> response, View v){
+
         String points="";
         Resources res = getResources();
         myProfileResponse = response.body();
-        //textViewEmailWritten.setText(myProfileResponse.getEmail());
         textViewEmailWritten.setText(myProfileResponse.getEmail());
         textViewName.setText(myProfileResponse.getName());
         if (myProfileResponse.getLanguage() != null) {
@@ -169,7 +173,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ctx, "EDITING USER!", Toast.LENGTH_LONG).show();
-
+                //once user has been edited the fragment redirect you to myProfileFragment
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.contenedor, new MyProfileEditFragment())
@@ -177,18 +181,18 @@ public class MyProfileFragment extends Fragment {
             }
         });
 
-        System.out.println(myProfileResponse.getLikes());
 
 
 
     }
+    //open gallery
     public void performFileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
-
+        //it counts badges points of our users
     public int countPoints(MyProfileResponse u) {
         int points = 0;
         if (u.getBadges().size() >= 1) {
@@ -198,7 +202,7 @@ public class MyProfileFragment extends Fragment {
         }
         return points;
     }
-
+    //it counts the number of badges
     public int countBadges(MyProfileResponse u) {
         int badges = 0;
         if (u.getBadges().size() >= 1) {
@@ -209,11 +213,12 @@ public class MyProfileFragment extends Fragment {
         return badges;
     }
     
-
+    //it counts our pois visited
     public int countPoisVisited(MyProfileResponse u) {
         return u.getVisited().size();
     }
 
+    //load every layaout item
     public void loadItemsFragment(View view) {
         textViewFriendsWritten = view.findViewById(R.id.textViewFriendsWritten);
         textViewBadgesWritten = view.findViewById(R.id.textViewBadgesWritten);
@@ -229,7 +234,7 @@ public class MyProfileFragment extends Fragment {
         //layaoutLikes=view.findViewById(R.id.layoutLikes);
     }
 
-    public void getUser(View view){
+    public void getUser(View view){//obtain from the api the user logged
         service = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
         Call<MyProfileResponse> getOneUser = service.getUser(userId);
@@ -239,17 +244,17 @@ public class MyProfileFragment extends Fragment {
                 //Resources res = getResources();
                 String points = "";
                 if (response.isSuccessful()) {
-                    Log.d("LOL", "user obtain successfully");
+                    Log.d("Success", "user obtain successfully");
                     setItemsFragment(response, view);
                 } else {
-                    Log.d("LOL3", "FALLITO BUENO");
+                    Log.d("Fail", "user can't be obtain successfully");
                     Toast.makeText(ctx, "You have to log in!", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MyProfileResponse> call, Throwable t) {
-                Log.d("LOL4", "FALLITO BUENO");
+                Log.d("Conexion failure", "FALLITO BUENO");
                 Toast.makeText(ctx, "Fail in the request!", Toast.LENGTH_LONG).show();
             }
         });
