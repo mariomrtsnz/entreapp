@@ -37,23 +37,19 @@ export class DialogCreateUserComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogCreateUserComponent>, public snackBar: MatSnackBar, public authService: AuthenticationService) { }
 
   ngOnInit() {
+    //it obtains all roles, citys and languages
     this.getAllLanguages();
     this.createForm();
     this.obtainRoles();
     this.getAllCountries();
     // this.getData();
   }
+  //method to generate random password
   generateNewPassword() {
     this.passGenerada = this.authService.generateNewPassword();
     this.passGeneradaDos = this.passGenerada;
   }
-  /*email: String;
-          password: String;
-          name: String;
-          role: String;
-          picture: String;
-          city: String;
-          language: String;*/
+
   randomPassword(length) {
     const chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890';
     let pass = '';
@@ -72,6 +68,7 @@ export class DialogCreateUserComponent implements OnInit {
 
 
   }
+  //it creates form with validatores
   createForm() {
     this.form = this.fb.group({
       email: [null, Validators.compose([Validators.required, Validators.email])],
@@ -84,7 +81,7 @@ export class DialogCreateUserComponent implements OnInit {
 
     });
   }
-
+  //get all cities from api
   getAllCountries() {
     this.userService.getAllCountries().subscribe(receivedCountries => {
       this.countries = receivedCountries;
@@ -92,6 +89,7 @@ export class DialogCreateUserComponent implements OnInit {
       this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
     });
   }
+  //get all languages from api
   getAllLanguages() {
     this.languageService.getAllLanguages(this.authService.getToken()).subscribe(receivedLanguages => {
       this.languages = receivedLanguages;
@@ -99,6 +97,7 @@ export class DialogCreateUserComponent implements OnInit {
       this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 });
     });
   }
+  //create a new user with a default gravatar
   onSubmit() {
     const newUser: UserCreateDto = <UserCreateDto>this.form.value;
     newUser.picture = 'https://gravatar.com/avatar/801fce29ee6b494ec10dc47af131b1ba?d=identicon';
@@ -106,17 +105,12 @@ export class DialogCreateUserComponent implements OnInit {
       this.dialogRef.close(resp);
     }, error => this.snackBar.open('There was an error when trying to create this user.', 'Close', { duration: 3000 }));
   }
+  //obtain all roles from api
   obtainRoles() {
     this.userService.getRoles().subscribe(receivedRoles => {
       this.roles = receivedRoles.roles;
     }, error => this.snackBar.open('There was an error when were loading data.', 'Close', { duration: 3000 }));
   }
-  /*onSubmit() {
-    const newPoi: PoiCreateDto = <PoiCreateDto>this.form.value;
-    newPoi.coordinates = this.coordinatesForm.value;
-    this.poiService.create(newPoi).toPromise()
-    .then(() => this.router.navigate(['/home']))
-    .catch(() => this.snackBar.open('Error al crear localización.', 'Cerrar', {duration: 3000}));
-  }*/
+  
 
 }

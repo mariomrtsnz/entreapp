@@ -65,69 +65,7 @@ export class UserService {
     return this.http.put<UserResponse>(`${userUrl}/${id}${this.token}`, user);
   }
 
-  // updateUsuario(usuario: Usuario): Observable<Usuario> {
-  //   const requestOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.authService.getToken()}`
-  //     })
-  //   };
-  //   return this.http.put<Usuario>(`${usuarioUrl}/${usuario.id}`, usuario, requestOptions);
-  // }
 
-  // createUser(recurso: UserDto): Observable<UserResponse> {
-  //   const requestOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.authService.getToken()}`
-  //     })
-  //   };
-
-  //   return this.http.post<UserResponse>(`${userUrl}/create`, recurso, requestOptions);
-  // }
-  // editUser(user: UserDto, userId: number): Observable<UserResponse> {
-  //   const requestOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.authService.getToken()}`
-  //     })
-  //   };
-
-  //   return this.http.put<UserResponse>(`${userUrl}/${userId}`, user, requestOptions);
-  // }
-
-  // updateProfile(profile: UserUpdateDto): Observable<UserResponse> {
-  //   const requestOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.authService.getToken()}`
-  //     })
-  //   };
-
-  //   return this.http.put<UserResponse>(`${userUrl}/update/profile`, profile, requestOptions);
-  // }
-
-  // updatePassword(passwordDto: UserPasswordDto): Observable<UserResponse> {
-  //   const requestOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.authService.getToken()}`
-  //     })
-  //   };
-
-  //   return this.http.put<UserResponse>(`${userUrl}/change/password`, passwordDto, requestOptions);
-  // }
-
-  // deleteUser(userId: number): Observable<User[]> {
-  //   const requestOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.authService.getToken()}`
-  //     })
-  //   };
-
-  //   return this.http.delete<User[]>(`${userUrl}/${userId}`, requestOptions);
-  // }
 
   getOneByEmail(email: string): any {
     let foundUser;
@@ -141,26 +79,5 @@ export class UserService {
     return foundUser;
   }
 
-  // getOneByEmail(email: string): any {
-  //   let foundUser;
-  //   this.getAllUsers().toPromise().then(
-  //     users => {
-  //       foundUser = users.find(user => {
-  //         return user.email.toLowerCase() === email.toLowerCase();
-  //       });
-  //     }
-  //   );
-  //   return foundUser;
-  // }
-  // getOneById(userId: number): Observable<User> {
-  //   const requestOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.authService.getToken()}`
-  //     })
-  //   };
-
-  //   return this.http.get<User>(`${userUrl}/${userId}`, requestOptions);
-  // }
 
 }

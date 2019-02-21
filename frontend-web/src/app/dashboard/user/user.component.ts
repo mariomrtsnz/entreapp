@@ -28,36 +28,40 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
+    //get all users and set tittle page
     this.getAll();
     this.titleService.setTitle('Users');
   }
-  getAll() {
+  getAll() {//get all users from api
     const totalSum = 0;
     this.userService.getAll().toPromise()
       .then(receivedUsers => {
-        // receivedUsers.rows.forEach(badges => {totalSum+=badge.points})
         this.dataSource = new MatTableDataSource(receivedUsers.rows);
         this.dataSource.paginator = this.paginator;
       })
       .catch(() => this.snackBar.open('There was an error when we were loading data.', 'Close', { duration: 3000 }));
   }
+  //it permits clients filtering app users
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+  //it permits clients delete users
   openDialogDeleteUser(u: UserResponse) {
     const dialogDeleteUser = this.dialog.open(DialogDeleteUserComponent, { data: { user: u } });
     dialogDeleteUser.afterClosed().subscribe(result => {
       this.getAll();
     });
   }
+  //dialog to create users
   openDialogNewUser() {
     const dialogNewUser = this.dialog.open(DialogCreateUserComponent, { width: '500px' });
     dialogNewUser.afterClosed().subscribe(result => {
       this.getAll();
     });
   }
+  //dialog to update users
   openDialogUpdateUser(userResponse: UserResponse) {
     const dialogUpdateUser = this.dialog.open(DialogEditUserComponent, { width: '500px', data: { user: userResponse } });
     dialogUpdateUser.afterClosed().subscribe(result => {

@@ -27,6 +27,7 @@ export class DialogTranslatePoiComponent implements OnInit {
     public authService: AuthenticationService, @Inject(MAT_DIALOG_DATA) public data: any, public languageService: LanguageService) { }
 
   ngOnInit() {
+    //it gets the poi to translate it
     this.getOnePoi();
     this.createForm();
     this.idLanguage = this.authService.getLanguageId();
@@ -62,9 +63,11 @@ export class DialogTranslatePoiComponent implements OnInit {
 
   checkAndSetTranslations(userIsoCode: string) {
     let posicionDescripcion = -1, posicionAudio = -1;
-    /* comprobamos el id del usuario
-    buscamos si existe traduccion con ese id  y la mostramos en el form control
-    si el usuario es ingles mostramos el texto original */
+   
+    //we take the user isocode to look for it in audioguides and description, if they don't
+    //exists we show the original text (english)
+    //if not we are going to look for in in the ArrayList with audio and description 
+    //to show them in his language
     if (this.checkEnglishUser(userIsoCode)) {
       console.log(this.poiObtenido.audioguides.originalFile);
       this.audioguidesForm.controls['translatedFile'].setValue(this.poiObtenido.audioguides.originalFile);
@@ -82,9 +85,9 @@ export class DialogTranslatePoiComponent implements OnInit {
         this.audioguidesForm.controls['translatedFile'].setValue(this.poiObtenido.audioguides.translations[posicionAudio].translatedFile);
       }
 
-      console.log(this.poiObtenido.description.translations[posicionDescripcion]);
     }
   }
+  //check if the user is English
   checkEnglishUser(userIsoCode: string) {
     const englishIsoCode = 'en';
     let result = false;
@@ -97,6 +100,7 @@ export class DialogTranslatePoiComponent implements OnInit {
     return result;
 
   }
+  //check if it exists a description translated in the user language 
   checkExistDescriptionTranslation(newPoi) {
     let posicionDescripcion = -1;
     for (let i = 0; i < newPoi.description.translations.length; i++) {
@@ -106,6 +110,8 @@ export class DialogTranslatePoiComponent implements OnInit {
     }
     return posicionDescripcion;
   }
+    //check if it exists a audioguide translated in the user language 
+
   checkExistAudioTranslation(newPoi) {
     let posicionDescripcion = -1;
     for (let i = 0; i < newPoi.audioguides.translations.length; i++) {
@@ -116,7 +122,7 @@ export class DialogTranslatePoiComponent implements OnInit {
     return posicionDescripcion;
   }
   onSubmit() {
-    // Creo un objeto PoiCreateDto con los datos del obtenido
+    // its created a new dto
     const englishIsoCode = 'en';
     const newPoi: PoiCreateDto = {
       audioguides: this.poiObtenido.audioguides,
@@ -138,25 +144,21 @@ export class DialogTranslatePoiComponent implements OnInit {
 
     let posicionDescripcion = -1, posicionAudio = -1;
 
-    // compruebo si esta la nueva traduccion
-    // si el idioma no es ingles se inserta en una nueva traduccion
+    // it checks if the translation exists
+    // if the language isnt english we write a translate description and audio guide
     if (!this.checkEnglishUser(this.isoCode)) {
-      console.log('no es ingles');
       posicionDescripcion = this.checkExistDescriptionTranslation(newPoi);
-      // si existe la borro y añado nueva
       // tslint:disable-next-line:no-non-null-assertion
       if (posicionDescripcion !== -1) {
         newPoi.description.translations.splice(posicionDescripcion);
       }
-      // compruebo si esta el audio
       posicionAudio = this.checkExistAudioTranslation(newPoi);
-      // si existe la borro y añado nueva
       // tslint:disable-next-line:no-non-null-assertion
       if (posicionAudio! = -1) {
         newPoi.audioguides.translations.splice(posicionDescripcion);
       }
 
-      // Inserto la nueva traduccion
+      // It inserts translation and audioguide
       newPoi.description.translations.push(
         {
           id: this.authService.getLanguageId(),
@@ -171,17 +173,18 @@ export class DialogTranslatePoiComponent implements OnInit {
       newPoi.description.originalDescription = this.descriptionForm.controls['translatedDescription'].value;
       newPoi.audioguides.originalFile = this.audioguidesForm.controls['translatedFile'].value;
     }
-    // Introduzco las categorias.
+    // It inserts categories
     this.poiObtenido.categories.forEach(c => {
       newPoi.categories.push(c.id);
     });
 
-    // Se envía
+    // It sends the new translations
     this.poiService.edit(this.poiObtenido.id, newPoi)
       .subscribe(r => this.dialogRef.close('confirm'),
         e => this.snackBar.open('There was an error updating the data.', 'Close', { duration: 3000 }));
   }
 
+  //it uploads audio
   audioUpload(e) {
     const randomId = Math.random().toString(36).substring(2);
     const timeId = new Date().getTime();
