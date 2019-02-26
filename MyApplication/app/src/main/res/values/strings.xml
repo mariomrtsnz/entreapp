@@ -8,6 +8,10 @@
     <string name="email_hint">Email</string>
     <string name="confirm_hint">Confirm Password</string>
 
+    <!-- Facebook -->
+    <string name="facebook_app_id">313908059266962</string>
+    <string name="fb_login_protocol_scheme">fb313908059266962</string>
+
     <!-- Preferencias -->
     <string name="sharedpreferences_filename">login</string>
     <string name="jwt_key">JWT_KEY</string>
