@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.BadgePoiResponse;
 import com.mario.myapplication.responses.BadgeResponse;
 import com.mario.myapplication.responses.PoiResponse;
 import com.mario.myapplication.retrofit.generator.AuthType;
@@ -48,7 +49,7 @@ import retrofit2.Response;
 public class BadgeDetailFragment extends Fragment {
     private String badgeId, jwt;
     private BadgeResponse badge;
-    private List<PoiResponse> pois;
+    private List<BadgePoiResponse> pois;
     private TextView name, description, points;
     private ImageView earned, icon;
     private BadgeDetailListener mListener;
@@ -78,6 +79,7 @@ public class BadgeDetailFragment extends Fragment {
                     badge = response.body();
                     response.headers();
                     setData(layout);
+                    pois = badge.getPois();
                 }
             }
 
@@ -119,7 +121,6 @@ public class BadgeDetailFragment extends Fragment {
         getBadgeDetails(badgeId, layout);
         recycler = layout.findViewById(R.id.badge_detail_pois_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(ctx));
-//        pois = badge.getPois();
         adapter = new PoisAdapter(ctx, pois, mListener);
         recycler.setAdapter(adapter);
         return layout;

@@ -35,11 +35,12 @@ import com.mario.myapplication.ui.routes.RoutesFragment;
 
 public class DashboardActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentCategoryInteractionListener, BadgeListener, BadgeDetailListener, RouteListener, PeopleFragment.OnListFragmentUserInteractionListener, PoiListListener, PeopleDetailsFragment.OnFragmentInteractionListener {
     FragmentTransaction fragmentChanger;
+    //every fragment used by app
     private Fragment badges, pois, myProfile, people, routes;
     private TextView mTextMessage;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
+        //bottom meny
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment f = null;
@@ -52,11 +53,11 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                 case R.id.navigation_routes:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, routes);
                     fragmentChanger.commit();
-                    break;
+                    return true;
                 case R.id.navigation_people:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, people);
                     fragmentChanger.commit();
-                    break;
+                    return true;
                 case R.id.navigation_badges:
                     fragmentChanger = getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, badges);
                     fragmentChanger.commit();
@@ -66,7 +67,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryFrag
                     fragmentChanger.commit();
                     return true;
 
-            }
+            }//default fragment
             if (f != null) {
                 getSupportFragmentManager()
                         .beginTransaction()

@@ -75,6 +75,7 @@ import retrofit2.Response;
 
 public class MyProfileEditFragment extends Fragment {
 
+    //variables
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int RESULT_OK = 73;
@@ -105,14 +106,17 @@ public class MyProfileEditFragment extends Fragment {
     private String urlUploadedPicture=null;
 
 
-    //variables foto camara
+    //variables for camera
 
     private static final String CARPETA_PRINCIPAL = "misImagenesApp/";
     private static final String CARPETA_IMAGEN = "imagenes";
     private static final String DIRECTORIO_IMAGEN= CARPETA_PRINCIPAL+CARPETA_IMAGEN;
-    //variables foto camara
+
     public MyProfileEditFragment() {
+        //empty constructor
     }
+
+    //default constructor
 
     public static MyProfileEditFragment newInstance(String param1, String param2) {
         MyProfileEditFragment fragment = new MyProfileEditFragment();
@@ -142,29 +146,25 @@ public class MyProfileEditFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof MyProfileInteractionListener) {
-            mListener = (MyProfileInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
+
     }
     @Override
     public void onDetach() {
         super.onDetach();
+        //reset interface
         mListener = null;
     }
 
     public void onCreate(Bundle savedInstanceState) {
-        // Create a ViewModel the first time the system calls an activity's onCreate() method.
-        // Re-created activities receive the same MyViewModel instance created by the first activity.
+
 
         super.onCreate(savedInstanceState);
+        //reset filePath
         filePath=null;
-        fireBaSeUrl="https://firebasestorage.googleapis.com/v0/b/";
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         mViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+        //get user shared in view model class
         mViewModel.getSelectedUser().observe(getActivity(),
                 user -> {
                 updatedUser = user;
@@ -173,7 +173,7 @@ public class MyProfileEditFragment extends Fragment {
                 });
     }
 
-    public void loadAllLanguages(){
+    public void loadAllLanguages(){//take every language in node api
         service = ServiceGenerator.createService(LanguageService.class,
                 jwt, AuthType.JWT);
         Call<ResponseContainer<LanguageResponse>> getAllLanguages = service.listLanguages();
@@ -183,15 +183,16 @@ public class MyProfileEditFragment extends Fragment {
                 if (response.isSuccessful()) {
                     int spinnerPosition=1;
                     Log.d("successLanguage", "languageObtained");
+                    //result put in languages
                     languages = response.body().getRows();
-                    System.out.println(languages);
 
+                    //setting spinner with languages
                     ArrayAdapter<LanguageResponse> adapter =
                             new ArrayAdapter<LanguageResponse>(ctx, android.R.layout.simple_spinner_dropdown_item, languages);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerLanguages.setAdapter(adapter);
 
-
+                    //getting the spinner position looking for the user's language
 
                     spinnerPosition = languages.indexOf(updatedUser.getLanguage());
 
@@ -213,7 +214,8 @@ public class MyProfileEditFragment extends Fragment {
     }
 
     //own methods
-    public void loadItemsFragment(View view) {
+    public void loadItemsFragment(View view) {//load every layaout element
+
         spinnerLanguages = view.findViewById(R.id.spinnerLanguage);
         editTextCity=view.findViewById(R.id.editTextCity);
         editTextemail=view.findViewById(R.id.editTextEmail);
@@ -221,7 +223,7 @@ public class MyProfileEditFragment extends Fragment {
         btn_save =view.findViewById(R.id.btn_edit_profile);
         profile_image = view.findViewById(R.id.edit_profile_image);
     }
-    public void updateUserCall(UserEditDto userEditDto) {
+    public void updateUserCall(UserEditDto userEditDto) {//update an user
         userService = ServiceGenerator.createService(UserService.class,
                 jwt, AuthType.JWT);
         Call<UserEditResponse> editUser = userService.editUser(updatedUser.getId(), userEditDto);
@@ -249,7 +251,7 @@ public class MyProfileEditFragment extends Fragment {
             }
         });
     }
-    public boolean validate(){
+    public boolean validate(){//validate every edit text with a static class called validatorUserEdit
         ValidatorUserEdit.clearError(editTextCity);
         ValidatorUserEdit.clearError(editTextName);
         String incorrectName, incorrectCity;
@@ -263,7 +265,7 @@ public class MyProfileEditFragment extends Fragment {
         if (!ValidatorUserEdit.onlyLetters(editTextName) || !ValidatorUserEdit.isNotEmpty(editTextName)){
             isValid=false;
 
-
+            //if there is any error we show it next to the editText
             ValidatorUserEdit.setError(editTextName, incorrectName);
         }
 
@@ -284,16 +286,20 @@ public class MyProfileEditFragment extends Fragment {
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedOption) {
+                        //dialog's options
+
+                        //open camera
                         if (options[selectedOption]==getString(R.string.from_camera)){
                             openCamera();
-
+                        //open gallery
                         }else if (options[selectedOption]==getString(R.string.from_gallery)){
                             performFileSearch();
+                            //close dialog
                         }else if (options[selectedOption] == getString(R.string.cancel)){
                             dialog.dismiss();
                         }
                     }
-                });
+                });//show dialog
                 builder.show();
 
 
@@ -304,13 +310,13 @@ public class MyProfileEditFragment extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(validate()){
+            if(validate()){//if the edit text are correct the user is updated
                 updateUserCall(myProfileResponseToUserEditDto(user));
             }
 
             }
         });
-        //image
+        //upload user image
         Glide.with(ctx)
                 .load(user.getPicture().toString())
                 .into(profile_image);
@@ -324,6 +330,7 @@ public class MyProfileEditFragment extends Fragment {
         loadAllLanguages();
 
     }
+    //transform myProfileResponse to userEditDto taking edit text and spinner values
     public UserEditDto myProfileResponseToUserEditDto(MyProfileResponse user){
         UserEditDto userEditDto = new UserEditDto();
         userEditDto.setPicture(user.getPicture());
@@ -344,6 +351,7 @@ public class MyProfileEditFragment extends Fragment {
 
         return userEditDto;
     }
+    //transform myProfileResponse to userEditDto taking edit text and spinner values AND uploading the picture
     public UserEditDto myProfileResponseToUserEditDto(MyProfileResponse user, String profilePicture){
         UserEditDto userEditDto = new UserEditDto();
         userEditDto.setCity(editTextCity.getText().toString());
@@ -378,7 +386,7 @@ public class MyProfileEditFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
-
+        //upload image with gallery
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
 
             Uri uri = null;
@@ -390,7 +398,7 @@ public class MyProfileEditFragment extends Fragment {
                         .load(filePath)
                         .into(profile_image);
                 uploadImage();
-            }
+            }//upload image with camera
         }else if (requestCode==PICK_FROM_CAMERA && resultCode == Activity.RESULT_OK){
             MediaScannerConnection.scanFile(getContext(), new String[]{path},
                     null, new MediaScannerConnection.OnScanCompletedListener() {
@@ -416,11 +424,12 @@ public class MyProfileEditFragment extends Fragment {
         }
     }
 
+    //optain picture url from firebase
     public void obtainDownloadUrl(StorageReference ref) {
 
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onSuccess(Uri uri) {
+            public void onSuccess(Uri uri) {//taking the url and uptading user
                 urlUploadedPicture=uri.toString();
                 UserEditDto u=myProfileResponseToUserEditDto(updatedUser, urlUploadedPicture);
                 updateUserCall(u);
@@ -437,6 +446,7 @@ public class MyProfileEditFragment extends Fragment {
         });
 
     }
+    //upload image to firebase
     private void uploadImage() {
 
         if(filePath != null)
@@ -444,10 +454,10 @@ public class MyProfileEditFragment extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(ctx);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
-
+            //where the picture will be saved
             StorageReference ref = storageReference.child("image/"+ UUID.randomUUID().toString());
 
-
+            //uploading picture to the server
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -466,7 +476,7 @@ public class MyProfileEditFragment extends Fragment {
                             progressDialog.dismiss();
                             Toast.makeText(ctx, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    })
+                    })//progress item
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
@@ -477,6 +487,7 @@ public class MyProfileEditFragment extends Fragment {
                     });
         }
     }
+    //TODO open camera and rescue the url in order to upload to the server
     public void openCamera() {
 
         File myFile = new File(Environment.getExternalStorageDirectory(), DIRECTORIO_IMAGEN);

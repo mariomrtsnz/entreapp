@@ -20,7 +20,7 @@ export class DialogDeleteUserComponent implements OnInit {
   ngOnInit() {
 
   }
-
+  //check if its a robot with captcha
   captcha() {
     if (this.checkedRobot) {
       return true;
@@ -28,7 +28,7 @@ export class DialogDeleteUserComponent implements OnInit {
       return false;
     }
   }
-
+  //delete user
   delete() {
     this.userService.remove(this.data.user.id).subscribe(result => {
       this.dialogRef.close('confirm');

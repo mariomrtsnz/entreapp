@@ -31,6 +31,7 @@ export class DialogUpdateProfileComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    //it obtains roles and the user to update it
     this.user = this.data.user;
     this.obtainRoles();
   }
@@ -40,12 +41,15 @@ export class DialogUpdateProfileComponent implements OnInit {
     });
   }
 
+  //it let you update your profile
   updateProfile() {
     this.user.password = this.password;
     this.userService.editMyProfile(this.user, this.user.id.toString())
       .subscribe(r => this.snackBar.open('User updated successfully.', 'Close', { duration: 3000 }),
         e => this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 }));
   }
+
+  //it obtains every role from api
   obtainRoles() {
     this.userService.getRoles().subscribe(receivedRoles => {
       this.roles = receivedRoles.roles;

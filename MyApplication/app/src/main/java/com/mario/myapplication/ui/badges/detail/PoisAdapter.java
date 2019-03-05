@@ -11,16 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mario.myapplication.R;
+import com.mario.myapplication.responses.BadgePoiResponse;
 import com.mario.myapplication.responses.PoiResponse;
 
 import java.util.List;
 
 public class PoisAdapter extends RecyclerView.Adapter<PoisAdapter.ViewHolder> {
     private Context ctx;
-    private List<PoiResponse> items;
+    private List<BadgePoiResponse> items;
     private final BadgeDetailListener mListener;
 
-    public PoisAdapter(Context ctx, List<PoiResponse> items, BadgeDetailListener mListener) {
+    public PoisAdapter(Context ctx, List<BadgePoiResponse> items, BadgeDetailListener mListener) {
         this.ctx = ctx;
         this.items = items;
         this.mListener = mListener;
@@ -30,12 +31,12 @@ public class PoisAdapter extends RecyclerView.Adapter<PoisAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(ctx).inflate(R.layout.badge_detail_poi_item, parent, false);
-        return new PoisAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+        holder.name.setText(items.get(position).getName());
     }
 
     @Override
@@ -47,16 +48,13 @@ public class PoisAdapter extends RecyclerView.Adapter<PoisAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView coverImage;
         public final TextView name;
+        public final View mView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            mView = itemView;
             coverImage = itemView.findViewById(R.id.badge_detail_poi_cover);
             name = itemView.findViewById(R.id.badge_detail_poi_title);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString();
         }
     }
 }

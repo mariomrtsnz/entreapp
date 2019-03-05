@@ -10,14 +10,14 @@ public class BadgeResponse{
     private int points;
     private String description;
     private String icon;
-    private List<PoiResponse> pois = new ArrayList<>();
+    private List<BadgePoiResponse> pois = new ArrayList<>();
     private boolean earned;
 
     public BadgeResponse() {
 
     }
 
-    public BadgeResponse(String id, String name, int points, String description, String icon, List<PoiResponse> pois, boolean earned) {
+    public BadgeResponse(String id, String name, int points, String description, String icon, List<BadgePoiResponse> pois, boolean earned) {
         this.id = id;
         this.name = name;
         this.points = points;
@@ -67,11 +67,11 @@ public class BadgeResponse{
         this.icon = icon;
     }
 
-    public List<PoiResponse> getPois() {
+    public List<BadgePoiResponse> getPois() {
         return pois;
     }
 
-    public void setPois(List<PoiResponse> pois) {
+    public void setPois(List<BadgePoiResponse> pois) {
         this.pois = pois;
     }
 

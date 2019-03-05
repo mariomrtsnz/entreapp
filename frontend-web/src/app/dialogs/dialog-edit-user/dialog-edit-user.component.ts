@@ -27,18 +27,19 @@ export class DialogEditUserComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogEditUserComponent>, public snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    //it creates form and obtain necesaries dates
     this.userId = this.data.user.id;
     this.createForm();
     this.obtainRoles();
     this.getAllCountries();
   }
-
+  //create form for html
   createForm() {
     this.form = this.fb.group({
       role: [this.data.user.role, Validators.compose([Validators.required])]
     });
   }
-
+  //it obtains all cities from api
   getAllCountries() {
     this.userService.getAllCountries().subscribe(receivedCountries => {
       this.countries = receivedCountries;
@@ -47,17 +48,7 @@ export class DialogEditUserComponent implements OnInit {
     });
   }
 
-  /*onSubmit() {
-      const updatedUser: UserUpdateDto = new UserUpdateDto(this.form.value.role);
-      console.log(updatedUser);
-      this.userService.edit(this.data.user.id, updatedUser).subscribe(result => {
-        console.log('success');
-        console.log(result);
-      }, error => {
-        console.log(error);
-        this.snackBar.open('Failed to update user.', 'Close', { duration: 3000 });
-      });
-  }*/
+  //button to edit user
   onSubmit() {
     const editedUser: UserUpdateDto = <UserUpdateDto>this.form.value;
     this.userService.edit(this.data.user.id, editedUser).subscribe(result => {
@@ -68,6 +59,7 @@ export class DialogEditUserComponent implements OnInit {
       });
     });
   }
+  //it obstains every api roles
   obtainRoles() {
     this.userService.getRoles().subscribe(receivedRoles => {
       this.roles = receivedRoles.roles;
