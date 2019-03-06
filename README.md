@@ -4,9 +4,10 @@ Tourism application for Erasmus+ in collaboration with Seville's City Council an
 Available information here: https://twinspace.etwinning.net/70996/home
 
 Technologies used:
-REST API developed with MongoDB, Mongoose and Node.js
-Web App created with Angular + Angular Material
-Native Java Android App.
+
+- REST API developed with MongoDB, Mongoose and Node.js
+- Web App created with Angular + Angular Material
+- Native Java Android App.
 
 ## Folder Structure
 - Android App can be found in 'MyApplication' folder.
